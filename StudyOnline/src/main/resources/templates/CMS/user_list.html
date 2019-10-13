@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="template">
+<head>
+    <link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js" ></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+</head>
+<body>
+<div layout:fragment="content" class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Users List
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Users List</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <a class="link" href="user-details.html">Add New</a>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Roles</th>
+                                <th>Last Login</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${user_list}">
+                                <td th:text="${user.user_id}"></td>
+                                <td th:text="${user.full_name}"></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.mobile}"></td>
+                                <td><span th:each="rool :${user.roles}" th:text="${rool.role_name+', '}"></span></td>
+                                <td th:text="${user.last_login}"></td>
+                                <td th:text="${user.stt}"></td>
+                                <td><a href="#">Edit</a><a class="link-space-left-20" href="#">Block</a> </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+
+</div>
+<div layout:fragment="script">
+</div>
+</body>
+</html>
