@@ -49,8 +49,9 @@
                                 <td th:text="${user.mobile}"></td>
                                 <td><span th:each="rool :${user.roles}" th:text="${rool.role_name+', '}"></span></td>
                                 <td th:text="${user.last_login}"></td>
-                                <td th:text="${user.stt}"></td>
-                                <td><a href="#">Edit</a><a class="link-space-left-20" href="#">Block</a> </td>
+                                <td th:if="${user.stt == true}">Active</td>
+                                <td th:unless="${user.stt == true}">InActive</td>
+                                <td><a href="#"><u>Edit</u></a><a class="link-space-left-20" href="#"><u>Block</u></a> </td>
                             </tr>
                             </tbody>
                         </table>

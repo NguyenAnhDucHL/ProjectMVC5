@@ -8,7 +8,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name= "user_id")
+    @Column(name= "id")
     private int user_id;
 
     @Column( name = "full_name")
@@ -32,7 +32,9 @@ public class User {
     @Column(name = "picture")
     private String picture;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name ="user_role",joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
     public User() {
