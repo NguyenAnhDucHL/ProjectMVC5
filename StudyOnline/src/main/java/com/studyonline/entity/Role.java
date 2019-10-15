@@ -13,7 +13,7 @@ public class Role {
 
     @Column( name = "role_name")
     private String role_name;
-    @OneToMany
+    @ManyToMany(mappedBy = "roles")
     private List<User> users;
     public Role() {
     }
