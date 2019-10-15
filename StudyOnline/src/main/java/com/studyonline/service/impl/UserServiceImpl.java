@@ -1,7 +1,6 @@
 package com.studyonline.service.impl;
 
 import com.studyonline.entity.User;
-import com.studyonline.model.UsersListModel;
 import com.studyonline.repository.UserRepository;
 import com.studyonline.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

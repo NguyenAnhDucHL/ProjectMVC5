@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="template">
+<body>
+<div layout:fragment="content" class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Courses List
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Courses List</a></li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <a class="link" href="post-details.html">Add new</a>
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Course</th>
+                                <th>Trainers(s)</th>
+                                <th>Supporter</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td>3</td>
+                                <td>Course name #1</td>
+                                <td>Trung,Quyet</td>
+                                <td>1.7</td>
+                                <td>A</td>
+                                <td>A</td>
+                                <td>A</td>
+                                <td><a href="#">Edit</a><br><a href="#">Inactivate</a><br><a href="#">Courseworks</a><a href="#">Grade</a></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Course name #2</td>
+                                <td>Quyet</td>
+                                <td>1.8</td>
+                                <td>A</td>
+                                <td>A</td>
+                                <td>A</td>
+                                <td><a href="#">Edit</a><br><a href="#">Inactivate</a><br><a href="#">Courseworks</a><a href="#">Grade</a></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+<div layout:fragment="script">
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#example1").DataTable();
+    });
+</script>
