@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import java.util.List;
 
 
@@ -30,7 +29,11 @@ public class UserController {
 //        public JSONObject userList() {
 //        return new JSONObject("{'id':'abc' }");
 //    }
+    @RequestMapping("/user-details")
+    public String userDetails() {
 
+        return "CMS/user-details";
+    }
 
 
     @RequestMapping("/post-list")
@@ -92,6 +95,11 @@ public class UserController {
     public String courseList(){
 
         return "CMS/course-list";
+    }
+    @RequestMapping("/course-works")
+    public String courseWorks(){
+
+        return "CMS/course-works";
     }
     @RequestMapping("/pratice-result")
     public String praticeResult(){
