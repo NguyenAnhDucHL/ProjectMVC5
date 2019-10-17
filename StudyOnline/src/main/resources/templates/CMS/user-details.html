@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
       layout:decorate="template">
 <body>
 <div layout:fragment="content" class="content-wrapper">
@@ -24,13 +24,13 @@
                     </ul>
                     <div class="tab-content">
                         <div class="active tab-pane" id="profile">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" th:object="${user}" th:action="@{save}" action="#" method="post">
                                 <div class="form-group">
-                                    <label for="inputname" class="col-sm-2 control-label">Email</label>
+                                    <label for="inputname" class="col-sm-2 control-label">Full_name</label>
 
                                     <div class="col-sm-10">
                                         <input type="email" class="form-control" id="inputname"
-                                               placeholder="Name">
+                                               placeholder="Name" th:field="*{full_name}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -38,11 +38,11 @@
 
                                     <div class="col-sm-10">
                                         <input type="email" class="form-control" id="inputEmail"
-                                               placeholder="Email">
+                                               placeholder="Email" th:field="*{email}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputMobile" class="col-sm-2 control-label">Mobile</label>
+                                    <label for="inputMobile" class="col-sm-2 control-label" th:field="*{mobile}">Mobile</label>
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inputMobile"
@@ -53,7 +53,7 @@
                                     <label for="inputForm" class="col-sm-2 control-label">Form</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputForm" placeholder="Form">
+                                        <input type="text" class="form-control" id="inputForm" placeholder="Form" th:field="*{from}">
                                     </div>
                                 </div>
                                 <div class="form-group">

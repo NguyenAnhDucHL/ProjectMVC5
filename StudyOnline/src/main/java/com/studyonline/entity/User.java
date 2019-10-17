@@ -26,6 +26,12 @@ public class User {
     @Column( name = "last_login")
     private String last_login;
 
+    @Column(name = "_from")
+    private String from;
+
+    @Column(name = "gender")
+    private boolean gender;
+
     @Column( name = "stt")
     private boolean stt;
 
@@ -40,14 +46,33 @@ public class User {
     public User() {
     }
 
-    public User(String full_name, String email, String mobile, String dob, String last_login, boolean stt, String picture) {
+    public User(String full_name, String email, String mobile, String dob, String last_login, String from, boolean gender, boolean stt, String picture, List<Role> roles) {
         this.full_name = full_name;
         this.email = email;
         this.mobile = mobile;
         this.dob = dob;
         this.last_login = last_login;
+        this.from = from;
+        this.gender = gender;
         this.stt = stt;
         this.picture = picture;
+        this.roles = roles;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     public int getUser_id() {

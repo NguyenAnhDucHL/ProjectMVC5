@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
       layout:decorate="template">
 <body>
 <div layout:fragment="content" class="content-wrapper">
@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <a class="link" href="user-details.html">Add New</a>
+                    <a class="link" th:href="@{/user-details}">Add New</a>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <table id="tb_user example1" class="table table-bordered table-striped">
@@ -44,7 +44,10 @@
                                 <td th:text="${user.last_login}"></td>
                                 <td th:if="${user.stt == true}">Active</td>
                                 <td th:unless="${user.stt == true}">InActive</td>
-                                <td><a href="user-details"><u>Edit</u></a><a class="link-space-left-20" href="#"><u>Block</u></a> </td>
+                                <td>
+                                    <a th:href="@{/edit?id={id}(id=${user.user_id})}"><u>Edit</u></a>
+                                    <a class="link-space-left-20" href="#"><u>Block</u></a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
