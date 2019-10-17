@@ -6,9 +6,7 @@ import com.studyonline.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,10 +33,17 @@ public class UserController {
        return "CMS/user-details";
     }
 
+    @GetMapping("/block-user/{userId}")
+    public String blockUser(Model model, @PathVariable("userId") int id) {
+        userService.blockUser(id);
+
+        return "redirect:/user-list";
+    }
+
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public String save(User user) {
         userService.saveUser(user);
-        return "redirect:/CMS/user-list";
+        return "redirect:/user-list";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)

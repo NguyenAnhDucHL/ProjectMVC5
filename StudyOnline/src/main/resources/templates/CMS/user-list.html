@@ -46,7 +46,8 @@
                                 <td th:unless="${user.stt == true}">InActive</td>
                                 <td>
                                     <a th:href="@{/edit?id={id}(id=${user.user_id})}"><u>Edit</u></a>
-                                    <a class="link-space-left-20" href="#"><u>Block</u></a>
+                                    <a class="link-space-left-20" th:if="${user.stt == true}" th:href="${'block-user/' + user.user_id}"><u>Block</u></a>
+                                    <a class="link-space-left-20" th:unless="${user.stt == true}" ><u>Unblock</u></a>
                                 </td>
                             </tr>
                             </tbody>
