@@ -38,7 +38,7 @@ public class User {
     @Column(name = "picture")
     private String picture;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY ,cascade = {CascadeType.ALL})
     @JoinTable(name ="user_role",joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
