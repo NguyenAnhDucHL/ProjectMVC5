@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.springframework.org/schema/data/jaxb" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
       layout:decorate="template">
 <body>
 <div layout:fragment="content" class="content-wrapper">
@@ -24,7 +25,8 @@
                     </ul>
                     <div class="tab-content">
                         <div class="active tab-pane" id="profile">
-                            <form class="form-horizontal" th:object="${user}" th:action="@{save}" action="#" method="post">
+                            <form class="form-horizontal" th:object="${user}" th:action="@{save}" action="#"
+                                  method="post">
                                 <div class="form-group">
                                     <label for="inputname" class="col-sm-2 control-label">Full_name</label>
 
@@ -42,18 +44,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputMobile" class="col-sm-2 control-label" th:field="*{mobile}">Mobile</label>
+                                    <label for="inputMobile" class="col-sm-2 control-label">Mobile</label>
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inputMobile"
-                                               placeholder="Mobile">
+                                               placeholder="Mobile" th:field="*{mobile}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputForm" class="col-sm-2 control-label">Form</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputForm" placeholder="Form" th:field="*{from}">
+                                        <input type="text" class="form-control" id="inputForm" placeholder="Form"
+                                               th:field="*{from}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -65,20 +68,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3">How do we call you?</label>
-
                                     <div class="col col-sm-2">
                                         <input type="radio" name="optionsRadios" id="optionsRadios1"
-                                               value="option1" checked>
+                                               value="option1" th:checked="${user.gender == true}">
                                         Mr
                                     </div>
                                     <div class="col col-sm-2">
-                                        <input type="radio" name="optionsRadios" id="optionsRadios2"
-                                               value="option2">
+                                        <input type="radio" name="optionsRadios" id="optionsRadios3"
+                                               value="option2" th:checked="${user.gender == false}">
                                         Ms
                                     </div>
                                     <div class="col col-sm-2">
-                                        <input type="radio" name="optionsRadios" id="optionsRadios3"
-                                               value="option3">
+                                        <input type="radio" name="optionsRadios" id="optionsRadios4"
+                                               value="option3" th:checked="${user.gender == false}">
                                         Mrs
                                     </div>
                                 </div>

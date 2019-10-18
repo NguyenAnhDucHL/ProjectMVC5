@@ -40,7 +40,7 @@
                                 <td th:text="${user.full_name}"></td>
                                 <td th:text="${user.email}"></td>
                                 <td th:text="${user.mobile}"></td>
-                                <td><span th:each="rool :${user.roles}" th:text="${rool.role_name+', '}"></span></td>
+                                <td><span th:each="role :${user.roles}" th:text="${role.role_name+', '}"></span></td>
                                 <td th:text="${user.last_login}"></td>
                                 <td th:if="${user.stt == true}">Active</td>
                                 <td th:unless="${user.stt == true}">InActive</td>
