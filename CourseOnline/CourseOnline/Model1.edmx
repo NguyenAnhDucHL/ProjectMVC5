@@ -87,7 +87,7 @@ warning 6013: The table/view 'MyCourse.dbo.Role_User' does not have a primary ke
           <Property Name="stt" Type="Boolean" />
           <Property Name="file_datas" Type="Boolean" />
         </EntityType>
-        <EntityContainer Name="MyCourseEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MyCourseEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="users" EntityType="Self.user" />
@@ -97,7 +97,7 @@ warning 6013: The table/view 'MyCourse.dbo.Role_User' does not have a primary ke
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MyCourseModelStoreContainer" CdmEntityContainer="MyCourseEntities">
+        <EntityContainerMapping StorageEntityContainer="MyCourseModelStoreContainer" CdmEntityContainer="MyCourseEntities1">
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="MyCourseModel.Role">
               <MappingFragment StoreEntitySet="Role">

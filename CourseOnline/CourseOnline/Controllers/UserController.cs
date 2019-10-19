@@ -1,4 +1,4 @@
-﻿using CourseOnline.Models;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +25,9 @@ namespace CourseOnline.Controllers
             string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
             string sortDirection = Request["order[0][dir]"];
 
-            using (StudyOnlineEntities db = new StudyOnlineEntities())
+            using (MyCourseEntities1 db = new MyCourseEntities1())
             {
-                List<User> arrUser = db.Users.ToList();
+                List<user> arrUser = db.users.ToList();
 
                 int totalrows = arrUser.Count;
                 int totalrowsafterfiltering = arrUser.Count;

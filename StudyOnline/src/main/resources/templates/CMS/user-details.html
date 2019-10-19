@@ -96,7 +96,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Roles</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control">
+                                        <select class="form-control" >
                                             <option>Search and select roles</option>
                                             <option>option 2</option>
                                             <option>option 3</option>
@@ -113,7 +113,9 @@
                             </form>
                         </div>
                         <div class="tab-pane tab-image" id="photo">
-                            <img class="img-responsive pad" th:src="@{/customimg/ronaldo.jpg}" alt="Photo">
+                        <form th:object="${myUploadForm}" method="POST"
+                              action="" enctype="multipart/form-data">
+                            <img class="img-responsive pad" th:src="@{}" alt="Photo">
                             <div class="row tab-button">
                                 <div class="form-group col-sm-5 col-sm-push-7">
                                     <label for="exampleChange">Add/Change image</label>
@@ -125,6 +127,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
                         </div>
                     </div>
                 </div>

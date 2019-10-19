@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CourseOnline.Models
+namespace CourseOnline
 {
     using System;
     using System.Collections.Generic;

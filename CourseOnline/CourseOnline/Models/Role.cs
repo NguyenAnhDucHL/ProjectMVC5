@@ -12,18 +12,9 @@ namespace CourseOnline.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class Role
     {
-        public int id { get; set; }
-        public string dob { get; set; }
-        public string email { get; set; }
-        public string C_from { get; set; }
-        public string full_name { get; set; }
-        public Nullable<bool> gender { get; set; }
-        public string last_login { get; set; }
-        public string mobile { get; set; }
-        public string picture { get; set; }
-        public Nullable<bool> stt { get; set; }
-        public Nullable<bool> file_datas { get; set; }
+        public int Role_ID { get; set; }
+        public string Role_Name { get; set; }
     }
 }

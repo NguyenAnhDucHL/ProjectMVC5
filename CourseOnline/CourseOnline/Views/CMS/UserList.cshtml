@@ -11,8 +11,11 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th></th>
-                        <th></th>
+                        <th>Mobile</th>
+                        <th>Roles</th>
+                        <th>LastLogin</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
             </table>
@@ -27,30 +30,35 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
     $(document).ready(function() {
-    $('#tb_user').DataTable({
-        "ajax": {
-        "url": '@Url.Action("GetAllUser", "User")',
-        "type": "POST",
-        "datatype": "json",
-        },
-        "columns": [
-            { "data": "id","name" : "id", "orderable" : true},
-            {"data" : "name","name" : "name", "orderable" : true},
-            { "data": "email","name" : "email", "orderable": true },
-             {
-                "data": "id", "render": function(data) {
-                    return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdEmp('" + data + "') ><i class='fa fa-fw fa-edit'></i>Sửa</a>";
-                },
-                "orderable": false,
-                "searchable": false
+        $('#tb_user').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllUser", "User")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "id", "name": "id", "orderable": true },
+                { "data": "full_name", "name": "full_name", "orderable": true },
+                { "data": "email", "name": "email", "orderable": true },
+                { "data": "mobile", "name": "mobile", "orderable": true },
+                { "data": "mobile", "name": "mobile", "orderable": true },
+                //{ "data": "roles", "name": "roles", "orderable": true },
+                { "data": "last_login", "name": "last_login", "orderable": true },
+                { "data": "Status", "name": "Status", "orderable": true },
+                {
+                    "data": "id", "render": function (data) {
+                        return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdEmp('" + data + "') ><i class='fa fa-fw fa-edit'></i>Sửa</a>";
+                    },
+                    "orderable": false,
+                    "searchable": false
                 },
                 {
-                "data": "id", "render": function(data) {
-                    return "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='fa fa-trash'></i> Xóa</a>";
-                },
-                "orderable": false,
-                "searchable": false
-            }
+                    "data": "id", "render": function (data) {
+                        return "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='fa fa-trash'></i> Xóa</a>";
+                    },
+                    "orderable": false,
+                    "searchable": false
+                }          
             ],
         "paging": true,
         "pageLength": 2,

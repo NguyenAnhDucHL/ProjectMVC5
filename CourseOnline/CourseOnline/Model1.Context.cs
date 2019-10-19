@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CourseOnline.Models
+namespace CourseOnline
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MyCourseEntities : DbContext
+    public partial class MyCourseEntities1 : DbContext
     {
-        public MyCourseEntities()
-            : base("name=MyCourseEntities")
+        public MyCourseEntities1()
+            : base("name=MyCourseEntities1")
         {
         }
     

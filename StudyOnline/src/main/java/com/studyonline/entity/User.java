@@ -1,29 +1,31 @@
 package com.studyonline.entity;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name= "user")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name= "id")
+    @Column(name = "id")
     private int user_id;
 
-    @Column( name = "full_name")
+    @Column(name = "full_name")
     private String full_name;
 
-    @Column( name = "email")
+    @Column(name = "email")
     private String email;
 
-    @Column( name = "mobile")
+    @Column(name = "mobile")
     private String mobile;
 
-    @Column( name = "dob")
+    @Column(name = "dob")
     private String dob;
 
-    @Column( name = "last_login")
+    @Column(name = "last_login")
     private String last_login;
 
     @Column(name = "_from")
@@ -32,21 +34,31 @@ public class User {
     @Column(name = "gender")
     private boolean gender;
 
-    @Column( name = "stt")
+    @Column(name = "stt")
     private boolean stt;
 
     @Column(name = "picture")
     private String picture;
 
-    @ManyToMany(fetch = FetchType.LAZY ,cascade = {CascadeType.ALL})
-    @JoinTable(name ="user_role",joinColumns = @JoinColumn(name="user_id"),
+    private MultipartFile[] fileDatas;
+
+    public MultipartFile[] getFileDatas() {
+        return fileDatas;
+    }
+
+    public void setFileDatas(MultipartFile[] fileDatas) {
+        this.fileDatas = fileDatas;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
     public User() {
     }
 
-    public User(String full_name, String email, String mobile, String dob, String last_login, String from, boolean gender, boolean stt, String picture, List<Role> roles) {
+    public User(String full_name, String email, String mobile, String dob, String last_login, String from, boolean gender, boolean stt, String picture, MultipartFile[] fileDatas, List<Role> roles) {
         this.full_name = full_name;
         this.email = email;
         this.mobile = mobile;
@@ -56,6 +68,7 @@ public class User {
         this.gender = gender;
         this.stt = stt;
         this.picture = picture;
+        this.fileDatas = fileDatas;
         this.roles = roles;
     }
 
