@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="335d35a6f30f4fa4acc742f00b3a0d32" Name="Diagram1">
+        <EntityTypeShape EntityType="StudyOnlineModel.roll" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudyOnlineModel.sysdiagram" Width="1.5" PointX="5" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudyOnlineModel.user" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudyOnlineModel.user_roll" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="StudyOnlineModel.FK__user_roll__id_us__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="StudyOnlineModel.FK__user_roll__id_us__6754599E" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

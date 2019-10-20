@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudyOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="roll">
+    <Key>
+      <PropertyRef Name="roll_id" />
+    </Key>
+    <Property Name="roll_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="roll_name" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_mobile" Type="int" Nullable="false" />
+    <Property Name="user_gender" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="user_status" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="user_roll">
+    <Key>
+      <PropertyRef Name="id_userroll" />
+    </Key>
+    <Property Name="id_roll" Type="int" Nullable="false" />
+    <Property Name="id_user" Type="int" Nullable="false" />
+    <Property Name="id_userroll" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__user_roll__id_us__66603565">
+    <End Role="roll" Type="Self.roll" Multiplicity="1" />
+    <End Role="user_roll" Type="Self.user_roll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="roll">
+        <PropertyRef Name="roll_id" />
+      </Principal>
+      <Dependent Role="user_roll">
+        <PropertyRef Name="id_roll" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__user_roll__id_us__6754599E">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="user_roll" Type="Self.user_roll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="user_roll">
+        <PropertyRef Name="id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StudyOnlineModelStoreContainer">
+    <EntitySet Name="roll" EntityType="Self.roll" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_roll" EntityType="Self.user_roll" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__user_roll__id_us__66603565" Association="Self.FK__user_roll__id_us__66603565">
+      <End Role="roll" EntitySet="roll" />
+      <End Role="user_roll" EntitySet="user_roll" />
+    </AssociationSet>
+    <AssociationSet Name="FK__user_roll__id_us__6754599E" Association="Self.FK__user_roll__id_us__6754599E">
+      <End Role="user" EntitySet="user" />
+      <End Role="user_roll" EntitySet="user_roll" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

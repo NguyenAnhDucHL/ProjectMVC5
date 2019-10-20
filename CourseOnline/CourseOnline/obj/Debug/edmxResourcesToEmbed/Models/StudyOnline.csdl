@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudyOnlineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="roll">
+    <Key>
+      <PropertyRef Name="roll_id" />
+    </Key>
+    <Property Name="roll_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="roll_name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="user_roll" Relationship="Self.FK__user_roll__id_us__66603565" FromRole="roll" ToRole="user_roll" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_mobile" Type="Int32" Nullable="false" />
+    <Property Name="user_gender" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="user_roll" Relationship="Self.FK__user_roll__id_us__6754599E" FromRole="user" ToRole="user_roll" />
+  </EntityType>
+  <EntityType Name="user_roll">
+    <Key>
+      <PropertyRef Name="id_userroll" />
+    </Key>
+    <Property Name="id_roll" Type="Int32" Nullable="false" />
+    <Property Name="id_user" Type="Int32" Nullable="false" />
+    <Property Name="id_userroll" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="roll" Relationship="Self.FK__user_roll__id_us__66603565" FromRole="user_roll" ToRole="roll" />
+    <NavigationProperty Name="user" Relationship="Self.FK__user_roll__id_us__6754599E" FromRole="user_roll" ToRole="user" />
+  </EntityType>
+  <Association Name="FK__user_roll__id_us__66603565">
+    <End Role="roll" Type="Self.roll" Multiplicity="1" />
+    <End Role="user_roll" Type="Self.user_roll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="roll">
+        <PropertyRef Name="roll_id" />
+      </Principal>
+      <Dependent Role="user_roll">
+        <PropertyRef Name="id_roll" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__user_roll__id_us__6754599E">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="user_roll" Type="Self.user_roll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="user_roll">
+        <PropertyRef Name="id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StudyOnlineEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="rolls" EntityType="Self.roll" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="users" EntityType="Self.user" />
+    <EntitySet Name="user_roll" EntityType="Self.user_roll" />
+    <AssociationSet Name="FK__user_roll__id_us__66603565" Association="Self.FK__user_roll__id_us__66603565">
+      <End Role="roll" EntitySet="rolls" />
+      <End Role="user_roll" EntitySet="user_roll" />
+    </AssociationSet>
+    <AssociationSet Name="FK__user_roll__id_us__6754599E" Association="Self.FK__user_roll__id_us__6754599E">
+      <End Role="user" EntitySet="users" />
+      <End Role="user_roll" EntitySet="user_roll" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
