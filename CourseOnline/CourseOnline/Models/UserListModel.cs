@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CourseOnline.Models
 {
-    public class UserListModel : user
+    public class UserListModel : User
     {
         public String roll_name { set; get; }
     }

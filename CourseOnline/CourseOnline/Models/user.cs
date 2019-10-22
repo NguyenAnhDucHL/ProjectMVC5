@@ -12,20 +12,12 @@ namespace CourseOnline.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class User
     {
-        public user()
-        {
-            this.user_roll = new HashSet<user_roll>();
-        }
-    
         public int user_id { get; set; }
-        public string user_name { get; set; }
+        public string user_group { get; set; }
+        public string user_fullname { get; set; }
         public string user_email { get; set; }
-        public int user_mobile { get; set; }
-        public string user_gender { get; set; }
-        public bool user_status { get; set; }
-    
-        public virtual ICollection<user_roll> user_roll { get; set; }
+        public string use_mobile { get; set; }
     }
 }

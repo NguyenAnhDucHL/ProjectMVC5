@@ -130,7 +130,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="post-list"><i class="fa fa-circle-o"></i> Posts List</a></li>
+                            <li><a @Url.Action("Post", "Index", "Post")><i class="fa fa-circle-o"></i> Posts List</a></li>
                             <li><a href="slide-list"><i class="fa fa-circle-o"></i> Slides</a></li>
                         </ul>
                     </li>
@@ -170,9 +170,9 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="settings-list"><i class="fa fa-circle-o"></i> Setting List</a></li>
-                            <li><a href="menu-list"><i class="fa fa-circle-o"></i> Menu List</a></li>
+                            <li><a @Url.Action("Menu","Index","Menu")><i class="fa fa-circle-o"></i> Menu List</a></li>
                             <li><a href="permissions-list"><i class="fa fa-circle-o"></i> Permissions</a></li>
-                            <li><a @Html.ActionLink("User","Index","User")<i class="fa fa-circle-o"></i> User List</a></li>
+                            <li><a @Url.Action("User","Index","User")><i class="fa fa-circle-o"></i> User List</a></li>
                             <li><a href="roles-menu"><i class="fa fa-circle-o"></i> Roles Menus</a></li>
                             <li><a href="roles-permission"><i class="fa fa-circle-o"></i> Roles Permission</a></li>
                         </ul>
@@ -194,11 +194,7 @@
             <!-- /.sidebar -->
         </aside>
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content">
                 @RenderBody()
-
-            </section>
         </div>
         <!-- Content Wrapper. Contains page content -->
         <!-- /.content-wrapper -->

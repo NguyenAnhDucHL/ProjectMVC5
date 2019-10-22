@@ -4,13 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="335d35a6f30f4fa4acc742f00b3a0d32" Name="Diagram1">
-        <EntityTypeShape EntityType="StudyOnlineModel.roll" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="StudyOnlineModel.sysdiagram" Width="1.5" PointX="5" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="StudyOnlineModel.user" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="StudyOnlineModel.user_roll" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <AssociationConnector Association="StudyOnlineModel.FK__user_roll__id_us__66603565" ManuallyRouted="false" />
-        <AssociationConnector Association="StudyOnlineModel.FK__user_roll__id_us__6754599E" ManuallyRouted="false" />
+      <Diagram DiagramId="4517a651f57f4898b720f6b7729eac3d" Name="Diagram1">
+        <EntityTypeShape EntityType="STUDYONLINEModel.AnswerOption" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Course" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Coursework" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Domain" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Exam" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.ExamConfig" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.ExamTest" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Grade" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Lesson" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Menu" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Permission" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Post" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Question" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Registration" Width="1.5" PointX="8.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.RoleMenu" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.RolePermission" Width="1.5" PointX="4.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Setting" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Slider" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Subject" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.sysdiagram" Width="1.5" PointX="6.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Tag" Width="1.5" PointX="8.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.TestAnswer" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.TestBatch" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.TestResult" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.User" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.UserRole" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.PostTag" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.SubjectReference" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.TestQuestion" Width="1.5" PointX="10.75" PointY="12.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,12 +1,183 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="StudyOnlineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="roll">
+<Schema Namespace="STUDYONLINEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AnswerOption">
     <Key>
-      <PropertyRef Name="roll_id" />
+      <PropertyRef Name="answer_option_id" />
     </Key>
-    <Property Name="roll_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="roll_name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="user_roll" Relationship="Self.FK__user_roll__id_us__66603565" FromRole="roll" ToRole="user_roll" />
+    <Property Name="answer_option_id" Type="Int32" Nullable="false" />
+    <Property Name="question_id" Type="Int32" Nullable="false" />
+    <Property Name="answer_text" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="answer_corect" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="course_id" />
+    </Key>
+    <Property Name="course_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="subject_id" Type="Int32" Nullable="false" />
+    <Property Name="teacher_id" Type="Int32" Nullable="false" />
+    <Property Name="course_is_default" Type="Boolean" Nullable="false" />
+    <Property Name="course_start_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="course_end_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Coursework">
+    <Key>
+      <PropertyRef Name="coursework_id" />
+    </Key>
+    <Property Name="coursework_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="assignment_id" Type="Int32" Nullable="false" />
+    <Property Name="course_id" Type="Int32" Nullable="false" />
+    <Property Name="test_id" Type="Int32" Nullable="false" />
+    <Property Name="due_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Domain">
+    <Key>
+      <PropertyRef Name="domain_id" />
+    </Key>
+    <Property Name="domain_id" Type="Int32" Nullable="false" />
+    <Property Name="subject_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Exam">
+    <Key>
+      <PropertyRef Name="exam_id" />
+    </Key>
+    <Property Name="exam_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="exam_level" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="exam_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="exam_is_practice" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ExamConfig">
+    <Key>
+      <PropertyRef Name="exam_config_id" />
+    </Key>
+    <Property Name="exam_config_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="exam_id" Type="Int32" Nullable="false" />
+    <Property Name="domain_id" Type="Int32" Nullable="false" />
+    <Property Name="domain_size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lesson_id" Type="Int32" Nullable="false" />
+    <Property Name="lesson_size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="keywords" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ExamTest">
+    <Key>
+      <PropertyRef Name="test_id" />
+    </Key>
+    <Property Name="test_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="exam_id" Type="Int32" Nullable="false" />
+    <Property Name="course_id" Type="Int32" Nullable="false" />
+    <Property Name="test_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="test_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Grade">
+    <Key>
+      <PropertyRef Name="grade_id" />
+    </Key>
+    <Property Name="grade_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="registration_id" Type="Int32" Nullable="false" />
+    <Property Name="course_id" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="coursework_id" Type="Int32" Nullable="false" />
+    <Property Name="grade1" Type="Int32" Nullable="false" />
+    <Property Name="grade_comment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Lesson">
+    <Key>
+      <PropertyRef Name="lesson_id" />
+    </Key>
+    <Property Name="lesson_id" Type="Int32" Nullable="false" />
+    <Property Name="subject_id" Type="Int32" Nullable="false" />
+    <Property Name="parent_id" Type="Int32" Nullable="false" />
+    <Property Name="lesson_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Menu">
+    <Key>
+      <PropertyRef Name="menu_id" />
+    </Key>
+    <Property Name="menu_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="parent_id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="permission_id" />
+    </Key>
+    <Property Name="permission_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Post">
+    <Key>
+      <PropertyRef Name="post_id" />
+    </Key>
+    <Property Name="post_id" Type="Int32" Nullable="false" />
+    <Property Name="post_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="post_category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="post_thumbnail" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="post_brief_info" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="post_detail_info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="post_document_link" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="post_embeb" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="post_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="post_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Question">
+    <Key>
+      <PropertyRef Name="question_id" />
+    </Key>
+    <Property Name="question_id" Type="Int32" Nullable="false" />
+    <Property Name="subject_id" Type="Int32" Nullable="false" />
+    <Property Name="domain_id" Type="Int32" Nullable="false" />
+    <Property Name="lesson_id" Type="Int32" Nullable="false" />
+    <Property Name="level" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Registration">
+    <Key>
+      <PropertyRef Name="registration_id" />
+    </Key>
+    <Property Name="registration_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="course_id" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RoleMenu">
+    <Key>
+      <PropertyRef Name="role_menu_id" />
+    </Key>
+    <Property Name="role_menu_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="role_id" Type="Int32" Nullable="false" />
+    <Property Name="menu_id" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RolePermission">
+    <Key>
+      <PropertyRef Name="role_permission_id" />
+    </Key>
+    <Property Name="role_permission_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="role_id" Type="Int32" Nullable="false" />
+    <Property Name="permission_id" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Setting">
+    <Key>
+      <PropertyRef Name="setting_id" />
+    </Key>
+    <Property Name="setting_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="setting_group_value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="setting_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="setting_description" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Slider">
+    <Key>
+      <PropertyRef Name="slider_id" />
+    </Key>
+    <Property Name="slider_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="slider_picture_url" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="slider_title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="slider_caption" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="slider_back_link" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="subject_id" />
+    </Key>
+    <Property Name="subject_id" Type="Int32" Nullable="false" />
+    <Property Name="subject_category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="subject_tag_line" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="subject_brief_info" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -18,64 +189,114 @@
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
-  <EntityType Name="user">
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="tag_id" />
+    </Key>
+    <Property Name="tag_id" Type="Int32" Nullable="false" />
+    <Property Name="tag_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestAnswer">
+    <Key>
+      <PropertyRef Name="test_answer_id" />
+    </Key>
+    <Property Name="test_answer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="test_user_id" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="question_id" Type="Int32" Nullable="false" />
+    <Property Name="user_answer" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="test_id" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestBatch">
+    <Key>
+      <PropertyRef Name="batch_id" />
+    </Key>
+    <Property Name="batch_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="batch_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestResult">
+    <Key>
+      <PropertyRef Name="test_user_id" />
+    </Key>
+    <Property Name="test_user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="test_id" Type="Int32" Nullable="false" />
+    <Property Name="exam_id" Type="Int32" Nullable="false" />
+    <Property Name="test_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="batch_id" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
     <Key>
       <PropertyRef Name="user_id" />
     </Key>
     <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="user_group" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="user_mobile" Type="Int32" Nullable="false" />
-    <Property Name="user_gender" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="user_status" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="user_roll" Relationship="Self.FK__user_roll__id_us__6754599E" FromRole="user" ToRole="user_roll" />
+    <Property Name="use_mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
-  <EntityType Name="user_roll">
+  <EntityType Name="UserRole">
     <Key>
-      <PropertyRef Name="id_userroll" />
+      <PropertyRef Name="user_role_id" />
     </Key>
-    <Property Name="id_roll" Type="Int32" Nullable="false" />
-    <Property Name="id_user" Type="Int32" Nullable="false" />
-    <Property Name="id_userroll" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <NavigationProperty Name="roll" Relationship="Self.FK__user_roll__id_us__66603565" FromRole="user_roll" ToRole="roll" />
-    <NavigationProperty Name="user" Relationship="Self.FK__user_roll__id_us__6754599E" FromRole="user_roll" ToRole="user" />
+    <Property Name="user_role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="role_id" Type="Int32" Nullable="false" />
   </EntityType>
-  <Association Name="FK__user_roll__id_us__66603565">
-    <End Role="roll" Type="Self.roll" Multiplicity="1" />
-    <End Role="user_roll" Type="Self.user_roll" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="roll">
-        <PropertyRef Name="roll_id" />
-      </Principal>
-      <Dependent Role="user_roll">
-        <PropertyRef Name="id_roll" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__user_roll__id_us__6754599E">
-    <End Role="user" Type="Self.user" Multiplicity="1" />
-    <End Role="user_roll" Type="Self.user_roll" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="user_id" />
-      </Principal>
-      <Dependent Role="user_roll">
-        <PropertyRef Name="id_user" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityContainer Name="StudyOnlineEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="rolls" EntityType="Self.roll" />
+  <EntityType Name="PostTag">
+    <Key>
+      <PropertyRef Name="post_id" />
+      <PropertyRef Name="tag_id" />
+    </Key>
+    <Property Name="post_id" Type="Int32" Nullable="false" />
+    <Property Name="tag_id" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubjectReference">
+    <Key>
+      <PropertyRef Name="subject_id" />
+      <PropertyRef Name="post_id" />
+    </Key>
+    <Property Name="subject_id" Type="Int32" Nullable="false" />
+    <Property Name="post_id" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestQuestion">
+    <Key>
+      <PropertyRef Name="test_id" />
+      <PropertyRef Name="question_id" />
+    </Key>
+    <Property Name="test_id" Type="Int32" Nullable="false" />
+    <Property Name="question_id" Type="Int32" Nullable="false" />
+    <Property Name="test_question_keys" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="STUDYONLINEEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AnswerOptions" EntityType="Self.AnswerOption" />
+    <EntitySet Name="Courses" EntityType="Self.Course" />
+    <EntitySet Name="Courseworks" EntityType="Self.Coursework" />
+    <EntitySet Name="Domains" EntityType="Self.Domain" />
+    <EntitySet Name="Exams" EntityType="Self.Exam" />
+    <EntitySet Name="ExamConfigs" EntityType="Self.ExamConfig" />
+    <EntitySet Name="ExamTests" EntityType="Self.ExamTest" />
+    <EntitySet Name="Grades" EntityType="Self.Grade" />
+    <EntitySet Name="Lessons" EntityType="Self.Lesson" />
+    <EntitySet Name="Menus" EntityType="Self.Menu" />
+    <EntitySet Name="Permissions" EntityType="Self.Permission" />
+    <EntitySet Name="Posts" EntityType="Self.Post" />
+    <EntitySet Name="Questions" EntityType="Self.Question" />
+    <EntitySet Name="Registrations" EntityType="Self.Registration" />
+    <EntitySet Name="RoleMenus" EntityType="Self.RoleMenu" />
+    <EntitySet Name="RolePermissions" EntityType="Self.RolePermission" />
+    <EntitySet Name="Settings" EntityType="Self.Setting" />
+    <EntitySet Name="Sliders" EntityType="Self.Slider" />
+    <EntitySet Name="Subjects" EntityType="Self.Subject" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-    <EntitySet Name="users" EntityType="Self.user" />
-    <EntitySet Name="user_roll" EntityType="Self.user_roll" />
-    <AssociationSet Name="FK__user_roll__id_us__66603565" Association="Self.FK__user_roll__id_us__66603565">
-      <End Role="roll" EntitySet="rolls" />
-      <End Role="user_roll" EntitySet="user_roll" />
-    </AssociationSet>
-    <AssociationSet Name="FK__user_roll__id_us__6754599E" Association="Self.FK__user_roll__id_us__6754599E">
-      <End Role="user" EntitySet="users" />
-      <End Role="user_roll" EntitySet="user_roll" />
-    </AssociationSet>
+    <EntitySet Name="Tags" EntityType="Self.Tag" />
+    <EntitySet Name="TestAnswers" EntityType="Self.TestAnswer" />
+    <EntitySet Name="TestBatches" EntityType="Self.TestBatch" />
+    <EntitySet Name="TestResults" EntityType="Self.TestResult" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <EntitySet Name="PostTags" EntityType="Self.PostTag" />
+    <EntitySet Name="SubjectReferences" EntityType="Self.SubjectReference" />
+    <EntitySet Name="TestQuestions" EntityType="Self.TestQuestion" />
   </EntityContainer>
 </Schema>

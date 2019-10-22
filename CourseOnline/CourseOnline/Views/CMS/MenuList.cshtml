@@ -1,0 +1,74 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+}
+<div class="box">
+    <div class="box-body">
+        <div class="table-responsive">
+            <table id="tb_user" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Menu</th>
+                        <th>Link</th>
+                        <th>Order</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+            <br />
+        </div>
+
+    </div>
+</div>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#tb_user').DataTable({
+            "ajax": {
+                "url": '@Url.Action("getAllMenu", "Menu")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "menu_id", "name": "menu_id", "orderable": true },
+                { "data": "menu_name", "name": "menu_name", "orderable": true },
+                { "data": "menu_link", "name": "menu_link", "orderable": true },
+                { "data": "menu_order", "name": "menu_order", "orderable": true },
+                {
+                    "data": "menu_status", "name": "menu_status", "orderable": true, "render": function (data) {
+                        if (data == 1) return "active"
+                        else return "unactive"}
+                },
+                {
+                    "data": "menu_status", "render": function (data) {
+                        if (data == 1) {
+                            return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' onclick=getIdMenu('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='fa fa-trash'></i>Inactive</a>";
+                        } else
+                            return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' onclick=getIdMenu('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='fa fa-trash'></i>Active</a>";
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+    });
+        function getIdMenu(id) {
+            if (id != null) {
+                window.location.href = '@Url.Action("getIdMenu","MenuDetail")?id=' + id;
+            }
+        }
+    </script>
+}

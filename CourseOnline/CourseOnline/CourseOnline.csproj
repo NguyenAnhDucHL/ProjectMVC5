@@ -130,11 +130,68 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\MenuDetailController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\roll.cs">
+    <Compile Include="Models\AnswerOption.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Course.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Coursework.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Domain.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Exam.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ExamConfig.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ExamTest.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Grade.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Lesson.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Menu.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Permission.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Post.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PostTag.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Question.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Registration.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RoleMenu.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RolePermission.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Setting.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Slider.cs">
       <DependentUpon>StudyOnline.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StudyOnline.Context.cs">
@@ -152,14 +209,35 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StudyOnline.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Subject.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SubjectReference.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>StudyOnline.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\user.cs">
+    <Compile Include="Models\Tag.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TestAnswer.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TestBatch.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TestQuestion.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TestResult.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
       <DependentUpon>StudyOnline.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserListModel.cs" />
-    <Compile Include="Models\user_roll.cs">
+    <Compile Include="Models\UserRole.cs">
       <DependentUpon>StudyOnline.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -245,6 +323,7 @@
     <Content Include="Assets\dist\js\demo.js" />
     <Content Include="Assets\dist\js\pages\dashboard.js" />
     <Content Include="Assets\dist\js\pages\dashboard2.js" />
+    <Content Include="Assets\IMGCMS\duan1.jpg" />
     <Content Include="Assets\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Assets\plugins\bootstrap-slider\slider.css" />
     <Content Include="Assets\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
@@ -1135,10 +1214,19 @@
     <Content Include="Views\CMS\UserList.cshtml" />
     <Content Include="Views\Shared\_CMS_Layout.cshtml" />
     <Content Include="Views\CMS\Home.cshtml" />
+    <Content Include="Views\CMS\MenuList.cshtml" />
+    <Content Include="Views\CMS\MenuDetail.cshtml" />
+    <Content Include="Views\CMS\PostList.cshtml" />
+    <Content Include="Views\CMS\PostDetail.cshtml" />
+    <Content Include="Views\Post\editPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Home\" />
+    <Folder Include="Views\MenuDetail\" />
+    <Folder Include="Views\Menu\" />
+    <Folder Include="Views\PostDetail\" />
+    <Folder Include="Views\PostList\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,203 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="StudyOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="roll">
+<Schema Namespace="STUDYONLINEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AnswerOption">
     <Key>
-      <PropertyRef Name="roll_id" />
+      <PropertyRef Name="answer_option_id" />
     </Key>
-    <Property Name="roll_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="roll_name" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="answer_option_id" Type="int" Nullable="false" />
+    <Property Name="question_id" Type="int" Nullable="false" />
+    <Property Name="answer_text" Type="nvarchar" MaxLength="2000" Nullable="false" />
+    <Property Name="answer_corect" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="course_id" />
+    </Key>
+    <Property Name="course_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="subject_id" Type="int" Nullable="false" />
+    <Property Name="teacher_id" Type="int" Nullable="false" />
+    <Property Name="course_is_default" Type="bit" Nullable="false" />
+    <Property Name="course_start_date" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="course_end_date" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Coursework">
+    <Key>
+      <PropertyRef Name="coursework_id" />
+    </Key>
+    <Property Name="coursework_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="assignment_id" Type="int" Nullable="false" />
+    <Property Name="course_id" Type="int" Nullable="false" />
+    <Property Name="test_id" Type="int" Nullable="false" />
+    <Property Name="due_date" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Domain">
+    <Key>
+      <PropertyRef Name="domain_id" />
+    </Key>
+    <Property Name="domain_id" Type="int" Nullable="false" />
+    <Property Name="subject_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Exam">
+    <Key>
+      <PropertyRef Name="exam_id" />
+    </Key>
+    <Property Name="exam_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="exam_level" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="exam_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="exam_is_practice" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ExamConfig">
+    <Key>
+      <PropertyRef Name="exam_config_id" />
+    </Key>
+    <Property Name="exam_config_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="exam_id" Type="int" Nullable="false" />
+    <Property Name="domain_id" Type="int" Nullable="false" />
+    <Property Name="domain_size" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="lesson_id" Type="int" Nullable="false" />
+    <Property Name="lesson_size" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="keywords" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ExamTest">
+    <Key>
+      <PropertyRef Name="test_id" />
+    </Key>
+    <Property Name="test_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="exam_id" Type="int" Nullable="false" />
+    <Property Name="course_id" Type="int" Nullable="false" />
+    <Property Name="test_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="test_code" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Grade">
+    <Key>
+      <PropertyRef Name="grade_id" />
+    </Key>
+    <Property Name="grade_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="registration_id" Type="int" Nullable="false" />
+    <Property Name="course_id" Type="int" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="coursework_id" Type="int" Nullable="false" />
+    <Property Name="grade" Type="int" Nullable="false" />
+    <Property Name="grade_comment" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Lesson">
+    <Key>
+      <PropertyRef Name="lesson_id" />
+    </Key>
+    <Property Name="lesson_id" Type="int" Nullable="false" />
+    <Property Name="subject_id" Type="int" Nullable="false" />
+    <Property Name="parent_id" Type="int" Nullable="false" />
+    <Property Name="lesson_type" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Menu">
+    <Key>
+      <PropertyRef Name="menu_id" />
+    </Key>
+    <Property Name="menu_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="parent_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="permission_id" />
+    </Key>
+    <Property Name="permission_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Post">
+    <Key>
+      <PropertyRef Name="post_id" />
+    </Key>
+    <Property Name="post_id" Type="int" Nullable="false" />
+    <Property Name="post_type" Type="varchar" MaxLength="50" />
+    <Property Name="post_category" Type="varchar" MaxLength="50" />
+    <Property Name="post_thumbnail" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="post_brief_info" Type="varchar" MaxLength="2000" Nullable="false" />
+    <Property Name="post_detail_info" Type="varchar(max)" Nullable="false" />
+    <Property Name="post_document_link" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="post_embeb" Type="varchar" MaxLength="200" />
+    <Property Name="post_name" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="post_status" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PostTag">
+    <Key>
+      <PropertyRef Name="post_id" />
+      <PropertyRef Name="tag_id" />
+    </Key>
+    <Property Name="post_id" Type="int" Nullable="false" />
+    <Property Name="tag_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Question">
+    <Key>
+      <PropertyRef Name="question_id" />
+    </Key>
+    <Property Name="question_id" Type="int" Nullable="false" />
+    <Property Name="subject_id" Type="int" Nullable="false" />
+    <Property Name="domain_id" Type="int" Nullable="false" />
+    <Property Name="lesson_id" Type="int" Nullable="false" />
+    <Property Name="level" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Registration">
+    <Key>
+      <PropertyRef Name="registration_id" />
+    </Key>
+    <Property Name="registration_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="course_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RoleMenu">
+    <Key>
+      <PropertyRef Name="role_menu_id" />
+    </Key>
+    <Property Name="role_menu_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="role_id" Type="int" Nullable="false" />
+    <Property Name="menu_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RolePermission">
+    <Key>
+      <PropertyRef Name="role_permission_id" />
+    </Key>
+    <Property Name="role_permission_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="role_id" Type="int" Nullable="false" />
+    <Property Name="permission_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Setting">
+    <Key>
+      <PropertyRef Name="setting_id" />
+    </Key>
+    <Property Name="setting_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="setting_group_value" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="setting_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="setting_description" Type="varchar" MaxLength="2000" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Slider">
+    <Key>
+      <PropertyRef Name="slider_id" />
+    </Key>
+    <Property Name="slider_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="slider_picture_url" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="slider_title" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="slider_caption" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="slider_back_link" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="subject_id" />
+    </Key>
+    <Property Name="subject_id" Type="int" Nullable="false" />
+    <Property Name="subject_category" Type="varchar" MaxLength="50" />
+    <Property Name="subject_tag_line" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="subject_brief_info" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'STUDYONLINE.dbo.SubjectReference' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="SubjectReference">
+    <Key>
+      <PropertyRef Name="subject_id" />
+      <PropertyRef Name="post_id" />
+    </Key>
+    <Property Name="subject_id" Type="int" Nullable="false" />
+    <Property Name="post_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -17,61 +209,116 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
-  <EntityType Name="user">
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="tag_id" />
+    </Key>
+    <Property Name="tag_id" Type="int" Nullable="false" />
+    <Property Name="tag_name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestAnswer">
+    <Key>
+      <PropertyRef Name="test_answer_id" />
+    </Key>
+    <Property Name="test_answer_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="test_user_id" Type="int" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="question_id" Type="int" Nullable="false" />
+    <Property Name="user_answer" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="test_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestBatch">
+    <Key>
+      <PropertyRef Name="batch_id" />
+    </Key>
+    <Property Name="batch_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="batch_name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="TestQuestion">
+    <Key>
+      <PropertyRef Name="test_id" />
+      <PropertyRef Name="question_id" />
+    </Key>
+    <Property Name="test_id" Type="int" Nullable="false" />
+    <Property Name="question_id" Type="int" Nullable="false" />
+    <Property Name="test_question_keys" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TestResult">
+    <Key>
+      <PropertyRef Name="test_user_id" />
+    </Key>
+    <Property Name="test_user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="test_id" Type="int" Nullable="false" />
+    <Property Name="exam_id" Type="int" Nullable="false" />
+    <Property Name="test_type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="batch_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
     <Key>
       <PropertyRef Name="user_id" />
     </Key>
     <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="user_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_group" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_fullname" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="user_email" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="user_mobile" Type="int" Nullable="false" />
-    <Property Name="user_gender" Type="varchar" MaxLength="3" Nullable="false" />
-    <Property Name="user_status" Type="bit" Nullable="false" />
+    <Property Name="use_mobile" Type="varchar" MaxLength="50" />
   </EntityType>
-  <EntityType Name="user_roll">
+  <EntityType Name="UserRole">
     <Key>
-      <PropertyRef Name="id_userroll" />
+      <PropertyRef Name="user_role_id" />
     </Key>
-    <Property Name="id_roll" Type="int" Nullable="false" />
-    <Property Name="id_user" Type="int" Nullable="false" />
-    <Property Name="id_userroll" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="role_id" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="FK__user_roll__id_us__66603565">
-    <End Role="roll" Type="Self.roll" Multiplicity="1" />
-    <End Role="user_roll" Type="Self.user_roll" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="roll">
-        <PropertyRef Name="roll_id" />
-      </Principal>
-      <Dependent Role="user_roll">
-        <PropertyRef Name="id_roll" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__user_roll__id_us__6754599E">
-    <End Role="user" Type="Self.user" Multiplicity="1" />
-    <End Role="user_roll" Type="Self.user_roll" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="user_id" />
-      </Principal>
-      <Dependent Role="user_roll">
-        <PropertyRef Name="id_user" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityContainer Name="StudyOnlineModelStoreContainer">
-    <EntitySet Name="roll" EntityType="Self.roll" Schema="dbo" store:Type="Tables" />
+  <EntityContainer Name="STUDYONLINEModelStoreContainer">
+    <EntitySet Name="AnswerOption" EntityType="Self.AnswerOption" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Coursework" EntityType="Self.Coursework" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Domain" EntityType="Self.Domain" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Exam" EntityType="Self.Exam" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExamConfig" EntityType="Self.ExamConfig" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExamTest" EntityType="Self.ExamTest" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Grade" EntityType="Self.Grade" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lesson" EntityType="Self.Lesson" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Registration" EntityType="Self.Registration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoleMenu" EntityType="Self.RoleMenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RolePermission" EntityType="Self.RolePermission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Setting" EntityType="Self.Setting" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="user_roll" EntityType="Self.user_roll" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__user_roll__id_us__66603565" Association="Self.FK__user_roll__id_us__66603565">
-      <End Role="roll" EntitySet="roll" />
-      <End Role="user_roll" EntitySet="user_roll" />
-    </AssociationSet>
-    <AssociationSet Name="FK__user_roll__id_us__6754599E" Association="Self.FK__user_roll__id_us__6754599E">
-      <End Role="user" EntitySet="user" />
-      <End Role="user_roll" EntitySet="user_roll" />
-    </AssociationSet>
+    <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TestAnswer" EntityType="Self.TestAnswer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TestBatch" EntityType="Self.TestBatch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TestResult" EntityType="Self.TestResult" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostTag" EntityType="Self.PostTag" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[PostTag].[post_id] AS [post_id], 
+[PostTag].[tag_id] AS [tag_id]
+FROM [dbo].[PostTag] AS [PostTag]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="SubjectReference" EntityType="Self.SubjectReference" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[SubjectReference].[subject_id] AS [subject_id], 
+[SubjectReference].[post_id] AS [post_id]
+FROM [dbo].[SubjectReference] AS [SubjectReference]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TestQuestion" EntityType="Self.TestQuestion" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[TestQuestion].[test_id] AS [test_id], 
+[TestQuestion].[question_id] AS [question_id], 
+[TestQuestion].[test_question_keys] AS [test_question_keys]
+FROM [dbo].[TestQuestion] AS [TestQuestion]</DefiningQuery>
+    </EntitySet>
   </EntityContainer>
 </Schema>

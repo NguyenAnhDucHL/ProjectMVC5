@@ -13,10 +13,10 @@ namespace CourseOnline.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class StudyOnlineEntities : DbContext
+    public partial class STUDYONLINEEntities1 : DbContext
     {
-        public StudyOnlineEntities()
-            : base("name=StudyOnlineEntities")
+        public STUDYONLINEEntities1()
+            : base("name=STUDYONLINEEntities1")
         {
         }
     
@@ -25,9 +25,34 @@ namespace CourseOnline.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<roll> rolls { get; set; }
+        public DbSet<AnswerOption> AnswerOptions { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Coursework> Courseworks { get; set; }
+        public DbSet<Domain> Domains { get; set; }
+        public DbSet<Exam> Exams { get; set; }
+        public DbSet<ExamConfig> ExamConfigs { get; set; }
+        public DbSet<ExamTest> ExamTests { get; set; }
+        public DbSet<Grade> Grades { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Registration> Registrations { get; set; }
+        public DbSet<RoleMenu> RoleMenus { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<Setting> Settings { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
-        public DbSet<user> users { get; set; }
-        public DbSet<user_roll> user_roll { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<TestAnswer> TestAnswers { get; set; }
+        public DbSet<TestBatch> TestBatches { get; set; }
+        public DbSet<TestResult> TestResults { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<PostTag> PostTags { get; set; }
+        public DbSet<SubjectReference> SubjectReferences { get; set; }
+        public DbSet<TestQuestion> TestQuestions { get; set; }
     }
 }
