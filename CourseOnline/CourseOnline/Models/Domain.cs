@@ -16,7 +16,5 @@ namespace CourseOnline.Models
     {
         public int domain_id { get; set; }
         public Nullable<int> subject_id { get; set; }
-    
-        public virtual Subject Subject { get; set; }
     }
 }

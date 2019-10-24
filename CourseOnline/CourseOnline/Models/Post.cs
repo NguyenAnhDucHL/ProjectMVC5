@@ -14,12 +14,6 @@ namespace CourseOnline.Models
     
     public partial class Post
     {
-        public Post()
-        {
-            this.PostTags = new HashSet<PostTag>();
-            this.Subjects = new HashSet<Subject>();
-        }
-    
         public int post_id { get; set; }
         public string post_type { get; set; }
         public string post_category { get; set; }
@@ -30,8 +24,5 @@ namespace CourseOnline.Models
         public string post_embeb { get; set; }
         public string post_name { get; set; }
         public string post_status { get; set; }
-    
-        public virtual ICollection<PostTag> PostTags { get; set; }
-        public virtual ICollection<Subject> Subjects { get; set; }
     }
 }

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="template">
+<body>
+<div layout:fragment="content" class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Subject List
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Subject List</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <!-- /.box-header -->
+                    <a class="link" href="subject-adding">Add New</a>
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="table-width5">ID</th>
+                                <th class="table-width50">Menu</th>
+                                <th class="table-width10">Type</th>
+                                <th class="table-width10">Category</th>
+                                <th class="table-width5">Lessons</th>
+                                <th class="table-width5">Status</th>
+                                <th class="table-width10">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr >
+                                <td >1</td>
+                                <td>English</td>
+                                <td>Exam</td>
+                                <td>Subject Cate 1</td>
+                                <td>1</td>
+                                <td>Active</td>
+                                <td><a href="subject-editing">Edit</a><a class="link-space-left-20" href="lesson-details">Lesson</a>
+                                </td>
+                            </tr>
+                            <tr >
+                                <td >2</td>
+                                <td>English</td>
+                                <td>Exam</td>
+                                <td>Subject Cate 1</td>
+                                <td>1</td>
+                                <td>Active</td>
+                                <td><a href="subject-editing">Edit</a><a class="link-space-left-20" href="lesson-details">Lesson</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >3</td>
+                                <td>English</td>
+                                <td>Exam</td>
+                                <td>Subject Cate 1</td>
+                                <td>1</td>
+                                <td>Active</td>
+                                <td><a href="subject-editing">Edit</a><a class="link-space-left-20" href="lesson-details">Lesson</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >4</td>
+                                <td>Physic</td>
+                                <td>Exam</td>
+                                <td>Subject Cate 1</td>
+                                <td>1</td>
+                                <td>Active</td>
+                                <td><a href="subject-editing">Edit</a><a class="link-space-left-20" href="lesson-details">Lesson</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >5</td>
+                                <td>Math</td>
+                                <td>Exam</td>
+                                <td>Subject Cate 1</td>
+                                <td>1</td>
+                                <td>Active</td>
+                                <td><a href="subject-editing">Edit</a><a class="link-space-left-20" href="lesson-details">Lesson</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div layout:fragment="script">
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#example1").DataTable();
+    });
+</script>

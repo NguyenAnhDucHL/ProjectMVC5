@@ -14,17 +14,7 @@ namespace CourseOnline.Models
     
     public partial class Menu
     {
-        public Menu()
-        {
-            this.Menu1 = new HashSet<Menu>();
-            this.RoleMenus = new HashSet<RoleMenu>();
-        }
-    
         public int menu_id { get; set; }
         public Nullable<int> parent_id { get; set; }
-    
-        public virtual ICollection<Menu> Menu1 { get; set; }
-        public virtual Menu Menu2 { get; set; }
-        public virtual ICollection<RoleMenu> RoleMenus { get; set; }
     }
 }

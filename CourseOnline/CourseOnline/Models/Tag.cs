@@ -14,16 +14,7 @@ namespace CourseOnline.Models
     
     public partial class Tag
     {
-        public Tag()
-        {
-            this.PostTags = new HashSet<PostTag>();
-            this.PostTags1 = new HashSet<PostTag>();
-        }
-    
         public int tag_id { get; set; }
         public string tag_name { get; set; }
-    
-        public virtual ICollection<PostTag> PostTags { get; set; }
-        public virtual ICollection<PostTag> PostTags1 { get; set; }
     }
 }

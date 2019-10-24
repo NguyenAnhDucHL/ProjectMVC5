@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="template">
+<body>
+<div layout:fragment="content" class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Users List
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Users List</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <a class="link" href="user-details.html">Add New</a>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="tb_user example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Roles</th>
+                                <th>Last Login</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${user_list}">
+                                <td th:text="${user.user_id}"></td>
+                                <td th:text="${user.full_name}"></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.mobile}"></td>
+                                <td><span th:each="rool :${user.roles}" th:text="${rool.role_name+', '}"></span></td>
+                                <td th:text="${user.last_login}"></td>
+                                <td th:if="${user.stt == true}">Active</td>
+                                <td th:unless="${user.stt == true}">InActive</td>
+                                <td><a href="user-details"><u>Edit</u></a><a class="link-space-left-20" href="#"><u>Block</u></a> </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+
+</div>
+<div layout:fragment="script">
+</div>
+<script th:src="@{/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+<!-- Bootstrap 3.3.6 -->
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<!-- DataTables -->
+<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/dataTables.bootstrap.min.js}"></script>
+</body>
+</html>
+<!--<script>-->
+
+<!--    $(document).ready(function () {-->
+<!--        $('#tb_user').DataTable({-->
+<!--            "ajax": {-->
+<!--                "url": "UserController/userList",-->
+<!--                "dataType": "json",-->
+<!--            },-->
+<!--            "columns": [-->
+<!--                {-->
+<!--                    "data": "user_id", "name": "ID"-->
+<!--                },-->
+<!--                {-->
+<!--                    "data": "full_name", "name": "Name"-->
+<!--                },-->
+<!--                {-->
+<!--                    "data": "email", "name": "Email"-->
+<!--                },-->
+<!--                {-->
+<!--                    "data": "mobile", "name": "Mobile"-->
+<!--                },-->
+<!--                {-->
+<!--                    "data": "roles", "name": "Roles"-->
+<!--                },-->
+<!--                {-->
+<!--                    "data": "last_login", "name": "Last Login"-->
+<!--                },-->
+<!--                {-->
+<!--                    "data": "stt", "name": "Status", "render": function (data) {-->
+<!--                        if (data == 1) {-->
+<!--                            return "Active"-->
+<!--                        } else {-->
+<!--                            return "Inactive"-->
+<!--                        }-->
+<!--                    }-->
+<!--                },-->
+<!--                {-->
+<!--                    "data": "user_id", "name": "Action", "render": function (data, type, row, meta) {-->
+<!--                        if (row["status"] === "1") {-->
+<!--                            return "<a href=''>Edit</a><a href=''>Block</a>"-->
+<!--                        } else {-->
+<!--                            return "<a href=''>Edit</a><a href=''>Unblock</a>"-->
+<!--                        }-->
+<!--                    }-->
+<!--                },-->
+<!--            ]-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+<script>
+    $(function () {
+        $("#example1").DataTable();
+    });
+</script>

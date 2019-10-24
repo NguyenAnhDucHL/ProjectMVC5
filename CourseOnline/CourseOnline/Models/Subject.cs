@@ -14,26 +14,9 @@ namespace CourseOnline.Models
     
     public partial class Subject
     {
-        public Subject()
-        {
-            this.Courses = new HashSet<Course>();
-            this.Domains = new HashSet<Domain>();
-            this.Lessons = new HashSet<Lesson>();
-            this.Questions = new HashSet<Question>();
-            this.Questions1 = new HashSet<Question>();
-            this.Posts = new HashSet<Post>();
-        }
-    
         public int subject_id { get; set; }
         public string subject_category { get; set; }
         public string subject_tag_line { get; set; }
         public string subject_brief_info { get; set; }
-    
-        public virtual ICollection<Course> Courses { get; set; }
-        public virtual ICollection<Domain> Domains { get; set; }
-        public virtual ICollection<Lesson> Lessons { get; set; }
-        public virtual ICollection<Question> Questions { get; set; }
-        public virtual ICollection<Question> Questions1 { get; set; }
-        public virtual ICollection<Post> Posts { get; set; }
     }
 }

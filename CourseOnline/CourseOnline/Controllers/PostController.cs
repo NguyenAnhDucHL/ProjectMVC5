@@ -27,7 +27,7 @@ namespace CourseOnline.Controllers
             string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
             string sortDirection = Request["order[0][dir]"];
 
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            using (STUDYONLINEEntities1 db = new STUDYONLINEEntities1())
             {
                 //string sql = "select p.[post_id],p.[post_thumbnail], p.[post_name], p.[post_category],p.[post_type],p.[post_brief],p.[post_status], p.[post_content]" +
                 //             "from post p";
@@ -65,7 +65,7 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult getDetailPost()
         {
-            STUDYONLINEEntities db = new STUDYONLINEEntities();
+            STUDYONLINEEntities1 db = new STUDYONLINEEntities1();
             
                 var detailPost = (from p in db.Posts
                                   where p.post_id == id_
@@ -91,7 +91,7 @@ namespace CourseOnline.Controllers
         {
             post.post_id = id_;
 
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            using (STUDYONLINEEntities1 db = new STUDYONLINEEntities1())
             {
                     db.Entry(post).State = EntityState.Modified;
                     db.SaveChanges();

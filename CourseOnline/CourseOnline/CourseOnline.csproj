@@ -132,9 +132,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MenuDetailController.cs" />
-    <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PostController.cs" />
-    <Compile Include="Controllers\TestExamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -190,7 +188,6 @@
     <Compile Include="Models\RolePermission.cs">
       <DependentUpon>StudyOnline.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RolePermissionsModel.cs" />
     <Compile Include="Models\Setting.cs">
       <DependentUpon>StudyOnline.tt</DependentUpon>
     </Compile>
@@ -215,6 +212,9 @@
     <Compile Include="Models\Subject.cs">
       <DependentUpon>StudyOnline.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SubjectReference.cs">
+      <DependentUpon>StudyOnline.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>StudyOnline.tt</DependentUpon>
     </Compile>
@@ -227,7 +227,6 @@
     <Compile Include="Models\TestBatch.cs">
       <DependentUpon>StudyOnline.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TestQuestion.cs">
       <DependentUpon>StudyOnline.tt</DependentUpon>
     </Compile>
@@ -241,7 +240,6 @@
     <Compile Include="Models\UserRole.cs">
       <DependentUpon>StudyOnline.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\user_roll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1221,9 +1219,6 @@
     <Content Include="Views\CMS\PostList.cshtml" />
     <Content Include="Views\CMS\PostDetail.cshtml" />
     <Content Include="Views\Post\editPost.cshtml" />
-    <Content Include="Views\CMS\PermissionsList.cshtml" />
-    <Content Include="Views\CMS\RolesPermission.cshtml" />
-    <Content Include="Views\CMS\TestList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1232,7 +1227,6 @@
     <Folder Include="Views\Menu\" />
     <Folder Include="Views\PostDetail\" />
     <Folder Include="Views\PostList\" />
-    <Folder Include="Views\TestExam\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

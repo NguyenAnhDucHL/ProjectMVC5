@@ -14,14 +14,7 @@ namespace CourseOnline.Models
     
     public partial class TestBatch
     {
-        public TestBatch()
-        {
-            this.TestResults = new HashSet<TestResult>();
-        }
-    
         public int batch_id { get; set; }
         public string batch_name { get; set; }
-    
-        public virtual ICollection<TestResult> TestResults { get; set; }
     }
 }

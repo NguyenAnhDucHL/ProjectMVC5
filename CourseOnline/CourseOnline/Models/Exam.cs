@@ -14,18 +14,9 @@ namespace CourseOnline.Models
     
     public partial class Exam
     {
-        public Exam()
-        {
-            this.ExamConfigs = new HashSet<ExamConfig>();
-            this.TestResults = new HashSet<TestResult>();
-        }
-    
         public int exam_id { get; set; }
         public string exam_level { get; set; }
         public string exam_name { get; set; }
         public bool exam_is_practice { get; set; }
-    
-        public virtual ICollection<ExamConfig> ExamConfigs { get; set; }
-        public virtual ICollection<TestResult> TestResults { get; set; }
     }
 }

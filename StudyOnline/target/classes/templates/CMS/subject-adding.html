@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="template">
+<body>
+<div layout:fragment="content" class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Subject Adding
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="subject-list">Subjects List</a></li>
+            <li class="active">Subject Adding</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col col-lg-5 col-md-5 col-sm-5">
+                                <div class="form-group">
+                                    <label>Subject Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter ...">
+                                </div>
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <input type="text" class="form-control" placeholder="Enter ...">
+                                </div>
+                            </div>
+                            <div class="col col-lg-7 col-md-7 col-sm-7">
+                                <div class="form-group">
+                                    <div class="col col-lg-7 col-md-7 col-sm-7">
+                                        <label>Type</label>
+                                        <div class="row">
+                                            <div>
+                                                <select class="form-control">
+                                                    <option>option 1</option>
+                                                    <option>option 2</option>
+                                                    <option>option 3</option>
+                                                    <option>option 4</option>
+                                                    <option>option 5</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox"> Featured Subject
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleChange">Add/Change image</label>
+                                            <input class="custom-input" type="file" id="exampleChange">
+                                        </div>
+                                    </div>
+                                    <div class="col col-lg-5 col-md-5 col-sm-5">
+                                        <img class="img-responsive pad"
+                                             th:src="@{/customimg/ronaldo.jpg/}"
+                                             alt="Photo">
+                                        <button type="submit" class="btn btn-info col-lg-offset-5">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control" rows="3" placeholder="Subject Description"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-info">Submit</button>
+                        <button type="submit" class="btn btn-info">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div layout:fragment="script">
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#example1").DataTable();
+    });
+</script>

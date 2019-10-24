@@ -21,7 +21,5 @@ namespace CourseOnline.Models
         public int lesson_id { get; set; }
         public string lesson_size { get; set; }
         public string keywords { get; set; }
-    
-        public virtual Exam Exam { get; set; }
     }
 }
