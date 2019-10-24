@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="~/Assets/plugins/daterangepicker/daterangepicker.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="~/Assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    @*<link rel="stylesheet" href="~/Assets/materialize/materialize/css/materialize.css">
+    <link rel="stylesheet" href="~/Assets/materialize/materialize/css/materialize.min.css">*@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -170,9 +172,9 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="settings-list"><i class="fa fa-circle-o"></i> Setting List</a></li>
-                            <li><a @Url.Action("Menu","Index","Menu")><i class="fa fa-circle-o"></i> Menu List</a></li>
+                            <li><a @Url.Action("Menu", "Index", "Menu")><i class="fa fa-circle-o"></i> Menu List</a></li>
                             <li><a href="permissions-list"><i class="fa fa-circle-o"></i> Permissions</a></li>
-                            <li><a @Url.Action("User","Index","User")><i class="fa fa-circle-o"></i> User List</a></li>
+                            <li><a @Url.Action("User", "Index", "User")><i class="fa fa-circle-o"></i> User List</a></li>
                             <li><a href="roles-menu"><i class="fa fa-circle-o"></i> Roles Menus</a></li>
                             <li><a href="roles-permission"><i class="fa fa-circle-o"></i> Roles Permission</a></li>
                         </ul>
@@ -194,7 +196,7 @@
             <!-- /.sidebar -->
         </aside>
         <div class="content-wrapper">
-                @RenderBody()
+            @RenderBody()
         </div>
         <!-- Content Wrapper. Contains page content -->
         <!-- /.content-wrapper -->
@@ -437,6 +439,8 @@
     <script src="~/Assets/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="~/Assets/dist/js/demo.js"></script>
+    @*<script src="~/Assets/materialize/materialize/js/materialize.js"></script>
+    <script src="~/Assets/materialize/materialize/js/materialize.min.js"></script>*@
 </body>
 </html>
 @RenderSection("scripts", required: false)

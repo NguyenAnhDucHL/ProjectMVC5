@@ -17,5 +17,8 @@ namespace CourseOnline.Models
         public int test_id { get; set; }
         public int question_id { get; set; }
         public string test_question_keys { get; set; }
+    
+        public virtual ExamTest ExamTest { get; set; }
+        public virtual Question Question { get; set; }
     }
 }

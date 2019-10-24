@@ -14,9 +14,18 @@ namespace CourseOnline.Models
     
     public partial class Lesson
     {
+        public Lesson()
+        {
+            this.Lesson1 = new HashSet<Lesson>();
+        }
+    
         public int lesson_id { get; set; }
         public int subject_id { get; set; }
         public int parent_id { get; set; }
         public string lesson_type { get; set; }
+    
+        public virtual ICollection<Lesson> Lesson1 { get; set; }
+        public virtual Lesson Lesson2 { get; set; }
+        public virtual Subject Subject { get; set; }
     }
 }

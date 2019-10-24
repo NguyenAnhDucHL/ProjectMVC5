@@ -17,5 +17,9 @@ namespace CourseOnline.Models
         public int role_permission_id { get; set; }
         public int role_id { get; set; }
         public int permission_id { get; set; }
+        public string role_name { get; set; }
+    
+        public virtual Permission Permission { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

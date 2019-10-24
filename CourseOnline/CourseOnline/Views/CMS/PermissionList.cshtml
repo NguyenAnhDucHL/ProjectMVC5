@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+}
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<section class="content-header">
+    <h1>
+        Permissions List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Permissions List</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <a class="link" href="permission-details">Add New</a>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="tb_permission" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="table-width5">ID</th>
+                                <th class="table-width20">Permission</th>
+                                <th class="table-width50">Link</th>
+                                <th class="table-width5">Status</th>
+                                <th class="table-width10">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#tb_permission').DataTable({
+             "ajax": {
+                "url": '@Url.Action("GetAllPermissions", "Permissions")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "permission_id", "name": "permission_id", "orderable": true },
+                { "data": "permission_name", "name": "permission_name", "orderable": true },
+                { "data": "permission_link", "name": "permission_link", "orderable": true },
+                {
+                    "data": "permission_status", "name": "permission_status", "orderable": true, "render": function (data) {
+                        if (data == 1) return "active"
+                        else return "unactive"}
+                },
+                {
+                    "data": "permission_status", "render": function (data) {
+                        if (data == 1) {
+                            return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target=''  style='margin-left:5px') ><i class='fa fa-fw fa-edit'></i>Edit</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px') ><i class='fa fa-trash'></i>Inactive</a>";
+                        } else
+                            return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target=''  style='margin-left:5px') ><i class='fa fa-fw fa-edit'></i>Edit</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px') ><i class='fa fa-trash'></i>Active</a>";
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+    });
+    </script>
+}

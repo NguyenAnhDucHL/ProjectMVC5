@@ -13,10 +13,10 @@ namespace CourseOnline.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class STUDYONLINEEntities1 : DbContext
+    public partial class STUDYONLINEEntities : DbContext
     {
-        public STUDYONLINEEntities1()
-            : base("name=STUDYONLINEEntities1")
+        public STUDYONLINEEntities()
+            : base("name=STUDYONLINEEntities")
         {
         }
     
@@ -41,6 +41,7 @@ namespace CourseOnline.Models
         public DbSet<Registration> Registrations { get; set; }
         public DbSet<RoleMenu> RoleMenus { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Subject> Subjects { get; set; }
@@ -52,7 +53,6 @@ namespace CourseOnline.Models
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<PostTag> PostTags { get; set; }
-        public DbSet<SubjectReference> SubjectReferences { get; set; }
         public DbSet<TestQuestion> TestQuestions { get; set; }
     }
 }

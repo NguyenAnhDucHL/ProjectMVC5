@@ -14,10 +14,23 @@ namespace CourseOnline.Models
     
     public partial class User
     {
+        public User()
+        {
+            this.Courses = new HashSet<Course>();
+            this.Registrations = new HashSet<Registration>();
+            this.UserRoles = new HashSet<UserRole>();
+        }
+    
         public int user_id { get; set; }
         public string user_group { get; set; }
         public string user_fullname { get; set; }
         public string user_email { get; set; }
         public string use_mobile { get; set; }
+        public bool user_gender { get; set; }
+        public bool user_status { get; set; }
+    
+        public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Registration> Registrations { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

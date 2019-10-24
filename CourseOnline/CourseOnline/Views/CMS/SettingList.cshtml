@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "SettingList";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+}
+<section class="content-header">
+    <h1>
+        System Settings
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Settings List</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <a class="link" href="menu-details">Add Menu</a>
+                <div class="box-body">
+                    <table id="tb_setting" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="table-width5">ID</th>
+                                <th class="table-width20">Group</th>
+                                <th class="table-width50">Name</th>
+                                <th class="table-width5">Order</th>
+                                <th class="table-width5">Status</th>
+                                <th class="table-width10">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#tb_setting').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllSetting", "Setting")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "setting_id", "name": "setting_id", "orderable": true },
+                { "data": "setting_group_value", "name": "setting_group_value", "orderable": true },
+                { "data": "setting_name", "name": "setting_name", "orderable": true },
+                { "data": "setting_order", "name": "setting_order", "orderable": true },
+                {
+                    "data": "setting_status", "name": "setting_status", "orderable": true, "render": function (data) {
+                        if (data == 1) return "active"
+                        else return "inactive"}
+                },
+                {
+                    "data": "setting_status", "render": function (data) {
+                        if (data == 1) {
+                            return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdEmp('" + data + "') ><i class='fa fa-fw fa-edit'></i> Edit</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='link-space-left-20 fa fa-eye-slash'></i> Inactive</a>";
+                        }
+                        else {
+                            return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdEmp('" + data + "') ><i class='fa fa-fw fa-edit'></i> Edit</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='link-space-left-20 fa fa-eye'></i> Active</a>";
+                        }
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+    } );
+    </script>
+}

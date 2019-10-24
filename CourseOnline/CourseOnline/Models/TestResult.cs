@@ -14,11 +14,21 @@ namespace CourseOnline.Models
     
     public partial class TestResult
     {
+        public TestResult()
+        {
+            this.TestAnswers = new HashSet<TestAnswer>();
+        }
+    
         public int test_user_id { get; set; }
         public int user_id { get; set; }
         public int test_id { get; set; }
         public int exam_id { get; set; }
         public string test_type { get; set; }
         public int batch_id { get; set; }
+    
+        public virtual Exam Exam { get; set; }
+        public virtual ExamTest ExamTest { get; set; }
+        public virtual ICollection<TestAnswer> TestAnswers { get; set; }
+        public virtual TestBatch TestBatch { get; set; }
     }
 }

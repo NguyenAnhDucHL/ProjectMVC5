@@ -17,31 +17,31 @@ namespace CourseOnline.Controllers
         {
             return View("~\\Views\\CMS\\UserList.cshtml");
         }
-        //[HttpPost]
-        //public ActionResult GetAllUser()
-        //{
-        //    int start = Convert.ToInt32(Request["start"]);
-        //    int length = Convert.ToInt32(Request["length"]);
-        //    string searchValue = Request["search[value]"];
-        //    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-        //    string sortDirection = Request["order[0][dir]"];
+        [HttpPost]
+        public ActionResult GetAllUser()
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
 
-        //    using (StudyOnlineEntities db = new StudyOnlineEntities())
-        //    {
-        //        string sql = "select u.[user_id], u.[user_name], u.[user_email], u.[user_mobile], u.[user_gender], u.[user_status], r.roll_name " +
-        //                    "from[user] u join[user_roll] ur " +
-        //                    "on u.[user_id] = ur.id_user " +
-        //                    "join roll r " +
-        //                    "on r.roll_id = ur.id_roll";
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                string sql = "select u.[user_id], u.user_fullname, u.[user_email], u.use_mobile, u.[user_gender], u.[user_status], r.role_name  " +
+                            "from[User] u join [UserRole] ur " +
+                            "on u.[user_id] = ur.user_id " +
+                            "join Roles r " +
+                            "on r.role_id = ur.role_id";
+                    
+                List<UserListModel> userListModels = db.Database.SqlQuery<UserListModel>(sql).ToList();
 
-        //        List<UserListModel> userListModels = db.Database.SqlQuery<UserListModel>(sql).ToList();
-
-        //        int totalrows = userListModels.Count;
-        //        int totalrowsafterfiltering = userListModels.Count;
-        //        userListModels = userListModels.Skip(start).Take(length).ToList();
-        //        userListModels = userListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
-        //        return Json(new { success = true, data = userListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
+                int totalrows = userListModels.Count;
+                int totalrowsafterfiltering = userListModels.Count;
+                userListModels = userListModels.Skip(start).Take(length).ToList();
+                userListModels = userListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = userListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

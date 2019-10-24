@@ -129,116 +129,124 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MenuDetailController.cs" />
+    <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\SettingController.cs" />
+    <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AnswerOption.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Course.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CourseListModel.cs" />
     <Compile Include="Models\Coursework.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Exam.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ExamConfig.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ExamTest.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Grade.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Lesson.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Menu.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Permission.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Post.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PostTag.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Question.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Registration.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RegistrationListModel.cs" />
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RoleMenu.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RolePermission.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RolePermissionsModel.cs" />
     <Compile Include="Models\Setting.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Slider.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StudyOnline.Context.cs">
+    <Compile Include="Models\STUDYONLINE.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StudyOnline.Context.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StudyOnline.cs">
+    <Compile Include="Models\STUDYONLINE.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StudyOnline.Designer.cs">
+    <Compile Include="Models\STUDYONLINE.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StudyOnline.edmx</DependentUpon>
+      <DependentUpon>STUDYONLINE.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Subject.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SubjectReference.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tag.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestAnswer.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestBatch.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestQuestion.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestResult.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserListModel.cs" />
     <Compile Include="Models\UserRole.cs">
-      <DependentUpon>StudyOnline.tt</DependentUpon>
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -324,6 +332,10 @@
     <Content Include="Assets\dist\js\pages\dashboard.js" />
     <Content Include="Assets\dist\js\pages\dashboard2.js" />
     <Content Include="Assets\IMGCMS\duan1.jpg" />
+    <Content Include="Assets\materialize\materialize\css\materialize.css" />
+    <Content Include="Assets\materialize\materialize\css\materialize.min.css" />
+    <Content Include="Assets\materialize\materialize\js\materialize.js" />
+    <Content Include="Assets\materialize\materialize\js\materialize.min.js" />
     <Content Include="Assets\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Assets\plugins\bootstrap-slider\slider.css" />
     <Content Include="Assets\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
@@ -1135,15 +1147,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\StudyOnline.Context.tt">
+    <Content Include="Models\STUDYONLINE.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StudyOnline.edmx</DependentUpon>
-      <LastGenOutput>StudyOnline.Context.cs</LastGenOutput>
+      <DependentUpon>STUDYONLINE.edmx</DependentUpon>
+      <LastGenOutput>STUDYONLINE.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\StudyOnline.tt">
+    <Content Include="Models\STUDYONLINE.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StudyOnline.edmx</DependentUpon>
-      <LastGenOutput>StudyOnline.cs</LastGenOutput>
+      <DependentUpon>STUDYONLINE.edmx</DependentUpon>
+      <LastGenOutput>STUDYONLINE.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1182,12 +1194,14 @@
     <Content Include="Assets\plugins\datatables\extensions\TableTools\Readme.md" />
     <Content Include="Assets\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Assets\plugins\input-mask\phone-codes\phone-codes.json" />
-    <EntityDeploy Include="Models\StudyOnline.edmx">
+    <Content Include="Assets\materialize\materialize\LICENSE" />
+    <Content Include="Assets\materialize\materialize\README.md" />
+    <EntityDeploy Include="Models\STUDYONLINE.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>StudyOnline.Designer.cs</LastGenOutput>
+      <LastGenOutput>STUDYONLINE.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\StudyOnline.edmx.diagram">
-      <DependentUpon>StudyOnline.edmx</DependentUpon>
+    <Content Include="Models\STUDYONLINE.edmx.diagram">
+      <DependentUpon>STUDYONLINE.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -1219,14 +1233,25 @@
     <Content Include="Views\CMS\PostList.cshtml" />
     <Content Include="Views\CMS\PostDetail.cshtml" />
     <Content Include="Views\Post\editPost.cshtml" />
+    <Content Include="Views\CMS\SliderList.cshtml" />
+    <Content Include="Views\CMS\SettingList.cshtml" />
+    <Content Include="Views\CMS\RegistrationList.cshtml" />
+    <Content Include="Views\CMS\CourseList.cshtml" />
+    <Content Include="Views\CMS\PermissionList.cshtml" />
+    <Content Include="Views\CMS\RolePermission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Course\" />
     <Folder Include="Views\Home\" />
     <Folder Include="Views\MenuDetail\" />
     <Folder Include="Views\Menu\" />
+    <Folder Include="Views\Permissions\" />
     <Folder Include="Views\PostDetail\" />
     <Folder Include="Views\PostList\" />
+    <Folder Include="Views\Registration\" />
+    <Folder Include="Views\Setting\" />
+    <Folder Include="Views\Slider\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

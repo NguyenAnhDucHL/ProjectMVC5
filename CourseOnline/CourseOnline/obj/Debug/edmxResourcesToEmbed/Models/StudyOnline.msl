@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="STUDYONLINEModelStoreContainer" CdmEntityContainer="STUDYONLINEEntities1">
+  <EntityContainerMapping StorageEntityContainer="STUDYONLINEModelStoreContainer" CdmEntityContainer="STUDYONLINEEntities">
     <EntitySetMapping Name="AnswerOptions">
       <EntityTypeMapping TypeName="STUDYONLINEModel.AnswerOption">
         <MappingFragment StoreEntitySet="AnswerOption">
@@ -20,6 +20,8 @@
           <ScalarProperty Name="course_is_default" ColumnName="course_is_default" />
           <ScalarProperty Name="course_start_date" ColumnName="course_start_date" />
           <ScalarProperty Name="course_end_date" ColumnName="course_end_date" />
+          <ScalarProperty Name="course_name" ColumnName="course_name" />
+          <ScalarProperty Name="course_status" ColumnName="course_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -111,6 +113,9 @@
       <EntityTypeMapping TypeName="STUDYONLINEModel.Permission">
         <MappingFragment StoreEntitySet="Permission">
           <ScalarProperty Name="permission_id" ColumnName="permission_id" />
+          <ScalarProperty Name="permission_status" ColumnName="permission_status" />
+          <ScalarProperty Name="permission_link" ColumnName="permission_link" />
+          <ScalarProperty Name="permission_name" ColumnName="permission_name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -147,6 +152,8 @@
           <ScalarProperty Name="registration_id" ColumnName="registration_id" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="course_id" ColumnName="course_id" />
+          <ScalarProperty Name="registration_time" ColumnName="registration_time" />
+          <ScalarProperty Name="registration_status" ColumnName="registration_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -165,6 +172,15 @@
           <ScalarProperty Name="role_permission_id" ColumnName="role_permission_id" />
           <ScalarProperty Name="role_id" ColumnName="role_id" />
           <ScalarProperty Name="permission_id" ColumnName="permission_id" />
+          <ScalarProperty Name="role_name" ColumnName="role_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+          <ScalarProperty Name="role_name" ColumnName="role_name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -175,6 +191,8 @@
           <ScalarProperty Name="setting_group_value" ColumnName="setting_group_value" />
           <ScalarProperty Name="setting_name" ColumnName="setting_name" />
           <ScalarProperty Name="setting_description" ColumnName="setting_description" />
+          <ScalarProperty Name="setting_order" ColumnName="setting_order" />
+          <ScalarProperty Name="setting_status" ColumnName="setting_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -186,6 +204,7 @@
           <ScalarProperty Name="slider_title" ColumnName="slider_title" />
           <ScalarProperty Name="slider_caption" ColumnName="slider_caption" />
           <ScalarProperty Name="slider_back_link" ColumnName="slider_back_link" />
+          <ScalarProperty Name="slider_status" ColumnName="slider_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -195,6 +214,7 @@
           <ScalarProperty Name="subject_id" ColumnName="subject_id" />
           <ScalarProperty Name="subject_category" ColumnName="subject_category" />
           <ScalarProperty Name="subject_tag_line" ColumnName="subject_tag_line" />
+          <ScalarProperty Name="subject_name" ColumnName="subject_name" />
           <ScalarProperty Name="subject_brief_info" ColumnName="subject_brief_info" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -258,6 +278,8 @@
           <ScalarProperty Name="user_fullname" ColumnName="user_fullname" />
           <ScalarProperty Name="user_email" ColumnName="user_email" />
           <ScalarProperty Name="use_mobile" ColumnName="use_mobile" />
+          <ScalarProperty Name="user_gender" ColumnName="user_gender" />
+          <ScalarProperty Name="user_status" ColumnName="user_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -278,14 +300,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="SubjectReferences">
-      <EntityTypeMapping TypeName="STUDYONLINEModel.SubjectReference">
-        <MappingFragment StoreEntitySet="SubjectReference">
-          <ScalarProperty Name="subject_id" ColumnName="subject_id" />
-          <ScalarProperty Name="post_id" ColumnName="post_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TestQuestions">
       <EntityTypeMapping TypeName="STUDYONLINEModel.TestQuestion">
         <MappingFragment StoreEntitySet="TestQuestion">
@@ -295,5 +309,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="SubjectReference" TypeName="STUDYONLINEModel.SubjectReference" StoreEntitySet="SubjectReference">
+      <EndProperty Name="Post">
+        <ScalarProperty Name="post_id" ColumnName="post_id" />
+      </EndProperty>
+      <EndProperty Name="Subject">
+        <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

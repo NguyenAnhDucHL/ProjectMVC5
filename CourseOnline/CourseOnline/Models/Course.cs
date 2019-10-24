@@ -14,11 +14,28 @@ namespace CourseOnline.Models
     
     public partial class Course
     {
+        public Course()
+        {
+            this.Courseworks = new HashSet<Coursework>();
+            this.Courseworks1 = new HashSet<Coursework>();
+            this.Grades = new HashSet<Grade>();
+            this.Registrations = new HashSet<Registration>();
+        }
+    
         public int course_id { get; set; }
         public int subject_id { get; set; }
         public int teacher_id { get; set; }
         public bool course_is_default { get; set; }
         public string course_start_date { get; set; }
         public string course_end_date { get; set; }
+        public string course_name { get; set; }
+        public bool course_status { get; set; }
+    
+        public virtual Subject Subject { get; set; }
+        public virtual User User { get; set; }
+        public virtual ICollection<Coursework> Courseworks { get; set; }
+        public virtual ICollection<Coursework> Courseworks1 { get; set; }
+        public virtual ICollection<Grade> Grades { get; set; }
+        public virtual ICollection<Registration> Registrations { get; set; }
     }
 }
