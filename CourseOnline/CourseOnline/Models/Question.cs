@@ -14,10 +14,23 @@ namespace CourseOnline.Models
     
     public partial class Question
     {
+        public Question()
+        {
+            this.AnswerOptions = new HashSet<AnswerOption>();
+            this.TestAnswers = new HashSet<TestAnswer>();
+            this.TestQuestions = new HashSet<TestQuestion>();
+        }
+    
         public int question_id { get; set; }
         public int subject_id { get; set; }
         public int domain_id { get; set; }
         public int lesson_id { get; set; }
         public string level { get; set; }
+    
+        public virtual ICollection<AnswerOption> AnswerOptions { get; set; }
+        public virtual Subject Subject { get; set; }
+        public virtual ICollection<TestAnswer> TestAnswers { get; set; }
+        public virtual ICollection<TestQuestion> TestQuestions { get; set; }
+        public virtual Subject Subject1 { get; set; }
     }
 }

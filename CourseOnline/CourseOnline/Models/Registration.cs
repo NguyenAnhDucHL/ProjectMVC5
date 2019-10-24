@@ -14,8 +14,17 @@ namespace CourseOnline.Models
     
     public partial class Registration
     {
+        public Registration()
+        {
+            this.Grades = new HashSet<Grade>();
+        }
+    
         public int registration_id { get; set; }
         public int user_id { get; set; }
         public int course_id { get; set; }
+    
+        public virtual Course Course { get; set; }
+        public virtual ICollection<Grade> Grades { get; set; }
+        public virtual User User { get; set; }
     }
 }

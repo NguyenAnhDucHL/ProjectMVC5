@@ -16,5 +16,9 @@ namespace CourseOnline.Models
     {
         public int post_id { get; set; }
         public int tag_id { get; set; }
+    
+        public virtual Post Post { get; set; }
+        public virtual Tag Tag { get; set; }
+        public virtual Tag Tag1 { get; set; }
     }
 }

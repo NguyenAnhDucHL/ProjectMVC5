@@ -467,3 +467,4 @@ C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\obj\Debug\CourseOnlin
 C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
 C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
 C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
