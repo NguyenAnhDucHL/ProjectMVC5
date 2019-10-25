@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "CourseList";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <a class="link" href="course-details.html">Add new</a>
+                <div class="box-body">
+                    <table id="tb_course" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Course</th>
+                                <th>Teacher</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#tb_course').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllCourse", "Course")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "course_id", "name": "course_id", "orderable": true },
+                { "data": "course_name", "name": "course_name", "orderable": true },
+                { "data": "user_fullname", "name": "user_fullname", "orderable": true },
+                { "data": "course_start_date", "name": "course_start_date", "orderable": true },
+                { "data": "course_end_date", "name": "course_end_date", "orderable": true },
+                {
+                    "data": "course_status", "name": "course_status", "orderable": true, "render": function (data) {
+                        if (data == 1) return "active"
+                        else return "inactive"}
+                },
+                {
+                    "data": "course_status", "render": function (data) {
+                        if (data == 1) {
+                            return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdEmp('" + data + "') ><i class='fa fa-fw fa-edit'></i> Edit</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='link-space-left-20 fa fa-eye-slash'></i> Inactive</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='link-space-left-20 fa fa-copy'></i> Courseworks</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='link-space-left-20 fa fa-file'></i> Grades</a>";
+                        }
+                        else {
+                            return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdEmp('" + data + "') ><i class='fa fa-fw fa-edit'></i> Edit</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='link-space-left-20 fa fa-eye'></i> Active</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='link-space-left-20 fa fa-copy'></i> Courseworks</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='link-space-left-20 fa fa-file'></i> Grades</a>";
+                        }
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+    } );
+    </script>
+}

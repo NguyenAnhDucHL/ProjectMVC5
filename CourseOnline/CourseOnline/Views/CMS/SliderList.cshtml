@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "SliderList";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Sliders List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Sliders List</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <a class="link" href="slider-details.html">Add new</a>
+                <div class="box-body">
+                    <table id="tb_slider" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Picture</th>
+                                <th>Slider</th>
+                                <th>Caption</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#tb_slider').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllSlider", "Slider")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "slider_id", "name": "slider_id", "orderable": true },
+                {
+                    "data": "slider_picture_url", "render": function (data) {
+                        if (data) {
+                            return "<img src='/Assets/customimg/ronaldo.jpg' style='height: 20%;'>";
+                        }
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+                { "data": "slider_title", "name": "slider_title", "orderable": true },
+                { "data": "slider_caption", "name": "slider_caption", "orderable": true },
+                { "data": "slider_status", "name": "slider_status", "orderable": true },
+                {
+                    "data": "slider_id", "render": function (data) {
+                        if (data) {
+                            return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdEmp('" + data + "') ><i class='fa fa-fw fa-edit'></i> Edit</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='link-space-left-20 fa fa-copy'></i> Preview</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='link-space-left-20 fa fa-trash'></i> Delete</a>";
+                        }
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+    } );
+    </script>
+}
+

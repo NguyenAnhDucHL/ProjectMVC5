@@ -18,5 +18,7 @@ namespace MvcPWy.Models
         public string setting_group_value { get; set; }
         public string setting_name { get; set; }
         public string setting_description { get; set; }
+        public int setting_order { get; set; }
+        public bool setting_status { get; set; }
     }
 }

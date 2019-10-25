@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="template">
+<body>
+<div layout:fragment="content" class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Question Details
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="questions-list">Questions</a></li>
+            <li class="active">Question Details</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Subject</label>
+                                    <select class="form-control">
+                                        <option>option 1</option>
+                                        <option>option 2</option>
+                                        <option>option 3</option>
+                                        <option>option 4</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Lesson</label>
+                                    <select class="form-control">
+                                        <option>option 1</option>
+                                        <option>option 2</option>
+                                        <option>option 3</option>
+                                        <option>option 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Domain</label>
+                                    <select class="form-control">
+                                        <option>option 1</option>
+                                        <option>option 2</option>
+                                        <option>option 3</option>
+                                        <option>option 4</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select class="form-control">
+                                        <option>option 1</option>
+                                        <option>option 2</option>
+                                        <option>option 3</option>
+                                        <option>option 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Content*</label>
+                            <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Question Media</label>
+                            <div class="form-horizontal">
+                                <input type="text" class="col-sm-10" placeholder="Enter ...">
+                                <button class="link-space-left-20" type="submit">Change</button>
+                                <button class="link-space-left-20" type="submit">Preview</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Answer Options</label>
+                            <a class="link-space-left-20" href="add-option.html">Add Option</a>
+                            <label class="col-lg-offset-8">Is key?</label>
+                            <label class="link-space-left-20">Actions</label>
+                        </div>
+                        <div class="form-horizontal">
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <div class="form-group">
+                                        <label class="col-lg-2">Option 1</label>
+                                        <input type="text" class="col-lg-10">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <input class="" type="checkbox">
+                                    <a class="col-lg-offset-2" href="#">Ed</a>
+                                    <a class="link-space-left-20" href="#">Ed</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <div class="form-group">
+                                        <label class="col-lg-2">Option 2</label>
+                                        <input type="text" class="col-lg-10">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <input class="" type="checkbox">
+                                    <a class="col-lg-offset-2" href="#">Ed</a>
+                                    <a class="link-space-left-20" href="#">Ed</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <div class="form-group">
+                                        <label class="col-lg-2">Option 3</label>
+                                        <input type="text" class="col-lg-10">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <input class="" type="checkbox">
+                                    <a class="col-lg-offset-2" href="#">Ed</a>
+                                    <a class="link-space-left-20" href="#">Ed</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <div class="form-group">
+                                        <label class="col-lg-2">Option 4</label>
+                                        <input type="text" class="col-lg-10">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <input class="" type="checkbox">
+                                    <a class="col-lg-offset-2" href="#">Ed</a>
+                                    <a class="link-space-left-20" href="#">Ed</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Explanation</label>
+                            <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Reference</label>
+                                    <select class="form-control">
+                                        <option>option 1</option>
+                                        <option>option 2</option>
+                                        <option>option 3</option>
+                                        <option>option 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Page</label>
+                                    <select class="form-control">
+                                        <option>option 1</option>
+                                        <option>option 2</option>
+                                        <option>option 3</option>
+                                        <option>option 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-danger">Submit</button>
+                        <button type="submit" class="btn btn-danger link-space-left-20">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+<div layout:fragment="script">
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#example1").DataTable();
+    });
+</script>

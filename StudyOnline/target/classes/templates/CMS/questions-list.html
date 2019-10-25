@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorate="template">
+<body>
+<div layout:fragment="content" class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Questions List
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Questions List</a></li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="link">
+                        <a href="questions-details">Questions Import</a>
+                    </div>
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="table-width10">ID</th>
+                                <th class="table-width40">Question</th>
+                                <th class="table-width10">Subject/Domain/Lesson</th>
+                                <th class="table-width10">Level</th>
+                                <th class="table-width10">Status</th>
+                                <th class="table-width20">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Đây là nôi dung câu hỏi, nội dung này có thể để trên nhiều dòng khác nhau..</td>
+                                <td><p>Tên subject</p>
+                                    <p>Tên domain</p>
+                                    <p>Tên lesson</p>
+                                </td>
+                                <td>Easy</td>
+                                <td>Pending</td>
+                                <td><a href="#">View</a>
+                                    <a href="#">Edit</a>
+                                    <a href="#">Publish</a>
+                                    <a href="#">Block</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Đây là nôi dung câu hỏi, nội dung này có thể để trên nhiều dòng khác nhau..</td>
+                                <td><p>Tên subject</p>
+                                    <p>Tên domain</p>
+                                    <p>Tên lesson</p>
+                                </td>
+                                <td>Difficult</td>
+                                <td>Published</td>
+                                <td><a href="#">View</a>
+                                    <a href="#">Edit</a>
+                                    <a href="#">Publish</a>
+                                    <a href="#">Block</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Đây là nôi dung câu hỏi, nội dung này có thể để trên nhiều dòng khác nhau..</td>
+                                <td><p>Tên subject</p>
+                                    <p>Tên domain</p>
+                                    <p>Tên lesson</p>
+                                </td>
+                                <td>Medium</td>
+                                <td>Blocked</td>
+                                <td><a href="#">View</a>
+                                    <a href="#">Edit</a>
+                                    <a href="#">Publish</a>
+                                    <a href="#">Block</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+<div layout:fragment="script">
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#example1").DataTable();
+    });
+</script>

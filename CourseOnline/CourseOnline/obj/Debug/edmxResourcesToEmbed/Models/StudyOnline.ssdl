@@ -19,6 +19,8 @@
     <Property Name="course_is_default" Type="bit" Nullable="false" />
     <Property Name="course_start_date" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="course_end_date" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="course_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="course_status" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Coursework">
     <Key>
@@ -101,9 +103,9 @@
       <PropertyRef Name="permission_id" />
     </Key>
     <Property Name="permission_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="permission_name" Type="varchar" MaxLength="255" />
-    <Property Name="permission_link" Type="varchar" MaxLength="255" />
     <Property Name="permission_status" Type="bit" />
+    <Property Name="permission_link" Type="varchar" MaxLength="255" />
+    <Property Name="permission_name" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Post">
     <Key>
@@ -147,6 +149,8 @@ warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary k
     <Property Name="registration_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="user_id" Type="int" Nullable="false" />
     <Property Name="course_id" Type="int" Nullable="false" />
+    <Property Name="registration_time" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="registration_status" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="RoleMenu">
     <Key>
@@ -165,6 +169,13 @@ warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary k
     <Property Name="permission_id" Type="int" Nullable="false" />
     <Property Name="role_name" Type="varchar" MaxLength="255" />
   </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="role_id" />
+    </Key>
+    <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="role_name" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
   <EntityType Name="Setting">
     <Key>
       <PropertyRef Name="setting_id" />
@@ -173,6 +184,8 @@ warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary k
     <Property Name="setting_group_value" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="setting_name" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="setting_description" Type="varchar" MaxLength="2000" Nullable="false" />
+    <Property Name="setting_order" Type="int" Nullable="false" />
+    <Property Name="setting_status" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Slider">
     <Key>
@@ -183,6 +196,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary k
     <Property Name="slider_title" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="slider_caption" Type="varchar" MaxLength="200" Nullable="false" />
     <Property Name="slider_back_link" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="slider_status" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Subject">
     <Key>
@@ -191,7 +205,8 @@ warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary k
     <Property Name="subject_id" Type="int" Nullable="false" />
     <Property Name="subject_category" Type="varchar" MaxLength="50" />
     <Property Name="subject_tag_line" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="subject_brief_info" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="subject_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="subject_brief_info" Type="varchar" MaxLength="2000" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'STUDYONLINE.dbo.SubjectReference' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -259,8 +274,6 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
     <Property Name="exam_id" Type="int" Nullable="false" />
     <Property Name="test_type" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="batch_id" Type="int" Nullable="false" />
-    <Property Name="average" Type="varchar" MaxLength="255" />
-    <Property Name="tested" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -271,6 +284,8 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
     <Property Name="user_fullname" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="user_email" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="use_mobile" Type="varchar" MaxLength="50" />
+    <Property Name="user_gender" Type="bit" Nullable="false" />
+    <Property Name="user_status" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="UserRole">
     <Key>
@@ -280,7 +295,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
     <Property Name="user_id" Type="int" Nullable="false" />
     <Property Name="role_id" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="FK__AnswerOpt__quest__68487DD7">
+  <Association Name="FK__AnswerOpt__quest__7E37BEF6">
     <End Role="Question" Type="Self.Question" Multiplicity="1" />
     <End Role="AnswerOption" Type="Self.AnswerOption" Multiplicity="*" />
     <ReferentialConstraint>
@@ -292,7 +307,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Course__subject___693CA210">
+  <Association Name="FK__Course__subject___04E4BC85">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="Course" Type="Self.Course" Multiplicity="*" />
     <ReferentialConstraint>
@@ -304,7 +319,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Course__teacher___6A30C649">
+  <Association Name="FK__Course__teacher___0A9D95DB">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Course" Type="Self.Course" Multiplicity="*" />
     <ReferentialConstraint>
@@ -316,7 +331,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Coursewor__cours__6B24EA82">
+  <Association Name="FK__Coursewor__cours__0C85DE4D">
     <End Role="Course" Type="Self.Course" Multiplicity="1" />
     <End Role="Coursework" Type="Self.Coursework" Multiplicity="*" />
     <ReferentialConstraint>
@@ -328,7 +343,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Coursewor__cours__6C190EBB">
+  <Association Name="FK__Coursewor__cours__0D7A0286">
     <End Role="ExamTest" Type="Self.ExamTest" Multiplicity="1" />
     <End Role="Coursework" Type="Self.Coursework" Multiplicity="0..1" />
     <ReferentialConstraint>
@@ -340,7 +355,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Coursewor__cours__6D0D32F4">
+  <Association Name="FK__Coursewor__cours__14270015">
     <End Role="Course" Type="Self.Course" Multiplicity="1" />
     <End Role="Coursework" Type="Self.Coursework" Multiplicity="*" />
     <ReferentialConstraint>
@@ -352,7 +367,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Domain__subject___6E01572D">
+  <Association Name="FK__Domain__subject___7B5B524B">
     <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
     <End Role="Domain" Type="Self.Domain" Multiplicity="*" />
     <ReferentialConstraint>
@@ -364,7 +379,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ExamConfi__exam___6EF57B66">
+  <Association Name="FK__ExamConfi__exam___1332DBDC">
     <End Role="Exam" Type="Self.Exam" Multiplicity="1" />
     <End Role="ExamConfig" Type="Self.ExamConfig" Multiplicity="*" />
     <ReferentialConstraint>
@@ -376,7 +391,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Grade__course_id__6FE99F9F">
+  <Association Name="FK__Grade__course_id__05D8E0BE">
     <End Role="Course" Type="Self.Course" Multiplicity="1" />
     <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
     <ReferentialConstraint>
@@ -388,7 +403,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Grade__registrat__70DDC3D8">
+  <Association Name="FK__Grade__registrat__08B54D69">
     <End Role="Registration" Type="Self.Registration" Multiplicity="1" />
     <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
     <ReferentialConstraint>
@@ -400,7 +415,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Lesson__parent_i__71D1E811">
+  <Association Name="FK__Lesson__parent_i__17036CC0">
     <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
     <End Role="Lesson1" Type="Self.Lesson" Multiplicity="*" />
     <ReferentialConstraint>
@@ -412,7 +427,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Lesson__subject___72C60C4A">
+  <Association Name="FK__Lesson__subject___02FC7413">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
     <ReferentialConstraint>
@@ -424,7 +439,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Menu__parent_id__73BA3083">
+  <Association Name="FK__Menu__parent_id__17F790F9">
     <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
     <End Role="Menu1" Type="Self.Menu" Multiplicity="*" />
     <ReferentialConstraint>
@@ -436,7 +451,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PostTag__post_id__74AE54BC">
+  <Association Name="FK__PostTag__post_id__73BA3083">
     <End Role="Post" Type="Self.Post" Multiplicity="1" />
     <End Role="PostTag" Type="Self.PostTag" Multiplicity="*" />
     <ReferentialConstraint>
@@ -448,7 +463,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PostTag__tag_id__75A278F5">
+  <Association Name="FK__PostTag__tag_id__74AE54BC">
     <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
     <End Role="PostTag" Type="Self.PostTag" Multiplicity="*" />
     <ReferentialConstraint>
@@ -460,7 +475,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PostTag__tag_id__76969D2E">
+  <Association Name="FK__PostTag__tag_id__7C4F7684">
     <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
     <End Role="PostTag" Type="Self.PostTag" Multiplicity="*" />
     <ReferentialConstraint>
@@ -472,7 +487,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Question__subjec__778AC167">
+  <Association Name="FK__Question__subjec__7D439ABD">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="Question" Type="Self.Question" Multiplicity="*" />
     <ReferentialConstraint>
@@ -484,7 +499,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Registrat__cours__797309D9">
+  <Association Name="FK__Registrat__cours__06CD04F7">
     <End Role="Course" Type="Self.Course" Multiplicity="1" />
     <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
     <ReferentialConstraint>
@@ -496,7 +511,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Registrat__user___7A672E12">
+  <Association Name="FK__Registrat__user___09A971A2">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
     <ReferentialConstraint>
@@ -508,7 +523,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__RoleMenu__menu_i__7B5B524B">
+  <Association Name="FK__RoleMenu__menu_i__160F4887">
     <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
     <End Role="RoleMenu" Type="Self.RoleMenu" Multiplicity="*" />
     <ReferentialConstraint>
@@ -520,7 +535,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__RolePermi__permi__7C4F7684">
+  <Association Name="FK__RolePermi__permi__151B244E">
     <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
     <End Role="RolePermission" Type="Self.RolePermission" Multiplicity="*" />
     <ReferentialConstraint>
@@ -532,7 +547,19 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SubjectRe__post___7D439ABD">
+  <Association Name="FK__RolePermi__role___1EA48E88">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="RolePermission" Type="Self.RolePermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="role_id" />
+      </Principal>
+      <Dependent Role="RolePermission">
+        <PropertyRef Name="role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SubjectRe__post___75A278F5">
     <End Role="Post" Type="Self.Post" Multiplicity="1" />
     <End Role="SubjectReference" Type="Self.SubjectReference" Multiplicity="*" />
     <ReferentialConstraint>
@@ -544,7 +571,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SubjectRe__subje__7E37BEF6">
+  <Association Name="FK__SubjectRe__subje__7A672E12">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="SubjectReference" Type="Self.SubjectReference" Multiplicity="*" />
     <ReferentialConstraint>
@@ -556,7 +583,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestAnswe__quest__7F2BE32F">
+  <Association Name="FK__TestAnswe__quest__00200768">
     <End Role="Question" Type="Self.Question" Multiplicity="1" />
     <End Role="TestAnswer" Type="Self.TestAnswer" Multiplicity="*" />
     <ReferentialConstraint>
@@ -568,7 +595,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestAnswe__test___00200768">
+  <Association Name="FK__TestAnswe__test___02084FDA">
     <End Role="ExamTest" Type="Self.ExamTest" Multiplicity="1" />
     <End Role="TestAnswer" Type="Self.TestAnswer" Multiplicity="*" />
     <ReferentialConstraint>
@@ -580,7 +607,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestAnswe__test___01142BA1">
+  <Association Name="FK__TestAnswe__test___10566F31">
     <End Role="TestResult" Type="Self.TestResult" Multiplicity="1" />
     <End Role="TestAnswer" Type="Self.TestAnswer" Multiplicity="*" />
     <ReferentialConstraint>
@@ -592,7 +619,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestQuest__quest__02084FDA">
+  <Association Name="FK__TestQuest__quest__7F2BE32F">
     <End Role="Question" Type="Self.Question" Multiplicity="1" />
     <End Role="TestQuestion" Type="Self.TestQuestion" Multiplicity="*" />
     <ReferentialConstraint>
@@ -604,7 +631,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestQuest__test___02FC7413">
+  <Association Name="FK__TestQuest__test___01142BA1">
     <End Role="ExamTest" Type="Self.ExamTest" Multiplicity="1" />
     <End Role="TestQuestion" Type="Self.TestQuestion" Multiplicity="*" />
     <ReferentialConstraint>
@@ -616,7 +643,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestResul__batch__03F0984C">
+  <Association Name="FK__TestResul__batch__123EB7A3">
     <End Role="TestBatch" Type="Self.TestBatch" Multiplicity="1" />
     <End Role="TestResult" Type="Self.TestResult" Multiplicity="*" />
     <ReferentialConstraint>
@@ -628,7 +655,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestResul__exam___04E4BC85">
+  <Association Name="FK__TestResul__exam___114A936A">
     <End Role="Exam" Type="Self.Exam" Multiplicity="1" />
     <End Role="TestResult" Type="Self.TestResult" Multiplicity="*" />
     <ReferentialConstraint>
@@ -640,7 +667,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestResul__test___05D8E0BE">
+  <Association Name="FK__TestResul__test___0F624AF8">
     <End Role="ExamTest" Type="Self.ExamTest" Multiplicity="1" />
     <End Role="TestResult" Type="Self.TestResult" Multiplicity="*" />
     <ReferentialConstraint>
@@ -652,7 +679,19 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__UserRole__user_i__06CD04F7">
+  <Association Name="FK__UserRole__role_i__1CBC4616">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="role_id" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserRole__user_i__0B91BA14">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
     <ReferentialConstraint>
@@ -693,6 +732,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
     <EntitySet Name="Registration" EntityType="Self.Registration" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RoleMenu" EntityType="Self.RoleMenu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RolePermission" EntityType="Self.RolePermission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Setting" EntityType="Self.Setting" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
@@ -722,131 +762,139 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
     [TestQuestion].[test_question_keys] AS [test_question_keys]
     FROM [dbo].[TestQuestion] AS [TestQuestion]</DefiningQuery>
     </EntitySet>
-    <AssociationSet Name="FK__AnswerOpt__quest__68487DD7" Association="Self.FK__AnswerOpt__quest__68487DD7">
+    <AssociationSet Name="FK__AnswerOpt__quest__7E37BEF6" Association="Self.FK__AnswerOpt__quest__7E37BEF6">
       <End Role="Question" EntitySet="Question" />
       <End Role="AnswerOption" EntitySet="AnswerOption" />
     </AssociationSet>
-    <AssociationSet Name="FK__Course__subject___693CA210" Association="Self.FK__Course__subject___693CA210">
+    <AssociationSet Name="FK__Course__subject___04E4BC85" Association="Self.FK__Course__subject___04E4BC85">
       <End Role="Subject" EntitySet="Subject" />
       <End Role="Course" EntitySet="Course" />
     </AssociationSet>
-    <AssociationSet Name="FK__Course__teacher___6A30C649" Association="Self.FK__Course__teacher___6A30C649">
+    <AssociationSet Name="FK__Course__teacher___0A9D95DB" Association="Self.FK__Course__teacher___0A9D95DB">
       <End Role="User" EntitySet="User" />
       <End Role="Course" EntitySet="Course" />
     </AssociationSet>
-    <AssociationSet Name="FK__Coursewor__cours__6B24EA82" Association="Self.FK__Coursewor__cours__6B24EA82">
+    <AssociationSet Name="FK__Coursewor__cours__0C85DE4D" Association="Self.FK__Coursewor__cours__0C85DE4D">
       <End Role="Course" EntitySet="Course" />
       <End Role="Coursework" EntitySet="Coursework" />
     </AssociationSet>
-    <AssociationSet Name="FK__Coursewor__cours__6C190EBB" Association="Self.FK__Coursewor__cours__6C190EBB">
+    <AssociationSet Name="FK__Coursewor__cours__0D7A0286" Association="Self.FK__Coursewor__cours__0D7A0286">
       <End Role="ExamTest" EntitySet="ExamTest" />
       <End Role="Coursework" EntitySet="Coursework" />
     </AssociationSet>
-    <AssociationSet Name="FK__Coursewor__cours__6D0D32F4" Association="Self.FK__Coursewor__cours__6D0D32F4">
+    <AssociationSet Name="FK__Coursewor__cours__14270015" Association="Self.FK__Coursewor__cours__14270015">
       <End Role="Course" EntitySet="Course" />
       <End Role="Coursework" EntitySet="Coursework" />
     </AssociationSet>
-    <AssociationSet Name="FK__Domain__subject___6E01572D" Association="Self.FK__Domain__subject___6E01572D">
+    <AssociationSet Name="FK__Domain__subject___7B5B524B" Association="Self.FK__Domain__subject___7B5B524B">
       <End Role="Subject" EntitySet="Subject" />
       <End Role="Domain" EntitySet="Domain" />
     </AssociationSet>
-    <AssociationSet Name="FK__ExamConfi__exam___6EF57B66" Association="Self.FK__ExamConfi__exam___6EF57B66">
+    <AssociationSet Name="FK__ExamConfi__exam___1332DBDC" Association="Self.FK__ExamConfi__exam___1332DBDC">
       <End Role="Exam" EntitySet="Exam" />
       <End Role="ExamConfig" EntitySet="ExamConfig" />
     </AssociationSet>
-    <AssociationSet Name="FK__Grade__course_id__6FE99F9F" Association="Self.FK__Grade__course_id__6FE99F9F">
+    <AssociationSet Name="FK__Grade__course_id__05D8E0BE" Association="Self.FK__Grade__course_id__05D8E0BE">
       <End Role="Course" EntitySet="Course" />
       <End Role="Grade" EntitySet="Grade" />
     </AssociationSet>
-    <AssociationSet Name="FK__Grade__registrat__70DDC3D8" Association="Self.FK__Grade__registrat__70DDC3D8">
+    <AssociationSet Name="FK__Grade__registrat__08B54D69" Association="Self.FK__Grade__registrat__08B54D69">
       <End Role="Registration" EntitySet="Registration" />
       <End Role="Grade" EntitySet="Grade" />
     </AssociationSet>
-    <AssociationSet Name="FK__Lesson__parent_i__71D1E811" Association="Self.FK__Lesson__parent_i__71D1E811">
+    <AssociationSet Name="FK__Lesson__parent_i__17036CC0" Association="Self.FK__Lesson__parent_i__17036CC0">
       <End Role="Lesson" EntitySet="Lesson" />
       <End Role="Lesson1" EntitySet="Lesson" />
     </AssociationSet>
-    <AssociationSet Name="FK__Lesson__subject___72C60C4A" Association="Self.FK__Lesson__subject___72C60C4A">
+    <AssociationSet Name="FK__Lesson__subject___02FC7413" Association="Self.FK__Lesson__subject___02FC7413">
       <End Role="Subject" EntitySet="Subject" />
       <End Role="Lesson" EntitySet="Lesson" />
     </AssociationSet>
-    <AssociationSet Name="FK__Menu__parent_id__73BA3083" Association="Self.FK__Menu__parent_id__73BA3083">
+    <AssociationSet Name="FK__Menu__parent_id__17F790F9" Association="Self.FK__Menu__parent_id__17F790F9">
       <End Role="Menu" EntitySet="Menu" />
       <End Role="Menu1" EntitySet="Menu" />
     </AssociationSet>
-    <AssociationSet Name="FK__PostTag__post_id__74AE54BC" Association="Self.FK__PostTag__post_id__74AE54BC">
+    <AssociationSet Name="FK__PostTag__post_id__73BA3083" Association="Self.FK__PostTag__post_id__73BA3083">
       <End Role="Post" EntitySet="Post" />
       <End Role="PostTag" EntitySet="PostTag" />
     </AssociationSet>
-    <AssociationSet Name="FK__PostTag__tag_id__75A278F5" Association="Self.FK__PostTag__tag_id__75A278F5">
+    <AssociationSet Name="FK__PostTag__tag_id__74AE54BC" Association="Self.FK__PostTag__tag_id__74AE54BC">
       <End Role="Tag" EntitySet="Tag" />
       <End Role="PostTag" EntitySet="PostTag" />
     </AssociationSet>
-    <AssociationSet Name="FK__PostTag__tag_id__76969D2E" Association="Self.FK__PostTag__tag_id__76969D2E">
+    <AssociationSet Name="FK__PostTag__tag_id__7C4F7684" Association="Self.FK__PostTag__tag_id__7C4F7684">
       <End Role="Tag" EntitySet="Tag" />
       <End Role="PostTag" EntitySet="PostTag" />
     </AssociationSet>
-    <AssociationSet Name="FK__Question__subjec__778AC167" Association="Self.FK__Question__subjec__778AC167">
+    <AssociationSet Name="FK__Question__subjec__7D439ABD" Association="Self.FK__Question__subjec__7D439ABD">
       <End Role="Subject" EntitySet="Subject" />
       <End Role="Question" EntitySet="Question" />
     </AssociationSet>
-    <AssociationSet Name="FK__Registrat__cours__797309D9" Association="Self.FK__Registrat__cours__797309D9">
+    <AssociationSet Name="FK__Registrat__cours__06CD04F7" Association="Self.FK__Registrat__cours__06CD04F7">
       <End Role="Course" EntitySet="Course" />
       <End Role="Registration" EntitySet="Registration" />
     </AssociationSet>
-    <AssociationSet Name="FK__Registrat__user___7A672E12" Association="Self.FK__Registrat__user___7A672E12">
+    <AssociationSet Name="FK__Registrat__user___09A971A2" Association="Self.FK__Registrat__user___09A971A2">
       <End Role="User" EntitySet="User" />
       <End Role="Registration" EntitySet="Registration" />
     </AssociationSet>
-    <AssociationSet Name="FK__RoleMenu__menu_i__7B5B524B" Association="Self.FK__RoleMenu__menu_i__7B5B524B">
+    <AssociationSet Name="FK__RoleMenu__menu_i__160F4887" Association="Self.FK__RoleMenu__menu_i__160F4887">
       <End Role="Menu" EntitySet="Menu" />
       <End Role="RoleMenu" EntitySet="RoleMenu" />
     </AssociationSet>
-    <AssociationSet Name="FK__RolePermi__permi__7C4F7684" Association="Self.FK__RolePermi__permi__7C4F7684">
+    <AssociationSet Name="FK__RolePermi__permi__151B244E" Association="Self.FK__RolePermi__permi__151B244E">
       <End Role="Permission" EntitySet="Permission" />
       <End Role="RolePermission" EntitySet="RolePermission" />
     </AssociationSet>
-    <AssociationSet Name="FK__SubjectRe__post___7D439ABD" Association="Self.FK__SubjectRe__post___7D439ABD">
+    <AssociationSet Name="FK__RolePermi__role___1EA48E88" Association="Self.FK__RolePermi__role___1EA48E88">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="RolePermission" EntitySet="RolePermission" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SubjectRe__post___75A278F5" Association="Self.FK__SubjectRe__post___75A278F5">
       <End Role="Post" EntitySet="Post" />
       <End Role="SubjectReference" EntitySet="SubjectReference" />
     </AssociationSet>
-    <AssociationSet Name="FK__SubjectRe__subje__7E37BEF6" Association="Self.FK__SubjectRe__subje__7E37BEF6">
+    <AssociationSet Name="FK__SubjectRe__subje__7A672E12" Association="Self.FK__SubjectRe__subje__7A672E12">
       <End Role="Subject" EntitySet="Subject" />
       <End Role="SubjectReference" EntitySet="SubjectReference" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestAnswe__quest__7F2BE32F" Association="Self.FK__TestAnswe__quest__7F2BE32F">
+    <AssociationSet Name="FK__TestAnswe__quest__00200768" Association="Self.FK__TestAnswe__quest__00200768">
       <End Role="Question" EntitySet="Question" />
       <End Role="TestAnswer" EntitySet="TestAnswer" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestAnswe__test___00200768" Association="Self.FK__TestAnswe__test___00200768">
+    <AssociationSet Name="FK__TestAnswe__test___02084FDA" Association="Self.FK__TestAnswe__test___02084FDA">
       <End Role="ExamTest" EntitySet="ExamTest" />
       <End Role="TestAnswer" EntitySet="TestAnswer" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestAnswe__test___01142BA1" Association="Self.FK__TestAnswe__test___01142BA1">
+    <AssociationSet Name="FK__TestAnswe__test___10566F31" Association="Self.FK__TestAnswe__test___10566F31">
       <End Role="TestResult" EntitySet="TestResult" />
       <End Role="TestAnswer" EntitySet="TestAnswer" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestQuest__quest__02084FDA" Association="Self.FK__TestQuest__quest__02084FDA">
+    <AssociationSet Name="FK__TestQuest__quest__7F2BE32F" Association="Self.FK__TestQuest__quest__7F2BE32F">
       <End Role="Question" EntitySet="Question" />
       <End Role="TestQuestion" EntitySet="TestQuestion" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestQuest__test___02FC7413" Association="Self.FK__TestQuest__test___02FC7413">
+    <AssociationSet Name="FK__TestQuest__test___01142BA1" Association="Self.FK__TestQuest__test___01142BA1">
       <End Role="ExamTest" EntitySet="ExamTest" />
       <End Role="TestQuestion" EntitySet="TestQuestion" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestResul__batch__03F0984C" Association="Self.FK__TestResul__batch__03F0984C">
+    <AssociationSet Name="FK__TestResul__batch__123EB7A3" Association="Self.FK__TestResul__batch__123EB7A3">
       <End Role="TestBatch" EntitySet="TestBatch" />
       <End Role="TestResult" EntitySet="TestResult" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestResul__exam___04E4BC85" Association="Self.FK__TestResul__exam___04E4BC85">
+    <AssociationSet Name="FK__TestResul__exam___114A936A" Association="Self.FK__TestResul__exam___114A936A">
       <End Role="Exam" EntitySet="Exam" />
       <End Role="TestResult" EntitySet="TestResult" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestResul__test___05D8E0BE" Association="Self.FK__TestResul__test___05D8E0BE">
+    <AssociationSet Name="FK__TestResul__test___0F624AF8" Association="Self.FK__TestResul__test___0F624AF8">
       <End Role="ExamTest" EntitySet="ExamTest" />
       <End Role="TestResult" EntitySet="TestResult" />
     </AssociationSet>
-    <AssociationSet Name="FK__UserRole__user_i__06CD04F7" Association="Self.FK__UserRole__user_i__06CD04F7">
+    <AssociationSet Name="FK__UserRole__role_i__1CBC4616" Association="Self.FK__UserRole__role_i__1CBC4616">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRole__user_i__0B91BA14" Association="Self.FK__UserRole__user_i__0B91BA14">
       <End Role="User" EntitySet="User" />
       <End Role="UserRole" EntitySet="UserRole" />
     </AssociationSet>

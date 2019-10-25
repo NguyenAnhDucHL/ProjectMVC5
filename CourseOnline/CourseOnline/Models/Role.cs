@@ -14,7 +14,16 @@ namespace CourseOnline.Models
     
     public partial class Role
     {
-        public int Role_ID { get; set; }
-        public string Role_Name { get; set; }
+        public Role()
+        {
+            this.RolePermissions = new HashSet<RolePermission>();
+            this.UserRoles = new HashSet<UserRole>();
+        }
+    
+        public int role_id { get; set; }
+        public string role_name { get; set; }
+    
+        public virtual ICollection<RolePermission> RolePermissions { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }
