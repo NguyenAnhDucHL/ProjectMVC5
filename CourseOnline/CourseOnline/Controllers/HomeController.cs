@@ -8,11 +8,31 @@ namespace CourseOnline.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Home
-        
-        public ActionResult Index()
+        public ActionResult HomePage()
         {
             return View("/Views/CMS/Home.cshtml");
         }
+        public ActionResult Index()
+        {
+            //ViewBag.Link = TempData["ViewBagLink"];
+            return View("/Views/Account/Login.cshtml");
+        }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
     }
+        // GET: Home
+    
 }

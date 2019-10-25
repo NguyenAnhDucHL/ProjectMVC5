@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Linq.Dynamic;
 using System.Drawing;
 using System.Data;
+using MvcPWy.Models;
+using System.Linq.Dynamic;
 
 namespace CourseOnline.Controllers
 {
@@ -93,8 +94,8 @@ namespace CourseOnline.Controllers
 
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                    db.Entry(post).State = EntityState.Modified;
-                    db.SaveChanges();
+                    //db.Entry(post).State = EntityState.Modified;
+                    //db.SaveChanges();
                 
                 return View();
             }
