@@ -1,0 +1,79 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Exam Tests List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="exams-list">Exams List</a></li>
+        <li class="active">Tests List</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <a class="link" href="test-adding">Add new</a>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Exam</th>
+                                <th>Test(s)</th>
+                                <th>Note</th>
+                                <th>Tested</th>
+                                <th>Average</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#tb_user').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllTestExam", "TestExam")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "test_id", "name": "test_id", "orderable": true },
+                { "data": "exam_name", "name": "exam_name", "orderable": true },
+                { "data": "test_name", "name": "test_name", "orderable": true },
+                { "data": "test_code", "name": "test_code", "orderable": true },
+                { "data": "tested", "name": "tested", "orderable": true },
+                { "data": "average", "name": "average", "orderable": true },
+                {
+                    "data": "user_id", "render": function (data) {
+                        return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px'><i class='fa fa-fw fa-edit'></i>Edit</a>" +
+                            "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px'><i class='fa fa-trash'></i>Results</a>";
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+    } );
+    </script>
+}
