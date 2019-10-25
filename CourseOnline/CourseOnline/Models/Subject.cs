@@ -28,7 +28,6 @@ namespace MvcPWy.Models
         public int subject_id { get; set; }
         public string subject_category { get; set; }
         public string subject_tag_line { get; set; }
-        public string subject_name { get; set; }
         public string subject_brief_info { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -27,8 +27,6 @@ namespace MvcPWy.Models
         public string user_fullname { get; set; }
         public string user_email { get; set; }
         public string use_mobile { get; set; }
-        public bool user_gender { get; set; }
-        public bool user_status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Course> Courses { get; set; }

@@ -26,6 +26,8 @@ namespace MvcPWy.Models
         public int exam_id { get; set; }
         public string test_type { get; set; }
         public int batch_id { get; set; }
+        public string average { get; set; }
+        public string tested { get; set; }
     
         public virtual Exam Exam { get; set; }
         public virtual ExamTest ExamTest { get; set; }

@@ -19,6 +19,5 @@ namespace MvcPWy.Models
         public string slider_title { get; set; }
         public string slider_caption { get; set; }
         public string slider_back_link { get; set; }
-        public string slider_status { get; set; }
     }
 }

@@ -21,6 +21,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Mobile</th>
+                        <th>Gender</th>
                         <th>Roles</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -30,20 +31,6 @@
             <br />
         </div>
 
-    </div>
-</div>
-<div id="edit_employee" class="modal open">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 class="modal-title">Xác nhận xóa chứng chỉ</h3>
-        </div>
-        <div class="modal-body">
-            <p class="red-text">Bạn có muốn xóa chứng chỉ này?</p>
-        </div>
-        <div class="modal-footer">
-            <a class="btn blue darken-2 modal-close">Xóa</a>
-            <a class="btn red modal-close">Hủy</a>
-        </div>
     </div>
 </div>
 <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -60,18 +47,19 @@
             },
             "columns": [
                 { "data": "user_id", "name": "user_id", "orderable": true },
-                { "data": "user_fullname", "name": "user_fullname", "orderable": true },
+                { "data": "user_name", "name": "user_name", "orderable": true },
                 { "data": "user_email", "name": "user_email", "orderable": true },
-                { "data": "use_mobile", "name": "use_mobile", "orderable": true },
-                { "data": "role_name", "name": "role_name", "orderable": true },
+                { "data": "user_mobile", "name": "user_mobile", "orderable": true },
+                { "data": "user_gender", "name": "user_gender", "orderable": true },
+                { "data": "roll_name", "name": "roll_name", "orderable": true },
                 {
                     "data": "user_status", "name": "user_status", "orderable": true, "render": function (data) {
                         if (data == 1) return "active"
-                        else return "Inactive"}
+                        else return "unactive"}
                 }, 
                 {
                     "data": "user_id", "render": function (data) {
-                        return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' ><i class='fa fa-fw fa-edit'></i>Sửa</a>" +
+                        return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdEmp('" + data + "') ><i class='fa fa-fw fa-edit'></i>Sửa</a>" +
                             "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='fa fa-trash'></i> Xóa</a>";
                     },
                     "orderable": false,

@@ -20,6 +20,5 @@ namespace MvcPWy.Models
         public string role_name { get; set; }
     
         public virtual Permission Permission { get; set; }
-        public virtual Role Role { get; set; }
     }
 }

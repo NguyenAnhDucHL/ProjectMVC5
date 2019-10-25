@@ -9,13 +9,13 @@ using System.Linq.Dynamic;
 
 namespace CourseOnline.Controllers
 {
-    public class PermissionController : Controller
+    public class PermissionsController : Controller
     {
         // GET: Permissions
         [Route("CMS/PermissionList")]
         public ActionResult Index()
         {
-            return View("/Views/CMS/PermissionList.cshtml");
+            return View("/Views/CMS/PermissionsList.cshtml");
         }
 
 
@@ -49,7 +49,7 @@ namespace CourseOnline.Controllers
         [Route("CMS/RolesPermission")]
         public ActionResult RolesPermission()
         {
-            return View("/Views/CMS/RolePermission.cshtml");
+            return View("/Views/CMS/RolesPermission.cshtml");
         }
 
         [HttpPost]
