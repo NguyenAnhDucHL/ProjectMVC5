@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CourseOnline.Models;
+using MvcPWy.Models;
+using System.Data.Entity;
+using System.Data.SqlClient;
 
 namespace CourseOnline.Controllers
 {
@@ -357,9 +360,43 @@ namespace CourseOnline.Controllers
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-            //if (loginInfo == null)
-            //{
-                return View("/Views/CMS/Home.cshtml");
+
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        int duplicate = (from Users in db.Users where Users.user_email == loginInfo.Email select Users).Count();
+                        if(duplicate == 0)
+                        {
+                            String sql = "insert into [User](user_group,user_fullname,user_email,use_mobile) values (@user_group,@user_fullname,@user_email,@use_mobile)";
+                            db.Database.ExecuteSqlCommand(sql,
+                                new SqlParameter("user_group", "Demo"),
+                                new SqlParameter("user_fullname", loginInfo.DefaultUserName),
+                                new SqlParameter("user_email", loginInfo.Email),
+                                new SqlParameter("use_mobile", "demo")
+                                );
+                            db.SaveChanges();
+                            transaction.Commit();
+                        }
+        
+                    }
+                    catch (Exception)
+                    {
+
+                        transaction.Rollback();
+                    }
+                }
+            }
+
+ 
+
+                // fields to be insert
+                // executes the commands to implement the changes to the database
+                //if (loginInfo == null)
+                //{
+            return View("/Views/CMS/Home.cshtml");
             //}
 
             // Sign in the user with this external login provider if the user already has a login

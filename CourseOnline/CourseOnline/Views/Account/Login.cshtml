@@ -1,15 +1,8 @@
 ﻿@using CourseOnline.Models
 @model LoginViewModel
 @{
-   ViewBag.Title = "Log in";
+    ViewBag.Title = "Log in";
 }
-
-   <div class="col-md-4">
-      <section id="socialLoginForm">
-         @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-      </section>
-   </div>
-
-@section Scripts {
-   @Scripts.Render("~/bundles/jqueryval")
-}
+    <section id="socialLoginForm">
+        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+    </section>

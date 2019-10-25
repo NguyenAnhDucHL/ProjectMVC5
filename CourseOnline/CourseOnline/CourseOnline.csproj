@@ -384,6 +384,15 @@
     <Content Include="Assets\dist\js\pages\dashboard.js" />
     <Content Include="Assets\dist\js\pages\dashboard2.js" />
     <Content Include="Assets\IMGCMS\duan1.jpg" />
+    <Content Include="Assets\materialize\css\materialize.css" />
+    <Content Include="Assets\materialize\css\materialize.min.css" />
+    <Content Include="Assets\materialize\images\book.jpg" />
+    <Content Include="Assets\materialize\images\hoctap.jpg" />
+    <Content Include="Assets\materialize\images\ronaldo.jpg" />
+    <Content Include="Assets\materialize\images\study.jpg" />
+    <Content Include="Assets\materialize\images\toan.jpg" />
+    <Content Include="Assets\materialize\js\materialize.js" />
+    <Content Include="Assets\materialize\js\materialize.min.js" />
     <Content Include="Assets\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Assets\plugins\bootstrap-slider\slider.css" />
     <Content Include="Assets\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
@@ -1399,7 +1408,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
@@ -1408,7 +1416,6 @@
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\CMS\Home.cshtml" />
     <Content Include="Views\CMS\MenuDetail.cshtml" />
@@ -1434,9 +1441,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Assets\materialize\css\" />
-    <Folder Include="Assets\materialize\images\" />
-    <Folder Include="Assets\materialize\js\" />
     <Folder Include="Views\Forum\" />
     <Folder Include="Views\Permissions\" />
     <Folder Include="Views\SliderList\" />
