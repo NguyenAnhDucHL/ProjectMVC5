@@ -92,7 +92,6 @@ E:\DemoCrud\CourseOnline\CourseOnline\obj\Debug\MvcPWy.pdb
 E:\Sourcecode\CourseOnline\CourseOnline\bin\MvcPWy.dll.config
 E:\Sourcecode\CourseOnline\CourseOnline\bin\MvcPWy.dll
 E:\Sourcecode\CourseOnline\CourseOnline\bin\MvcPWy.pdb
-E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\MvcPWy.dll
