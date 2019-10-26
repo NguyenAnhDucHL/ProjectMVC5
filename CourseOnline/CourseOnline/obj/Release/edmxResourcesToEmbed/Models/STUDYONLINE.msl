@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="STUDYONLINEModelStoreContainer" CdmEntityContainer="STUDYONLINEEntities">
+    <EntitySetMapping Name="AnswerOptions">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.AnswerOption">
+        <MappingFragment StoreEntitySet="AnswerOption">
+          <ScalarProperty Name="answer_option_id" ColumnName="answer_option_id" />
+          <ScalarProperty Name="question_id" ColumnName="question_id" />
+          <ScalarProperty Name="answer_text" ColumnName="answer_text" />
+          <ScalarProperty Name="answer_corect" ColumnName="answer_corect" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Course">
+        <MappingFragment StoreEntitySet="Course">
+          <ScalarProperty Name="course_id" ColumnName="course_id" />
+          <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+          <ScalarProperty Name="teacher_id" ColumnName="teacher_id" />
+          <ScalarProperty Name="course_is_default" ColumnName="course_is_default" />
+          <ScalarProperty Name="course_start_date" ColumnName="course_start_date" />
+          <ScalarProperty Name="course_end_date" ColumnName="course_end_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Courseworks">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Coursework">
+        <MappingFragment StoreEntitySet="Coursework">
+          <ScalarProperty Name="coursework_id" ColumnName="coursework_id" />
+          <ScalarProperty Name="assignment_id" ColumnName="assignment_id" />
+          <ScalarProperty Name="course_id" ColumnName="course_id" />
+          <ScalarProperty Name="test_id" ColumnName="test_id" />
+          <ScalarProperty Name="due_date" ColumnName="due_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Domains">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Domain">
+        <MappingFragment StoreEntitySet="Domain">
+          <ScalarProperty Name="domain_id" ColumnName="domain_id" />
+          <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Exams">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Exam">
+        <MappingFragment StoreEntitySet="Exam">
+          <ScalarProperty Name="exam_id" ColumnName="exam_id" />
+          <ScalarProperty Name="exam_level" ColumnName="exam_level" />
+          <ScalarProperty Name="exam_name" ColumnName="exam_name" />
+          <ScalarProperty Name="exam_is_practice" ColumnName="exam_is_practice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExamConfigs">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.ExamConfig">
+        <MappingFragment StoreEntitySet="ExamConfig">
+          <ScalarProperty Name="exam_config_id" ColumnName="exam_config_id" />
+          <ScalarProperty Name="exam_id" ColumnName="exam_id" />
+          <ScalarProperty Name="domain_id" ColumnName="domain_id" />
+          <ScalarProperty Name="domain_size" ColumnName="domain_size" />
+          <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
+          <ScalarProperty Name="lesson_size" ColumnName="lesson_size" />
+          <ScalarProperty Name="keywords" ColumnName="keywords" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExamTests">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.ExamTest">
+        <MappingFragment StoreEntitySet="ExamTest">
+          <ScalarProperty Name="test_id" ColumnName="test_id" />
+          <ScalarProperty Name="exam_id" ColumnName="exam_id" />
+          <ScalarProperty Name="course_id" ColumnName="course_id" />
+          <ScalarProperty Name="test_name" ColumnName="test_name" />
+          <ScalarProperty Name="test_code" ColumnName="test_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Grades">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Grade">
+        <MappingFragment StoreEntitySet="Grade">
+          <ScalarProperty Name="grade_id" ColumnName="grade_id" />
+          <ScalarProperty Name="registration_id" ColumnName="registration_id" />
+          <ScalarProperty Name="course_id" ColumnName="course_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="coursework_id" ColumnName="coursework_id" />
+          <ScalarProperty Name="grade1" ColumnName="grade" />
+          <ScalarProperty Name="grade_comment" ColumnName="grade_comment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lessons">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Lesson">
+        <MappingFragment StoreEntitySet="Lesson">
+          <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
+          <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+          <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+          <ScalarProperty Name="lesson_type" ColumnName="lesson_type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Menus">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Menu">
+        <MappingFragment StoreEntitySet="Menu">
+          <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+          <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Permissions">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Permission">
+        <MappingFragment StoreEntitySet="Permission">
+          <ScalarProperty Name="permission_id" ColumnName="permission_id" />
+          <ScalarProperty Name="permission_name" ColumnName="permission_name" />
+          <ScalarProperty Name="permission_link" ColumnName="permission_link" />
+          <ScalarProperty Name="permission_status" ColumnName="permission_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Post">
+        <MappingFragment StoreEntitySet="Post">
+          <ScalarProperty Name="post_id" ColumnName="post_id" />
+          <ScalarProperty Name="post_type" ColumnName="post_type" />
+          <ScalarProperty Name="post_category" ColumnName="post_category" />
+          <ScalarProperty Name="post_thumbnail" ColumnName="post_thumbnail" />
+          <ScalarProperty Name="post_brief_info" ColumnName="post_brief_info" />
+          <ScalarProperty Name="post_detail_info" ColumnName="post_detail_info" />
+          <ScalarProperty Name="post_document_link" ColumnName="post_document_link" />
+          <ScalarProperty Name="post_embeb" ColumnName="post_embeb" />
+          <ScalarProperty Name="post_name" ColumnName="post_name" />
+          <ScalarProperty Name="post_status" ColumnName="post_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Questions">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Question">
+        <MappingFragment StoreEntitySet="Question">
+          <ScalarProperty Name="question_id" ColumnName="question_id" />
+          <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+          <ScalarProperty Name="domain_id" ColumnName="domain_id" />
+          <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
+          <ScalarProperty Name="level" ColumnName="level" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Registrations">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Registration">
+        <MappingFragment StoreEntitySet="Registration">
+          <ScalarProperty Name="registration_id" ColumnName="registration_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="course_id" ColumnName="course_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoleMenus">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.RoleMenu">
+        <MappingFragment StoreEntitySet="RoleMenu">
+          <ScalarProperty Name="role_menu_id" ColumnName="role_menu_id" />
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+          <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RolePermissions">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.RolePermission">
+        <MappingFragment StoreEntitySet="RolePermission">
+          <ScalarProperty Name="role_permission_id" ColumnName="role_permission_id" />
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+          <ScalarProperty Name="permission_id" ColumnName="permission_id" />
+          <ScalarProperty Name="role_name" ColumnName="role_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Settings">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Setting">
+        <MappingFragment StoreEntitySet="Setting">
+          <ScalarProperty Name="setting_id" ColumnName="setting_id" />
+          <ScalarProperty Name="setting_group_value" ColumnName="setting_group_value" />
+          <ScalarProperty Name="setting_name" ColumnName="setting_name" />
+          <ScalarProperty Name="setting_description" ColumnName="setting_description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sliders">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Slider">
+        <MappingFragment StoreEntitySet="Slider">
+          <ScalarProperty Name="slider_id" ColumnName="slider_id" />
+          <ScalarProperty Name="slider_picture_url" ColumnName="slider_picture_url" />
+          <ScalarProperty Name="slider_title" ColumnName="slider_title" />
+          <ScalarProperty Name="slider_caption" ColumnName="slider_caption" />
+          <ScalarProperty Name="slider_back_link" ColumnName="slider_back_link" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Subjects">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Subject">
+        <MappingFragment StoreEntitySet="Subject">
+          <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+          <ScalarProperty Name="subject_category" ColumnName="subject_category" />
+          <ScalarProperty Name="subject_tag_line" ColumnName="subject_tag_line" />
+          <ScalarProperty Name="subject_brief_info" ColumnName="subject_brief_info" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tags">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Tag">
+        <MappingFragment StoreEntitySet="Tag">
+          <ScalarProperty Name="tag_id" ColumnName="tag_id" />
+          <ScalarProperty Name="tag_name" ColumnName="tag_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestAnswers">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.TestAnswer">
+        <MappingFragment StoreEntitySet="TestAnswer">
+          <ScalarProperty Name="test_answer_id" ColumnName="test_answer_id" />
+          <ScalarProperty Name="test_user_id" ColumnName="test_user_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="question_id" ColumnName="question_id" />
+          <ScalarProperty Name="user_answer" ColumnName="user_answer" />
+          <ScalarProperty Name="test_id" ColumnName="test_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestBatches">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.TestBatch">
+        <MappingFragment StoreEntitySet="TestBatch">
+          <ScalarProperty Name="batch_id" ColumnName="batch_id" />
+          <ScalarProperty Name="batch_name" ColumnName="batch_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestResults">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.TestResult">
+        <MappingFragment StoreEntitySet="TestResult">
+          <ScalarProperty Name="test_user_id" ColumnName="test_user_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="test_id" ColumnName="test_id" />
+          <ScalarProperty Name="exam_id" ColumnName="exam_id" />
+          <ScalarProperty Name="test_type" ColumnName="test_type" />
+          <ScalarProperty Name="batch_id" ColumnName="batch_id" />
+          <ScalarProperty Name="average" ColumnName="average" />
+          <ScalarProperty Name="tested" ColumnName="tested" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_group" ColumnName="user_group" />
+          <ScalarProperty Name="user_fullname" ColumnName="user_fullname" />
+          <ScalarProperty Name="user_email" ColumnName="user_email" />
+          <ScalarProperty Name="use_mobile" ColumnName="use_mobile" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoles">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.UserRole">
+        <MappingFragment StoreEntitySet="UserRole">
+          <ScalarProperty Name="user_role_id" ColumnName="user_role_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostTags">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.PostTag">
+        <MappingFragment StoreEntitySet="PostTag">
+          <ScalarProperty Name="post_id" ColumnName="post_id" />
+          <ScalarProperty Name="tag_id" ColumnName="tag_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestQuestions">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.TestQuestion">
+        <MappingFragment StoreEntitySet="TestQuestion">
+          <ScalarProperty Name="test_id" ColumnName="test_id" />
+          <ScalarProperty Name="question_id" ColumnName="question_id" />
+          <ScalarProperty Name="test_question_keys" ColumnName="test_question_keys" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="SubjectReference" TypeName="STUDYONLINEModel.SubjectReference" StoreEntitySet="SubjectReference">
+      <EndProperty Name="Post">
+        <ScalarProperty Name="post_id" ColumnName="post_id" />
+      </EndProperty>
+      <EndProperty Name="Subject">
+        <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,8 @@
+E:\Sourcecode\CourseOnline\CourseOnline\bin\MvcPWy.dll.config
+E:\Sourcecode\CourseOnline\CourseOnline\bin\MvcPWy.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\MvcPWy.pdb
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Release\CourseOnline.csprojAssemblyReference.cache
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Release\CourseOnline.csproj.CoreCompileInputs.cache
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Release\CourseOnline.csproj.CopyComplete
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Release\MvcPWy.dll
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Release\MvcPWy.pdb

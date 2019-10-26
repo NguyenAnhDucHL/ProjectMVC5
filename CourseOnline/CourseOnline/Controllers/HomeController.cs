@@ -10,6 +10,7 @@ namespace CourseOnline.Controllers
     {
         public ActionResult HomePage()
         {
+            ViewBag.UserName = Session["Name"];
             return View("/Views/CMS/Home.cshtml");
         }
         public ActionResult Index()

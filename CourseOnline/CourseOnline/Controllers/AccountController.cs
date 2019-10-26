@@ -360,6 +360,8 @@ namespace CourseOnline.Controllers
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            Session["Name"] = loginInfo.DefaultUserName;
+            Session["Email"] = loginInfo.Email;
 
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
@@ -372,10 +374,10 @@ namespace CourseOnline.Controllers
                         {
                             String sql = "insert into [User](user_group,user_fullname,user_email,use_mobile) values (@user_group,@user_fullname,@user_email,@use_mobile)";
                             db.Database.ExecuteSqlCommand(sql,
-                                new SqlParameter("user_group", "Demo"),
+                                new SqlParameter("user_group", ""),
                                 new SqlParameter("user_fullname", loginInfo.DefaultUserName),
                                 new SqlParameter("user_email", loginInfo.Email),
-                                new SqlParameter("use_mobile", "demo")
+                                new SqlParameter("use_mobile", "")
                                 );
                             db.SaveChanges();
                             transaction.Commit();
@@ -396,7 +398,7 @@ namespace CourseOnline.Controllers
                 // executes the commands to implement the changes to the database
                 //if (loginInfo == null)
                 //{
-            return View("/Views/CMS/Home.cshtml");
+            return RedirectToAction("HomePage", "Home");
             //}
 
             // Sign in the user with this external login provider if the user already has a login
@@ -458,7 +460,7 @@ namespace CourseOnline.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
