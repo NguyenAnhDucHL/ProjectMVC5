@@ -32,7 +32,7 @@ namespace CourseOnline
          var myMessage = new SendGridMessage();
          myMessage.AddTo(message.Destination);
          myMessage.From = new System.Net.Mail.MailAddress(
-                             "ducnase04962.fpt.edu.vn", "DucNguyen");
+                             "ducnase04962@fpt.edu.vn", "DucNguyen");
          myMessage.Subject = message.Subject;
          myMessage.Text = message.Body;
          myMessage.Html = message.Body;
@@ -102,16 +102,6 @@ namespace CourseOnline
             AllowOnlyAlphanumericUserNames = false,
             RequireUniqueEmail = true
          };
-
-         // Configure validation logic for passwords
-         //manager.PasswordValidator = new PasswordValidator
-         //{
-         //    RequiredLength = 6,
-         //    RequireNonLetterOrDigit = true,
-         //    RequireDigit = true,
-         //    RequireLowercase = true,
-         //    RequireUppercase = true,
-         //};
 
          // Configure user lockout defaults
          manager.UserLockoutEnabledByDefault = true;
