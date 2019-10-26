@@ -96,3 +96,4 @@ E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompil
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\MvcPWy.dll
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\MvcPWy.pdb
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
