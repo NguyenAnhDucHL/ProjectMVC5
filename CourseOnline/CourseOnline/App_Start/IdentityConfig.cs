@@ -32,7 +32,7 @@ namespace CourseOnline
          var myMessage = new SendGridMessage();
          myMessage.AddTo(message.Destination);
          myMessage.From = new System.Net.Mail.MailAddress(
-                             "Joe@contoso.com", "Joe S.");
+                             "ducnase04962.fpt.edu.vn", "DucNguyen");
          myMessage.Subject = message.Subject;
          myMessage.Text = message.Body;
          myMessage.Html = message.Body;
