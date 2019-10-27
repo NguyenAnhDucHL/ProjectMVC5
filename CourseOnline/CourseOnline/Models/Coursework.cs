@@ -19,6 +19,8 @@ namespace MvcPWy.Models
         public int course_id { get; set; }
         public int test_id { get; set; }
         public string due_date { get; set; }
+        public string coursework_type { get; set; }
+        public bool coursework_status { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual Course Course1 { get; set; }

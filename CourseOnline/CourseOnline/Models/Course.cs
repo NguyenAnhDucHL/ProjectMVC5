@@ -29,6 +29,8 @@ namespace MvcPWy.Models
         public bool course_is_default { get; set; }
         public string course_start_date { get; set; }
         public string course_end_date { get; set; }
+        public string course_name { get; set; }
+        public bool course_status { get; set; }
     
         public virtual Subject Subject { get; set; }
         public virtual User User { get; set; }

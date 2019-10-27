@@ -25,7 +25,10 @@ namespace MvcPWy.Models
         public string exam_level { get; set; }
         public string exam_name { get; set; }
         public bool exam_is_practice { get; set; }
+        public Nullable<int> subject_id { get; set; }
+        public int exam_duration { get; set; }
     
+        public virtual Subject Subject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExamConfig> ExamConfigs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

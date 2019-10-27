@@ -12,28 +12,21 @@ namespace MvcPWy.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TestResult
+    public partial class Role
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TestResult()
+        public Role()
         {
-            this.TestAnswers = new HashSet<TestAnswer>();
+            this.RolePermissions = new HashSet<RolePermission>();
+            this.UserRoles = new HashSet<UserRole>();
         }
     
-        public int test_user_id { get; set; }
-        public int user_id { get; set; }
-        public int test_id { get; set; }
-        public int exam_id { get; set; }
-        public string test_type { get; set; }
-        public int batch_id { get; set; }
-        public Nullable<int> tested { get; set; }
-        public string average { get; set; }
-        public string pass_rate { get; set; }
+        public int role_id { get; set; }
+        public string role_name { get; set; }
     
-        public virtual Exam Exam { get; set; }
-        public virtual ExamTest ExamTest { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TestAnswer> TestAnswers { get; set; }
-        public virtual TestBatch TestBatch { get; set; }
+        public virtual ICollection<RolePermission> RolePermissions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

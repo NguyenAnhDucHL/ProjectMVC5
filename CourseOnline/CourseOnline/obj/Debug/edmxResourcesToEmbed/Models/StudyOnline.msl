@@ -20,6 +20,8 @@
           <ScalarProperty Name="course_is_default" ColumnName="course_is_default" />
           <ScalarProperty Name="course_start_date" ColumnName="course_start_date" />
           <ScalarProperty Name="course_end_date" ColumnName="course_end_date" />
+          <ScalarProperty Name="course_name" ColumnName="course_name" />
+          <ScalarProperty Name="course_status" ColumnName="course_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -31,6 +33,8 @@
           <ScalarProperty Name="course_id" ColumnName="course_id" />
           <ScalarProperty Name="test_id" ColumnName="test_id" />
           <ScalarProperty Name="due_date" ColumnName="due_date" />
+          <ScalarProperty Name="coursework_type" ColumnName="coursework_type" />
+          <ScalarProperty Name="coursework_status" ColumnName="coursework_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -49,6 +53,8 @@
           <ScalarProperty Name="exam_level" ColumnName="exam_level" />
           <ScalarProperty Name="exam_name" ColumnName="exam_name" />
           <ScalarProperty Name="exam_is_practice" ColumnName="exam_is_practice" />
+          <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+          <ScalarProperty Name="exam_duration" ColumnName="exam_duration" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -73,6 +79,7 @@
           <ScalarProperty Name="course_id" ColumnName="course_id" />
           <ScalarProperty Name="test_name" ColumnName="test_name" />
           <ScalarProperty Name="test_code" ColumnName="test_code" />
+          <ScalarProperty Name="exam_note" ColumnName="exam_note" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -95,7 +102,10 @@
           <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
           <ScalarProperty Name="subject_id" ColumnName="subject_id" />
           <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+          <ScalarProperty Name="lesson_name" ColumnName="lesson_name" />
+          <ScalarProperty Name="lesson_order" ColumnName="lesson_order" />
           <ScalarProperty Name="lesson_type" ColumnName="lesson_type" />
+          <ScalarProperty Name="lesson_status" ColumnName="lesson_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -104,6 +114,10 @@
         <MappingFragment StoreEntitySet="Menu">
           <ScalarProperty Name="menu_id" ColumnName="menu_id" />
           <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+          <ScalarProperty Name="menu_name" ColumnName="menu_name" />
+          <ScalarProperty Name="menu_link" ColumnName="menu_link" />
+          <ScalarProperty Name="menu_order" ColumnName="menu_order" />
+          <ScalarProperty Name="menu_status" ColumnName="menu_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -150,6 +164,8 @@
           <ScalarProperty Name="registration_id" ColumnName="registration_id" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="course_id" ColumnName="course_id" />
+          <ScalarProperty Name="registration_time" ColumnName="registration_time" />
+          <ScalarProperty Name="registration_status" ColumnName="registration_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -172,6 +188,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="STUDYONLINEModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+          <ScalarProperty Name="role_name" ColumnName="role_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Settings">
       <EntityTypeMapping TypeName="STUDYONLINEModel.Setting">
         <MappingFragment StoreEntitySet="Setting">
@@ -179,6 +203,8 @@
           <ScalarProperty Name="setting_group_value" ColumnName="setting_group_value" />
           <ScalarProperty Name="setting_name" ColumnName="setting_name" />
           <ScalarProperty Name="setting_description" ColumnName="setting_description" />
+          <ScalarProperty Name="setting_order" ColumnName="setting_order" />
+          <ScalarProperty Name="setting_status" ColumnName="setting_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -190,6 +216,7 @@
           <ScalarProperty Name="slider_title" ColumnName="slider_title" />
           <ScalarProperty Name="slider_caption" ColumnName="slider_caption" />
           <ScalarProperty Name="slider_back_link" ColumnName="slider_back_link" />
+          <ScalarProperty Name="slider_status" ColumnName="slider_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -199,7 +226,10 @@
           <ScalarProperty Name="subject_id" ColumnName="subject_id" />
           <ScalarProperty Name="subject_category" ColumnName="subject_category" />
           <ScalarProperty Name="subject_tag_line" ColumnName="subject_tag_line" />
+          <ScalarProperty Name="subject_name" ColumnName="subject_name" />
           <ScalarProperty Name="subject_brief_info" ColumnName="subject_brief_info" />
+          <ScalarProperty Name="subject_type" ColumnName="subject_type" />
+          <ScalarProperty Name="subject_status" ColumnName="subject_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -251,8 +281,9 @@
           <ScalarProperty Name="exam_id" ColumnName="exam_id" />
           <ScalarProperty Name="test_type" ColumnName="test_type" />
           <ScalarProperty Name="batch_id" ColumnName="batch_id" />
-          <ScalarProperty Name="average" ColumnName="average" />
           <ScalarProperty Name="tested" ColumnName="tested" />
+          <ScalarProperty Name="average" ColumnName="average" />
+          <ScalarProperty Name="pass_rate" ColumnName="pass_rate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -264,6 +295,8 @@
           <ScalarProperty Name="user_fullname" ColumnName="user_fullname" />
           <ScalarProperty Name="user_email" ColumnName="user_email" />
           <ScalarProperty Name="use_mobile" ColumnName="use_mobile" />
+          <ScalarProperty Name="user_gender" ColumnName="user_gender" />
+          <ScalarProperty Name="user_status" ColumnName="user_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -12,6 +12,7 @@ using CourseOnline.Models;
 using MvcPWy.Models;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace CourseOnline.Controllers
 {
@@ -99,12 +100,14 @@ namespace CourseOnline.Controllers
                         int duplicate = (from Users in db.Users where Users.user_email == loginInfo.Email select Users).Count();
                         if(duplicate == 0)
                         {
-                            String sql = "insert into [User](user_group,user_fullname,user_email,use_mobile) values (@user_group,@user_fullname,@user_email,@use_mobile)";
+                            String sql = "insert into [User](user_group,user_fullname,user_email,use_mobile,user_gender,user_status) values (@user_group,@user_fullname,@user_email,@use_mobile,@user_gender,@user_status)";
                             db.Database.ExecuteSqlCommand(sql,
                                 new SqlParameter("user_group", ""),
                                 new SqlParameter("user_fullname", loginInfo.DefaultUserName),
                                 new SqlParameter("user_email", loginInfo.Email),
-                                new SqlParameter("use_mobile", "")
+                                new SqlParameter("use_mobile", ""),
+                                new SqlParameter("user_gender",  ""),
+                                new SqlParameter("user_status", "")
                                 );
                             db.SaveChanges();
                             transaction.Commit();
@@ -118,7 +121,41 @@ namespace CourseOnline.Controllers
                     }
                 }
             }
-            return RedirectToAction("HomePage", "Home");
+            GetPermission(loginInfo.Email);
+            if (Session["permission"].Equals("Permission 1") || Session["permission"].Equals("Permission 2"))
+            {
+                return RedirectToAction("HomePage", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        private STUDYONLINEEntities db = new STUDYONLINEEntities();
+        public void GetPermission(string email)
+        {
+            List<String> Permission = new List<string>();
+            var checkPermission = (from u in db.Users.Where(x => x.user_email == email)
+                                   join ur in db.UserRoles on u.user_id equals ur.user_id
+                                   join r in db.Roles on ur.role_id equals r.role_id
+                                   join rp in db.RolePermissions on r.role_id equals rp.role_id
+                                   join p in db.Permissions on rp.permission_id equals p.permission_id
+                                   select p.permission_name);
+                                   
+            foreach(string permissionName in checkPermission)
+            {
+                if (permissionName.Equals("Permission 1"))
+                {
+                    Session["permission"] = "Permission 1";
+                }else if(permissionName.Equals("Permission 2"))
+                {
+                    Session["permission"] = "Permission 2";
+                }
+                else
+                {
+                    Session["permission"] = "Permission 3";
+                }
+            }              
         }
 
         //

@@ -17,7 +17,6 @@ namespace MvcPWy.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Post()
         {
-            this.PostTags = new HashSet<PostTag>();
             this.Subjects = new HashSet<Subject>();
         }
     
@@ -32,8 +31,6 @@ namespace MvcPWy.Models
         public string post_name { get; set; }
         public string post_status { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostTag> PostTags { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subject> Subjects { get; set; }
     }

@@ -23,6 +23,10 @@ namespace MvcPWy.Models
     
         public int menu_id { get; set; }
         public Nullable<int> parent_id { get; set; }
+        public string menu_name { get; set; }
+        public string menu_link { get; set; }
+        public Nullable<int> menu_order { get; set; }
+        public Nullable<bool> menu_status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Menu> Menu1 { get; set; }

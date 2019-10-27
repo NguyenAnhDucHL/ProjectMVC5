@@ -14,20 +14,12 @@ namespace MvcPWy.Models
     
     public partial class Lesson
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Lesson()
-        {
-            this.Lesson1 = new HashSet<Lesson>();
-        }
-    
         public int lesson_id { get; set; }
         public int subject_id { get; set; }
         public int parent_id { get; set; }
+        public string lesson_name { get; set; }
+        public int lesson_order { get; set; }
         public string lesson_type { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Lesson> Lesson1 { get; set; }
-        public virtual Lesson Lesson2 { get; set; }
-        public virtual Subject Subject { get; set; }
+        public bool lesson_status { get; set; }
     }
 }

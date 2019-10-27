@@ -23,6 +23,8 @@ namespace MvcPWy.Models
         public int registration_id { get; set; }
         public int user_id { get; set; }
         public int course_id { get; set; }
+        public string registration_time { get; set; }
+        public string registration_status { get; set; }
     
         public virtual Course Course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

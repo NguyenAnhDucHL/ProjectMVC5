@@ -41,6 +41,7 @@ namespace MvcPWy.Models
         public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<RoleMenu> RoleMenus { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<Slider> Sliders { get; set; }
         public virtual DbSet<Subject> Subjects { get; set; }
