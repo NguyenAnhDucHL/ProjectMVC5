@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvcPWy.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,13 @@ namespace CourseOnline.Controllers
 {
     public class HomeController : Controller
     {
+        private STUDYONLINEEntities db = new STUDYONLINEEntities();
         public ActionResult HomePage()
         {
+            
             ViewBag.UserName = Session["Name"];
+            string email = (string)Session["Email"];
+            GetPermission(email);
             return View("/Views/CMS/Home.cshtml");
         }
         public ActionResult Index()
@@ -19,20 +24,15 @@ namespace CourseOnline.Controllers
             return View("/Views/Account/Login.cshtml");
         }
 
-        public ActionResult About()
+        public void GetPermission(string email)
         {
-            ViewBag.Message = "Your application description page.";
+            List<String> Permission = new List<string>();
 
-            return View();
+
+
+            Session["Permission"] = Permission;
         }
 
-        [Authorize]
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
         // GET: Home
     
