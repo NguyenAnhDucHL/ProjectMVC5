@@ -306,14 +306,42 @@
     <Compile Include="SupportClass\Auther.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\bootstrap\css\aos.css" />
+    <Content Include="Assets\bootstrap\css\bootstrap-datepicker.css" />
     <Content Include="Assets\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Assets\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Assets\bootstrap\css\bootstrap.css" />
     <Content Include="Assets\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Assets\bootstrap\css\flaticon.css" />
+    <Content Include="Assets\bootstrap\css\flaticon.html" />
+    <Content Include="Assets\bootstrap\css\Flaticon.svg" />
+    <Content Include="Assets\bootstrap\css\jquery-ui.css" />
+    <Content Include="Assets\bootstrap\css\jquery.fancybox.min.css" />
+    <Content Include="Assets\bootstrap\css\jquery.mb.YTPlayer.min.css" />
+    <Content Include="Assets\bootstrap\css\owl.carousel.min.css" />
+    <Content Include="Assets\bootstrap\css\owl.theme.default.min.css" />
+    <Content Include="Assets\bootstrap\css\style.css" />
+    <Content Include="Assets\bootstrap\css\_flaticon.css" />
     <Content Include="Assets\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Assets\bootstrap\fonts\icomoon.svg" />
+    <Content Include="Assets\bootstrap\fonts\style.css" />
+    <Content Include="Assets\bootstrap\js\aos.js" />
+    <Content Include="Assets\bootstrap\js\bootstrap-datepicker.min.js" />
     <Content Include="Assets\bootstrap\js\bootstrap.js" />
     <Content Include="Assets\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Assets\bootstrap\js\jquery-3.3.1.min.js" />
+    <Content Include="Assets\bootstrap\js\jquery-migrate-3.0.1.min.js" />
+    <Content Include="Assets\bootstrap\js\jquery-ui.js" />
+    <Content Include="Assets\bootstrap\js\jquery.countdown.min.js" />
+    <Content Include="Assets\bootstrap\js\jquery.easing.1.3.js" />
+    <Content Include="Assets\bootstrap\js\jquery.fancybox.min.js" />
+    <Content Include="Assets\bootstrap\js\jquery.mb.YTPlayer.min.js" />
+    <Content Include="Assets\bootstrap\js\jquery.stellar.min.js" />
+    <Content Include="Assets\bootstrap\js\jquery.sticky.js" />
+    <Content Include="Assets\bootstrap\js\main.js" />
     <Content Include="Assets\bootstrap\js\npm.js" />
+    <Content Include="Assets\bootstrap\js\owl.carousel.min.js" />
+    <Content Include="Assets\bootstrap\js\popper.min.js" />
     <Content Include="Assets\customcss\menu.css" />
     <Content Include="Assets\customimg\ronaldo.jpg" />
     <Content Include="Assets\customjs\CustomJs.js" />
@@ -387,6 +415,23 @@
     <Content Include="Assets\dist\js\pages\dashboard.js" />
     <Content Include="Assets\dist\js\pages\dashboard2.js" />
     <Content Include="Assets\IMGCMS\duan1.jpg" />
+    <Content Include="Assets\IMGUSER\bg_1.jpg" />
+    <Content Include="Assets\IMGUSER\blog_1.jpg" />
+    <Content Include="Assets\IMGUSER\blog_2.jpg" />
+    <Content Include="Assets\IMGUSER\blog_large_1.jpg" />
+    <Content Include="Assets\IMGUSER\course_1.jpg" />
+    <Content Include="Assets\IMGUSER\course_2.jpg" />
+    <Content Include="Assets\IMGUSER\course_3.jpg" />
+    <Content Include="Assets\IMGUSER\course_4.jpg" />
+    <Content Include="Assets\IMGUSER\course_5.jpg" />
+    <Content Include="Assets\IMGUSER\course_6.jpg" />
+    <Content Include="Assets\IMGUSER\hero_1.jpg" />
+    <Content Include="Assets\IMGUSER\logo.jpg" />
+    <Content Include="Assets\IMGUSER\logo.png" />
+    <Content Include="Assets\IMGUSER\person_1.jpg" />
+    <Content Include="Assets\IMGUSER\person_2.jpg" />
+    <Content Include="Assets\IMGUSER\person_3.jpg" />
+    <Content Include="Assets\IMGUSER\person_4.jpg" />
     <Content Include="Assets\materialize\css\materialize.css" />
     <Content Include="Assets\materialize\css\materialize.min.css" />
     <Content Include="Assets\materialize\images\book.jpg" />
@@ -1352,6 +1397,15 @@
     <Content Include="Models\STUDYONLINE.edmx.diagram">
       <DependentUpon>STUDYONLINE.edmx</DependentUpon>
     </Content>
+    <Content Include="Assets\bootstrap\.DS_Store" />
+    <Content Include="Assets\bootstrap\css\Flaticon.eot" />
+    <Content Include="Assets\bootstrap\css\Flaticon.ttf" />
+    <Content Include="Assets\bootstrap\css\Flaticon.woff" />
+    <Content Include="Assets\bootstrap\css\Flaticon.woff2" />
+    <Content Include="Assets\bootstrap\css\_flaticon.scss" />
+    <Content Include="Assets\bootstrap\fonts\icomoon.eot" />
+    <Content Include="Assets\bootstrap\fonts\icomoon.ttf" />
+    <Content Include="Assets\bootstrap\fonts\icomoon.woff" />
     <None Include="Properties\PublishProfiles\MvcP.pubxml" />
     <None Include="Properties\PublishProfiles\MvcPWy.pubxml" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
@@ -1430,7 +1484,6 @@
     <Content Include="Scripts\README.md" />
     <Content Include="Views\Shared\_CMS_Layout.cshtml" />
     <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
