@@ -124,11 +124,11 @@ namespace CourseOnline.Controllers
             GetPermission(loginInfo.Email);
             if (Session["permission"].Equals("Permission 1") || Session["permission"].Equals("Permission 2"))
             {
-                return RedirectToAction("HomePage", "Home");
+                return RedirectToAction("Home_CMS", "Home");
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Home_User", "Home");
             }
         }
         private STUDYONLINEEntities db = new STUDYONLINEEntities();
@@ -141,8 +141,9 @@ namespace CourseOnline.Controllers
                                    join rp in db.RolePermissions on r.role_id equals rp.role_id
                                    join p in db.Permissions on rp.permission_id equals p.permission_id
                                    select p.permission_name);
-                                   
-            foreach(string permissionName in checkPermission)
+
+            Session["permission"] = "";
+            foreach (string permissionName in checkPermission)
             {
                 if (permissionName.Equals("Permission 1"))
                 {

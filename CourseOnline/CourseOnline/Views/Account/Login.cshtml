@@ -1,8 +1,0 @@
-﻿@using CourseOnline.Models
-@model LoginViewModel
-@{
-    ViewBag.Title = "Log in";
-}
-    <section id="socialLoginForm">
-        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-    </section>

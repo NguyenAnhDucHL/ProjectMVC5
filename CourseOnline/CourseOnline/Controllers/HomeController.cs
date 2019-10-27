@@ -10,17 +10,17 @@ namespace CourseOnline.Controllers
     public class HomeController : Controller
     {
         
-        public ActionResult HomePage()
+        public ActionResult Home_CMS()
         {
             
             ViewBag.UserName = Session["Name"];
             string email = (string)Session["Email"];
             return View("/Views/CMS/Home.cshtml");
         }
-        public ActionResult Index()
+        public ActionResult Home_User()
         {
             //ViewBag.Link = TempData["ViewBagLink"];
-            return View("/Views/Account/Login.cshtml");
+            return View("/Views/User/Home.cshtml");
         }
 
     }

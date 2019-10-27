@@ -1,4 +1,5 @@
-﻿
+﻿@using CourseOnline.Models
+@model LoginViewModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,126 +18,40 @@
 
 
     <nav class="blue lighten-1">
-        
-                <div class="nav-wrapper container">
-                    <a id="logo-container" href="#" class="brand-logo"><i class="material-icons">school</i></a>
-                    <ul class="right hide-on-med-and-down row">
-                        <div class="row">
-                            <div class="col-2">
-                                <li class="col-sm-2"><a href="#">Hướng dẫn</a></li>
-                                <li class="col-sm-2"><a href="#">Tài nguyên</a></li>
-                                <li class="col-sm-2"><a href="#">Khóa học</a></li>
-                                <li class="col-sm-2"><a href="#">Luyện thi</a></li>
-                                <li class="col-sm-2">
-                                    <div class="input-field col-2">
-                                        <input placeholder=" Search" id="first_name" type="text" class="validate">
-                                    </div>
 
-                                </li>
-                                <li class="col-sm-2" style="margin-top:0px;">@RenderBody()</li>
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo"><i class="material-icons">school</i></a>
+            <ul class="right hide-on-med-and-down row">
+                <div class="row">
+                    <div class="col-2">
+                        <li class="col-sm-2"><a href="#">Hướng dẫn</a></li>
+                        <li class="col-sm-2"><a href="#">Tài nguyên</a></li>
+                        <li class="col-sm-2"><a href="#">Khóa học</a></li>
+                        <li class="col-sm-2"><a href="#">Luyện thi</a></li>
+                        <li class="col-sm-2">
+                            <div class="input-field col-2">
+                                <input placeholder=" Search" id="first_name" type="text" class="validate">
                             </div>
-                        </div>
-                        
-                        
-                    </ul>
+
+                        </li>
+                        <li class="col-sm-2" style="margin-top:0px;">
+                            @{
+                                ViewBag.Title = "Log in";
+                            }
+                            <section id="socialLoginForm">
+                                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                            </section>
+                        </li>
+                    </div>
                 </div>
-            
-        
+
+
+            </ul>
+        </div>
+
+
     </nav>
-
-    <div class="row">
-        <div class="col s4 push-s8"><img src="~/Assets/materialize/images/book.jpg"><a class="waves-effect green btn">Cổng thông tin chia sẻ</a></div>
-        <div class="col s8 pull-s4"><img src="~/Assets/materialize/images/ronaldo.jpg"><a class="waves-effect waves-light btn">Slide next >></a></div>
-    </div>
-
-    <div class="row">
-        <div class="col s4 push-s8">
-            <div class="col s12">
-                <div class="red white-text">Hướng dẫn mới nhất</div>
-                <ul class="content">
-                    <li>
-                        <div class="row">
-                            <div class="col s4">
-                                <div class="card">
-                                    <div class="card-image">
-                                        <img src="~/Assets/materialize/images/book.jpg"><span class="card-title"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col s8">
-                                <div class="row s11">
-                                    <a href="post.html">I am a very simple card. Books is very important.</a>
-                                </div>
-                                <div class="black-text ">24-05-2019</div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="row">
-                            <div class="col s4">
-                                <div class="card">
-                                    <div class="card-image">
-                                        <img src="~/Assets/materialize/images/study.jpg"><span class="card-title"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col s8">
-                                <div class="row s11">
-                                    <a href="post.html">Study easy and helpful. Funny and easy. Easy life</a>
-                                </div>
-                                <div class="black-text ">29-07-2019</div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="row">
-                            <div class="col s4">
-                                <div class="card">
-                                    <div class="card-image">
-                                        <img src="~/Assets/materialize/images/study.jpg"><span class="card-title"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col s8">
-                                <div class="row s11">
-                                    <a href="post.html">Study easy and helpful. Funny and easy. Easy life</a>
-                                </div>
-                                <div class="black-text ">29-07-2019</div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="col s8 pull-s4">
-            <div class="col s12">
-                <div class="red white-text">Các Khóa học nổi bật</div>
-            </div>
-            <div class="col s12 m4 l4">
-                <img src="~/Assets/materialize/images/hoctap.jpg"><b>Learning Online</b><br><p>Học online là xu hướng mới hiện nay.</p>
-                <div class="row">
-                    <div class="col s6"><a class="waves-effect green btn">Register</a></div>
-                    <div class="col s6"><p><del>200$</del> --> <ins>150$</ins></p></div>
-                </div>
-            </div>
-            <div class="col s12 m4 l4">
-                <img src="~/Assets/materialize/images/hoctap.jpg"><b>Playing Game</b><br><p>Chơi game giúp thư thái đầu óc.</p>
-                <div class="row">
-                    <div class="col s6"><a class="waves-effect green btn">Register</a></div>
-                    <div class="col s6"><p><del>100$</del> --> <ins>50$</ins></p></div>
-                </div>
-            </div>
-            <div class="col s12 m4 l4">
-                <img src="~/Assets/materialize/images/hoctap.jpg"><b>Sales clothes</b><br><p>Đồ ngon bổ rẻ.</p>
-                <div class="row">
-                    <div class="col s6"><a class="waves-effect green btn">Register</a></div>
-                    <div class="col s6"><p><del>1000$</del> --> <ins>500$</ins></p></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    @RenderBody()
     <!--JavaScript at end of body for optimized loading-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
