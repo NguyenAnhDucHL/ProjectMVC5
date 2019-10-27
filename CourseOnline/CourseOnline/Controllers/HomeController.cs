@@ -19,8 +19,8 @@ namespace CourseOnline.Controllers
         }
         public ActionResult Home_User()
         {
-            //ViewBag.Link = TempData["ViewBagLink"];
-            return View("/Views/User/Home.cshtml");
+                //ViewBag.Link = TempData["ViewBagLink"];
+                return View("/Views/User/Home.cshtml");
         }
 
     }
