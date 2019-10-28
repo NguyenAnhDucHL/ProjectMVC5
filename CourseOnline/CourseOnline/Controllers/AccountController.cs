@@ -9,7 +9,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CourseOnline.Models;
-using MvcPWy.Models;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Collections.Generic;

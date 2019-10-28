@@ -1,4 +1,4 @@
-﻿using MvcPWy.Models;
+﻿using CourseOnline.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

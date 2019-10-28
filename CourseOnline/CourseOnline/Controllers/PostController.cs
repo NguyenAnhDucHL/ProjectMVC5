@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Drawing;
 using System.Data;
-using MvcPWy.Models;
 using System.Linq.Dynamic;
 
 namespace CourseOnline.Controllers

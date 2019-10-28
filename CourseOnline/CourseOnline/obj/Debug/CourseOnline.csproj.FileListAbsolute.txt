@@ -89,11 +89,11 @@ E:\DemoCrud\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileI
 E:\DemoCrud\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
 E:\DemoCrud\CourseOnline\CourseOnline\obj\Debug\MvcPWy.dll
 E:\DemoCrud\CourseOnline\CourseOnline\obj\Debug\MvcPWy.pdb
-E:\Sourcecode\CourseOnline\CourseOnline\bin\MvcPWy.dll.config
-E:\Sourcecode\CourseOnline\CourseOnline\bin\MvcPWy.dll
-E:\Sourcecode\CourseOnline\CourseOnline\bin\MvcPWy.pdb
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
-E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\MvcPWy.dll
-E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\MvcPWy.pdb
+E:\Sourcecode\CourseOnline\CourseOnline\bin\CourseOnline.dll.config
+E:\Sourcecode\CourseOnline\CourseOnline\bin\CourseOnline.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\CourseOnline.pdb
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache

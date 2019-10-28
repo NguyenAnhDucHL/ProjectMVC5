@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MvcPWy.Models
+namespace CourseOnline.Models
 {
     using System;
     using System.Collections.Generic;
