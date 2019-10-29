@@ -31,6 +31,7 @@ namespace CourseOnline.Models
         public string post_detail_info { get; set; }
         public string post_document_link { get; set; }
         public string post_status { get; set; }
+        public string Post_Date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tag> Tags { get; set; }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a0ba4ee473e744cb9cc95d07b2a4403c" Name="Diagram1">
+      <Diagram DiagramId="9d61a86ca03245daa8750859c7106fff" Name="Diagram1">
         <EntityTypeShape EntityType="STUDYONLINEModel.AnswerOption" Width="1.5" PointX="7.5" PointY="21.25" IsExpanded="true" />
         <EntityTypeShape EntityType="STUDYONLINEModel.Course" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="STUDYONLINEModel.Coursework" Width="1.5" PointX="7.5" PointY="10.375" IsExpanded="true" />
@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="STUDYONLINEModel.Lesson" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="STUDYONLINEModel.Menu" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="STUDYONLINEModel.Permission" Width="1.5" PointX="6" PointY="27.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="STUDYONLINEModel.Post" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDYONLINEModel.Post" Width="1.5" PointX="0.75" PointY="14.25" IsExpanded="true" />
         <EntityTypeShape EntityType="STUDYONLINEModel.Question" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
         <EntityTypeShape EntityType="STUDYONLINEModel.Registration" Width="1.5" PointX="7.5" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="STUDYONLINEModel.RoleMenu" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />

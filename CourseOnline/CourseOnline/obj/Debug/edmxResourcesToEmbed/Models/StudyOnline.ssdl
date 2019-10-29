@@ -133,6 +133,7 @@
     <Property Name="post_detail_info" Type="varchar(max)" />
     <Property Name="post_document_link" Type="varchar" MaxLength="200" />
     <Property Name="post_status" Type="varchar" MaxLength="10" />
+    <Property Name="Post_Date" Type="varchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->

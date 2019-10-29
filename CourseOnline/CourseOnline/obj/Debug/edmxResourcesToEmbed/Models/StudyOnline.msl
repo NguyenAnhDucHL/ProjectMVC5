@@ -144,6 +144,7 @@
           <ScalarProperty Name="post_detail_info" ColumnName="post_detail_info" />
           <ScalarProperty Name="post_document_link" ColumnName="post_document_link" />
           <ScalarProperty Name="post_status" ColumnName="post_status" />
+          <ScalarProperty Name="Post_Date" ColumnName="Post_Date" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -4,6 +4,7 @@
     ViewBag.Title = "HomePage";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<Subject> listSubjects = ViewBag.lstSubject;
+    List<Post> listPost = ViewBag.lstPost;
 }
 <div class="hero-slide owl-carousel site-blocks-cover">
     <div class="intro-section" style="background-image: url('../../Assets/IMGUSER/fpt_logo.jpg');">
@@ -62,7 +63,7 @@
                     {
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="course-single.html"><img src="~/Assets/IMGUSER/course_1.jpg" alt="Image" class="img-fluid"></a>
+                                <a href="#"><img src="@item.Picture" alt="Image" class="img-fluid"></a>
                                 <div class="category"><h3>@item.subject_category</h3></div>
                             </figure>
                             <div class="course-1-content pb-4">
@@ -75,7 +76,7 @@
                                     <span class="icon-star2 text-warning"></span>
                                 </div>
                                 <p class="desc mb-4">@item.subject_brief_info</p>
-                                <p><a href="course-single.html" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
+                                <p><a href="#" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
                             </div>
                         </div>
                     }
@@ -103,53 +104,34 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="post-entry-big">
-                    <a href="news-single.html" class="img-link"><img src="~/Assets/IMGUSER/blog_large_1.jpg" alt="Image" class="img-fluid"></a>
+                    <a href="#" class="img-link"><img src="@listPost[0].post_thumbnail" alt="Image" class="img-fluid"></a>
                     <div class="post-content">
                         <div class="post-meta">
-                            <a href="#">June 6, 2019</a>
-                            <span class="mx-1">/</span>
-                            <a href="#">Admission</a>, <a href="#">Updates</a>
+                            <a href="#">@listPost[0].Post_Date</a>
+                            <span class="mx-1">/@listPost[0].post_category</span>
                         </div>
-                        <h3 class="post-heading"><a href="news-single.html">Campus Camping and Learning Session</a></h3>
+                        <h3 class="post-heading"><a href="#">@listPost[0].post_name</a></h3>
+                        <span>@listPost[0].post_brief_info</span>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="post-entry-big horizontal d-flex mb-4">
-                    <a href="news-single.html" class="img-link mr-4"><img src="~/Assets/IMGUSER/blog_1.jpg" alt="Image" class="img-fluid"></a>
-                    <div class="post-content">
-                        <div class="post-meta">
-                            <a href="#">June 6, 2019</a>
-                            <span class="mx-1">/</span>
-                            <a href="#">Admission</a>, <a href="#">Updates</a>
+                @{ listPost.RemoveAt(0);
+                    foreach (var item in listPost)
+                    {
+                        <div class="post-entry-big horizontal d-flex mb-4">
+                            <a href="#" class="img-link mr-4"><img src="@item.post_thumbnail" alt="Image" class="img-fluid"></a>
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <a href="#">@item.Post_Date</a>
+                                    <span class="mx-1">/@item.post_category</span>
+                                </div>
+                                <h3 class="post-heading"><a href="#">@item.post_name</a></h3>
+                                <span>@item.post_brief_info</span>
+                            </div>
                         </div>
-                        <h3 class="post-heading"><a href="news-single.html">Campus Camping and Learning Session</a></h3>
-                    </div>
-                </div>
-
-                <div class="post-entry-big horizontal d-flex mb-4">
-                    <a href="news-single.html" class="img-link mr-4"><img src="~/Assets/IMGUSER/blog_2.jpg" alt="Image" class="img-fluid"></a>
-                    <div class="post-content">
-                        <div class="post-meta">
-                            <a href="#">June 6, 2019</a>
-                            <span class="mx-1">/</span>
-                            <a href="#">Admission</a>, <a href="#">Updates</a>
-                        </div>
-                        <h3 class="post-heading"><a href="news-single.html">Campus Camping and Learning Session</a></h3>
-                    </div>
-                </div>
-
-                <div class="post-entry-big horizontal d-flex mb-4">
-                    <a href="news-single.html" class="img-link mr-4"><img src="~/Assets/IMGUSER/blog_1.jpg" alt="Image" class="img-fluid"></a>
-                    <div class="post-content">
-                        <div class="post-meta">
-                            <a href="#">June 6, 2019</a>
-                            <span class="mx-1">/</span>
-                            <a href="#">Admission</a>, <a href="#">Updates</a>
-                        </div>
-                        <h3 class="post-heading"><a href="news-single.html">Campus Camping and Learning Session</a></h3>
-                    </div>
-                </div>
+                    }
+                }
             </div>
         </div>
     </div>
@@ -252,49 +234,5 @@
     </div>
 </div>
 
-<div class="section-bg style-1" style="background-image: url('images/about_1.jpg');">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <h2 class="section-title-underline style-2">
-                    <span>About Our University</span>
-                </h2>
-            </div>
-            <div class="col-lg-8">
-                <p class="lead">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem nesciunt quaerat ad reiciendis perferendis voluptate fugiat sunt fuga error totam.</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus assumenda omnis tempora ullam alias amet eveniet voluptas, incidunt quasi aut officiis porro ad, expedita saepe necessitatibus rem debitis architecto dolore? Nam omnis sapiente placeat blanditiis voluptas dignissimos, itaque fugit a laudantium adipisci dolorem enim ipsum cum molestias? Quod quae molestias modi fugiat quisquam. Eligendi recusandae officiis debitis quas beatae aliquam?</p>
-                <p><a href="#">Read more</a></p>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- // 05 - Block -->
-
-<div class="section-bg style-1" style="background-image: url('images/hero_1.jpg');">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
-                <span class="icon flaticon-mortarboard"></span>
-                <h3>Our Philosphy</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis recusandae, iure repellat quis delectus ea? Dolore, amet reprehenderit.</p>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
-                <span class="icon flaticon-school-material"></span>
-                <h3>Academics Principle</h3>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis recusandae, iure repellat quis delectus ea?
-                    Dolore, amet reprehenderit.
-                </p>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
-                <span class="icon flaticon-library"></span>
-                <h3>Key of Success</h3>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis recusandae, iure repellat quis delectus ea?
-                    Dolore, amet reprehenderit.
-                </p>
-            </div>
-        </div>
-    </div>
-</div>

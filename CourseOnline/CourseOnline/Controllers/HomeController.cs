@@ -18,8 +18,11 @@ namespace CourseOnline.Controllers
         public ActionResult Home_User()
         {
             //ViewBag.Link = TempData["ViewBagLink"];
-            var lstSubject = db.Subjects.Take(5).ToList();
+            var lstSubject = db.Subjects.Take(5).ToList();      
             ViewBag.lstSubject = lstSubject;
+
+            var lstPost = db.Posts.Take(4).ToList();
+            ViewBag.lstPost = lstPost;
             return View("/Views/User/Home.cshtml");
         }
 
