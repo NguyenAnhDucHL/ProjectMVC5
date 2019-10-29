@@ -1378,7 +1378,6 @@
     <Content Include="Assets\plugins\datatables\extensions\TableTools\Readme.md" />
     <Content Include="Assets\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Assets\plugins\input-mask\phone-codes\phone-codes.json" />
-    <Content Include="Assets\bootstrap\.DS_Store" />
     <Content Include="Assets\bootstrap\css\Flaticon.eot" />
     <Content Include="Assets\bootstrap\css\Flaticon.ttf" />
     <Content Include="Assets\bootstrap\css\Flaticon.woff" />

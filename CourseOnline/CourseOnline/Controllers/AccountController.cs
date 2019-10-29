@@ -63,14 +63,6 @@ namespace CourseOnline.Controllers
         }
 
         //
-        // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
-        public ActionResult ResetPasswordConfirmation()
-        {
-            return View();
-        }
-
-        //
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
@@ -165,7 +157,7 @@ namespace CourseOnline.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return View("Views/User/Home.cshtml");
         }
 
         #region Helpers

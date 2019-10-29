@@ -32,12 +32,37 @@
     <link rel="stylesheet" href="~/Assets/plugins/datepicker/datepicker3.css">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="~/Assets/plugins/daterangepicker/daterangepicker.css">
+    <!--preloader-->
+    <link href="~/Assets/preload/css.css" rel="stylesheet" />
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="~/Assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    @*<link rel="stylesheet" href="~/Assets/materialize/materialize/css/materialize.css">
+        <link rel="stylesheet" href="~/Assets/materialize/materialize/css/materialize.min.css">*@
+
+    <!--study online alert-->
+    <link href="~/Assets/studyonlinealert/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Assets/studyonlinealert/alert-js.js"></script>
+    <script src="~/Assets/studyonlinealert/sweetalert2.all.min.js"></script>
+    <script src="~/Assets/studyonlinealert/sweetalert2.min.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
-
+        @*preloader*@
+        <div id="pre-load" hidden>
+            <div class="loading">
+                <div class="preloader-wrapper big active">
+                    <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                            <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <header class="main-header">
             <!-- Logo -->
             <a href="/" class="logo">
@@ -57,15 +82,16 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="~/Assets/dist/img/avatar.png" class="user-image" alt="User Image">
-                                <span class="hidden-xs">@ViewBag.UserName</span>
+                                <span class="hidden-xs">@Session["Name"]</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
                                     <img src="~/Assets/dist/img/avatar.png" class="img-circle" alt="User Image">
                                     <p>
-                                        @ViewBag.UserName
+                                        @Session["Name"]
                                     </p>
+                                    <p>@Session["Email"]</p>
                                 </li>
                                 <!-- Menu Body -->
                                 <li class="user-body">
@@ -88,7 +114,7 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href = "@Url.Action("LogOff", "Account")" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="@Url.Action("LogOff", "Account")" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -111,7 +137,7 @@
                         <img src="~/Assets/dist/img/avatar.png" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>@ViewBag.UserName</p>
+                        <p>@Session["Name"]</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -170,9 +196,9 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="settings-list"><i class="fa fa-circle-o"></i> Setting List</a></li>
-                            <li><a href="/CMS/MenuList"><i class="fa fa-circle-o"></i> Menu List</a></li>
-                            <li><a href="/CMS/PermissionList"><i class="fa fa-circle-o"></i> Permissions</a></li>
-                            <li><a href="@Url.Action("User", "Index", "User")"><i class="fa fa-circle-o"></i> User List</a></li>
+                            <li><a @Url.Action("Menu", "Index", "Menu")><i class="fa fa-circle-o"></i> Menu List</a></li>
+                            <li><a href="permissions-list"><i class="fa fa-circle-o"></i> Permissions</a></li>
+                            <li><a @Url.Action("User", "Index", "User")><i class="fa fa-circle-o"></i> User List</a></li>
                             <li><a href="roles-menu"><i class="fa fa-circle-o"></i> Roles Menus</a></li>
                             <li><a href="roles-permission"><i class="fa fa-circle-o"></i> Roles Permission</a></li>
                         </ul>
@@ -442,6 +468,8 @@
     <script src="~/Assets/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="~/Assets/dist/js/demo.js"></script>
+    @*<script src="~/Assets/materialize/materialize/js/materialize.js"></script>
+        <script src="~/Assets/materialize/materialize/js/materialize.min.js"></script>*@
 </body>
 </html>
 @RenderSection("scripts", required: false)
