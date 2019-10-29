@@ -32,6 +32,7 @@ namespace CourseOnline.Models
         public string subject_brief_info { get; set; }
         public string subject_type { get; set; }
         public string subject_status { get; set; }
+        public string Picture { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Course> Courses { get; set; }

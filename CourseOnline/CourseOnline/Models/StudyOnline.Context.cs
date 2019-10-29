@@ -52,7 +52,6 @@ namespace CourseOnline.Models
         public virtual DbSet<TestResult> TestResults { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<PostTag> PostTags { get; set; }
         public virtual DbSet<TestQuestion> TestQuestions { get; set; }
     }
 }

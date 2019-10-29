@@ -17,16 +17,13 @@ namespace CourseOnline.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tag()
         {
-            this.PostTags = new HashSet<PostTag>();
-            this.PostTags1 = new HashSet<PostTag>();
+            this.Posts = new HashSet<Post>();
         }
     
         public int tag_id { get; set; }
         public string tag_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostTag> PostTags { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostTag> PostTags1 { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }

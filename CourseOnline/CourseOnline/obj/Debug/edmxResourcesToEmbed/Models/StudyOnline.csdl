@@ -148,16 +148,17 @@
     <Key>
       <PropertyRef Name="post_id" />
     </Key>
-    <Property Name="post_id" Type="Int32" Nullable="false" />
     <Property Name="post_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="post_category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="post_thumbnail" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="post_brief_info" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="post_detail_info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="post_document_link" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="post_embeb" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="post_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="post_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="post_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="post_thumbnail" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="post_detail_info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="post_document_link" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="post_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tags" Relationship="Self.PostTag" FromRole="Post" ToRole="Tag" />
     <NavigationProperty Name="Subjects" Relationship="Self.SubjectReference" FromRole="Post" ToRole="Subject" />
   </EntityType>
   <EntityType Name="Question">
@@ -250,6 +251,7 @@
     <Property Name="subject_brief_info" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
     <Property Name="subject_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="subject_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Picture" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Courses" Relationship="Self.FK__Course__subject___6B24EA82" FromRole="Subject" ToRole="Course" />
     <NavigationProperty Name="Domains" Relationship="Self.FK__Domain__subject___6FE99F9F" FromRole="Subject" ToRole="Domain" />
     <NavigationProperty Name="Exams" Relationship="Self.FK__Exam__subject_id__70DDC3D8" FromRole="Subject" ToRole="Exam" />
@@ -273,8 +275,7 @@
     </Key>
     <Property Name="tag_id" Type="Int32" Nullable="false" />
     <Property Name="tag_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="PostTags" Relationship="Self.FK__PostTag__tag_id__75A278F5" FromRole="Tag" ToRole="PostTag" />
-    <NavigationProperty Name="PostTags1" Relationship="Self.FK__PostTag__tag_id__76969D2E" FromRole="Tag" ToRole="PostTag" />
+    <NavigationProperty Name="Posts" Relationship="Self.PostTag" FromRole="Tag" ToRole="Post" />
   </EntityType>
   <EntityType Name="TestAnswer">
     <Key>
@@ -340,16 +341,6 @@
     <Property Name="role_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Role" Relationship="Self.FK__UserRole__role_i__07C12930" FromRole="UserRole" ToRole="Roles" />
     <NavigationProperty Name="User" Relationship="Self.FK__UserRole__user_i__08B54D69" FromRole="UserRole" ToRole="User" />
-  </EntityType>
-  <EntityType Name="PostTag">
-    <Key>
-      <PropertyRef Name="post_id" />
-      <PropertyRef Name="tag_id" />
-    </Key>
-    <Property Name="post_id" Type="Int32" Nullable="false" />
-    <Property Name="tag_id" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Tag" Relationship="Self.FK__PostTag__tag_id__75A278F5" FromRole="PostTag" ToRole="Tag" />
-    <NavigationProperty Name="Tag1" Relationship="Self.FK__PostTag__tag_id__76969D2E" FromRole="PostTag" ToRole="Tag" />
   </EntityType>
   <EntityType Name="TestQuestion">
     <Key>
@@ -674,30 +665,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PostTag__tag_id__75A278F5">
-    <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
-    <End Role="PostTag" Type="Self.PostTag" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tag">
-        <PropertyRef Name="tag_id" />
-      </Principal>
-      <Dependent Role="PostTag">
-        <PropertyRef Name="tag_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__PostTag__tag_id__76969D2E">
-    <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
-    <End Role="PostTag" Type="Self.PostTag" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tag">
-        <PropertyRef Name="tag_id" />
-      </Principal>
-      <Dependent Role="PostTag">
-        <PropertyRef Name="tag_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__TestAnswe__test___02084FDA">
     <End Role="TestResult" Type="Self.TestResult" Multiplicity="1" />
     <End Role="TestAnswer" Type="Self.TestAnswer" Multiplicity="*" />
@@ -734,6 +701,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="PostTag">
+    <End Role="Post" Type="Self.Post" Multiplicity="*" />
+    <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
+  </Association>
   <Association Name="SubjectReference">
     <End Role="Post" Type="Self.Post" Multiplicity="*" />
     <End Role="Subject" Type="Self.Subject" Multiplicity="*" />
@@ -766,7 +737,6 @@
     <EntitySet Name="TestResults" EntityType="Self.TestResult" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
-    <EntitySet Name="PostTags" EntityType="Self.PostTag" />
     <EntitySet Name="TestQuestions" EntityType="Self.TestQuestion" />
     <AssociationSet Name="FK__AnswerOpt__quest__6A30C649" Association="Self.FK__AnswerOpt__quest__6A30C649">
       <End Role="Question" EntitySet="Questions" />
@@ -872,14 +842,6 @@
       <End Role="Roles" EntitySet="Roles" />
       <End Role="UserRole" EntitySet="UserRoles" />
     </AssociationSet>
-    <AssociationSet Name="FK__PostTag__tag_id__75A278F5" Association="Self.FK__PostTag__tag_id__75A278F5">
-      <End Role="Tag" EntitySet="Tags" />
-      <End Role="PostTag" EntitySet="PostTags" />
-    </AssociationSet>
-    <AssociationSet Name="FK__PostTag__tag_id__76969D2E" Association="Self.FK__PostTag__tag_id__76969D2E">
-      <End Role="Tag" EntitySet="Tags" />
-      <End Role="PostTag" EntitySet="PostTags" />
-    </AssociationSet>
     <AssociationSet Name="FK__TestAnswe__test___02084FDA" Association="Self.FK__TestAnswe__test___02084FDA">
       <End Role="TestResult" EntitySet="TestResults" />
       <End Role="TestAnswer" EntitySet="TestAnswers" />
@@ -891,6 +853,10 @@
     <AssociationSet Name="FK__UserRole__user_i__08B54D69" Association="Self.FK__UserRole__user_i__08B54D69">
       <End Role="User" EntitySet="Users" />
       <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="PostTag" Association="Self.PostTag">
+      <End Role="Post" EntitySet="Posts" />
+      <End Role="Tag" EntitySet="Tags" />
     </AssociationSet>
     <AssociationSet Name="SubjectReference" Association="Self.SubjectReference">
       <End Role="Post" EntitySet="Posts" />

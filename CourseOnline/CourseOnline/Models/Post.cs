@@ -17,20 +17,23 @@ namespace CourseOnline.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Post()
         {
+            this.Tags = new HashSet<Tag>();
             this.Subjects = new HashSet<Subject>();
         }
     
-        public int post_id { get; set; }
         public string post_type { get; set; }
         public string post_category { get; set; }
-        public string post_thumbnail { get; set; }
         public string post_brief_info { get; set; }
-        public string post_detail_info { get; set; }
-        public string post_document_link { get; set; }
         public string post_embeb { get; set; }
         public string post_name { get; set; }
+        public int post_id { get; set; }
+        public string post_thumbnail { get; set; }
+        public string post_detail_info { get; set; }
+        public string post_document_link { get; set; }
         public string post_status { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tag> Tags { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subject> Subjects { get; set; }
     }

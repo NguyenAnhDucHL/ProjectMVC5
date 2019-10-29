@@ -123,16 +123,16 @@
     <Key>
       <PropertyRef Name="post_id" />
     </Key>
-    <Property Name="post_id" Type="int" Nullable="false" />
     <Property Name="post_type" Type="varchar" MaxLength="50" />
     <Property Name="post_category" Type="varchar" MaxLength="50" />
-    <Property Name="post_thumbnail" Type="varchar" MaxLength="500" Nullable="false" />
     <Property Name="post_brief_info" Type="varchar" MaxLength="2000" Nullable="false" />
-    <Property Name="post_detail_info" Type="varchar(max)" Nullable="false" />
-    <Property Name="post_document_link" Type="varchar" MaxLength="200" Nullable="false" />
     <Property Name="post_embeb" Type="varchar" MaxLength="200" />
     <Property Name="post_name" Type="varchar" MaxLength="200" Nullable="false" />
-    <Property Name="post_status" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="post_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="post_thumbnail" Type="varchar" MaxLength="500" />
+    <Property Name="post_detail_info" Type="varchar(max)" />
+    <Property Name="post_document_link" Type="varchar" MaxLength="200" />
+    <Property Name="post_status" Type="varchar" MaxLength="10" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -221,6 +221,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary k
     <Property Name="subject_brief_info" Type="varchar" MaxLength="2000" />
     <Property Name="subject_type" Type="varchar" MaxLength="50" />
     <Property Name="subject_status" Type="varchar" MaxLength="50" />
+    <Property Name="Picture" Type="varchar" MaxLength="255" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'STUDYONLINE.dbo.SubjectReference' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -456,15 +457,15 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PostTag__tag_id__75A278F5">
-    <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+  <Association Name="FK__PostTag__post_id__75A278F5">
+    <End Role="Post" Type="Self.Post" Multiplicity="1" />
     <End Role="PostTag" Type="Self.PostTag" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Tag">
-        <PropertyRef Name="tag_id" />
+      <Principal Role="Post">
+        <PropertyRef Name="post_id" />
       </Principal>
       <Dependent Role="PostTag">
-        <PropertyRef Name="tag_id" />
+        <PropertyRef Name="post_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -803,8 +804,8 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       <End Role="Menu" EntitySet="Menu" />
       <End Role="Menu1" EntitySet="Menu" />
     </AssociationSet>
-    <AssociationSet Name="FK__PostTag__tag_id__75A278F5" Association="Self.FK__PostTag__tag_id__75A278F5">
-      <End Role="Tag" EntitySet="Tag" />
+    <AssociationSet Name="FK__PostTag__post_id__75A278F5" Association="Self.FK__PostTag__post_id__75A278F5">
+      <End Role="Post" EntitySet="Post" />
       <End Role="PostTag" EntitySet="PostTag" />
     </AssociationSet>
     <AssociationSet Name="FK__PostTag__tag_id__76969D2E" Association="Self.FK__PostTag__tag_id__76969D2E">

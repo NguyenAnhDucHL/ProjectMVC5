@@ -229,9 +229,6 @@
     <Compile Include="Models\Post.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PostTag.cs">
-      <DependentUpon>STUDYONLINE.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Question.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
@@ -425,12 +422,16 @@
     <Content Include="Assets\IMGUSER\course_4.jpg" />
     <Content Include="Assets\IMGUSER\course_5.jpg" />
     <Content Include="Assets\IMGUSER\course_6.jpg" />
+    <Content Include="Assets\IMGUSER\fpt_logo.jpg" />
+    <Content Include="Assets\IMGUSER\fpt_logo_2.jpg" />
+    <Content Include="Assets\IMGUSER\fpt_logo_3.jpg" />
     <Content Include="Assets\IMGUSER\hero_1.jpg" />
     <Content Include="Assets\IMGUSER\logo.jpg" />
     <Content Include="Assets\IMGUSER\person_1.jpg" />
     <Content Include="Assets\IMGUSER\person_2.jpg" />
     <Content Include="Assets\IMGUSER\person_3.jpg" />
     <Content Include="Assets\IMGUSER\person_4.jpg" />
+    <Content Include="Assets\IMGUSER\team-1-800x800.jpg" />
     <Content Include="Assets\materialize\css\materialize.css" />
     <Content Include="Assets\materialize\css\materialize.min.css" />
     <Content Include="Assets\materialize\images\book.jpg" />
@@ -1389,13 +1390,6 @@
     <Content Include="Assets\plugins\datatables\extensions\TableTools\Readme.md" />
     <Content Include="Assets\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Assets\plugins\input-mask\phone-codes\phone-codes.json" />
-    <EntityDeploy Include="Models\STUDYONLINE.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>STUDYONLINE.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\STUDYONLINE.edmx.diagram">
-      <DependentUpon>STUDYONLINE.edmx</DependentUpon>
-    </Content>
     <Content Include="Assets\bootstrap\.DS_Store" />
     <Content Include="Assets\bootstrap\css\Flaticon.eot" />
     <Content Include="Assets\bootstrap\css\Flaticon.ttf" />
@@ -1405,6 +1399,13 @@
     <Content Include="Assets\bootstrap\fonts\icomoon.eot" />
     <Content Include="Assets\bootstrap\fonts\icomoon.ttf" />
     <Content Include="Assets\bootstrap\fonts\icomoon.woff" />
+    <EntityDeploy Include="Models\STUDYONLINE.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>STUDYONLINE.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\STUDYONLINE.edmx.diagram">
+      <DependentUpon>STUDYONLINE.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\MvcP.pubxml" />
     <None Include="Properties\PublishProfiles\MvcPWy.pubxml" />
     <Content Include="Scripts\esm\popper-utils.js.map" />

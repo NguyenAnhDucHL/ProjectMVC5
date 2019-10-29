@@ -9,21 +9,21 @@ namespace CourseOnline.Controllers
 {
     public class HomeController : Controller
     {
-        
+
+        private STUDYONLINEEntities db = new STUDYONLINEEntities();
         public ActionResult Home_CMS()
         {
-            
-            ViewBag.UserName = Session["Name"];
-            string email = (string)Session["Email"];
             return View("/Views/CMS/Home.cshtml");
         }
         public ActionResult Home_User()
         {
-                //ViewBag.Link = TempData["ViewBagLink"];
-                return View("/Views/User/Home.cshtml");
+            //ViewBag.Link = TempData["ViewBagLink"];
+            var lstSubject = db.Subjects.Take(5).ToList();
+            ViewBag.lstSubject = lstSubject;
+            return View("/Views/User/Home.cshtml");
         }
 
     }
-        // GET: Home
-    
+    // GET: Home
+
 }
