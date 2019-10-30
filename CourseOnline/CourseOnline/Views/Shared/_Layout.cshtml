@@ -84,12 +84,11 @@
                                 <li>
                                     <a href="contact.html" class="nav-link text-left">Contact</a>
                                 </li>
-                            </ul>                                                                                                                                                                                                                                                                                          </ul>
+                            </ul>
                         </nav>
 
                     </div>
                     <div class="ml-auto">
-
                         @{ if (Session["Name"] == null)
                             {
                                 <div class="social-wrap">
@@ -101,13 +100,17 @@
                             else
                             {
                                 <span style="color:#51be78">@Session["Name"]</span>
-                                <a href="@Url.Action("LogOff", "Account")" class="btn btn-default btn-flat">Sign out</a>
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                {
+                                    <a href="javascript:document.getElementById('logoutForm').submit()"> Log Out</a>
+                                }
                             }
                         }
-
-
                     </div>
+
+
                 </div>
+            </div>
 
         </header>
         @RenderBody()

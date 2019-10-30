@@ -15,7 +15,6 @@ using System.Collections.Generic;
 
 namespace CourseOnline.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
@@ -44,14 +43,7 @@ namespace CourseOnline.Controllers
 
         //
         // GET: /Account/Login
-        [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
-        {
-            ViewBag.ReturnUrl = returnUrl;
-            //AuthenticationManager.SignOut();
-            //Session["Name"] = "";
-            return RedirectToAction("LogOff", "Account");
-        }
+       
 
         private ApplicationSignInManager _signInManager;
 
@@ -154,11 +146,11 @@ namespace CourseOnline.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpGet]
-        [ValidateAntiForgeryToken]
+        [HttpPost]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
+            Session.Abandon();
             return RedirectToAction("Home_User", "Home");
         }
 
