@@ -89,23 +89,25 @@
 
                     </div>
                     <div class="ml-auto">
-                        <div class="social-wrap">
-                            @{ if (Session["Name"] == null)
-                                {
+
+                        @{ if (Session["Name"] == null)
+                            {
+                                <div class="social-wrap">
                                     <section id="socialLoginForm">
                                         @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
                                     </section>
-                                }
-                                else
-                                {
-                                        <span style="color:#51be78">@Session["Name"]</span>
-                                }
+                                </div>
                             }
-                        </div>
-                    </div>
+                            else
+                            {
+                                <span style="color:#51be78">@Session["Name"]</span>
+                                <a href="@Url.Action("LogOff", "Account")" class="btn btn-default btn-flat">Sign out</a>
+                            }
+                        }
 
+
+                    </div>
                 </div>
-            </div>
 
         </header>
         @RenderBody()

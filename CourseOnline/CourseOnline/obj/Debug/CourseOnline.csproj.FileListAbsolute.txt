@@ -96,3 +96,4 @@ E:\Sourcecode\CourseOnline\CourseOnline\bin\CourseOnline.dll
 E:\Sourcecode\CourseOnline\CourseOnline\bin\CourseOnline.pdb
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache

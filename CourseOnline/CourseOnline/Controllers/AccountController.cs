@@ -48,7 +48,9 @@ namespace CourseOnline.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            //AuthenticationManager.SignOut();
+            //Session["Name"] = "";
+            return RedirectToAction("LogOff", "Account");
         }
 
         private ApplicationSignInManager _signInManager;
@@ -157,7 +159,7 @@ namespace CourseOnline.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return View("Views/User/Home.cshtml");
+            return RedirectToAction("Home_User", "Home");
         }
 
         #region Helpers

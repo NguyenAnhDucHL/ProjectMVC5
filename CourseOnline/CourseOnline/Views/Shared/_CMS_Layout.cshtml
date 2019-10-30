@@ -2,6 +2,7 @@
     Layout = null;
 }
 @using CourseOnline.Models
+@using Microsoft.AspNet.Identity
 
 <!DOCTYPE html>
 <html lang="en">
@@ -114,8 +115,18 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="@Url.Action("LogOff", "Account")" class="btn btn-default btn-flat">Sign out</a>
-                                    </div>
+                                        @if (Request.IsAuthenticated)
+                                        {
+                                            <script>alert("OK")</script>
+                                            var user = (System.Security.Claims.ClaimsIdentity)User.Identity;
+
+                                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <a href="javascript:document.getElementById('logoutForm').submit()"> Sign out</a>
+                                            }
+                                        }
+                                        </div>
                                 </li>
                             </ul>
                         </li>
