@@ -1,6 +1,9 @@
-﻿
+﻿@using PagedList.Mvc
+@using CourseOnline.Models
+
 @{
     ViewBag.Title = "Course";
+    PagedList.IPagedList<Subject> listSubjects = ViewBag.lstCourse;
 }
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -28,31 +31,36 @@
 <div class="site-section">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="course-1-item">
-                    <figure class="thumnail">
-                        <a href="course-single.html"><img src="images/course_1.jpg" alt="Image" class="img-fluid"></a>
-                        <div class="price">$99.00</div>
-                        <div class="category"><h3>Mobile Application</h3></div>
-                    </figure>
-                    <div class="course-1-content pb-4">
-                        <h2>How To Create Mobile Apps Using Ionic</h2>
-                        <div class="rating text-center mb-3">
-                            <span class="icon-star2 text-warning"></span>
-                            <span class="icon-star2 text-warning"></span>
-                            <span class="icon-star2 text-warning"></span>
-                            <span class="icon-star2 text-warning"></span>
-                            <span class="icon-star2 text-warning"></span>
+            @foreach (var item in listSubjects)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="course-1-item">
+                        <figure class="thumnail">
+                            <a href="course-single.html"><img src="@item.Picture" alt="Image" class="img-fluid"></a>
+                            <div class="category"><h3>@item.subject_category</h3></div>
+                        </figure>
+                        <div class="course-1-content pb-4">
+                            <h2>@item.subject_name</h2>
+                            <div class="rating text-center mb-3">
+                                <span class="icon-star2 text-warning"></span>
+                                <span class="icon-star2 text-warning"></span>
+                                <span class="icon-star2 text-warning"></span>
+                                <span class="icon-star2 text-warning"></span>
+                                <span class="icon-star2 text-warning"></span>
+                            </div>
+                            <p class="desc mb-4">@item.subject_brief_info</p>
+                            <p><a href="course-single.html" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
                         </div>
-                        <p class="desc mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique accusantium ipsam.</p>
-                        <p><a href="course-single.html" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>
-
+<div class="dlink">
+    Trang @(listSubjects.PageCount < listSubjects.PageNumber ? 0 : listSubjects.PageNumber)/@listSubjects.PageCount
+    @Html.PagedListPager(listSubjects, page => Url.Action("ListCourse", new { page = page }))
+</div>
 <div class="section-bg style-1" style="background-image: url('images/hero_1.jpg');">
     <div class="container">
         <div class="row">

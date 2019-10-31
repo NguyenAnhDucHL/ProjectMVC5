@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace CourseOnline.Controllers
 {
@@ -11,10 +12,12 @@ namespace CourseOnline.Controllers
     {
         private STUDYONLINEEntities db = new STUDYONLINEEntities();
         // GET: Course
-        public ActionResult ListCourse()
+        public ActionResult ListCourse(int? page)
         {
-
-           //var lstSubject = 
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
+            var lstCourse = db.Subjects.OrderBy(n => n.subject_id).ToPagedList(pageNumber,pageSize);
+            ViewBag.lstCourse = lstCourse;
             return View("/Views/User/Course.cshtml");
         }
     }
