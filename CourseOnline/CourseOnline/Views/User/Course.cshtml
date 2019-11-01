@@ -23,7 +23,7 @@
 
 <div class="custom-breadcrumns border-bottom">
     <div class="container">
-        <a href="index.html">Home</a>
+        <a href="@Url.Action("Home_User","Home")">Home</a>
         <span class="mx-3 icon-keyboard_arrow_right"></span>
         <span class="current">Courses</span>
     </div>
@@ -59,7 +59,7 @@
     </div>
 </div>
 <div class="dlink">
-    Trang @(listSubjects.PageCount < listSubjects.PageNumber ? 0 : listSubjects.PageNumber)/@listSubjects.PageCount
+    Page @(listSubjects.PageCount < listSubjects.PageNumber ? 0 : listSubjects.PageNumber)/@listSubjects.PageCount
     @Html.PagedListPager(listSubjects, page => Url.Action("ListCourse", new { page = page }))
 </div>
 

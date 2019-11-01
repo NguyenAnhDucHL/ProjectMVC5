@@ -47,7 +47,21 @@
                         <a href="mailto:ducnase04962@fpt.edu.vn" class="small mr-3"><span class="icon-envelope-o mr-2"></span>sro.hn@fpt.edu.vn</a>
                     </div>
                     <div class="col-lg-3 text-right">
-
+                        @{ if (Session["Name"] == null)
+                            {
+                                <section id="socialLoginForm">
+                                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                                </section>
+                            }
+                            else
+                            {
+                                <span style="color:#51be78">@Session["Name"]</span>
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                {
+                                    <a href="javascript:document.getElementById('logoutForm').submit()"> Log Out</a>
+                                }
+                            }
+                        }
                     </div>
                 </div>
             </div>
@@ -85,26 +99,12 @@
 
                     </div>
                     <div class="ml-auto">
-                        @{ if (Session["Name"] == null)
-                            {
-                                <div class="social-wrap">
-                                    <section id="socialLoginForm">
-                                        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                                    </section>
-                                </div>
-                            }
-                            else
-                            {
-                                <span style="color:#51be78">@Session["Name"]</span>
-                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                                {
-                                    <a href="javascript:document.getElementById('logoutForm').submit()"> Log Out</a>
-                                }
-                            }
-                        }
+                        <div class="social-wrap">
+                            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black">
+                                <span class="icon-menu h3"></span>
+                            </a>
+                        </div>
                     </div>
-
-
                 </div>
             </div>
 
