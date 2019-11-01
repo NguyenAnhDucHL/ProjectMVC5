@@ -17,7 +17,6 @@ namespace CourseOnline.Controllers
         }
         public ActionResult Home_User()
         {
-            //ViewBag.Link = TempData["ViewBagLink"];
             var lstSubject = db.Subjects.Take(5).ToList();      
             ViewBag.lstSubject = lstSubject;
 
