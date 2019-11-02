@@ -325,6 +325,7 @@
     <Content Include="Assets\bootstrap\css\owl.theme.default.min.css" />
     <Content Include="Assets\bootstrap\css\style.css" />
     <Content Include="Assets\bootstrap\css\_flaticon.css" />
+    <Content Include="Assets\bootstrap\css_user\bootstrap.min.css" />
     <Content Include="Assets\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\bootstrap\fonts\icomoon.svg" />
     <Content Include="Assets\bootstrap\fonts\style.css" />
@@ -421,6 +422,7 @@
     <Content Include="Assets\IMGUSER\fpt_logo.jpg" />
     <Content Include="Assets\IMGUSER\fpt_logo_2.jpg" />
     <Content Include="Assets\IMGUSER\fpt_logo_3.jpg" />
+    <Content Include="Assets\IMGUSER\logo.png" />
     <Content Include="Assets\IMGUSER\person_1.jpg" />
     <Content Include="Assets\IMGUSER\person_2.jpg" />
     <Content Include="Assets\IMGUSER\person_3.jpg" />
@@ -1370,6 +1372,7 @@
     <Content Include="Models\STUDYONLINE.edmx.diagram">
       <DependentUpon>STUDYONLINE.edmx</DependentUpon>
     </Content>
+    <Content Include="Assets\bootstrap\js\bootstrap.min.js.download" />
     <None Include="Properties\PublishProfiles\MvcP.pubxml" />
     <None Include="Properties\PublishProfiles\MvcPWy.pubxml" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
