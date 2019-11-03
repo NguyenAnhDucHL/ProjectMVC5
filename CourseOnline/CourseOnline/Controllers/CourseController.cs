@@ -16,7 +16,7 @@ namespace CourseOnline.Controllers
         {
             int pageSize = 6;
             int pageNumber = (page ?? 1);
-            var lstCourse = db.Subjects.OrderBy(n => n.subject_id).ToPagedList(pageNumber,pageSize);
+            var lstCourse = db.Subjects.OrderBy(n => n.subject_id).Where(n => n.subject_status == "Submitted").ToPagedList(pageNumber,pageSize);
             ViewBag.lstCourse = lstCourse;
             return View("/Views/User/Course.cshtml");
         }
