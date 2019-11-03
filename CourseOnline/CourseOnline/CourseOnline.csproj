@@ -193,6 +193,7 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\TestExamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1454,6 +1455,7 @@
     <Content Include="Views\User\Course.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Post.cshtml" />
+    <Content Include="Views\User\TeacherList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1463,6 +1465,7 @@
     <Folder Include="Views\News\" />
     <Folder Include="Views\Permissions\" />
     <Folder Include="Views\SliderList\" />
+    <Folder Include="Views\Teacher\" />
     <Folder Include="Views\TestExam\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
