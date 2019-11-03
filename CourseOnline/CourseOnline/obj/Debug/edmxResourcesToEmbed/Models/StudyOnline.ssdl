@@ -38,8 +38,11 @@
     <Key>
       <PropertyRef Name="domain_id" />
     </Key>
-    <Property Name="domain_id" Type="int" Nullable="false" />
+    <Property Name="domain_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="subject_id" Type="int" />
+    <Property Name="domain_name" Type="varchar" MaxLength="50" />
+    <Property Name="domain_description" Type="varchar" MaxLength="200" />
+    <Property Name="domain_status" Type="bit" />
   </EntityType>
   <EntityType Name="Exam">
     <Key>
@@ -51,6 +54,7 @@
     <Property Name="exam_is_practice" Type="bit" Nullable="false" />
     <Property Name="subject_id" Type="int" />
     <Property Name="exam_duration" Type="int" Nullable="false" />
+    <Property Name="exam_description" Type="varchar" MaxLength="2000" />
   </EntityType>
   <EntityType Name="ExamConfig">
     <Key>
@@ -93,11 +97,13 @@
     </Key>
     <Property Name="lesson_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="subject_id" Type="int" Nullable="false" />
-    <Property Name="parent_id" Type="int" Nullable="false" />
-    <Property Name="lesson_name" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="lesson_order" Type="int" Nullable="false" />
-    <Property Name="lesson_type" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="lesson_status" Type="bit" Nullable="false" />
+    <Property Name="parent_id" Type="int" />
+    <Property Name="lesson_name" Type="varchar" MaxLength="50" />
+    <Property Name="lesson_order" Type="int" />
+    <Property Name="lesson_type" Type="varchar" MaxLength="50" />
+    <Property Name="lesson_status" Type="bit" />
+    <Property Name="lesson_link" Type="varchar" MaxLength="200" />
+    <Property Name="lesson_content" Type="varchar" MaxLength="2000" />
   </EntityType>
   <EntityType Name="Menu">
     <Key>
@@ -109,6 +115,7 @@
     <Property Name="menu_link" Type="varchar" MaxLength="50" />
     <Property Name="menu_order" Type="int" />
     <Property Name="menu_status" Type="bit" />
+    <Property Name="menu_description" Type="varchar" MaxLength="2000" />
   </EntityType>
   <EntityType Name="Permission">
     <Key>
@@ -133,7 +140,7 @@
     <Property Name="post_detail_info" Type="varchar(max)" />
     <Property Name="post_document_link" Type="varchar" MaxLength="200" />
     <Property Name="post_status" Type="varchar" MaxLength="10" />
-    <Property Name="Post_Date" Type="varchar" MaxLength="50" />
+    <Property Name="post_date" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -205,24 +212,24 @@ warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary k
       <PropertyRef Name="slider_id" />
     </Key>
     <Property Name="slider_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="slider_picture_url" Type="varchar" MaxLength="500" Nullable="false" />
     <Property Name="slider_title" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="slider_caption" Type="varchar" MaxLength="200" Nullable="false" />
     <Property Name="slider_back_link" Type="varchar" MaxLength="500" Nullable="false" />
-    <Property Name="slider_status" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="slider_picture_url" Type="varchar" MaxLength="500" />
+    <Property Name="slider_status" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Subject">
     <Key>
       <PropertyRef Name="subject_id" />
     </Key>
-    <Property Name="subject_id" Type="int" Nullable="false" />
     <Property Name="subject_category" Type="varchar" MaxLength="50" />
-    <Property Name="subject_tag_line" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="subject_name" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="subject_brief_info" Type="varchar" MaxLength="2000" />
     <Property Name="subject_type" Type="varchar" MaxLength="50" />
     <Property Name="subject_status" Type="varchar" MaxLength="50" />
-    <Property Name="Picture" Type="varchar" MaxLength="255" />
+    <Property Name="subject_tag_line" Type="varchar" MaxLength="50" />
+    <Property Name="subject_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="picture" Type="nvarchar" MaxLength="250" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'STUDYONLINE.dbo.SubjectReference' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -446,7 +453,19 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Menu__parent_id__74AE54BC">
+  <Association Name="FK__Lesson__subject___74AE54BC">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+    <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="subject_id" />
+      </Principal>
+      <Dependent Role="Lesson">
+        <PropertyRef Name="subject_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Menu__parent_id__75A278F5">
     <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
     <End Role="Menu1" Type="Self.Menu" Multiplicity="*" />
     <ReferentialConstraint>
@@ -458,7 +477,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PostTag__post_id__75A278F5">
+  <Association Name="FK__PostTag__post_id__76969D2E">
     <End Role="Post" Type="Self.Post" Multiplicity="1" />
     <End Role="PostTag" Type="Self.PostTag" Multiplicity="*" />
     <ReferentialConstraint>
@@ -470,7 +489,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PostTag__tag_id__76969D2E">
+  <Association Name="FK__PostTag__tag_id__778AC167">
     <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
     <End Role="PostTag" Type="Self.PostTag" Multiplicity="*" />
     <ReferentialConstraint>
@@ -482,7 +501,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Question__subjec__778AC167">
+  <Association Name="FK__Question__subjec__787EE5A0">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="Question" Type="Self.Question" Multiplicity="*" />
     <ReferentialConstraint>
@@ -698,18 +717,6 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Question_Subject">
-    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
-    <End Role="Question" Type="Self.Question" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Subject">
-        <PropertyRef Name="subject_id" />
-      </Principal>
-      <Dependent Role="Question">
-        <PropertyRef Name="subject_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="STUDYONLINEModelStoreContainer">
     <EntitySet Name="AnswerOption" EntityType="Self.AnswerOption" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
@@ -801,19 +808,23 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       <End Role="Registration" EntitySet="Registration" />
       <End Role="Grade" EntitySet="Grade" />
     </AssociationSet>
-    <AssociationSet Name="FK__Menu__parent_id__74AE54BC" Association="Self.FK__Menu__parent_id__74AE54BC">
+    <AssociationSet Name="FK__Lesson__subject___74AE54BC" Association="Self.FK__Lesson__subject___74AE54BC">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="Lesson" EntitySet="Lesson" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Menu__parent_id__75A278F5" Association="Self.FK__Menu__parent_id__75A278F5">
       <End Role="Menu" EntitySet="Menu" />
       <End Role="Menu1" EntitySet="Menu" />
     </AssociationSet>
-    <AssociationSet Name="FK__PostTag__post_id__75A278F5" Association="Self.FK__PostTag__post_id__75A278F5">
+    <AssociationSet Name="FK__PostTag__post_id__76969D2E" Association="Self.FK__PostTag__post_id__76969D2E">
       <End Role="Post" EntitySet="Post" />
       <End Role="PostTag" EntitySet="PostTag" />
     </AssociationSet>
-    <AssociationSet Name="FK__PostTag__tag_id__76969D2E" Association="Self.FK__PostTag__tag_id__76969D2E">
+    <AssociationSet Name="FK__PostTag__tag_id__778AC167" Association="Self.FK__PostTag__tag_id__778AC167">
       <End Role="Tag" EntitySet="Tag" />
       <End Role="PostTag" EntitySet="PostTag" />
     </AssociationSet>
-    <AssociationSet Name="FK__Question__subjec__778AC167" Association="Self.FK__Question__subjec__778AC167">
+    <AssociationSet Name="FK__Question__subjec__787EE5A0" Association="Self.FK__Question__subjec__787EE5A0">
       <End Role="Subject" EntitySet="Subject" />
       <End Role="Question" EntitySet="Question" />
     </AssociationSet>
@@ -884,10 +895,6 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
     <AssociationSet Name="FK__UserRole__user_i__08B54D69" Association="Self.FK__UserRole__user_i__08B54D69">
       <End Role="User" EntitySet="User" />
       <End Role="UserRole" EntitySet="UserRole" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Question_Subject" Association="Self.FK_Question_Subject">
-      <End Role="Subject" EntitySet="Subject" />
-      <End Role="Question" EntitySet="Question" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -190,6 +190,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MenuDetailController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\TestExamController.cs" />
@@ -1365,6 +1366,7 @@
     <Content Include="Assets\bootstrap\fonts\icomoon.eot" />
     <Content Include="Assets\bootstrap\fonts\icomoon.ttf" />
     <Content Include="Assets\bootstrap\fonts\icomoon.woff" />
+    <Content Include="Assets\bootstrap\js\bootstrap.min.js.download" />
     <EntityDeploy Include="Models\STUDYONLINE.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>STUDYONLINE.Designer.cs</LastGenOutput>
@@ -1372,7 +1374,6 @@
     <Content Include="Models\STUDYONLINE.edmx.diagram">
       <DependentUpon>STUDYONLINE.edmx</DependentUpon>
     </Content>
-    <Content Include="Assets\bootstrap\js\bootstrap.min.js.download" />
     <None Include="Properties\PublishProfiles\MvcP.pubxml" />
     <None Include="Properties\PublishProfiles\MvcPWy.pubxml" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
@@ -1450,12 +1451,15 @@
     <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\User\Home.cshtml" />
     <Content Include="Views\User\Course.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\User\Post.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Connected Services\" />
     <Folder Include="Views\Course\" />
     <Folder Include="Views\Forum\" />
+    <Folder Include="Views\News\" />
     <Folder Include="Views\Permissions\" />
     <Folder Include="Views\SliderList\" />
     <Folder Include="Views\TestExam\" />

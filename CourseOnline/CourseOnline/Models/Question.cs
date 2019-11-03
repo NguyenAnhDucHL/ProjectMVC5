@@ -35,6 +35,5 @@ namespace CourseOnline.Models
         public virtual ICollection<TestAnswer> TestAnswers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
-        public virtual Subject Subject1 { get; set; }
     }
 }

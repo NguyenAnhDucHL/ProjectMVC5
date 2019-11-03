@@ -20,5 +20,6 @@ namespace CourseOnline.Controllers
             ViewBag.lstCourse = lstCourse;
             return View("/Views/User/Course.cshtml");
         }
+
     }
 }

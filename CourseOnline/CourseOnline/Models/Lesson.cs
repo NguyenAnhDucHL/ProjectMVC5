@@ -16,10 +16,14 @@ namespace CourseOnline.Models
     {
         public int lesson_id { get; set; }
         public int subject_id { get; set; }
-        public int parent_id { get; set; }
+        public Nullable<int> parent_id { get; set; }
         public string lesson_name { get; set; }
-        public int lesson_order { get; set; }
+        public Nullable<int> lesson_order { get; set; }
         public string lesson_type { get; set; }
-        public bool lesson_status { get; set; }
+        public Nullable<bool> lesson_status { get; set; }
+        public string lesson_link { get; set; }
+        public string lesson_content { get; set; }
+    
+        public virtual Subject Subject { get; set; }
     }
 }

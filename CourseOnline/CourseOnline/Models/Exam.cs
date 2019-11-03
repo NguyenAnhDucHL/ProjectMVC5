@@ -27,6 +27,7 @@ namespace CourseOnline.Models
         public bool exam_is_practice { get; set; }
         public Nullable<int> subject_id { get; set; }
         public int exam_duration { get; set; }
+        public string exam_description { get; set; }
     
         public virtual Subject Subject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

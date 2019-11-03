@@ -63,7 +63,7 @@
                     {
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="#"><img src="@item.Picture" alt="Image" class="img-fluid"></a>
+                                <a href="#"><img src="@item.picture" alt="Image" class="img-fluid"></a>
                                 <div class="category"><h3>@item.subject_category</h3></div>
                             </figure>
                             <div class="course-1-content pb-4">
@@ -98,7 +98,7 @@
                 <h2 class="section-title-underline mb-3">
                     <span>News &amp; Updates</span>
                 </h2>
-                <a href="#">Read All News</a>
+                <a href="@Url.Action("PostList","News")">Read All News</a>
             </div>
         </div>
         <div class="row">
@@ -107,7 +107,7 @@
                     <a href="#" class="img-link"><img src="@listPost[0].post_thumbnail" alt="Image" class="img-fluid"></a>
                     <div class="post-content">
                         <div class="post-meta">
-                            <a href="#">@listPost[0].Post_Date</a>
+                            <a href="#">@listPost[0].post_date</a>
                             <span class="mx-1">/@listPost[0].post_category</span>
                         </div>
                         <h3 class="post-heading"><a href="#">@listPost[0].post_name</a></h3>
@@ -123,7 +123,7 @@
                             <a href="#" class="img-link mr-4"><img src="@item.post_thumbnail" alt="Image" class="img-fluid"></a>
                             <div class="post-content">
                                 <div class="post-meta">
-                                    <a href="#">@item.Post_Date</a>
+                                    <a href="#">@item.post_date</a>
                                     <span class="mx-1">/@item.post_category</span>
                                 </div>
                                 <h3 class="post-heading"><a href="#">@item.post_name</a></h3>
