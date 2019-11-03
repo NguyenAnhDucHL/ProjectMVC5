@@ -29,6 +29,8 @@ namespace CourseOnline.Models
         public string use_mobile { get; set; }
         public bool user_gender { get; set; }
         public bool user_status { get; set; }
+        public string user_image { get; set; }
+        public string user_description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Course> Courses { get; set; }

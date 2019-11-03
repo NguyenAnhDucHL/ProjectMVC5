@@ -317,6 +317,8 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
           <Property Name="use_mobile" Type="varchar" MaxLength="50" />
           <Property Name="user_gender" Type="bit" Nullable="false" />
           <Property Name="user_status" Type="bit" Nullable="false" />
+          <Property Name="user_image" Type="nvarchar" MaxLength="250" />
+          <Property Name="user_description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -1243,6 +1245,8 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
           <Property Name="use_mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="user_gender" Type="Boolean" Nullable="false" />
           <Property Name="user_status" Type="Boolean" Nullable="false" />
+          <Property Name="user_image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="user_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Courses" Relationship="Self.FK__Course__teacher___6C190EBB" FromRole="User" ToRole="Course" />
           <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__user___7A672E12" FromRole="User" ToRole="Registration" />
           <NavigationProperty Name="UserRoles" Relationship="Self.FK__UserRole__user_i__08B54D69" FromRole="User" ToRole="UserRole" />
@@ -2089,6 +2093,8 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
                 <ScalarProperty Name="use_mobile" ColumnName="use_mobile" />
                 <ScalarProperty Name="user_gender" ColumnName="user_gender" />
                 <ScalarProperty Name="user_status" ColumnName="user_status" />
+                <ScalarProperty Name="user_image" ColumnName="user_image" />
+                <ScalarProperty Name="user_description" ColumnName="user_description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

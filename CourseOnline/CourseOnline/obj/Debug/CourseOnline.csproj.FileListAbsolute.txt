@@ -100,3 +100,4 @@ E:\Sourcecode\CourseOnline\CourseOnline\bin\PagedList.dll
 E:\Sourcecode\CourseOnline\CourseOnline\bin\PagedList.Mvc.dll
 E:\Sourcecode\CourseOnline\CourseOnline\bin\PagedList.xml
 E:\Sourcecode\CourseOnline\CourseOnline\bin\PagedList.Mvc.xml
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache

@@ -336,6 +336,8 @@
     <Property Name="use_mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="user_gender" Type="Boolean" Nullable="false" />
     <Property Name="user_status" Type="Boolean" Nullable="false" />
+    <Property Name="user_image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="user_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Courses" Relationship="Self.FK__Course__teacher___6C190EBB" FromRole="User" ToRole="Course" />
     <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__user___7A672E12" FromRole="User" ToRole="Registration" />
     <NavigationProperty Name="UserRoles" Relationship="Self.FK__UserRole__user_i__08B54D69" FromRole="User" ToRole="UserRole" />

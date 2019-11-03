@@ -21,5 +21,14 @@ namespace CourseOnline.Controllers
             return View("/Views/User/Course.cshtml");
         }
 
+        public ActionResult YourCourse(int? page)
+        {
+            //int pageSize = 6;
+            //int pageNumber = (page ?? 1);
+            //var lstMyCourse = from 
+            //ViewBag.lstCourse = lstCourse;
+            //return View("/Views/User/Course.cshtml");
+            return View();
+        }
     }
 }

@@ -298,6 +298,7 @@
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserListModel.cs" />
+    <Compile Include="Models\TeacherModel.cs" />
     <Compile Include="Models\UserRole.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>

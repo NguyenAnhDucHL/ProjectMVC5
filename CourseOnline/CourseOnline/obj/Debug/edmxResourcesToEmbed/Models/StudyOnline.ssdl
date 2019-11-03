@@ -312,6 +312,8 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
     <Property Name="use_mobile" Type="varchar" MaxLength="50" />
     <Property Name="user_gender" Type="bit" Nullable="false" />
     <Property Name="user_status" Type="bit" Nullable="false" />
+    <Property Name="user_image" Type="nvarchar" MaxLength="250" />
+    <Property Name="user_description" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="UserRole">
     <Key>

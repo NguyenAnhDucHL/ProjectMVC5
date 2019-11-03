@@ -306,6 +306,8 @@
           <ScalarProperty Name="use_mobile" ColumnName="use_mobile" />
           <ScalarProperty Name="user_gender" ColumnName="user_gender" />
           <ScalarProperty Name="user_status" ColumnName="user_status" />
+          <ScalarProperty Name="user_image" ColumnName="user_image" />
+          <ScalarProperty Name="user_description" ColumnName="user_description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
