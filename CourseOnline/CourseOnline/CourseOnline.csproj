@@ -1454,7 +1454,6 @@
     <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\User\Home.cshtml" />
     <Content Include="Views\User\Course.cshtml" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Post.cshtml" />
     <Content Include="Views\User\TeacherList.cshtml" />
     <Content Include="Views\User\MyCourse.cshtml" />
