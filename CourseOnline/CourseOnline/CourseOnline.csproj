@@ -231,6 +231,7 @@
     <Compile Include="Models\Menu.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MySubjectModel.cs" />
     <Compile Include="Models\Permission.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
@@ -1456,6 +1457,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Post.cshtml" />
     <Content Include="Views\User\TeacherList.cshtml" />
+    <Content Include="Views\User\MyCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
