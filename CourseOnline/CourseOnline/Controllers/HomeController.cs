@@ -31,7 +31,7 @@ namespace CourseOnline.Controllers
                                user_group = u.user_group,
                                user_image = u.user_image,
                                user_description = u.user_description,
-                             }).Take(4).ToList();
+                             }).Take(6).ToList();
 
             ViewBag.lstTeacher = lstTeacher;
             return View("/Views/User/Home.cshtml");
