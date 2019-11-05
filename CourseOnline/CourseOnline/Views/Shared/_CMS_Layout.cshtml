@@ -1,7 +1,4 @@
-﻿@{
-    Layout = null;
-}
-@using CourseOnline.Models
+﻿@using CourseOnline.Models
 
 <!DOCTYPE html>
 <html lang="en">
@@ -159,8 +156,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a @Url.Action("Post", "Index", "Post")><i class="fa fa-circle-o"></i> Posts List</a></li>
-                            <li><a href="slide-list"><i class="fa fa-circle-o"></i> Slides</a></li>
+                            <li><a href="@Url.Action("Index","Post")"><i class="fa fa-circle-o"></i> Posts List</a></li>
+                            <li><a href="@Url.Action("Index","Slider")"><i class="fa fa-circle-o"></i> Slides</a></li>
                         </ul>
                     </li>
                     <li class=" treeview">

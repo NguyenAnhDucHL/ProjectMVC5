@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Exam List";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Exams List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Exam List</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <a class="link" href="menu-details.html">Add New</a>
+                <div class="box-body">
+                    <table id="tb_exam" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="table-width5">ID</th>
+                                <th class="table-width30">Exam</th>
+                                <th class="table-width20">Subject</th>
+                                <th class="table-width5">Level</th>
+                                <th class="table-width10">Dur</th>
+                                <th class="table-width10">Pass Rate</th>
+                                <th class="table-width10">Test Type</th>
+                                <th class="table-width10">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#tb_exam').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllExam", "Exam")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "exam_id", "name": "exam_id", "orderable": true },
+                { "data": "exam_name", "name": "exam_name", "orderable": true },
+                { "data": "subject_name", "name": "subject_name", "orderable": true },
+                { "data": "exam_level", "name": "exam_level", "orderable": true },
+                { "data": "exam_duration", "name": "exam_duration", "orderable": true },
+                { "data": "pass_rate", "name": "pass_rate", "orderable": true },
+                { "data": "test_type", "name": "test_type", "orderable": true },
+                {
+                    "data": "exam_id", "render": function (data) {
+                        return "<button><a data-target='edit_employee'  style='margin-left:5px' ><i class='fa fa-fw fa-edit'></i>Sửa</a></button>" +
+                            "<button><a style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='fa fa-trash'></i> Xóa</a></button>";
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+    } );
+    </script>
+}

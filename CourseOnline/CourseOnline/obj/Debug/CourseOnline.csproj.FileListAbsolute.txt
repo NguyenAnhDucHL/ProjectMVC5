@@ -1,103 +1,788 @@
-F:\New folder (5)\C#\MvcPWy\bin\MvcPWy.dll.config
-F:\New folder (5)\C#\MvcPWy\bin\MvcPWy.dll
-F:\New folder (5)\C#\MvcPWy\bin\MvcPWy.pdb
-F:\New folder (5)\C#\MvcPWy\bin\Antlr3.Runtime.dll
-F:\New folder (5)\C#\MvcPWy\bin\EntityFramework.dll
-F:\New folder (5)\C#\MvcPWy\bin\EntityFramework.SqlServer.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.AspNet.Identity.Core.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.AspNet.Identity.EntityFramework.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.AspNet.Identity.Owin.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Host.SystemWeb.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.Cookies.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.Facebook.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.Google.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.OAuth.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.Twitter.dll
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Web.Infrastructure.dll
-F:\New folder (5)\C#\MvcPWy\bin\Newtonsoft.Json.dll
-F:\New folder (5)\C#\MvcPWy\bin\Owin.dll
-F:\New folder (5)\C#\MvcPWy\bin\RestSharp.dll
-F:\New folder (5)\C#\MvcPWy\bin\SendGrid.SmtpApi.dll
-F:\New folder (5)\C#\MvcPWy\bin\SendGridMail.dll
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.Helpers.dll
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.Mvc.dll
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.Optimization.dll
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.Razor.dll
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.WebPages.Deployment.dll
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.WebPages.dll
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.WebPages.Razor.dll
-F:\New folder (5)\C#\MvcPWy\bin\Twilio.Api.dll
-F:\New folder (5)\C#\MvcPWy\bin\WebGrease.dll
-F:\New folder (5)\C#\MvcPWy\bin\RestSharp.xml
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.Helpers.xml
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.Mvc.xml
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.Optimization.xml
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.Razor.xml
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.WebPages.xml
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.WebPages.Deployment.xml
-F:\New folder (5)\C#\MvcPWy\bin\System.Web.WebPages.Razor.xml
-F:\New folder (5)\C#\MvcPWy\bin\Twilio.Api.pdb
-F:\New folder (5)\C#\MvcPWy\bin\Twilio.Api.xml
-F:\New folder (5)\C#\MvcPWy\bin\Antlr3.Runtime.pdb
-F:\New folder (5)\C#\MvcPWy\bin\Newtonsoft.Json.xml
-F:\New folder (5)\C#\MvcPWy\bin\EntityFramework.xml
-F:\New folder (5)\C#\MvcPWy\bin\EntityFramework.SqlServer.xml
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.AspNet.Identity.Core.xml
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.AspNet.Identity.Owin.xml
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.xml
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Host.SystemWeb.xml
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.xml
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.Facebook.xml
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.Cookies.xml
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.OAuth.xml
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.Google.xml
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.Twitter.xml
-F:\New folder (5)\C#\MvcPWy\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-F:\New folder (5)\C#\MvcPWy\obj\Debug\CourseOnline.csprojAssemblyReference.cache
-F:\New folder (5)\C#\MvcPWy\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
-F:\New folder (5)\C#\MvcPWy\obj\Debug\CourseOnline.csproj.CopyComplete
-F:\New folder (5)\C#\MvcPWy\obj\Debug\MvcPWy.dll
-F:\New folder (5)\C#\MvcPWy\obj\Debug\MvcPWy.pdb
-E:\DemoCrud\C#\MvcPWy\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
-E:\DemoCrud\C#\MvcPWy\obj\Debug\MvcPWy.dll
-E:\DemoCrud\C#\MvcPWy\obj\Debug\MvcPWy.pdb
-E:\DemoCrud\C#\MvcPWy\bin\MvcPWy.dll.config
-E:\DemoCrud\C#\MvcPWy\bin\MvcPWy.dll
-E:\DemoCrud\C#\MvcPWy\bin\MvcPWy.pdb
-E:\DemoCrud\C#\MvcPWy\bin\System.Linq.Dynamic.dll
-E:\DemoCrud\C#\MvcPWy\obj\Debug\CourseOnline.csproj.CopyComplete
-E:\DemoCrud\C#\MvcPWy\obj\Debug\CourseOnline.csprojAssemblyReference.cache
-E:\DemoCrud\C#\CourseOnline\bin\MvcPWy.dll.config
-E:\DemoCrud\C#\CourseOnline\bin\MvcPWy.dll
-E:\DemoCrud\C#\CourseOnline\bin\MvcPWy.pdb
-E:\DemoCrud\C#\CourseOnline\bin\System.Linq.Dynamic.dll
-E:\DemoCrud\C#\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
-E:\DemoCrud\C#\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
-E:\DemoCrud\C#\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
-E:\DemoCrud\C#\CourseOnline\obj\Debug\MvcPWy.dll
-E:\DemoCrud\C#\CourseOnline\obj\Debug\MvcPWy.pdb
-E:\DemoCrud\CourseOnline\CourseOnline\bin\MvcPWy.dll.config
-E:\DemoCrud\CourseOnline\CourseOnline\bin\MvcPWy.dll
-E:\DemoCrud\CourseOnline\CourseOnline\bin\MvcPWy.pdb
-E:\DemoCrud\CourseOnline\CourseOnline\bin\System.Linq.Dynamic.dll
-E:\DemoCrud\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
-E:\DemoCrud\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
-E:\DemoCrud\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
-E:\DemoCrud\CourseOnline\CourseOnline\obj\Debug\MvcPWy.dll
-E:\DemoCrud\CourseOnline\CourseOnline\obj\Debug\MvcPWy.pdb
-E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
-E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\CourseOnline.dll.config
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\CourseOnline.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\CourseOnline.pdb
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\csc.exe
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\csc.exe.config
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\csc.rsp
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\csi.exe
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\csi.exe.config
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\csi.rsp
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.AppContext.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Console.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.IO.Compression.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Security.Claims.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.ValueTuple.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\vbc.exe
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\vbc.exe.config
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\vbc.rsp
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\Antlr3.Runtime.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\Newtonsoft.Json.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.Helpers.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.Mvc.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.Optimization.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.Razor.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.WebPages.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\WebGrease.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.Helpers.xml
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.Mvc.xml
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.Optimization.xml
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.Razor.xml
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.WebPages.xml
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.xml
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.xml
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\Newtonsoft.Json.xml
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\Antlr3.Runtime.pdb
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\EntityFramework.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\System.Linq.Dynamic.dll
+C:\Users\USER\source\repos\CourseOnline\CourseOnline\bin\EntityFramework.xml
 E:\Sourcecode\CourseOnline\CourseOnline\bin\CourseOnline.dll.config
 E:\Sourcecode\CourseOnline\CourseOnline\bin\CourseOnline.dll
 E:\Sourcecode\CourseOnline\CourseOnline\bin\CourseOnline.pdb
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\csc.exe
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\csc.exe.config
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\csc.rsp
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\csi.exe
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\csi.exe.config
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\csi.rsp
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Managed.Core.targets
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.AppContext.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Collections.Immutable.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Console.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.IO.Compression.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.AccessControl.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Reflection.Metadata.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Security.AccessControl.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Security.Claims.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Security.Principal.Windows.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.ValueTuple.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XmlDocument.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\vbc.exe
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\vbc.exe.config
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\vbc.rsp
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe
+E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe.config
+E:\Sourcecode\CourseOnline\CourseOnline\bin\Antlr3.Runtime.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\EntityFramework.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.Web.Infrastructure.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\Newtonsoft.Json.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Linq.Dynamic.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.Helpers.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.Mvc.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.Optimization.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.Razor.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.WebPages.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\WebGrease.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\EntityFramework.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.Helpers.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.Mvc.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.Optimization.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.Razor.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.WebPages.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\Newtonsoft.Json.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\Antlr3.Runtime.pdb
+E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
-E:\Sourcecode\CourseOnline\CourseOnline\bin\PagedList.dll
-E:\Sourcecode\CourseOnline\CourseOnline\bin\PagedList.Mvc.dll
-E:\Sourcecode\CourseOnline\CourseOnline\bin\PagedList.xml
-E:\Sourcecode\CourseOnline\CourseOnline\bin\PagedList.Mvc.xml
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\CourseOnline.dll.config
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\CourseOnline.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\CourseOnline.pdb
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\csc.exe
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\csc.exe.config
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\csc.rsp
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\csi.exe
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\csi.exe.config
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\csi.rsp
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.AppContext.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Console.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.Compression.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Claims.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.ValueTuple.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\vbc.exe
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\vbc.exe.config
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\vbc.rsp
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\Antlr3.Runtime.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\EntityFramework.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\Newtonsoft.Json.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Linq.Dynamic.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.Helpers.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.Mvc.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.Optimization.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.Razor.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\WebGrease.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\EntityFramework.xml
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.Helpers.xml
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.Mvc.xml
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.Optimization.xml
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.Razor.xml
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.xml
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.xml
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.xml
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\Newtonsoft.Json.xml
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\Antlr3.Runtime.pdb
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
+C:\Users\ANH DUC\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\CourseOnline.dll.config
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\CourseOnline.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\CourseOnline.pdb
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\csc.exe
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\csc.exe.config
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\csc.rsp
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\csi.exe
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\csi.exe.config
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\csi.rsp
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.AppContext.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Console.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.IO.Compression.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Security.Claims.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.ValueTuple.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\vbc.exe
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\vbc.exe.config
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\vbc.rsp
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\Antlr3.Runtime.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\EntityFramework.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\Newtonsoft.Json.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Linq.Dynamic.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.Helpers.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.Mvc.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.Optimization.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.Razor.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.WebPages.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\WebGrease.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\EntityFramework.xml
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.Helpers.xml
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.Mvc.xml
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.Optimization.xml
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.Razor.xml
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.WebPages.xml
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.xml
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.xml
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\Newtonsoft.Json.xml
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\Antlr3.Runtime.pdb
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
+C:\Users\B360m\Desktop\Sourcecode_Capstone\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\CourseOnline.dll.config
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\CourseOnline.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\CourseOnline.pdb
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\csc.exe
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\csc.exe.config
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\csc.rsp
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\csi.exe
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\csi.exe.config
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\csi.rsp
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.AppContext.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Console.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.Compression.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Claims.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.ValueTuple.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\vbc.exe
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\vbc.exe.config
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\vbc.rsp
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\Antlr3.Runtime.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\EntityFramework.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\Newtonsoft.Json.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Linq.Dynamic.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.Helpers.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.Mvc.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.Optimization.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.Razor.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\WebGrease.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\EntityFramework.xml
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.Helpers.xml
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.Mvc.xml
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.Optimization.xml
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.Razor.xml
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.xml
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.xml
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.xml
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\Newtonsoft.Json.xml
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\Antlr3.Runtime.pdb
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
+C:\Users\B360m\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\CourseOnline.dll.config
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\CourseOnline.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\CourseOnline.pdb
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\csc.exe
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\csc.exe.config
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\csc.rsp
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\csi.exe
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\csi.exe.config
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\csi.rsp
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.AppContext.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Console.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.IO.Compression.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Security.Claims.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.ValueTuple.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\vbc.exe
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\vbc.exe.config
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\vbc.rsp
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\Antlr3.Runtime.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\EntityFramework.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\Newtonsoft.Json.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Linq.Dynamic.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.Helpers.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.Mvc.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.Optimization.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.Razor.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.WebPages.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\WebGrease.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\EntityFramework.xml
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.Helpers.xml
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.Mvc.xml
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.Optimization.xml
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.Razor.xml
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.WebPages.xml
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.xml
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.xml
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\Newtonsoft.Json.xml
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\Antlr3.Runtime.pdb
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
+C:\Users\USER\Desktop\New folder\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\CourseOnline.dll.config
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\CourseOnline.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\CourseOnline.pdb
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\csc.exe
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\csc.exe.config
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\csc.rsp
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\csi.exe
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\csi.exe.config
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\csi.rsp
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.AppContext.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Console.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.Compression.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Claims.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.ValueTuple.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\vbc.exe
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\vbc.exe.config
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\vbc.rsp
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\Antlr3.Runtime.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\EntityFramework.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\Newtonsoft.Json.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Linq.Dynamic.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.Helpers.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.Mvc.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.Optimization.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.Razor.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\WebGrease.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\EntityFramework.xml
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.Helpers.xml
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.Mvc.xml
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.Optimization.xml
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.Razor.xml
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.xml
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.xml
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.xml
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\Newtonsoft.Json.xml
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\Antlr3.Runtime.pdb
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
+C:\Users\USER\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
 E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
+E:\CourseOnline\CourseOnline\bin\CourseOnline.dll.config
+E:\CourseOnline\CourseOnline\bin\CourseOnline.dll
+E:\CourseOnline\CourseOnline\bin\CourseOnline.pdb
+E:\CourseOnline\CourseOnline\bin\roslyn\csc.exe
+E:\CourseOnline\CourseOnline\bin\roslyn\csc.exe.config
+E:\CourseOnline\CourseOnline\bin\roslyn\csc.rsp
+E:\CourseOnline\CourseOnline\bin\roslyn\csi.exe
+E:\CourseOnline\CourseOnline\bin\roslyn\csi.exe.config
+E:\CourseOnline\CourseOnline\bin\roslyn\csi.rsp
+E:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Managed.Core.targets
+E:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\CourseOnline\CourseOnline\bin\roslyn\System.AppContext.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Collections.Immutable.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Console.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.IO.Compression.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.AccessControl.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Reflection.Metadata.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Security.AccessControl.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Security.Claims.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Security.Principal.Windows.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.ValueTuple.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XmlDocument.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\CourseOnline\CourseOnline\bin\roslyn\vbc.exe
+E:\CourseOnline\CourseOnline\bin\roslyn\vbc.exe.config
+E:\CourseOnline\CourseOnline\bin\roslyn\vbc.rsp
+E:\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe
+E:\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe.config
+E:\CourseOnline\CourseOnline\bin\Antlr3.Runtime.dll
+E:\CourseOnline\CourseOnline\bin\EntityFramework.dll
+E:\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\CourseOnline\CourseOnline\bin\Microsoft.Web.Infrastructure.dll
+E:\CourseOnline\CourseOnline\bin\Newtonsoft.Json.dll
+E:\CourseOnline\CourseOnline\bin\System.Linq.Dynamic.dll
+E:\CourseOnline\CourseOnline\bin\System.Web.Helpers.dll
+E:\CourseOnline\CourseOnline\bin\System.Web.Mvc.dll
+E:\CourseOnline\CourseOnline\bin\System.Web.Optimization.dll
+E:\CourseOnline\CourseOnline\bin\System.Web.Razor.dll
+E:\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.dll
+E:\CourseOnline\CourseOnline\bin\System.Web.WebPages.dll
+E:\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.dll
+E:\CourseOnline\CourseOnline\bin\WebGrease.dll
+E:\CourseOnline\CourseOnline\bin\EntityFramework.xml
+E:\CourseOnline\CourseOnline\bin\System.Web.Helpers.xml
+E:\CourseOnline\CourseOnline\bin\System.Web.Mvc.xml
+E:\CourseOnline\CourseOnline\bin\System.Web.Optimization.xml
+E:\CourseOnline\CourseOnline\bin\System.Web.Razor.xml
+E:\CourseOnline\CourseOnline\bin\System.Web.WebPages.xml
+E:\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.xml
+E:\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.xml
+E:\CourseOnline\CourseOnline\bin\Newtonsoft.Json.xml
+E:\CourseOnline\CourseOnline\bin\Antlr3.Runtime.pdb
+E:\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
+E:\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
+E:\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
+E:\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
+F:\CourseOnline\CourseOnline\bin\CourseOnline.dll.config
+F:\CourseOnline\CourseOnline\bin\CourseOnline.dll
+F:\CourseOnline\CourseOnline\bin\CourseOnline.pdb
+F:\CourseOnline\CourseOnline\bin\roslyn\csc.exe
+F:\CourseOnline\CourseOnline\bin\roslyn\csc.exe.config
+F:\CourseOnline\CourseOnline\bin\roslyn\csc.rsp
+F:\CourseOnline\CourseOnline\bin\roslyn\csi.exe
+F:\CourseOnline\CourseOnline\bin\roslyn\csi.exe.config
+F:\CourseOnline\CourseOnline\bin\roslyn\csi.rsp
+F:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CSharp.Core.targets
+F:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Managed.Core.targets
+F:\CourseOnline\CourseOnline\bin\roslyn\Microsoft.VisualBasic.Core.targets
+F:\CourseOnline\CourseOnline\bin\roslyn\System.AppContext.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Collections.Immutable.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Console.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.StackTrace.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.IO.Compression.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.Primitives.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.AccessControl.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Reflection.Metadata.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Security.AccessControl.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Security.Claims.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Encoding.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Primitives.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Security.Principal.Windows.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Text.Encoding.CodePages.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.ValueTuple.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Xml.ReaderWriter.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XmlDocument.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.XDocument.dll
+F:\CourseOnline\CourseOnline\bin\roslyn\vbc.exe
+F:\CourseOnline\CourseOnline\bin\roslyn\vbc.exe.config
+F:\CourseOnline\CourseOnline\bin\roslyn\vbc.rsp
+F:\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe
+F:\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe.config
+F:\CourseOnline\CourseOnline\bin\Antlr3.Runtime.dll
+F:\CourseOnline\CourseOnline\bin\EntityFramework.dll
+F:\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+F:\CourseOnline\CourseOnline\bin\Microsoft.Web.Infrastructure.dll
+F:\CourseOnline\CourseOnline\bin\Newtonsoft.Json.dll
+F:\CourseOnline\CourseOnline\bin\System.Linq.Dynamic.dll
+F:\CourseOnline\CourseOnline\bin\System.Web.Helpers.dll
+F:\CourseOnline\CourseOnline\bin\System.Web.Mvc.dll
+F:\CourseOnline\CourseOnline\bin\System.Web.Optimization.dll
+F:\CourseOnline\CourseOnline\bin\System.Web.Razor.dll
+F:\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.dll
+F:\CourseOnline\CourseOnline\bin\System.Web.WebPages.dll
+F:\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.dll
+F:\CourseOnline\CourseOnline\bin\WebGrease.dll
+F:\CourseOnline\CourseOnline\bin\EntityFramework.xml
+F:\CourseOnline\CourseOnline\bin\System.Web.Helpers.xml
+F:\CourseOnline\CourseOnline\bin\System.Web.Mvc.xml
+F:\CourseOnline\CourseOnline\bin\System.Web.Optimization.xml
+F:\CourseOnline\CourseOnline\bin\System.Web.Razor.xml
+F:\CourseOnline\CourseOnline\bin\System.Web.WebPages.xml
+F:\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.xml
+F:\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.xml
+F:\CourseOnline\CourseOnline\bin\Newtonsoft.Json.xml
+F:\CourseOnline\CourseOnline\bin\Antlr3.Runtime.pdb
+F:\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
+F:\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
+F:\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
+F:\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
+F:\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
+D:\.NetCore\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
+D:\.NetCore\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
+D:\.NetCore\CourseOnline\CourseOnline\bin\CourseOnline.dll.config
+D:\.NetCore\CourseOnline\CourseOnline\bin\CourseOnline.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\CourseOnline.pdb
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\csc.exe
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\csc.exe.config
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\csc.rsp
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\csi.exe
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\csi.exe.config
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\csi.rsp
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\Microsoft.Managed.Core.targets
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.AppContext.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Collections.Immutable.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Console.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.IO.Compression.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.IO.Pipes.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Reflection.Metadata.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Security.AccessControl.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Security.Claims.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Security.Principal.Windows.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.ValueTuple.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XmlDocument.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\vbc.exe
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\vbc.exe.config
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\vbc.rsp
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe
+D:\.NetCore\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe.config
+D:\.NetCore\CourseOnline\CourseOnline\bin\Antlr3.Runtime.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\Microsoft.Web.Infrastructure.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\Newtonsoft.Json.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Linq.Dynamic.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.Helpers.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.Mvc.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.Optimization.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.Razor.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.WebPages.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\WebGrease.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\Microsoft.Owin.Security.OAuth.dll
+D:\.NetCore\CourseOnline\CourseOnline\bin\Microsoft.Owin.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\Microsoft.Owin.Security.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\Microsoft.Owin.Security.Cookies.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\PagedList.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\PagedList.Mvc.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.Helpers.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.Mvc.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.Optimization.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.Razor.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.WebPages.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\Newtonsoft.Json.xml
+D:\.NetCore\CourseOnline\CourseOnline\bin\Antlr3.Runtime.pdb
+D:\.NetCore\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\.NetCore\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
+D:\.NetCore\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
+D:\.NetCore\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb

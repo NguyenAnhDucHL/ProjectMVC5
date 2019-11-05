@@ -1,0 +1,234 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "SubjectDetail";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    List<Setting> listSettingType = ViewBag.SettingType;
+    List<Setting> listSettingCategory = ViewBag.SettingCategory;
+}
+
+<section class="content-header">
+    <h1>
+        Subject Adding
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Index","Subject")'>Subjects List</a></li>
+        <li class="active">Subject Adding</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <div class="form-group">
+                                <label>Subject Name</label>
+                                <input type="text" class="form-control" id="inp_name">
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <div>
+                                    <select id="sl_subjectCategory" class="form-control">
+                                        @{
+                                            foreach (Setting setting in listSettingCategory)
+                                            {
+                                                <option value="@setting.setting_name">@setting.setting_name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label>Type</label>
+                                <div>
+                                    <select id="sl_subjectType" class="form-control">
+                                        @{
+                                            foreach (Setting setting in listSettingType)
+                                            {
+                                                <option value="@setting.setting_name">@setting.setting_name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleChange">Add/Change image</label>
+                                <input class="custom-input" type="file" id="exampleChange">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" rows="3" id="inp_shortDes"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-info" onclick="DraftAddSubject()">Save Draft</button>
+                    <button type="submit" class="btn btn-info" onclick="SubmitAddSubject()">Submit</button>
+                    <button type="submit" class="btn btn-info" onclick="ApproveAddSubject()">Approve</button>
+                    <button type="submit" class="btn btn-info" onclick="PublishAddSubject()">Publish Online</button>
+                    <button type="submit" class="btn btn-info" onclick="HideAddSubject()">Hide</button>
+                    <button type="submit" class="btn btn-info" onclick="getBackSubjectList()">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        // bat su kien submit
+        function SubmitAddSubject() {
+
+            var subject = {
+                subjectName: $("#inp_name").val(),
+                subjectCategory: $("#sl_subjectCategory").val(),
+                subjectType: $("#sl_subjectType").val(),
+                shortDes: $("#inp_shortDes").val(),
+                subjectStatus : "Submitted"
+            };
+
+            var postJson = JSON.stringify(subject);
+
+            $.ajax({
+                url: '@Url.Action("SubmitAddSubject","Subject")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+
+        // bat su kien draft
+        function DraftAddSubject() {
+
+            var subject = {
+                subjectName: $("#inp_name").val(),
+                subjectCategory: $("#sl_subjectCategory").val(),
+                subjectType: $("#sl_subjectType").val(),
+                shortDes: $("#inp_shortDes").val(),
+                subjectStatus : "Draft"
+            };
+
+            var postJson = JSON.stringify(subject);
+
+            $.ajax({
+                url: '@Url.Action("SubmitAddSubject","Subject")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+
+        // bat su kien approve
+        function ApproveAddSubject() {
+
+            var subject = {
+                subjectName: $("#inp_name").val(),
+                subjectCategory: $("#sl_subjectCategory").val(),
+                subjectType: $("#sl_subjectType").val(),
+                shortDes: $("#inp_shortDes").val(),
+                subjectStatus : "Approved"
+            };
+
+            var postJson = JSON.stringify(subject);
+
+            $.ajax({
+                url: '@Url.Action("SubmitAddSubject","Subject")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+
+        // bat su kien publish
+        function PublishAddSubject() {
+
+            var subject = {
+                subjectName: $("#inp_name").val(),
+                subjectCategory: $("#sl_subjectCategory").val(),
+                subjectType: $("#sl_subjectType").val(),
+                shortDes: $("#inp_shortDes").val(),
+                subjectStatus : "Online"
+            };
+
+            var postJson = JSON.stringify(subject);
+
+            $.ajax({
+                url: '@Url.Action("SubmitAddSubject","Subject")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+
+        // bat su kien hide
+        function HideAddSubject() {
+
+            var subject = {
+                subjectName: $("#inp_name").val(),
+                subjectCategory: $("#sl_subjectCategory").val(),
+                subjectType: $("#sl_subjectType").val(),
+                shortDes: $("#inp_shortDes").val(),
+                subjectStatus : "Hiden"
+            };
+
+            var postJson = JSON.stringify(subject);
+
+            $.ajax({
+                url: '@Url.Action("SubmitAddSubject","Subject")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+
+    // bat su kien back
+    function getBackSubjectList() {
+               window.location.href ='@Url.Action("Index", "Subject")';
+        }
+    </script>
+}

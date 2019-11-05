@@ -1,0 +1,90 @@
+﻿@{
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Course Works
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="course-list.html">Course List</a></li>
+        <li class="active">Course works</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <a class="link" href="coursework-details">Add Menu</a>
+                <div class="box-body">
+                    <table id="tb_course_work" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Course</th>
+                                <th>Type</th>
+                                <th>Name</th>
+                                <th>Create by</th>
+                                <th>Deadline</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#tb_course_work').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllCourseWork", "CourseWork")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "coursework_id", "name": "coursework_id", "orderable": true },
+                { "data": "course_name", "name": "course_name", "orderable": true },
+                { "data": "coursework_type", "name": "coursework_type", "orderable": true },
+                { "data": "test_name", "name": "test_name", "orderable": true },
+                { "data": "user_email", "name": "user_email", "orderable": true },
+                { "data": "due_date", "name": "due_date", "orderable": true },
+                {
+                    "data": "coursework_id", "name": "menu_status", "orderable": true, "render": function (data) {
+                        if (data == 1) return "active"
+                        else return "inactive"}
+                },
+                {
+                    "data": "coursework_id", "render": function (data) {
+                        if (data == 1) {
+                            return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' onclick=getIdMenu('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='fa fa-eye-slash'></i>Inactive</a>";
+                        } else
+                            return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' onclick=getIdMenu('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</a>" +
+                                "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='fa fa-eye'></i>Active</a>";
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+    });
+    </script>
+}
+

@@ -48,24 +48,24 @@ public partial class Startup
         // This is similar to the RememberMe option when you log in.
         app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-        // Uncomment the following lines to enable logging in with third party login providers
-        //app.UseMicrosoftAccountAuthentication(
-        //    clientId: "",
-        //    clientSecret: "");
+            // Uncomment the following lines to enable logging in with third party login providers
+            //app.UseMicrosoftAccountAuthentication(
+            //    clientId: "",
+            //    clientSecret: "");
 
-        //app.UseTwitterAuthentication(
-        //   consumerKey: "",
-        //   consumerSecret: "");
+            //app.UseTwitterAuthentication(
+            //   consumerKey: "",
+            //   consumerSecret: "");
 
-        //app.UseFacebookAuthentication(
-        //   appId: "",
-        //   appSecret: "");
+            //app.UseFacebookAuthentication(
+            //   appId: "",
+            //   appSecret: "");
 
-        // This is the RickAndMSFT@gmail.com account which uses https://localhost:44306/
+            // This is the RickAndMSFT@gmail.com account which uses https://localhost:44306/
 
-       app.UseGoogleAuthentication(
-                 clientId: "443232741565-n43ni8cnplb203ai67204gctrbf5btpa.apps.googleusercontent.com",
-                 clientSecret: "9xNMIIV8srNcO8rZb5tnl66p");
+            app.UseGoogleAuthentication(
+                      clientId: "443232741565-n43ni8cnplb203ai67204gctrbf5btpa.apps.googleusercontent.com",
+                      clientSecret: "9xNMIIV8srNcO8rZb5tnl66p");
         }
-}
+    }
 }

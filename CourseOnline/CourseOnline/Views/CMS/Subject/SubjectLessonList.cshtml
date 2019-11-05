@@ -1,0 +1,141 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "SubjectLessonList";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+}
+<section class="content-header">
+    <h1>
+        Subject Lessons
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Index","Subject")'>Subject List</a></li>
+        <li class="active">Subject Lessons</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="row">
+                    <div class="col-sm-2">
+                        <button id="btnAdd" type="button" class="btn btn-block btn-primary" onclick='getAddLesson()'>Add Lesson</button>
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="sl_lessonStatus" class="form-control">
+                            <option>All Status</option>
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <label><h5>Subject: <b>@{@ViewBag.Subject.subject_name}</b></h5></label>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <table id="tb_subject_lesson" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="table-width5">ID</th>
+                                <th class="table-width20">Lesson</th>
+                                <th class="table-width50">Order</th>
+                                <th class="table-width5">Type</th>
+                                <th class="table-width5">Status</th>
+                                <th class="table-width10">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        var dataTable;
+    $(document).ready(function() {
+        dataTable = $('#tb_subject_lesson').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllSubjectLesson", "SubjectLesson")',
+                "type": "POST",
+                "data": { "id" : @ViewBag.id },
+                "dataType": "json",
+            },
+            "columns": [
+                { "data": "lesson_id", "name": "lesson_id", "orderable": true },
+                { "data": "lesson_name", "name": "lesson_name", "orderable": true },
+                { "data": "lesson_order", "name": "lesson_order", "orderable": true },
+                { "data": "lesson_type", "name": "lesson_type", "orderable": true },
+                {
+                    "data": "lesson_status", "orderable": true, "render": function (data) {
+                        if (data == 1) return "active"
+                        else return "inactive"}
+                },
+                {
+                    "data": "lesson_id", "render": function (data) {
+                            return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdLesson('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
+                              "<button class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdLesson('" + data + "') ><i class='fa fa-trash'></i>Delete</button>";
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+    });
+
+    filterListener();
+    function filterListener() {
+             $('#sl_lessonStatus').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                 var valueSelected = this.value;
+                 dataTable.ajax.url('@Url.Action("FilterByLessonStatus","SubjectLesson")' + '?type=' + valueSelected + "&subject_id=" +@ViewBag.id).load(function (response) { });
+            });
+        }
+    // bat su kien add
+        function getAddLesson() {
+               window.location.href ='@Url.Action("AddLesson", "SubjectLesson")/@ViewBag.id';
+        }
+
+    //bat su kien edit
+    function getEditIdLesson(id) {
+            if (id != null) {
+               window.location.href ='@Url.Action("EditLesson", "SubjectLesson")?lessonId=' + id +"&subjectId=" + @ViewBag.id;
+            }
+        }
+
+    function getDelIdLesson(id) {
+            if (id != null) {
+                confirmAlert('Xóa', 'Xác nhận xóa', function submit() {
+                    $.ajax({
+                        url:'@Url.Action("deleteLesson","SubjectLesson")',
+                        type: "POST",
+                        data: { id: id },
+                        datatype: "json",
+                        success: (response) => {
+                            if (response.success) {
+                                dataTable.ajax.reload(); successAlert("Thành công", "Xóa thành công")
+                            } else {
+                                errorAlert("Thất bại", "Xóa thất bại")
+                            }
+                        },
+                        error: (response) => { errorAlert("Thất bại", "Xóa thất bại") }
+                    });
+                });
+            }
+        }
+
+
+    </script>
+}

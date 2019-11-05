@@ -71,7 +71,7 @@ namespace CourseOnline.Controllers
                               }).ToList().Select(rp => new RolePermissionsModel
                               {
                                   role_permission_id = rp.role_permission_id,
-                                  permissionName = rp.permission_name,
+                                  permission_name = rp.permission_name,
                                   role_name = rp.role_name,
                               }).ToList();
 

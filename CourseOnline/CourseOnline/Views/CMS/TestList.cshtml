@@ -1,5 +1,6 @@
 ﻿
 @{
+    ViewBag.Title = "Test List";
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
 }
 
@@ -10,7 +11,7 @@
     <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="exams-list">Exams List</a></li>
-        <li class="active">Tests List</li>
+        <li><a class="active">Tests List</a></li>
     </ol>
 </section>
 
@@ -19,9 +20,9 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <a class="link" href="test-adding">Add new</a>
+                <button type="button" class="btn btn-block btn-primary">Add new</button>
                 <div class="box-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="tb_test" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -39,29 +40,30 @@
         </div>
     </div>
 </section>
+
 <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts{
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
     $(document).ready(function() {
-        $('#tb_user').DataTable({
+        $('#tb_test').DataTable({
             "ajax": {
-                "url": '@Url.Action("GetAllTestExam", "TestExam")',
+                "url": '@Url.Action("GetAllTest", "Test")',
                 "type": "POST",
                 "datatype": "json",
             },
             "columns": [
-                { "data": "test_id", "name": "test_id", "orderable": true },
+                { "data": "exam_id", "name": "exam_id", "orderable": true },
                 { "data": "exam_name", "name": "exam_name", "orderable": true },
                 { "data": "test_name", "name": "test_name", "orderable": true },
-                { "data": "test_code", "name": "test_code", "orderable": true },
+                { "data": "exam_note", "name": "exam_note", "orderable": true },
                 { "data": "tested", "name": "tested", "orderable": true },
                 { "data": "average", "name": "average", "orderable": true },
                 {
-                    "data": "user_id", "render": function (data) {
-                        return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px'><i class='fa fa-fw fa-edit'></i>Edit</a>" +
-                            "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px'><i class='fa fa-trash'></i>Results</a>";
+                    "data": "exam_id", "render": function (data) {
+                        return "<button><a data-target='edit_employee'  style='margin-left:5px' ><i class='fa fa-fw fa-edit'></i>Sửa</a></button>" +
+                            "<button><a style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='fa fa-trash'></i> Xóa</a></button>";
                     },
                     "orderable": false,
                     "searchable": false

@@ -7,6 +7,6 @@ namespace CourseOnline.Models
 {
     public class UserListModel : User
     {
-        public String roll_name { set; get; }
+        public String role_name { set; get; }
     }
 }

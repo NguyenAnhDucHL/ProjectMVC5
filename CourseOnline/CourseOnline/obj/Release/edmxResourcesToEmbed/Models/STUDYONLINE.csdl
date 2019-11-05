@@ -8,7 +8,7 @@
     <Property Name="question_id" Type="Int32" Nullable="false" />
     <Property Name="answer_text" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="answer_corect" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Question" Relationship="Self.FK__AnswerOpt__quest__68487DD7" FromRole="AnswerOption" ToRole="Question" />
+    <NavigationProperty Name="Question" Relationship="Self.FK__AnswerOpt__quest__6A30C649" FromRole="AnswerOption" ToRole="Question" />
   </EntityType>
   <EntityType Name="Course">
     <Key>
@@ -20,12 +20,14 @@
     <Property Name="course_is_default" Type="Boolean" Nullable="false" />
     <Property Name="course_start_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="course_end_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Subject" Relationship="Self.FK__Course__subject___693CA210" FromRole="Course" ToRole="Subject" />
-    <NavigationProperty Name="User" Relationship="Self.FK__Course__teacher___6A30C649" FromRole="Course" ToRole="User" />
-    <NavigationProperty Name="Courseworks" Relationship="Self.FK__Coursewor__cours__6B24EA82" FromRole="Course" ToRole="Coursework" />
-    <NavigationProperty Name="Courseworks1" Relationship="Self.FK__Coursewor__cours__6D0D32F4" FromRole="Course" ToRole="Coursework" />
-    <NavigationProperty Name="Grades" Relationship="Self.FK__Grade__course_id__6FE99F9F" FromRole="Course" ToRole="Grade" />
-    <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__cours__797309D9" FromRole="Course" ToRole="Registration" />
+    <Property Name="course_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="course_status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK__Course__subject___2180FB33" FromRole="Course" ToRole="Subject" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Course__teacher___6C190EBB" FromRole="Course" ToRole="User" />
+    <NavigationProperty Name="Courseworks" Relationship="Self.FK__Coursewor__cours__6D0D32F4" FromRole="Course" ToRole="Coursework" />
+    <NavigationProperty Name="Courseworks1" Relationship="Self.FK__Coursewor__cours__6EF57B66" FromRole="Course" ToRole="Coursework" />
+    <NavigationProperty Name="Grades" Relationship="Self.FK__Grade__course_id__71D1E811" FromRole="Course" ToRole="Grade" />
+    <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__cours__7B5B524B" FromRole="Course" ToRole="Registration" />
   </EntityType>
   <EntityType Name="Coursework">
     <Key>
@@ -36,9 +38,11 @@
     <Property Name="course_id" Type="Int32" Nullable="false" />
     <Property Name="test_id" Type="Int32" Nullable="false" />
     <Property Name="due_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Course" Relationship="Self.FK__Coursewor__cours__6B24EA82" FromRole="Coursework" ToRole="Course" />
-    <NavigationProperty Name="Course1" Relationship="Self.FK__Coursewor__cours__6D0D32F4" FromRole="Coursework" ToRole="Course" />
-    <NavigationProperty Name="ExamTest" Relationship="Self.FK__Coursewor__cours__6C190EBB" FromRole="Coursework" ToRole="ExamTest" />
+    <Property Name="coursework_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="coursework_status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Course" Relationship="Self.FK__Coursewor__cours__6D0D32F4" FromRole="Coursework" ToRole="Course" />
+    <NavigationProperty Name="Course1" Relationship="Self.FK__Coursewor__cours__6EF57B66" FromRole="Coursework" ToRole="Course" />
+    <NavigationProperty Name="ExamTest" Relationship="Self.FK__Coursewor__cours__6E01572D" FromRole="Coursework" ToRole="ExamTest" />
   </EntityType>
   <EntityType Name="Domain">
     <Key>
@@ -46,7 +50,7 @@
     </Key>
     <Property Name="domain_id" Type="Int32" Nullable="false" />
     <Property Name="subject_id" Type="Int32" />
-    <NavigationProperty Name="Subject" Relationship="Self.FK__Domain__subject___6E01572D" FromRole="Domain" ToRole="Subject" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK__Domain__subject___1EA48E88" FromRole="Domain" ToRole="Subject" />
   </EntityType>
   <EntityType Name="Exam">
     <Key>
@@ -56,8 +60,11 @@
     <Property Name="exam_level" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="exam_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="exam_is_practice" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="ExamConfigs" Relationship="Self.FK__ExamConfi__exam___6EF57B66" FromRole="Exam" ToRole="ExamConfig" />
-    <NavigationProperty Name="TestResults" Relationship="Self.FK__TestResul__exam___04E4BC85" FromRole="Exam" ToRole="TestResult" />
+    <Property Name="subject_id" Type="Int32" />
+    <Property Name="exam_duration" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK__Exam__subject_id__208CD6FA" FromRole="Exam" ToRole="Subject" />
+    <NavigationProperty Name="ExamConfigs" Relationship="Self.FK__ExamConfi__exam___70DDC3D8" FromRole="Exam" ToRole="ExamConfig" />
+    <NavigationProperty Name="TestResults" Relationship="Self.FK__TestResul__exam___07C12930" FromRole="Exam" ToRole="TestResult" />
   </EntityType>
   <EntityType Name="ExamConfig">
     <Key>
@@ -70,7 +77,7 @@
     <Property Name="lesson_id" Type="Int32" Nullable="false" />
     <Property Name="lesson_size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="keywords" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Exam" Relationship="Self.FK__ExamConfi__exam___6EF57B66" FromRole="ExamConfig" ToRole="Exam" />
+    <NavigationProperty Name="Exam" Relationship="Self.FK__ExamConfi__exam___70DDC3D8" FromRole="ExamConfig" ToRole="Exam" />
   </EntityType>
   <EntityType Name="ExamTest">
     <Key>
@@ -81,10 +88,11 @@
     <Property Name="course_id" Type="Int32" Nullable="false" />
     <Property Name="test_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="test_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Coursework" Relationship="Self.FK__Coursewor__cours__6C190EBB" FromRole="ExamTest" ToRole="Coursework" />
-    <NavigationProperty Name="TestAnswers" Relationship="Self.FK__TestAnswe__test___00200768" FromRole="ExamTest" ToRole="TestAnswer" />
-    <NavigationProperty Name="TestQuestions" Relationship="Self.FK__TestQuest__test___02FC7413" FromRole="ExamTest" ToRole="TestQuestion" />
-    <NavigationProperty Name="TestResults" Relationship="Self.FK__TestResul__test___05D8E0BE" FromRole="ExamTest" ToRole="TestResult" />
+    <Property Name="exam_note" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Coursework" Relationship="Self.FK__Coursewor__cours__6E01572D" FromRole="ExamTest" ToRole="Coursework" />
+    <NavigationProperty Name="TestAnswers" Relationship="Self.FK__TestAnswe__test___02FC7413" FromRole="ExamTest" ToRole="TestAnswer" />
+    <NavigationProperty Name="TestQuestions" Relationship="Self.FK__TestQuest__test___05D8E0BE" FromRole="ExamTest" ToRole="TestQuestion" />
+    <NavigationProperty Name="TestResults" Relationship="Self.FK__TestResul__test___08B54D69" FromRole="ExamTest" ToRole="TestResult" />
   </EntityType>
   <EntityType Name="Grade">
     <Key>
@@ -97,20 +105,21 @@
     <Property Name="coursework_id" Type="Int32" Nullable="false" />
     <Property Name="grade1" Type="Int32" Nullable="false" />
     <Property Name="grade_comment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Course" Relationship="Self.FK__Grade__course_id__6FE99F9F" FromRole="Grade" ToRole="Course" />
-    <NavigationProperty Name="Registration" Relationship="Self.FK__Grade__registrat__70DDC3D8" FromRole="Grade" ToRole="Registration" />
+    <NavigationProperty Name="Course" Relationship="Self.FK__Grade__course_id__71D1E811" FromRole="Grade" ToRole="Course" />
+    <NavigationProperty Name="Registration" Relationship="Self.FK__Grade__registrat__72C60C4A" FromRole="Grade" ToRole="Registration" />
   </EntityType>
   <EntityType Name="Lesson">
     <Key>
       <PropertyRef Name="lesson_id" />
     </Key>
-    <Property Name="lesson_id" Type="Int32" Nullable="false" />
+    <Property Name="lesson_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="subject_id" Type="Int32" Nullable="false" />
     <Property Name="parent_id" Type="Int32" Nullable="false" />
-    <Property Name="lesson_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Lesson1" Relationship="Self.FK__Lesson__parent_i__71D1E811" FromRole="Lesson" ToRole="Lesson1" />
-    <NavigationProperty Name="Lesson2" Relationship="Self.FK__Lesson__parent_i__71D1E811" FromRole="Lesson1" ToRole="Lesson" />
-    <NavigationProperty Name="Subject" Relationship="Self.FK__Lesson__subject___72C60C4A" FromRole="Lesson" ToRole="Subject" />
+    <Property Name="lesson_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lesson_order" Type="Int32" Nullable="false" />
+    <Property Name="lesson_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lesson_status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK__Lesson__subject___236943A5" FromRole="Lesson" ToRole="Subject" />
   </EntityType>
   <EntityType Name="Menu">
     <Key>
@@ -118,35 +127,40 @@
     </Key>
     <Property Name="menu_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="parent_id" Type="Int32" />
-    <NavigationProperty Name="Menu1" Relationship="Self.FK__Menu__parent_id__73BA3083" FromRole="Menu" ToRole="Menu1" />
-    <NavigationProperty Name="Menu2" Relationship="Self.FK__Menu__parent_id__73BA3083" FromRole="Menu1" ToRole="Menu" />
-    <NavigationProperty Name="RoleMenus" Relationship="Self.FK__RoleMenu__menu_i__7B5B524B" FromRole="Menu" ToRole="RoleMenu" />
+    <Property Name="menu_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="menu_link" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="menu_order" Type="Int32" />
+    <Property Name="menu_status" Type="Boolean" />
+    <Property Name="menu_description" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Menu1" Relationship="Self.FK__Menu__parent_id__75A278F5" FromRole="Menu" ToRole="Menu1" />
+    <NavigationProperty Name="Menu2" Relationship="Self.FK__Menu__parent_id__75A278F5" FromRole="Menu1" ToRole="Menu" />
+    <NavigationProperty Name="RoleMenus" Relationship="Self.FK__RoleMenu__menu_i__7D439ABD" FromRole="Menu" ToRole="RoleMenu" />
   </EntityType>
   <EntityType Name="Permission">
     <Key>
       <PropertyRef Name="permission_id" />
     </Key>
     <Property Name="permission_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="permission_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="permission_link" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="permission_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="permission_link" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="permission_status" Type="Boolean" />
-    <NavigationProperty Name="RolePermissions" Relationship="Self.FK__RolePermi__permi__7C4F7684" FromRole="Permission" ToRole="RolePermission" />
+    <NavigationProperty Name="RolePermissions" Relationship="Self.FK__RolePermi__permi__7E37BEF6" FromRole="Permission" ToRole="RolePermission" />
   </EntityType>
   <EntityType Name="Post">
     <Key>
       <PropertyRef Name="post_id" />
     </Key>
-    <Property Name="post_id" Type="Int32" Nullable="false" />
     <Property Name="post_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="post_category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="post_thumbnail" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="post_brief_info" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="post_detail_info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="post_document_link" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="post_embeb" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="post_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="post_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="PostTags" Relationship="Self.FK__PostTag__post_id__74AE54BC" FromRole="Post" ToRole="PostTag" />
+    <Property Name="post_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="post_thumbnail" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="post_detail_info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="post_document_link" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="post_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tags" Relationship="Self.PostTag" FromRole="Post" ToRole="Tag" />
     <NavigationProperty Name="Subjects" Relationship="Self.SubjectReference" FromRole="Post" ToRole="Subject" />
   </EntityType>
   <EntityType Name="Question">
@@ -158,11 +172,10 @@
     <Property Name="domain_id" Type="Int32" Nullable="false" />
     <Property Name="lesson_id" Type="Int32" Nullable="false" />
     <Property Name="level" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="AnswerOptions" Relationship="Self.FK__AnswerOpt__quest__68487DD7" FromRole="Question" ToRole="AnswerOption" />
-    <NavigationProperty Name="Subject" Relationship="Self.FK__Question__subjec__778AC167" FromRole="Question" ToRole="Subject" />
-    <NavigationProperty Name="TestAnswers" Relationship="Self.FK__TestAnswe__quest__7F2BE32F" FromRole="Question" ToRole="TestAnswer" />
-    <NavigationProperty Name="TestQuestions" Relationship="Self.FK__TestQuest__quest__02084FDA" FromRole="Question" ToRole="TestQuestion" />
-    <NavigationProperty Name="Subject1" Relationship="Self.FK_Question_Subject" FromRole="Question" ToRole="Subject" />
+    <NavigationProperty Name="AnswerOptions" Relationship="Self.FK__AnswerOpt__quest__6A30C649" FromRole="Question" ToRole="AnswerOption" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK__Question__subjec__22751F6C" FromRole="Question" ToRole="Subject" />
+    <NavigationProperty Name="TestAnswers" Relationship="Self.FK__TestAnswe__quest__02084FDA" FromRole="Question" ToRole="TestAnswer" />
+    <NavigationProperty Name="TestQuestions" Relationship="Self.FK__TestQuest__quest__04E4BC85" FromRole="Question" ToRole="TestQuestion" />
   </EntityType>
   <EntityType Name="Registration">
     <Key>
@@ -171,9 +184,11 @@
     <Property Name="registration_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="user_id" Type="Int32" Nullable="false" />
     <Property Name="course_id" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Course" Relationship="Self.FK__Registrat__cours__797309D9" FromRole="Registration" ToRole="Course" />
-    <NavigationProperty Name="Grades" Relationship="Self.FK__Grade__registrat__70DDC3D8" FromRole="Registration" ToRole="Grade" />
-    <NavigationProperty Name="User" Relationship="Self.FK__Registrat__user___7A672E12" FromRole="Registration" ToRole="User" />
+    <Property Name="registration_time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="registration_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Course" Relationship="Self.FK__Registrat__cours__7B5B524B" FromRole="Registration" ToRole="Course" />
+    <NavigationProperty Name="Grades" Relationship="Self.FK__Grade__registrat__72C60C4A" FromRole="Registration" ToRole="Grade" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Registrat__user___7C4F7684" FromRole="Registration" ToRole="User" />
   </EntityType>
   <EntityType Name="RoleMenu">
     <Key>
@@ -182,7 +197,7 @@
     <Property Name="role_menu_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="role_id" Type="Int32" Nullable="false" />
     <Property Name="menu_id" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Menu" Relationship="Self.FK__RoleMenu__menu_i__7B5B524B" FromRole="RoleMenu" ToRole="Menu" />
+    <NavigationProperty Name="Menu" Relationship="Self.FK__RoleMenu__menu_i__7D439ABD" FromRole="RoleMenu" ToRole="Menu" />
   </EntityType>
   <EntityType Name="RolePermission">
     <Key>
@@ -192,7 +207,17 @@
     <Property Name="role_id" Type="Int32" Nullable="false" />
     <Property Name="permission_id" Type="Int32" Nullable="false" />
     <Property Name="role_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Permission" Relationship="Self.FK__RolePermi__permi__7C4F7684" FromRole="RolePermission" ToRole="Permission" />
+    <NavigationProperty Name="Permission" Relationship="Self.FK__RolePermi__permi__7E37BEF6" FromRole="RolePermission" ToRole="Permission" />
+    <NavigationProperty Name="Role" Relationship="Self.FK__RolePermi__role___7F2BE32F" FromRole="RolePermission" ToRole="Roles" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="role_id" />
+    </Key>
+    <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="role_name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="RolePermissions" Relationship="Self.FK__RolePermi__role___7F2BE32F" FromRole="Roles" ToRole="RolePermission" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK__UserRole__role_i__09A971A2" FromRole="Roles" ToRole="UserRole" />
   </EntityType>
   <EntityType Name="Setting">
     <Key>
@@ -202,6 +227,8 @@
     <Property Name="setting_group_value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="setting_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="setting_description" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="setting_order" Type="Int32" Nullable="false" />
+    <Property Name="setting_status" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Slider">
     <Key>
@@ -212,20 +239,24 @@
     <Property Name="slider_title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="slider_caption" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="slider_back_link" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="slider_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
   </EntityType>
   <EntityType Name="Subject">
     <Key>
       <PropertyRef Name="subject_id" />
     </Key>
-    <Property Name="subject_id" Type="Int32" Nullable="false" />
     <Property Name="subject_category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="subject_tag_line" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="subject_brief_info" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Courses" Relationship="Self.FK__Course__subject___693CA210" FromRole="Subject" ToRole="Course" />
-    <NavigationProperty Name="Domains" Relationship="Self.FK__Domain__subject___6E01572D" FromRole="Subject" ToRole="Domain" />
-    <NavigationProperty Name="Lessons" Relationship="Self.FK__Lesson__subject___72C60C4A" FromRole="Subject" ToRole="Lesson" />
-    <NavigationProperty Name="Questions" Relationship="Self.FK__Question__subjec__778AC167" FromRole="Subject" ToRole="Question" />
-    <NavigationProperty Name="Questions1" Relationship="Self.FK_Question_Subject" FromRole="Subject" ToRole="Question" />
+    <Property Name="subject_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="subject_brief_info" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Name="subject_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="subject_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="subject_tag_line" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="subject_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Courses" Relationship="Self.FK__Course__subject___2180FB33" FromRole="Subject" ToRole="Course" />
+    <NavigationProperty Name="Domains" Relationship="Self.FK__Domain__subject___1EA48E88" FromRole="Subject" ToRole="Domain" />
+    <NavigationProperty Name="Exams" Relationship="Self.FK__Exam__subject_id__208CD6FA" FromRole="Subject" ToRole="Exam" />
+    <NavigationProperty Name="Lessons" Relationship="Self.FK__Lesson__subject___236943A5" FromRole="Subject" ToRole="Lesson" />
+    <NavigationProperty Name="Questions" Relationship="Self.FK__Question__subjec__22751F6C" FromRole="Subject" ToRole="Question" />
     <NavigationProperty Name="Posts" Relationship="Self.SubjectReference" FromRole="Subject" ToRole="Post" />
   </EntityType>
   <EntityType Name="sysdiagram">
@@ -244,8 +275,7 @@
     </Key>
     <Property Name="tag_id" Type="Int32" Nullable="false" />
     <Property Name="tag_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="PostTags" Relationship="Self.FK__PostTag__tag_id__75A278F5" FromRole="Tag" ToRole="PostTag" />
-    <NavigationProperty Name="PostTags1" Relationship="Self.FK__PostTag__tag_id__76969D2E" FromRole="Tag" ToRole="PostTag" />
+    <NavigationProperty Name="Posts" Relationship="Self.PostTag" FromRole="Tag" ToRole="Post" />
   </EntityType>
   <EntityType Name="TestAnswer">
     <Key>
@@ -257,9 +287,9 @@
     <Property Name="question_id" Type="Int32" Nullable="false" />
     <Property Name="user_answer" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="test_id" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="ExamTest" Relationship="Self.FK__TestAnswe__test___00200768" FromRole="TestAnswer" ToRole="ExamTest" />
-    <NavigationProperty Name="Question" Relationship="Self.FK__TestAnswe__quest__7F2BE32F" FromRole="TestAnswer" ToRole="Question" />
-    <NavigationProperty Name="TestResult" Relationship="Self.FK__TestAnswe__test___01142BA1" FromRole="TestAnswer" ToRole="TestResult" />
+    <NavigationProperty Name="ExamTest" Relationship="Self.FK__TestAnswe__test___02FC7413" FromRole="TestAnswer" ToRole="ExamTest" />
+    <NavigationProperty Name="Question" Relationship="Self.FK__TestAnswe__quest__02084FDA" FromRole="TestAnswer" ToRole="Question" />
+    <NavigationProperty Name="TestResult" Relationship="Self.FK__TestAnswe__test___03F0984C" FromRole="TestAnswer" ToRole="TestResult" />
   </EntityType>
   <EntityType Name="TestBatch">
     <Key>
@@ -267,7 +297,7 @@
     </Key>
     <Property Name="batch_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="batch_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="TestResults" Relationship="Self.FK__TestResul__batch__03F0984C" FromRole="TestBatch" ToRole="TestResult" />
+    <NavigationProperty Name="TestResults" Relationship="Self.FK__TestResul__batch__06CD04F7" FromRole="TestBatch" ToRole="TestResult" />
   </EntityType>
   <EntityType Name="TestResult">
     <Key>
@@ -279,12 +309,13 @@
     <Property Name="exam_id" Type="Int32" Nullable="false" />
     <Property Name="test_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="batch_id" Type="Int32" Nullable="false" />
-    <Property Name="average" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="tested" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Exam" Relationship="Self.FK__TestResul__exam___04E4BC85" FromRole="TestResult" ToRole="Exam" />
-    <NavigationProperty Name="ExamTest" Relationship="Self.FK__TestResul__test___05D8E0BE" FromRole="TestResult" ToRole="ExamTest" />
-    <NavigationProperty Name="TestAnswers" Relationship="Self.FK__TestAnswe__test___01142BA1" FromRole="TestResult" ToRole="TestAnswer" />
-    <NavigationProperty Name="TestBatch" Relationship="Self.FK__TestResul__batch__03F0984C" FromRole="TestResult" ToRole="TestBatch" />
+    <Property Name="tested" Type="Int32" />
+    <Property Name="average" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="pass_rate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Exam" Relationship="Self.FK__TestResul__exam___07C12930" FromRole="TestResult" ToRole="Exam" />
+    <NavigationProperty Name="ExamTest" Relationship="Self.FK__TestResul__test___08B54D69" FromRole="TestResult" ToRole="ExamTest" />
+    <NavigationProperty Name="TestAnswers" Relationship="Self.FK__TestAnswe__test___03F0984C" FromRole="TestResult" ToRole="TestAnswer" />
+    <NavigationProperty Name="TestBatch" Relationship="Self.FK__TestResul__batch__06CD04F7" FromRole="TestResult" ToRole="TestBatch" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -295,9 +326,11 @@
     <Property Name="user_fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="use_mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Courses" Relationship="Self.FK__Course__teacher___6A30C649" FromRole="User" ToRole="Course" />
-    <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__user___7A672E12" FromRole="User" ToRole="Registration" />
-    <NavigationProperty Name="UserRoles" Relationship="Self.FK__UserRole__user_i__06CD04F7" FromRole="User" ToRole="UserRole" />
+    <Property Name="user_gender" Type="Boolean" Nullable="false" />
+    <Property Name="user_status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Courses" Relationship="Self.FK__Course__teacher___6C190EBB" FromRole="User" ToRole="Course" />
+    <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__user___7C4F7684" FromRole="User" ToRole="Registration" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK__UserRole__user_i__0A9D95DB" FromRole="User" ToRole="UserRole" />
   </EntityType>
   <EntityType Name="UserRole">
     <Key>
@@ -306,18 +339,8 @@
     <Property Name="user_role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="user_id" Type="Int32" Nullable="false" />
     <Property Name="role_id" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="User" Relationship="Self.FK__UserRole__user_i__06CD04F7" FromRole="UserRole" ToRole="User" />
-  </EntityType>
-  <EntityType Name="PostTag">
-    <Key>
-      <PropertyRef Name="post_id" />
-      <PropertyRef Name="tag_id" />
-    </Key>
-    <Property Name="post_id" Type="Int32" Nullable="false" />
-    <Property Name="tag_id" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Post" Relationship="Self.FK__PostTag__post_id__74AE54BC" FromRole="PostTag" ToRole="Post" />
-    <NavigationProperty Name="Tag" Relationship="Self.FK__PostTag__tag_id__75A278F5" FromRole="PostTag" ToRole="Tag" />
-    <NavigationProperty Name="Tag1" Relationship="Self.FK__PostTag__tag_id__76969D2E" FromRole="PostTag" ToRole="Tag" />
+    <NavigationProperty Name="Role" Relationship="Self.FK__UserRole__role_i__09A971A2" FromRole="UserRole" ToRole="Roles" />
+    <NavigationProperty Name="User" Relationship="Self.FK__UserRole__user_i__0A9D95DB" FromRole="UserRole" ToRole="User" />
   </EntityType>
   <EntityType Name="TestQuestion">
     <Key>
@@ -327,10 +350,10 @@
     <Property Name="test_id" Type="Int32" Nullable="false" />
     <Property Name="question_id" Type="Int32" Nullable="false" />
     <Property Name="test_question_keys" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="ExamTest" Relationship="Self.FK__TestQuest__test___02FC7413" FromRole="TestQuestion" ToRole="ExamTest" />
-    <NavigationProperty Name="Question" Relationship="Self.FK__TestQuest__quest__02084FDA" FromRole="TestQuestion" ToRole="Question" />
+    <NavigationProperty Name="ExamTest" Relationship="Self.FK__TestQuest__test___05D8E0BE" FromRole="TestQuestion" ToRole="ExamTest" />
+    <NavigationProperty Name="Question" Relationship="Self.FK__TestQuest__quest__04E4BC85" FromRole="TestQuestion" ToRole="Question" />
   </EntityType>
-  <Association Name="FK__AnswerOpt__quest__68487DD7">
+  <Association Name="FK__AnswerOpt__quest__6A30C649">
     <End Role="Question" Type="Self.Question" Multiplicity="1" />
     <End Role="AnswerOption" Type="Self.AnswerOption" Multiplicity="*" />
     <ReferentialConstraint>
@@ -342,7 +365,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Course__subject___693CA210">
+  <Association Name="FK__Course__subject___2180FB33">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="Course" Type="Self.Course" Multiplicity="*" />
     <ReferentialConstraint>
@@ -354,7 +377,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Course__teacher___6A30C649">
+  <Association Name="FK__Course__teacher___6C190EBB">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Course" Type="Self.Course" Multiplicity="*" />
     <ReferentialConstraint>
@@ -363,18 +386,6 @@
       </Principal>
       <Dependent Role="Course">
         <PropertyRef Name="teacher_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Coursewor__cours__6B24EA82">
-    <End Role="Course" Type="Self.Course" Multiplicity="1" />
-    <End Role="Coursework" Type="Self.Coursework" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Course">
-        <PropertyRef Name="course_id" />
-      </Principal>
-      <Dependent Role="Coursework">
-        <PropertyRef Name="course_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -390,7 +401,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Grade__course_id__6FE99F9F">
+  <Association Name="FK__Coursewor__cours__6EF57B66">
+    <End Role="Course" Type="Self.Course" Multiplicity="1" />
+    <End Role="Coursework" Type="Self.Coursework" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="course_id" />
+      </Principal>
+      <Dependent Role="Coursework">
+        <PropertyRef Name="course_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Grade__course_id__71D1E811">
     <End Role="Course" Type="Self.Course" Multiplicity="1" />
     <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
     <ReferentialConstraint>
@@ -402,7 +425,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Registrat__cours__797309D9">
+  <Association Name="FK__Registrat__cours__7B5B524B">
     <End Role="Course" Type="Self.Course" Multiplicity="1" />
     <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
     <ReferentialConstraint>
@@ -414,7 +437,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Coursewor__cours__6C190EBB">
+  <Association Name="FK__Coursewor__cours__6E01572D">
     <End Role="ExamTest" Type="Self.ExamTest" Multiplicity="1" />
     <End Role="Coursework" Type="Self.Coursework" Multiplicity="0..1" />
     <ReferentialConstraint>
@@ -426,7 +449,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Domain__subject___6E01572D">
+  <Association Name="FK__Domain__subject___1EA48E88">
     <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
     <End Role="Domain" Type="Self.Domain" Multiplicity="*" />
     <ReferentialConstraint>
@@ -438,7 +461,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ExamConfi__exam___6EF57B66">
+  <Association Name="FK__Exam__subject_id__208CD6FA">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
+    <End Role="Exam" Type="Self.Exam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="subject_id" />
+      </Principal>
+      <Dependent Role="Exam">
+        <PropertyRef Name="subject_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExamConfi__exam___70DDC3D8">
     <End Role="Exam" Type="Self.Exam" Multiplicity="1" />
     <End Role="ExamConfig" Type="Self.ExamConfig" Multiplicity="*" />
     <ReferentialConstraint>
@@ -450,7 +485,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestResul__exam___04E4BC85">
+  <Association Name="FK__TestResul__exam___07C12930">
     <End Role="Exam" Type="Self.Exam" Multiplicity="1" />
     <End Role="TestResult" Type="Self.TestResult" Multiplicity="*" />
     <ReferentialConstraint>
@@ -462,7 +497,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestAnswe__test___00200768">
+  <Association Name="FK__TestAnswe__test___02FC7413">
     <End Role="ExamTest" Type="Self.ExamTest" Multiplicity="1" />
     <End Role="TestAnswer" Type="Self.TestAnswer" Multiplicity="*" />
     <ReferentialConstraint>
@@ -474,7 +509,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestQuest__test___02FC7413">
+  <Association Name="FK__TestQuest__test___05D8E0BE">
     <End Role="ExamTest" Type="Self.ExamTest" Multiplicity="1" />
     <End Role="TestQuestion" Type="Self.TestQuestion" Multiplicity="*" />
     <ReferentialConstraint>
@@ -486,7 +521,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestResul__test___05D8E0BE">
+  <Association Name="FK__TestResul__test___08B54D69">
     <End Role="ExamTest" Type="Self.ExamTest" Multiplicity="1" />
     <End Role="TestResult" Type="Self.TestResult" Multiplicity="*" />
     <ReferentialConstraint>
@@ -498,7 +533,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Grade__registrat__70DDC3D8">
+  <Association Name="FK__Grade__registrat__72C60C4A">
     <End Role="Registration" Type="Self.Registration" Multiplicity="1" />
     <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
     <ReferentialConstraint>
@@ -510,19 +545,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Lesson__parent_i__71D1E811">
-    <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
-    <End Role="Lesson1" Type="Self.Lesson" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Lesson">
-        <PropertyRef Name="lesson_id" />
-      </Principal>
-      <Dependent Role="Lesson1">
-        <PropertyRef Name="parent_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Lesson__subject___72C60C4A">
+  <Association Name="FK__Lesson__subject___236943A5">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
     <ReferentialConstraint>
@@ -534,7 +557,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Menu__parent_id__73BA3083">
+  <Association Name="FK__Menu__parent_id__75A278F5">
     <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
     <End Role="Menu1" Type="Self.Menu" Multiplicity="*" />
     <ReferentialConstraint>
@@ -546,7 +569,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__RoleMenu__menu_i__7B5B524B">
+  <Association Name="FK__RoleMenu__menu_i__7D439ABD">
     <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
     <End Role="RoleMenu" Type="Self.RoleMenu" Multiplicity="*" />
     <ReferentialConstraint>
@@ -558,7 +581,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__RolePermi__permi__7C4F7684">
+  <Association Name="FK__RolePermi__permi__7E37BEF6">
     <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
     <End Role="RolePermission" Type="Self.RolePermission" Multiplicity="*" />
     <ReferentialConstraint>
@@ -570,19 +593,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PostTag__post_id__74AE54BC">
-    <End Role="Post" Type="Self.Post" Multiplicity="1" />
-    <End Role="PostTag" Type="Self.PostTag" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Post">
-        <PropertyRef Name="post_id" />
-      </Principal>
-      <Dependent Role="PostTag">
-        <PropertyRef Name="post_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Question__subjec__778AC167">
+  <Association Name="FK__Question__subjec__22751F6C">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="Question" Type="Self.Question" Multiplicity="*" />
     <ReferentialConstraint>
@@ -594,7 +605,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestAnswe__quest__7F2BE32F">
+  <Association Name="FK__TestAnswe__quest__02084FDA">
     <End Role="Question" Type="Self.Question" Multiplicity="1" />
     <End Role="TestAnswer" Type="Self.TestAnswer" Multiplicity="*" />
     <ReferentialConstraint>
@@ -606,7 +617,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestQuest__quest__02084FDA">
+  <Association Name="FK__TestQuest__quest__04E4BC85">
     <End Role="Question" Type="Self.Question" Multiplicity="1" />
     <End Role="TestQuestion" Type="Self.TestQuestion" Multiplicity="*" />
     <ReferentialConstraint>
@@ -618,19 +629,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Question_Subject">
-    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
-    <End Role="Question" Type="Self.Question" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Subject">
-        <PropertyRef Name="subject_id" />
-      </Principal>
-      <Dependent Role="Question">
-        <PropertyRef Name="subject_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Registrat__user___7A672E12">
+  <Association Name="FK__Registrat__user___7C4F7684">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
     <ReferentialConstraint>
@@ -642,31 +641,31 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PostTag__tag_id__75A278F5">
-    <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
-    <End Role="PostTag" Type="Self.PostTag" Multiplicity="*" />
+  <Association Name="FK__RolePermi__role___7F2BE32F">
+    <End Role="Roles" Type="Self.Role" Multiplicity="1" />
+    <End Role="RolePermission" Type="Self.RolePermission" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Tag">
-        <PropertyRef Name="tag_id" />
+      <Principal Role="Roles">
+        <PropertyRef Name="role_id" />
       </Principal>
-      <Dependent Role="PostTag">
-        <PropertyRef Name="tag_id" />
+      <Dependent Role="RolePermission">
+        <PropertyRef Name="role_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PostTag__tag_id__76969D2E">
-    <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
-    <End Role="PostTag" Type="Self.PostTag" Multiplicity="*" />
+  <Association Name="FK__UserRole__role_i__09A971A2">
+    <End Role="Roles" Type="Self.Role" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Tag">
-        <PropertyRef Name="tag_id" />
+      <Principal Role="Roles">
+        <PropertyRef Name="role_id" />
       </Principal>
-      <Dependent Role="PostTag">
-        <PropertyRef Name="tag_id" />
+      <Dependent Role="UserRole">
+        <PropertyRef Name="role_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestAnswe__test___01142BA1">
+  <Association Name="FK__TestAnswe__test___03F0984C">
     <End Role="TestResult" Type="Self.TestResult" Multiplicity="1" />
     <End Role="TestAnswer" Type="Self.TestAnswer" Multiplicity="*" />
     <ReferentialConstraint>
@@ -678,7 +677,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TestResul__batch__03F0984C">
+  <Association Name="FK__TestResul__batch__06CD04F7">
     <End Role="TestBatch" Type="Self.TestBatch" Multiplicity="1" />
     <End Role="TestResult" Type="Self.TestResult" Multiplicity="*" />
     <ReferentialConstraint>
@@ -690,7 +689,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__UserRole__user_i__06CD04F7">
+  <Association Name="FK__UserRole__user_i__0A9D95DB">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
     <ReferentialConstraint>
@@ -701,6 +700,10 @@
         <PropertyRef Name="user_id" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <Association Name="PostTag">
+    <End Role="Post" Type="Self.Post" Multiplicity="*" />
+    <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
   </Association>
   <Association Name="SubjectReference">
     <End Role="Post" Type="Self.Post" Multiplicity="*" />
@@ -723,6 +726,7 @@
     <EntitySet Name="Registrations" EntityType="Self.Registration" />
     <EntitySet Name="RoleMenus" EntityType="Self.RoleMenu" />
     <EntitySet Name="RolePermissions" EntityType="Self.RolePermission" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
     <EntitySet Name="Settings" EntityType="Self.Setting" />
     <EntitySet Name="Sliders" EntityType="Self.Slider" />
     <EntitySet Name="Subjects" EntityType="Self.Subject" />
@@ -733,131 +737,126 @@
     <EntitySet Name="TestResults" EntityType="Self.TestResult" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
-    <EntitySet Name="PostTags" EntityType="Self.PostTag" />
     <EntitySet Name="TestQuestions" EntityType="Self.TestQuestion" />
-    <AssociationSet Name="FK__AnswerOpt__quest__68487DD7" Association="Self.FK__AnswerOpt__quest__68487DD7">
+    <AssociationSet Name="FK__AnswerOpt__quest__6A30C649" Association="Self.FK__AnswerOpt__quest__6A30C649">
       <End Role="Question" EntitySet="Questions" />
       <End Role="AnswerOption" EntitySet="AnswerOptions" />
     </AssociationSet>
-    <AssociationSet Name="FK__Course__subject___693CA210" Association="Self.FK__Course__subject___693CA210">
+    <AssociationSet Name="FK__Course__subject___2180FB33" Association="Self.FK__Course__subject___2180FB33">
       <End Role="Subject" EntitySet="Subjects" />
       <End Role="Course" EntitySet="Courses" />
     </AssociationSet>
-    <AssociationSet Name="FK__Course__teacher___6A30C649" Association="Self.FK__Course__teacher___6A30C649">
+    <AssociationSet Name="FK__Course__teacher___6C190EBB" Association="Self.FK__Course__teacher___6C190EBB">
       <End Role="User" EntitySet="Users" />
       <End Role="Course" EntitySet="Courses" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Coursewor__cours__6B24EA82" Association="Self.FK__Coursewor__cours__6B24EA82">
-      <End Role="Course" EntitySet="Courses" />
-      <End Role="Coursework" EntitySet="Courseworks" />
     </AssociationSet>
     <AssociationSet Name="FK__Coursewor__cours__6D0D32F4" Association="Self.FK__Coursewor__cours__6D0D32F4">
       <End Role="Course" EntitySet="Courses" />
       <End Role="Coursework" EntitySet="Courseworks" />
     </AssociationSet>
-    <AssociationSet Name="FK__Grade__course_id__6FE99F9F" Association="Self.FK__Grade__course_id__6FE99F9F">
+    <AssociationSet Name="FK__Coursewor__cours__6EF57B66" Association="Self.FK__Coursewor__cours__6EF57B66">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="Coursework" EntitySet="Courseworks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Grade__course_id__71D1E811" Association="Self.FK__Grade__course_id__71D1E811">
       <End Role="Course" EntitySet="Courses" />
       <End Role="Grade" EntitySet="Grades" />
     </AssociationSet>
-    <AssociationSet Name="FK__Registrat__cours__797309D9" Association="Self.FK__Registrat__cours__797309D9">
+    <AssociationSet Name="FK__Registrat__cours__7B5B524B" Association="Self.FK__Registrat__cours__7B5B524B">
       <End Role="Course" EntitySet="Courses" />
       <End Role="Registration" EntitySet="Registrations" />
     </AssociationSet>
-    <AssociationSet Name="FK__Coursewor__cours__6C190EBB" Association="Self.FK__Coursewor__cours__6C190EBB">
+    <AssociationSet Name="FK__Coursewor__cours__6E01572D" Association="Self.FK__Coursewor__cours__6E01572D">
       <End Role="ExamTest" EntitySet="ExamTests" />
       <End Role="Coursework" EntitySet="Courseworks" />
     </AssociationSet>
-    <AssociationSet Name="FK__Domain__subject___6E01572D" Association="Self.FK__Domain__subject___6E01572D">
+    <AssociationSet Name="FK__Domain__subject___1EA48E88" Association="Self.FK__Domain__subject___1EA48E88">
       <End Role="Subject" EntitySet="Subjects" />
       <End Role="Domain" EntitySet="Domains" />
     </AssociationSet>
-    <AssociationSet Name="FK__ExamConfi__exam___6EF57B66" Association="Self.FK__ExamConfi__exam___6EF57B66">
+    <AssociationSet Name="FK__Exam__subject_id__208CD6FA" Association="Self.FK__Exam__subject_id__208CD6FA">
+      <End Role="Subject" EntitySet="Subjects" />
+      <End Role="Exam" EntitySet="Exams" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExamConfi__exam___70DDC3D8" Association="Self.FK__ExamConfi__exam___70DDC3D8">
       <End Role="Exam" EntitySet="Exams" />
       <End Role="ExamConfig" EntitySet="ExamConfigs" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestResul__exam___04E4BC85" Association="Self.FK__TestResul__exam___04E4BC85">
+    <AssociationSet Name="FK__TestResul__exam___07C12930" Association="Self.FK__TestResul__exam___07C12930">
       <End Role="Exam" EntitySet="Exams" />
       <End Role="TestResult" EntitySet="TestResults" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestAnswe__test___00200768" Association="Self.FK__TestAnswe__test___00200768">
+    <AssociationSet Name="FK__TestAnswe__test___02FC7413" Association="Self.FK__TestAnswe__test___02FC7413">
       <End Role="ExamTest" EntitySet="ExamTests" />
       <End Role="TestAnswer" EntitySet="TestAnswers" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestQuest__test___02FC7413" Association="Self.FK__TestQuest__test___02FC7413">
+    <AssociationSet Name="FK__TestQuest__test___05D8E0BE" Association="Self.FK__TestQuest__test___05D8E0BE">
       <End Role="ExamTest" EntitySet="ExamTests" />
       <End Role="TestQuestion" EntitySet="TestQuestions" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestResul__test___05D8E0BE" Association="Self.FK__TestResul__test___05D8E0BE">
+    <AssociationSet Name="FK__TestResul__test___08B54D69" Association="Self.FK__TestResul__test___08B54D69">
       <End Role="ExamTest" EntitySet="ExamTests" />
       <End Role="TestResult" EntitySet="TestResults" />
     </AssociationSet>
-    <AssociationSet Name="FK__Grade__registrat__70DDC3D8" Association="Self.FK__Grade__registrat__70DDC3D8">
+    <AssociationSet Name="FK__Grade__registrat__72C60C4A" Association="Self.FK__Grade__registrat__72C60C4A">
       <End Role="Registration" EntitySet="Registrations" />
       <End Role="Grade" EntitySet="Grades" />
     </AssociationSet>
-    <AssociationSet Name="FK__Lesson__parent_i__71D1E811" Association="Self.FK__Lesson__parent_i__71D1E811">
-      <End Role="Lesson" EntitySet="Lessons" />
-      <End Role="Lesson1" EntitySet="Lessons" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Lesson__subject___72C60C4A" Association="Self.FK__Lesson__subject___72C60C4A">
+    <AssociationSet Name="FK__Lesson__subject___236943A5" Association="Self.FK__Lesson__subject___236943A5">
       <End Role="Subject" EntitySet="Subjects" />
       <End Role="Lesson" EntitySet="Lessons" />
     </AssociationSet>
-    <AssociationSet Name="FK__Menu__parent_id__73BA3083" Association="Self.FK__Menu__parent_id__73BA3083">
+    <AssociationSet Name="FK__Menu__parent_id__75A278F5" Association="Self.FK__Menu__parent_id__75A278F5">
       <End Role="Menu" EntitySet="Menus" />
       <End Role="Menu1" EntitySet="Menus" />
     </AssociationSet>
-    <AssociationSet Name="FK__RoleMenu__menu_i__7B5B524B" Association="Self.FK__RoleMenu__menu_i__7B5B524B">
+    <AssociationSet Name="FK__RoleMenu__menu_i__7D439ABD" Association="Self.FK__RoleMenu__menu_i__7D439ABD">
       <End Role="Menu" EntitySet="Menus" />
       <End Role="RoleMenu" EntitySet="RoleMenus" />
     </AssociationSet>
-    <AssociationSet Name="FK__RolePermi__permi__7C4F7684" Association="Self.FK__RolePermi__permi__7C4F7684">
+    <AssociationSet Name="FK__RolePermi__permi__7E37BEF6" Association="Self.FK__RolePermi__permi__7E37BEF6">
       <End Role="Permission" EntitySet="Permissions" />
       <End Role="RolePermission" EntitySet="RolePermissions" />
     </AssociationSet>
-    <AssociationSet Name="FK__PostTag__post_id__74AE54BC" Association="Self.FK__PostTag__post_id__74AE54BC">
-      <End Role="Post" EntitySet="Posts" />
-      <End Role="PostTag" EntitySet="PostTags" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Question__subjec__778AC167" Association="Self.FK__Question__subjec__778AC167">
+    <AssociationSet Name="FK__Question__subjec__22751F6C" Association="Self.FK__Question__subjec__22751F6C">
       <End Role="Subject" EntitySet="Subjects" />
       <End Role="Question" EntitySet="Questions" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestAnswe__quest__7F2BE32F" Association="Self.FK__TestAnswe__quest__7F2BE32F">
+    <AssociationSet Name="FK__TestAnswe__quest__02084FDA" Association="Self.FK__TestAnswe__quest__02084FDA">
       <End Role="Question" EntitySet="Questions" />
       <End Role="TestAnswer" EntitySet="TestAnswers" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestQuest__quest__02084FDA" Association="Self.FK__TestQuest__quest__02084FDA">
+    <AssociationSet Name="FK__TestQuest__quest__04E4BC85" Association="Self.FK__TestQuest__quest__04E4BC85">
       <End Role="Question" EntitySet="Questions" />
       <End Role="TestQuestion" EntitySet="TestQuestions" />
     </AssociationSet>
-    <AssociationSet Name="FK_Question_Subject" Association="Self.FK_Question_Subject">
-      <End Role="Subject" EntitySet="Subjects" />
-      <End Role="Question" EntitySet="Questions" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Registrat__user___7A672E12" Association="Self.FK__Registrat__user___7A672E12">
+    <AssociationSet Name="FK__Registrat__user___7C4F7684" Association="Self.FK__Registrat__user___7C4F7684">
       <End Role="User" EntitySet="Users" />
       <End Role="Registration" EntitySet="Registrations" />
     </AssociationSet>
-    <AssociationSet Name="FK__PostTag__tag_id__75A278F5" Association="Self.FK__PostTag__tag_id__75A278F5">
-      <End Role="Tag" EntitySet="Tags" />
-      <End Role="PostTag" EntitySet="PostTags" />
+    <AssociationSet Name="FK__RolePermi__role___7F2BE32F" Association="Self.FK__RolePermi__role___7F2BE32F">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="RolePermission" EntitySet="RolePermissions" />
     </AssociationSet>
-    <AssociationSet Name="FK__PostTag__tag_id__76969D2E" Association="Self.FK__PostTag__tag_id__76969D2E">
-      <End Role="Tag" EntitySet="Tags" />
-      <End Role="PostTag" EntitySet="PostTags" />
+    <AssociationSet Name="FK__UserRole__role_i__09A971A2" Association="Self.FK__UserRole__role_i__09A971A2">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="UserRole" EntitySet="UserRoles" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestAnswe__test___01142BA1" Association="Self.FK__TestAnswe__test___01142BA1">
+    <AssociationSet Name="FK__TestAnswe__test___03F0984C" Association="Self.FK__TestAnswe__test___03F0984C">
       <End Role="TestResult" EntitySet="TestResults" />
       <End Role="TestAnswer" EntitySet="TestAnswers" />
     </AssociationSet>
-    <AssociationSet Name="FK__TestResul__batch__03F0984C" Association="Self.FK__TestResul__batch__03F0984C">
+    <AssociationSet Name="FK__TestResul__batch__06CD04F7" Association="Self.FK__TestResul__batch__06CD04F7">
       <End Role="TestBatch" EntitySet="TestBatches" />
       <End Role="TestResult" EntitySet="TestResults" />
     </AssociationSet>
-    <AssociationSet Name="FK__UserRole__user_i__06CD04F7" Association="Self.FK__UserRole__user_i__06CD04F7">
+    <AssociationSet Name="FK__UserRole__user_i__0A9D95DB" Association="Self.FK__UserRole__user_i__0A9D95DB">
       <End Role="User" EntitySet="Users" />
       <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="PostTag" Association="Self.PostTag">
+      <End Role="Post" EntitySet="Posts" />
+      <End Role="Tag" EntitySet="Tags" />
     </AssociationSet>
     <AssociationSet Name="SubjectReference" Association="Self.SubjectReference">
       <End Role="Post" EntitySet="Posts" />
