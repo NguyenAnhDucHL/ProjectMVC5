@@ -186,7 +186,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MenuDetailController.cs" />
@@ -1453,10 +1453,12 @@
     <Content Include="Views\Shared\_CMS_Layout.cshtml" />
     <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\User\Home.cshtml" />
-    <Content Include="Views\User\Course.cshtml" />
+    <Content Include="Views\User\SubjectList.cshtml" />
     <Content Include="Views\User\Post.cshtml" />
     <Content Include="Views\User\TeacherList.cshtml" />
-    <Content Include="Views\User\MyCourse.cshtml" />
+    <Content Include="Views\User\MySubject.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\User\SubjectDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

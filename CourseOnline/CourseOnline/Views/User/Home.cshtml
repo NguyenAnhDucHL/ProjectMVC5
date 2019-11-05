@@ -50,9 +50,9 @@
         <div class="row mb-5 justify-content-center text-center">
             <div class="col-lg-6 mb-5">
                 <h2 class="section-title-underline mb-3">
-                    <span>Popular Courses</span>
+                    <span>Popular Subjects</span>
                 </h2>
-                <a href="@Url.Action("ListCourse","Course")">Read All Courses</a>
+                <a href="@Url.Action("ListSubjects","Subject")">Read All Subjects</a>
             </div>
         </div>
 
@@ -64,7 +64,7 @@
                     {
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="#"><img src="@item.picture" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
+                                <a href="@Url.Action("SubjectDetail","Subject", new { @id = item.subject_id})"><img src="@item.picture" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
                                 <div class="category"><h3>@item.subject_category</h3></div>
                             </figure>
                             <div class="course-1-content pb-4">
