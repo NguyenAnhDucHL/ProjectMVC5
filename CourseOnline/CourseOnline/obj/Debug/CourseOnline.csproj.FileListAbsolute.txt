@@ -126,7 +126,6 @@ E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\vbc.rsp
 E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe
 E:\Sourcecode\CourseOnline\CourseOnline\bin\roslyn\VBCSCompiler.exe.config
 E:\Sourcecode\CourseOnline\CourseOnline\bin\Antlr3.Runtime.dll
-E:\Sourcecode\CourseOnline\CourseOnline\bin\EntityFramework.dll
 E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.Web.Infrastructure.dll
 E:\Sourcecode\CourseOnline\CourseOnline\bin\Newtonsoft.Json.dll
@@ -139,7 +138,6 @@ E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.WebPages.Deployment.dll
 E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.WebPages.dll
 E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.WebPages.Razor.dll
 E:\Sourcecode\CourseOnline\CourseOnline\bin\WebGrease.dll
-E:\Sourcecode\CourseOnline\CourseOnline\bin\EntityFramework.xml
 E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.Helpers.xml
 E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.Mvc.xml
 E:\Sourcecode\CourseOnline\CourseOnline\bin\System.Web.Optimization.xml
@@ -786,3 +784,9 @@ D:\.NetCore\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetComp
 D:\.NetCore\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
 D:\.NetCore\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
 D:\.NetCore\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
+E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.Owin.Security.OAuth.dll
+E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.Owin.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.Owin.Security.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.Owin.Security.Cookies.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\PagedList.xml
+E:\Sourcecode\CourseOnline\CourseOnline\bin\PagedList.Mvc.xml
