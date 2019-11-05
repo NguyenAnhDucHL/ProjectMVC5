@@ -542,7 +542,6 @@ C:\Users\USER\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAss
 C:\Users\USER\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
 C:\Users\USER\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
 C:\Users\USER\Desktop\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
-E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
 E:\CourseOnline\CourseOnline\bin\CourseOnline.dll.config
 E:\CourseOnline\CourseOnline\bin\CourseOnline.dll
 E:\CourseOnline\CourseOnline\bin\CourseOnline.pdb
@@ -784,9 +783,4 @@ D:\.NetCore\CourseOnline\CourseOnline\bin\Microsoft.CodeDom.Providers.DotNetComp
 D:\.NetCore\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
 D:\.NetCore\CourseOnline\CourseOnline\obj\Debug\CourseOnline.dll
 D:\.NetCore\CourseOnline\CourseOnline\obj\Debug\CourseOnline.pdb
-E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.Owin.Security.OAuth.dll
-E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.Owin.xml
-E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.Owin.Security.xml
-E:\Sourcecode\CourseOnline\CourseOnline\bin\Microsoft.Owin.Security.Cookies.xml
-E:\Sourcecode\CourseOnline\CourseOnline\bin\PagedList.xml
-E:\Sourcecode\CourseOnline\CourseOnline\bin\PagedList.Mvc.xml
+E:\Sourcecode\CourseOnline\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache
