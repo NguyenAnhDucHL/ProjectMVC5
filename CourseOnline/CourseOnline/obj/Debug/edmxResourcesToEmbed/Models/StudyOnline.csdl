@@ -54,6 +54,7 @@
     <Property Name="domain_description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="domain_status" Type="Boolean" />
     <NavigationProperty Name="Subject" Relationship="Self.FK__Domain__subject___6FE99F9F" FromRole="Domain" ToRole="Subject" />
+    <NavigationProperty Name="Questions" Relationship="Self.FK__Question__domain__14270015" FromRole="Domain" ToRole="Question" />
   </EntityType>
   <EntityType Name="Exam">
     <Key>
@@ -66,6 +67,7 @@
     <Property Name="subject_id" Type="Int32" />
     <Property Name="exam_duration" Type="Int32" Nullable="false" />
     <Property Name="exam_description" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Name="test_type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Subject" Relationship="Self.FK__Exam__subject_id__70DDC3D8" FromRole="Exam" ToRole="Subject" />
     <NavigationProperty Name="ExamConfigs" Relationship="Self.FK__ExamConfi__exam___71D1E811" FromRole="Exam" ToRole="ExamConfig" />
     <NavigationProperty Name="TestResults" Relationship="Self.FK__TestResul__exam___05D8E0BE" FromRole="Exam" ToRole="TestResult" />
@@ -126,6 +128,7 @@
     <Property Name="lesson_link" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="lesson_content" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Subject" Relationship="Self.FK__Lesson__subject___74AE54BC" FromRole="Lesson" ToRole="Subject" />
+    <NavigationProperty Name="Questions" Relationship="Self.FK__Question__lesson__151B244E" FromRole="Lesson" ToRole="Question" />
   </EntityType>
   <EntityType Name="Menu">
     <Key>
@@ -150,6 +153,7 @@
     <Property Name="permission_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="permission_link" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="permission_status" Type="Boolean" />
+    <Property Name="permission_describe" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="RolePermissions" Relationship="Self.FK__RolePermi__permi__7C4F7684" FromRole="Permission" ToRole="RolePermission" />
   </EntityType>
   <EntityType Name="Post">
@@ -180,6 +184,8 @@
     <Property Name="lesson_id" Type="Int32" Nullable="false" />
     <Property Name="level" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="AnswerOptions" Relationship="Self.FK__AnswerOpt__quest__6A30C649" FromRole="Question" ToRole="AnswerOption" />
+    <NavigationProperty Name="Domain" Relationship="Self.FK__Question__domain__14270015" FromRole="Question" ToRole="Domain" />
+    <NavigationProperty Name="Lesson" Relationship="Self.FK__Question__lesson__151B244E" FromRole="Question" ToRole="Lesson" />
     <NavigationProperty Name="Subject" Relationship="Self.FK__Question__subjec__787EE5A0" FromRole="Question" ToRole="Subject" />
     <NavigationProperty Name="TestAnswers" Relationship="Self.FK__TestAnswe__quest__00200768" FromRole="Question" ToRole="TestAnswer" />
     <NavigationProperty Name="TestQuestions" Relationship="Self.FK__TestQuest__quest__02FC7413" FromRole="Question" ToRole="TestQuestion" />
@@ -471,6 +477,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Question__domain__14270015">
+    <End Role="Domain" Type="Self.Domain" Multiplicity="1" />
+    <End Role="Question" Type="Self.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Domain">
+        <PropertyRef Name="domain_id" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="domain_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Exam__subject_id__70DDC3D8">
     <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
     <End Role="Exam" Type="Self.Exam" Multiplicity="*" />
@@ -564,6 +582,18 @@
       </Principal>
       <Dependent Role="Lesson">
         <PropertyRef Name="subject_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Question__lesson__151B244E">
+    <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
+    <End Role="Question" Type="Self.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lesson">
+        <PropertyRef Name="lesson_id" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="lesson_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -784,6 +814,10 @@
       <End Role="Subject" EntitySet="Subjects" />
       <End Role="Domain" EntitySet="Domains" />
     </AssociationSet>
+    <AssociationSet Name="FK__Question__domain__14270015" Association="Self.FK__Question__domain__14270015">
+      <End Role="Domain" EntitySet="Domains" />
+      <End Role="Question" EntitySet="Questions" />
+    </AssociationSet>
     <AssociationSet Name="FK__Exam__subject_id__70DDC3D8" Association="Self.FK__Exam__subject_id__70DDC3D8">
       <End Role="Subject" EntitySet="Subjects" />
       <End Role="Exam" EntitySet="Exams" />
@@ -815,6 +849,10 @@
     <AssociationSet Name="FK__Lesson__subject___74AE54BC" Association="Self.FK__Lesson__subject___74AE54BC">
       <End Role="Subject" EntitySet="Subjects" />
       <End Role="Lesson" EntitySet="Lessons" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Question__lesson__151B244E" Association="Self.FK__Question__lesson__151B244E">
+      <End Role="Lesson" EntitySet="Lessons" />
+      <End Role="Question" EntitySet="Questions" />
     </AssociationSet>
     <AssociationSet Name="FK__Menu__parent_id__75A278F5" Association="Self.FK__Menu__parent_id__75A278F5">
       <End Role="Menu" EntitySet="Menus" />

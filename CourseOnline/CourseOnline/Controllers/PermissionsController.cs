@@ -5,16 +5,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Linq.Dynamic;
-
+using Newtonsoft.Json.Linq;
+using CourseOnline.Global.Setting;
 namespace CourseOnline.Controllers
 {
     public class PermissionsController : Controller
     {
         // GET: Permissions
-        [Route("CMS/PermissionList")]
         public ActionResult Index()
         {
-            return View("/Views/CMS/PermissionsList.cshtml");
+            return View("/Views/CMS/Permission/PermissionsList.cshtml");
         }
 
 
@@ -34,7 +34,8 @@ namespace CourseOnline.Controllers
                                       {
                                           permission_id = p.permission_id,
                                           permission_name = p.permission_name,
-                                          permission_link = p.permission_link
+                                          permission_link = p.permission_link,
+                                          permission_status = p.permission_status
                                       }).ToList();
 
                 int totalrows = permissionList.Count;
@@ -44,8 +45,192 @@ namespace CourseOnline.Controllers
                 return Json(new { success = true, data = permissionList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
             }
         }
+        [HttpGet]
+        public ActionResult PermissionsDetail(int id)
+        {
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                Permission permission = db.Permissions.Where(m => m.permission_id == id).FirstOrDefault();
+                ViewBag.Permission = permission;
+                ViewBag.id = id;
+                return View("/Views/CMS/Permission/PermissionDetail.cshtml");
+            }
+        }
+        [HttpGet]
+        public ActionResult AddPermission()
+        {
 
-        [Route("CMS/RolesPermission")]
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                return View("/Views/CMS/Permission/AddPermission.cshtml");
+            }
+        }
+        [HttpPost]
+        public ActionResult SubmitAddPermission(string postJson)
+        {
+            try
+            {
+                using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                {
+                    dynamic addpermission = JValue.Parse(postJson);
+                    string temp = null;
+
+                    Permission permission = new Permission();
+                    permission.permission_name = addpermission.permissionName;
+                    permission.permission_link = addpermission.permissionLink;
+                    temp = addpermission.permissionStatus;
+                    if (temp.Equals("Active"))
+                    {
+                        permission.permission_status = true;
+                    }
+                    else
+                    {
+                        permission.permission_status = false;
+                    }
+                    permission.permission_describe = addpermission.permissionDescribe;
+                    db.Permissions.Add(permission);
+                    db.SaveChanges();
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult SubmitEditPermission(string postJson)
+        {
+            try
+            {
+                using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                {
+                    string temp = null;
+                    dynamic editpermission = JValue.Parse(postJson);
+                    int id = editpermission.permissionid;
+
+                    Permission permission = db.Permissions.Where(p => p.permission_id == id).FirstOrDefault();
+                    if (permission != null)
+                    {
+                        permission.permission_name = editpermission.permissionName;
+                        permission.permission_link = editpermission.permissionLink;
+                        temp = editpermission.permissionStatus;
+                        if (temp.Equals("Active"))
+                        {
+                            permission.permission_status = true;
+                        }
+                        else
+                        {
+                            permission.permission_status = false;
+                        }
+                        permission.permission_describe = editpermission.permissionDescribe;
+                        db.SaveChanges();
+                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult deletePermission(int id)
+        {
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var permssion = db.Permissions.Where(m => m.permission_id == id).FirstOrDefault();
+                if (permssion != null)
+                {
+                    db.Permissions.Remove(permssion);
+                    db.SaveChanges();
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                }
+
+
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult FilterByPermissionStatus(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                if (!type.Equals(All.ALL_STATUS)) // filter theo status
+                {
+                    if (type.Equals(Status.ACTIVE))
+                    {
+                        var Permissions = (from p in db.Permissions
+                                     where p.permission_status == true
+                                     select new
+                                     {
+                                         p.permission_id,
+                                         p.permission_name,
+                                         p.permission_link,
+                                         p.permission_status,
+                                         p.permission_describe,
+                                     }).ToList();
+
+                        int totalrows = Permissions.Count;
+                        int totalrowsafterfiltering = Permissions.Count;
+                        Permissions = Permissions.Skip(start).Take(length).ToList();
+                        Permissions = Permissions.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = Permissions, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        var Permissions = (from p in db.Permissions
+                                     where p.permission_status == false
+                                     select new
+                                     {
+                                         p.permission_id,
+                                         p.permission_name,
+                                         p.permission_link,
+                                         p.permission_status,
+                                         p.permission_describe,
+                                     }).ToList();
+
+                        int totalrows = Permissions.Count;
+                        int totalrowsafterfiltering = Permissions.Count;
+                        Permissions = Permissions.Skip(start).Take(length).ToList();
+                        Permissions = Permissions.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = Permissions, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else // lay ra tat ca
+                {
+                    string sql = "select * from Permission";
+
+                    List<Permission> Permissions = db.Database.SqlQuery<Permission>(sql).ToList();
+
+                    int totalrows = Permissions.Count;
+                    int totalrowsafterfiltering = Permissions.Count;
+                    Permissions = Permissions.Skip(start).Take(length).ToList();
+                    Permissions = Permissions.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                    return Json(new { success = true, data = Permissions, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+        }
+
         public ActionResult RolesPermission()
         {
             return View("/Views/CMS/RolesPermission.cshtml");
@@ -84,5 +269,6 @@ namespace CourseOnline.Controllers
             }
 
         }
+
     }
 }

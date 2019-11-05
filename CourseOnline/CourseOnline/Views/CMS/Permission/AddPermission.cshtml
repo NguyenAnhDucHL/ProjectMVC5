@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "PermissionDetail";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+        Permission Details
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Index","Permissions")'>Menus List</a></li>
+        <li class="active">Menu Details</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" id="inp_name">
+                    </div>
+                    <div class="form-group">
+                        <label>Link</label>
+                        <input type="text" class="form-control" id="inp_link">
+                    </div>
+                    <div class="form-group">
+                        <label>Describe</label>
+                        <input type="text" class="form-control" id="inp_des">
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="sl_permissionStatus" class="form-control">
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-info" onclick="SubmitAddPermission()">Submit</button>
+                    <button type="submit" class="btn btn-info" onclick='getBackPermission()'>Back</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+</section>
+@section scripts{
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+
+
+        $(document).ready(function () {
+
+    });
+
+
+        function SubmitAddPermission() {
+
+            var permission = {
+            permissionName: $("#inp_name").val(),
+            permissionLink: $("#inp_link").val(),
+            permissionStatus: $("#sl_permissionStatus").val(),
+            permissionDescribe: $("#inp_des").val(),
+            };
+
+            var postJson = JSON.stringify(permission);
+
+            $.ajax({
+                url: '@Url.Action("SubmitAddPermission","Permissions")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit success");
+                    } else {
+                        alert("submit failed");
+                    }
+                },
+                error: (response) => { alert("Network error") }
+            });
+        };
+
+    // bat su kien back
+    function getBackPermission() {
+               window.location.href ='@Url.Action("Index", "Permissions")';
+        }
+    </script>
+}

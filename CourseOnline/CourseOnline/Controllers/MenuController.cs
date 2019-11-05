@@ -211,7 +211,7 @@ namespace CourseOnline.Controllers
                         temp = editmenu.menuStatus;
                         if (temp.Equals("Active"))
                         {
-                            m.menu_status = true;
+                            m.menu_status = true;         
                         }
                         else
                         {

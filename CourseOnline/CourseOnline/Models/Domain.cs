@@ -14,6 +14,12 @@ namespace CourseOnline.Models
     
     public partial class Domain
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Domain()
+        {
+            this.Questions = new HashSet<Question>();
+        }
+    
         public int domain_id { get; set; }
         public Nullable<int> subject_id { get; set; }
         public string domain_name { get; set; }
@@ -21,5 +27,7 @@ namespace CourseOnline.Models
         public Nullable<bool> domain_status { get; set; }
     
         public virtual Subject Subject { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Question> Questions { get; set; }
     }
 }

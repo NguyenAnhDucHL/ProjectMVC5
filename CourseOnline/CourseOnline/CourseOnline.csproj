@@ -238,7 +238,6 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MenuDetailController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
-    <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
@@ -1498,6 +1497,7 @@
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Assets\bootstrap\js\dashboard.js.download" />
     <EntityDeploy Include="Models\STUDYONLINE.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>STUDYONLINE.Designer.cs</LastGenOutput>
@@ -1505,7 +1505,6 @@
     <Content Include="Models\STUDYONLINE.edmx.diagram">
       <DependentUpon>STUDYONLINE.edmx</DependentUpon>
     </Content>
-    <Content Include="Assets\bootstrap\js\dashboard.js.download" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -1569,7 +1568,6 @@
     <Content Include="Views\CMS\Setting\SettingList.cshtml" />
     <Content Include="Views\CMS\RegistrationList.cshtml" />
     <Content Include="Views\CMS\CourseList.cshtml" />
-    <Content Include="Views\CMS\PermissionList.cshtml" />
     <Content Include="Views\CMS\RolePermissionList.cshtml" />
     <Content Include="Views\CMS\Subject\SubjectLessonList.cshtml" />
     <Content Include="Views\CMS\RoleMenuList.cshtml" />
@@ -1602,9 +1600,11 @@
     <Content Include="Views\User\TeacherList.cshtml" />
     <Content Include="Views\CMS\MenuDetail.cshtml" />
     <Content Include="Views\CMS\MenuList.cshtml" />
-    <Content Include="Views\CMS\PermissionsList.cshtml" />
+    <Content Include="Views\CMS\Permission\PermissionsList.cshtml" />
     <Content Include="Views\CMS\RolesPermission.cshtml" />
     <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\CMS\Permission\PermissionDetail.cshtml" />
+    <Content Include="Views\CMS\Permission\AddPermission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

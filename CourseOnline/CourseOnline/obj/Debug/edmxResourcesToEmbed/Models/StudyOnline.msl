@@ -59,6 +59,7 @@
           <ScalarProperty Name="subject_id" ColumnName="subject_id" />
           <ScalarProperty Name="exam_duration" ColumnName="exam_duration" />
           <ScalarProperty Name="exam_description" ColumnName="exam_description" />
+          <ScalarProperty Name="test_type" ColumnName="test_type" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -135,6 +136,7 @@
           <ScalarProperty Name="permission_name" ColumnName="permission_name" />
           <ScalarProperty Name="permission_link" ColumnName="permission_link" />
           <ScalarProperty Name="permission_status" ColumnName="permission_status" />
+          <ScalarProperty Name="permission_describe" ColumnName="permission_describe" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

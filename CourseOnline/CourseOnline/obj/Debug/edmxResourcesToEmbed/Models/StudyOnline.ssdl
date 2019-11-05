@@ -55,6 +55,7 @@
     <Property Name="subject_id" Type="int" />
     <Property Name="exam_duration" Type="int" Nullable="false" />
     <Property Name="exam_description" Type="varchar" MaxLength="2000" />
+    <Property Name="test_type" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="ExamConfig">
     <Key>
@@ -125,6 +126,7 @@
     <Property Name="permission_name" Type="varchar" MaxLength="50" />
     <Property Name="permission_link" Type="varchar" MaxLength="50" />
     <Property Name="permission_status" Type="bit" />
+    <Property Name="permission_describe" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="Post">
     <Key>
@@ -503,6 +505,30 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Question__domain__14270015">
+    <End Role="Domain" Type="Self.Domain" Multiplicity="1" />
+    <End Role="Question" Type="Self.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Domain">
+        <PropertyRef Name="domain_id" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="domain_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Question__lesson__151B244E">
+    <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
+    <End Role="Question" Type="Self.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lesson">
+        <PropertyRef Name="lesson_id" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="lesson_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Question__subjec__787EE5A0">
     <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
     <End Role="Question" Type="Self.Question" Multiplicity="*" />
@@ -825,6 +851,14 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
     <AssociationSet Name="FK__PostTag__tag_id__778AC167" Association="Self.FK__PostTag__tag_id__778AC167">
       <End Role="Tag" EntitySet="Tag" />
       <End Role="PostTag" EntitySet="PostTag" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Question__domain__14270015" Association="Self.FK__Question__domain__14270015">
+      <End Role="Domain" EntitySet="Domain" />
+      <End Role="Question" EntitySet="Question" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Question__lesson__151B244E" Association="Self.FK__Question__lesson__151B244E">
+      <End Role="Lesson" EntitySet="Lesson" />
+      <End Role="Question" EntitySet="Question" />
     </AssociationSet>
     <AssociationSet Name="FK__Question__subjec__787EE5A0" Association="Self.FK__Question__subjec__787EE5A0">
       <End Role="Subject" EntitySet="Subject" />

@@ -24,6 +24,7 @@ namespace CourseOnline.Models
         public string permission_name { get; set; }
         public string permission_link { get; set; }
         public Nullable<bool> permission_status { get; set; }
+        public string permission_describe { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RolePermission> RolePermissions { get; set; }

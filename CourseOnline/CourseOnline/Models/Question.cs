@@ -30,6 +30,8 @@ namespace CourseOnline.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnswerOption> AnswerOptions { get; set; }
+        public virtual Domain Domain { get; set; }
+        public virtual Lesson Lesson { get; set; }
         public virtual Subject Subject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestAnswer> TestAnswers { get; set; }

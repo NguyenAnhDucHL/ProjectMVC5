@@ -87,10 +87,10 @@
         "serverSide": "true",
         "order": [[0, "asc"]],
         "searching": false
-        });
+       });
+       filterListener();
     });
 
-    filterListener();
     function filterListener() {
              $('#sl_menuStatus').on('change', function (e) {
                 var optionSelected = $("option:selected", this);
