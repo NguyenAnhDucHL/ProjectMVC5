@@ -111,7 +111,7 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"}))
+                                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                         {
                                             <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat"> Sign Out</a>
                                         }
@@ -130,7 +130,7 @@
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
-            <section class="sidebar">
+            <section class="sidebar" style="height: auto;">
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="pull-left image">
@@ -149,7 +149,7 @@
                         </a>
                     </li>
                     <li class="active treeview">
-                        <a href="#">
+                        <a>
                             <i class="fa fa-fw fa-file-text"></i> <span>Public Contents</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
@@ -199,7 +199,7 @@
                             <li><a @Url.Action("Menu", "Index", "Menu")><i class="fa fa-circle-o"></i> Menu List</a></li>
                             <li><a href="permissions-list"><i class="fa fa-circle-o"></i> Permissions</a></li>
                             <li><a @Url.Action("User", "Index", "User")><i class="fa fa-circle-o"></i> User List</a></li>
-                            <li><a href="roles-menu"><i class="fa fa-circle-o"></i> Roles Menus</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Roles Menus</a></li>
                             <li><a href="roles-permission"><i class="fa fa-circle-o"></i> Roles Permission</a></li>
                         </ul>
                     </li>
@@ -219,7 +219,7 @@
             </section>
             <!-- /.sidebar -->
         </aside>
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="min-height: 916px;">
             @RenderBody()
         </div>
         <!-- Content Wrapper. Contains page content -->
@@ -466,6 +466,7 @@
     @*<script src="~/Assets/materialize/materialize/js/materialize.js"></script>
         <script src="~/Assets/materialize/materialize/js/materialize.min.js"></script>*@
     <script src="~/Assets/bootstrap/js/bootstrap.min.js.download"></script>
+
 </body>
 </html>
 @RenderSection("scripts", required: false)
