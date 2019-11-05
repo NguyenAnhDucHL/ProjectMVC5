@@ -47,7 +47,7 @@ namespace CourseOnline.Controllers
             int pageNumber = (page ?? 1);
             var lstMySubject = (from s in db.Subjects
                                join c in db.Courses on s.subject_id equals c.subject_id
-                               join re in db.Registrations on c.course_id equals re.course_id
+                               join re in db.Registrations.Where(re => re.registration_status == "Approved") on c.course_id equals re.course_id
                                join u in db.Users on re.user_id equals u.user_id
                                select new MySubjectModel
                                {
