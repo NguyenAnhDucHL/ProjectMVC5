@@ -77,7 +77,7 @@
                                     <span class="icon-star2 text-warning"></span>
                                 </div>
                                 <div class="desc mb-4" style="height:100px; overflow:hidden">@item.subject_brief_info</div>
-                                <p><a href="#" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
+                                <p><a href="@Url.Action("SubjectDetail","Subject", new { @id = item.subject_id})" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
                             </div>
                         </div>
                     }
