@@ -26,8 +26,9 @@ namespace CourseOnline.Models
         public int exam_id { get; set; }
         public int course_id { get; set; }
         public string test_name { get; set; }
-        public string test_code { get; set; }
         public string exam_note { get; set; }
+        public string test_code { get; set; }
+        public string note { get; set; }
     
         public virtual Coursework Coursework { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

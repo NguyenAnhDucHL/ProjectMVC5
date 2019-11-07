@@ -22,6 +22,7 @@
     <Property Name="course_end_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="course_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="course_status" Type="Boolean" Nullable="false" />
+    <Property Name="course_note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Subject" Relationship="Self.FK__Course__subject___6B24EA82" FromRole="Course" ToRole="Subject" />
     <NavigationProperty Name="User" Relationship="Self.FK__Course__teacher___6C190EBB" FromRole="Course" ToRole="User" />
     <NavigationProperty Name="Courseworks" Relationship="Self.FK__Coursewor__cours__6D0D32F4" FromRole="Course" ToRole="Coursework" />
@@ -93,8 +94,9 @@
     <Property Name="exam_id" Type="Int32" Nullable="false" />
     <Property Name="course_id" Type="Int32" Nullable="false" />
     <Property Name="test_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="test_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="exam_note" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Name="test_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="note" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Coursework" Relationship="Self.FK__Coursewor__cours__6E01572D" FromRole="ExamTest" ToRole="Coursework" />
     <NavigationProperty Name="TestAnswers" Relationship="Self.FK__TestAnswe__test___01142BA1" FromRole="ExamTest" ToRole="TestAnswer" />
     <NavigationProperty Name="TestQuestions" Relationship="Self.FK__TestQuest__test___03F0984C" FromRole="ExamTest" ToRole="TestQuestion" />
@@ -336,7 +338,6 @@
       <PropertyRef Name="user_id" />
     </Key>
     <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="user_group" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="user_fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="use_mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -344,6 +345,8 @@
     <Property Name="user_status" Type="Boolean" Nullable="false" />
     <Property Name="user_image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="user_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="user_position" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="check_recieveInformation" Type="Boolean" />
     <NavigationProperty Name="Courses" Relationship="Self.FK__Course__teacher___6C190EBB" FromRole="User" ToRole="Course" />
     <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__user___7A672E12" FromRole="User" ToRole="Registration" />
     <NavigationProperty Name="UserRoles" Relationship="Self.FK__UserRole__user_i__08B54D69" FromRole="User" ToRole="UserRole" />

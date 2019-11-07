@@ -2,15 +2,15 @@
 @{
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
 }
-    <section class="content-header">
-        <h1>
-            Users List
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Users List</li>
-        </ol>
-    </section>
+<section class="content-header">
+    <h1>
+        Users List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Users List</li>
+    </ol>
+</section>
 <div class="box">
     <div class="box-body">
         <div class="table-responsive">
@@ -67,15 +67,15 @@
                     "data": "user_status", "name": "user_status", "orderable": true, "render": function (data) {
                         if (data == 1) return "active"
                         else return "Inactive"}
-                }, 
+                },
                 {
                     "data": "user_id", "render": function (data) {
-                        return "<a class='waves-effect waves-light btn-small blue darken-2 modal-trigger' data-target='edit_employee'  style='margin-left:5px' ><i class='fa fa-fw fa-edit'></i>Sửa</a>" +
-                            "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:5px' onclick=getDeleteIdEmp('" + data + "') ><i class='fa fa-trash'></i> Xóa</a>";
+                            return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdUser('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
+                              "<button class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdMenu('" + data + "') ><i class='fa fa-trash'></i>Delete</button>";
                     },
                     "orderable": false,
                     "searchable": false
-                },      
+                },
             ],
         "paging": true,
         "pageLength": 5,
@@ -84,7 +84,14 @@
         "order": [[0, "asc"]],
         "searching": false
         });
-    } );
+    });
+
+
+        function getEditIdUser(id) {
+              if (id != null) {
+               window.location.href ='@Url.Action("UserDetail", "User")?id=' + id;
+            }
+        }
     </script>
 }
 

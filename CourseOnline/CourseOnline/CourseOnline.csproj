@@ -1557,7 +1557,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\CMS\UserList.cshtml" />
+    <Content Include="Views\CMS\User\UserList.cshtml" />
     <Content Include="Views\Shared\_CMS_Layout.cshtml" />
     <Content Include="Views\CMS\Home.cshtml" />
     <Content Include="Views\CMS\Menu\MenuList.cshtml" />
@@ -1605,6 +1605,8 @@
     <Content Include="Views\CMS\Permission\PermissionDetail.cshtml" />
     <Content Include="Views\CMS\Permission\AddPermission.cshtml" />
     <Content Include="Views\CMS\Registration\RegistrationList.cshtml" />
+    <Content Include="Views\CMS\User\UserDetail.cshtml" />
+    <Content Include="Views\CMS\User\AddUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

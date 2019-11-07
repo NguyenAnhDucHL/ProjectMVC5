@@ -23,7 +23,6 @@ namespace CourseOnline.Models
         }
     
         public int user_id { get; set; }
-        public string user_group { get; set; }
         public string user_fullname { get; set; }
         public string user_email { get; set; }
         public string use_mobile { get; set; }
@@ -31,6 +30,8 @@ namespace CourseOnline.Models
         public bool user_status { get; set; }
         public string user_image { get; set; }
         public string user_description { get; set; }
+        public string user_position { get; set; }
+        public Nullable<bool> check_recieveInformation { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Course> Courses { get; set; }

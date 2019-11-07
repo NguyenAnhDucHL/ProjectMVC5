@@ -21,6 +21,7 @@
     <Property Name="course_end_date" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="course_name" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="course_status" Type="bit" Nullable="false" />
+    <Property Name="course_note" Type="nvarchar" MaxLength="2000" />
   </EntityType>
   <EntityType Name="Coursework">
     <Key>
@@ -77,8 +78,9 @@
     <Property Name="exam_id" Type="int" Nullable="false" />
     <Property Name="course_id" Type="int" Nullable="false" />
     <Property Name="test_name" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="test_code" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="exam_note" Type="varchar" MaxLength="2000" />
+    <Property Name="test_code" Type="varchar" MaxLength="50" />
+    <Property Name="note" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Grade">
     <Key>
@@ -308,7 +310,6 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       <PropertyRef Name="user_id" />
     </Key>
     <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="user_group" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="user_fullname" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="user_email" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="use_mobile" Type="varchar" MaxLength="50" />
@@ -316,6 +317,8 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
     <Property Name="user_status" Type="bit" Nullable="false" />
     <Property Name="user_image" Type="nvarchar" MaxLength="250" />
     <Property Name="user_description" Type="nvarchar(max)" />
+    <Property Name="user_position" Type="nvarchar" MaxLength="150" />
+    <Property Name="check_recieveInformation" Type="bit" />
   </EntityType>
   <EntityType Name="UserRole">
     <Key>

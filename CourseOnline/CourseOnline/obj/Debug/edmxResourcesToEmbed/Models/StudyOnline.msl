@@ -22,6 +22,7 @@
           <ScalarProperty Name="course_end_date" ColumnName="course_end_date" />
           <ScalarProperty Name="course_name" ColumnName="course_name" />
           <ScalarProperty Name="course_status" ColumnName="course_status" />
+          <ScalarProperty Name="course_note" ColumnName="course_note" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -83,8 +84,9 @@
           <ScalarProperty Name="exam_id" ColumnName="exam_id" />
           <ScalarProperty Name="course_id" ColumnName="course_id" />
           <ScalarProperty Name="test_name" ColumnName="test_name" />
-          <ScalarProperty Name="test_code" ColumnName="test_code" />
           <ScalarProperty Name="exam_note" ColumnName="exam_note" />
+          <ScalarProperty Name="test_code" ColumnName="test_code" />
+          <ScalarProperty Name="note" ColumnName="note" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -302,7 +304,6 @@
       <EntityTypeMapping TypeName="STUDYONLINEModel.User">
         <MappingFragment StoreEntitySet="User">
           <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="user_group" ColumnName="user_group" />
           <ScalarProperty Name="user_fullname" ColumnName="user_fullname" />
           <ScalarProperty Name="user_email" ColumnName="user_email" />
           <ScalarProperty Name="use_mobile" ColumnName="use_mobile" />
@@ -310,6 +311,8 @@
           <ScalarProperty Name="user_status" ColumnName="user_status" />
           <ScalarProperty Name="user_image" ColumnName="user_image" />
           <ScalarProperty Name="user_description" ColumnName="user_description" />
+          <ScalarProperty Name="user_position" ColumnName="user_position" />
+          <ScalarProperty Name="check_recieveInformation" ColumnName="check_recieveInformation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -31,6 +31,7 @@ namespace CourseOnline.Models
         public string course_end_date { get; set; }
         public string course_name { get; set; }
         public bool course_status { get; set; }
+        public string course_note { get; set; }
     
         public virtual Subject Subject { get; set; }
         public virtual User User { get; set; }
