@@ -73,6 +73,16 @@ namespace CourseOnline.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult AddUser()
+        {
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var Roles = db.Roles.Select(r => r.role_name).Distinct().ToList();
+                ViewBag.Roles = Roles;
+            }
+            return View("/Views/CMS/User/AddUser.cshtml");
+        }
 
         [HttpPost]
         public ActionResult SubmitUser(string postJson)
@@ -108,6 +118,60 @@ namespace CourseOnline.Controllers
                         {
                             user.user_status = false;
                         }
+                        db.SaveChanges();
+                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+      
+        [HttpPost]
+        public ActionResult SubmitAddUser(string postJson)
+        {
+            try
+            {
+                using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                {
+                    string temp = null;
+                    dynamic editUser = JValue.Parse(postJson);
+                    string roleName = editUser.userRole;
+                    User user = new User();
+                    UserRole userRole = new UserRole();
+                    var idRole = db.Roles.Where(r => r.role_name == roleName).Select(r => r.role_id).FirstOrDefault();
+                    if (user != null)
+                    {
+                        user.user_fullname = editUser.userName;
+                        user.user_email = editUser.userMail;
+                        user.use_mobile = editUser.userMobile;
+                        user.user_position = editUser.userPosition;
+                        user.user_description = editUser.userDescription;
+                        user.check_recieveInformation = editUser.userCheckReceive;
+                        user.user_gender = editUser.userGender;
+                        temp = editUser.userStatus;
+                        if (temp.Equals("Active"))
+                        {
+                            user.user_status = true;
+                        }
+                        else
+                        {
+                            user.user_status = false;
+                        }
+                        db.Users.Add(user);
+                        db.SaveChanges();
+                        string useremail = editUser.userMail;
+                        userRole.role_id = Convert.ToInt32(idRole);
+                        var idUsers = db.Users.Select(r => r.user_id).Max();
+                        userRole.user_id = idUsers;                     
+                        db.UserRoles.Add(userRole);
                         db.SaveChanges();
                         return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                     }

@@ -59,11 +59,7 @@ namespace CourseOnline.Controllers
         [HttpGet]
         public ActionResult AddPermission()
         {
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
-            {
-                return View("/Views/CMS/Permission/AddPermission.cshtml");
-            }
+            return View("/Views/CMS/Permission/AddPermission.cshtml");        
         }
         [HttpPost]
         public ActionResult SubmitAddPermission(string postJson)

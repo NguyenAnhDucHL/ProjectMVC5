@@ -7,31 +7,46 @@
         Users List
     </h1>
     <ol class="breadcrumb">
-        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Users List</li>
     </ol>
 </section>
-<div class="box">
-    <div class="box-body">
-        <div class="table-responsive">
-            <table id="tb_user" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Mobile</th>
-                        <th>Roles</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-            </table>
-            <br />
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="row">
+                    <div class="col-sm-2">
+                        <button id="btnAdd" type="submit" class="btn btn-block btn-primary" onclick='getAddUser()'>Add User</button>
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="sl_menuStatus" class="form-control">
+                            <option>All Status</option>
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <table id="tb_user" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="table-width5">ID</th>
+                                <th class="table-width20">Name</th>
+                                <th class="table-width50">Email</th>
+                                <th class="table-width5">Mobile</th>
+                                <th class="table-width5">Roles</th>
+                                <th class="table-width10">Status</th>
+                                <th class="table-width20">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
         </div>
-
     </div>
-</div>
+</section>
 <div id="edit_employee" class="modal open">
     <div class="modal-content">
         <div class="modal-header">
@@ -86,11 +101,14 @@
         });
     });
 
-
         function getEditIdUser(id) {
               if (id != null) {
                window.location.href ='@Url.Action("UserDetail", "User")?id=' + id;
             }
+        }
+
+           function getAddUser() {
+               window.location.href ='@Url.Action("AddUser", "User")';
         }
     </script>
 }
