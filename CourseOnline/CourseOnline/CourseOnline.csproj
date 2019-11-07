@@ -1566,7 +1566,6 @@
     <Content Include="Views\CMS\Post\PostDetail.cshtml" />
     <Content Include="Views\CMS\Slider\SliderList.cshtml" />
     <Content Include="Views\CMS\Setting\SettingList.cshtml" />
-    <Content Include="Views\CMS\RegistrationList.cshtml" />
     <Content Include="Views\CMS\CourseList.cshtml" />
     <Content Include="Views\CMS\RolePermissionList.cshtml" />
     <Content Include="Views\CMS\Subject\SubjectLessonList.cshtml" />
@@ -1605,6 +1604,7 @@
     <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\CMS\Permission\PermissionDetail.cshtml" />
     <Content Include="Views\CMS\Permission\AddPermission.cshtml" />
+    <Content Include="Views\CMS\Registration\RegistrationList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

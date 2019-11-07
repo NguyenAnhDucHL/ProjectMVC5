@@ -2,6 +2,10 @@
 @{
     ViewBag.Title = "RegistrationList";
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+
+    var lstSubject = ViewBag.lstSubject;
+    var lstCourse = ViewBag.lstCourse;
+    var lststatus = ViewBag.lststatus;
 }
 
 <section class="content-header">
@@ -17,6 +21,41 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <select id="sl_Subject" class="form-control">
+                            <option>All Subject</option>
+                            @{
+                                foreach (string subjectname in lstSubject)
+                                {
+                                    <option value="@subjectname">@subjectname</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="sl_Course" class="form-control">
+                            <option>All Course</option>
+                            @{
+                                foreach (string coursename in lstCourse)
+                                {
+                                    <option value="@coursename">@coursename</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="sl_Status" class="form-control">
+                            <option>All Status</option>
+                            @{
+                                foreach (string statusName in lststatus)
+                                {
+                                    <option value="@statusName">@statusName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
                 <a class="link" href="/import">Import</a>
                 <div class="box-body">
                     <table id="tb_registration" class="table table-bordered table-striped">
@@ -42,8 +81,9 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
+        var dataTable;
     $(document).ready(function() {
-        $('#tb_registration').DataTable({
+       dataTable = $('#tb_registration').DataTable({
             "ajax": {
                 "url": '@Url.Action("GetAllRegistration", "Registration")',
                 "type": "POST",
@@ -76,7 +116,30 @@
         "order": [[0, "asc"]],
         "searching": false
         });
-    } );
+        filterListener();
+    });
+
+          function filterListener() {
+            $('#sl_Subject').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                var valueSelected = this.value;
+
+                dataTable.ajax.url('@Url.Action("FilterBySubjectName","Registration")' + '?subjectName=' + valueSelected).load(function (response) { });
+            });
+
+             $('#sl_Course').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                 var valueSelected = this.value;
+                 dataTable.ajax.url('@Url.Action("FilterByCourses","Registration")' + '?courseName=' + valueSelected).load(function (response) { });
+             });
+
+             $('#sl_Status').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                 var valueSelected = this.value;
+                 dataTable.ajax.url('@Url.Action("FilterBySubjectStatus","Registration")' + '?statusName=' + valueSelected).load(function (response) { });
+            });
+        }
+
     </script>
 }
 

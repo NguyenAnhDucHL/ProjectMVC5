@@ -25,11 +25,12 @@ namespace CourseOnline.Controllers
 
             var lstTeacher = (from u in db.Users
                              join ur in db.UserRoles.Where(ur => ur.role_id == 2) on u.user_id equals ur.user_id
-                             select new TeacherModel
+                              join r in db.Roles on ur.role_id equals r.role_id
+                              select new TeacherModel
                              {
                                user_fullname = u.user_fullname,
-                               user_group = u.user_group,
-                               user_image = u.user_image,
+                               user_role = r.role_name,
+                                  user_image = u.user_image,
                                user_description = u.user_description,
                              }).Take(6).ToList();
 
