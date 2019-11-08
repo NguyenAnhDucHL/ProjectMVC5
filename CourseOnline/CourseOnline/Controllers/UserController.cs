@@ -8,6 +8,7 @@ using System.Linq.Dynamic;
 using CourseOnline.Models;
 using Newtonsoft.Json.Linq;
 using CourseOnline.Global.Setting;
+using System.Data.SqlClient;
 
 namespace CourseOnline.Controllers
 {
@@ -243,6 +244,48 @@ namespace CourseOnline.Controllers
                     }
                 }
                 else // lay ra tat ca
+                {
+                    string sql = "select u.[user_id], u.user_fullname, u.[user_email], u.use_mobile, u.[user_gender], u.[user_status], r.role_name  " +
+                      "from[User] u join [UserRole] ur " +
+                      "on u.[user_id] = ur.user_id " +
+                      "join Roles r " +
+                      "on r.role_id = ur.role_id";
+
+                    List<UserListModel> userListModels = db.Database.SqlQuery<UserListModel>(sql).ToList();
+
+                    int totalrows = userListModels.Count;
+                    int totalrowsafterfiltering = userListModels.Count;
+                    userListModels = userListModels.Skip(start).Take(length).ToList();
+                    userListModels = userListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                    return Json(new { success = true, data = userListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+        public ActionResult FilterByUserRoles(string roleUser)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                if (!roleUser.Equals(All.ALL_ROLE)) // filter theo status
+                {
+                    string sql = "select u.[user_id], u.user_fullname, u.[user_email], u.use_mobile, u.[user_gender], u.[user_status], r.role_name " +
+                    "from[User] u join [UserRole] ur " +
+                    "on u.[user_id] = ur.[user_id]" +
+                    "join Roles r " +
+                    "on r.role_id = ur.role_id  where r.[role_name] = @role_name";
+                    List<UserListModel> userListModels = db.Database.SqlQuery<UserListModel>(sql, new SqlParameter("role_name", roleUser)).ToList();
+                    int totalrows = userListModels.Count;
+                    int totalrowsafterfiltering = userListModels.Count;
+                    userListModels = userListModels.Skip(start).Take(length).ToList();
+                    userListModels = userListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                    return Json(new { success = true, data = userListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                }
+                else
                 {
                     string sql = "select u.[user_id], u.user_fullname, u.[user_email], u.use_mobile, u.[user_gender], u.[user_status], r.role_name  " +
                       "from[User] u join [UserRole] ur " +

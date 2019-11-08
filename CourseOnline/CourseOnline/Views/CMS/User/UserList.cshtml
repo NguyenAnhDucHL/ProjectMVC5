@@ -34,7 +34,7 @@
                                     </select>
                                 </div>
                                 <div class="col col-lg-3 col-md-3 col-sm-3">
-                                    <select id="sl_postCategory" class="form-control">
+                                    <select id="sl_userRoles" class="form-control">
                                         <option>All Roles</option>
                                         @{
                                             foreach (string roles in lstRoles)
@@ -126,7 +126,14 @@
                 var optionSelected = $("option:selected", this);
                  var valueSelected = this.value;
                  dataTable.ajax.url('@Url.Action("FilterByUserStatus","User")' + '?status=' + valueSelected).load(function (response) { });
-            });
+             });
+
+                $('#sl_userRoles').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                 var valueSelected = this.value;
+                 dataTable.ajax.url('@Url.Action("FilterByUserRoles","User")' + '?roleUser=' + valueSelected).load(function (response) { });
+             });
+              
         }
     </script>
 }

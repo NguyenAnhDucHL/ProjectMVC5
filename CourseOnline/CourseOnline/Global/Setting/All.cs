@@ -12,7 +12,7 @@ namespace CourseOnline.Global.Setting
         public static readonly string ALL_CATEGORY = "All Category";
         public static readonly string ALL_STATUS = "All Status";
         public static readonly string ALL_GROUP = "All setting types";
-
+        public static readonly string ALL_ROLE = "All Roles";
         public static readonly string ALL_Subject = "All Subject";
         public static readonly string All_Course = "All Course";
 
