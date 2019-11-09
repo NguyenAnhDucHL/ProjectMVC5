@@ -148,7 +148,7 @@
                             <i class="fa fa-fw fa-television"></i> <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="active treeview">
+                    <li class="treeview">
                         <a href="#">
                             <i class="fa fa-fw fa-file-text"></i> <span>Public Contents</span>
                             <span class="pull-right-container">
@@ -169,8 +169,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class=""><a href="subject-list"><i class="fa fa-circle-o"></i> Subject Lists</a></li>
-                            <li class=""><a href="questions-list"><i class="fa fa-circle-o"></i> Questions</a></li>
+                            <li class=""><a href="@Url.Action("Index","Subject")"><i class="fa fa-circle-o"></i> Subject Lists</a></li>
+                            <li class=""><a href="@Url.Action("Index","Question")"><i class="fa fa-circle-o"></i> Questions</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -182,9 +182,9 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="exams-list"><a href="exams-list"><i class="fa fa-circle-o"></i> Exams Lists</a></li>
-                            <li class=""><a href="test-list"><i class="fa fa-circle-o"></i> Test List</a></li>
-                            <li class=""><a href="pratice-result"><i class="fa fa-circle-o"></i> Practice Result</a></li>
+                            <li class="exams-list"><a href="@Url.Action("Index","Exam")"><i class="fa fa-circle-o"></i> Exams Lists</a></li>
+                            <li class=""><a href="@Url.Action("Index","Test")"><i class="fa fa-circle-o"></i> Test List</a></li>
+                            <li class=""><a href="@Url.Action("Index","PraticeResult")"><i class="fa fa-circle-o"></i> Practice Result</a></li>
                         </ul>
                     </li>
                     <li class=" treeview">
@@ -195,12 +195,12 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="settings-list"><i class="fa fa-circle-o"></i> Setting List</a></li>
-                            <li><a @Url.Action("Menu", "Index", "Menu")><i class="fa fa-circle-o"></i> Menu List</a></li>
-                            <li><a href="permissions-list"><i class="fa fa-circle-o"></i> Permissions</a></li>
-                            <li><a @Url.Action("User", "Index", "User")><i class="fa fa-circle-o"></i> User List</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Roles Menus</a></li>
-                            <li><a href="roles-permission"><i class="fa fa-circle-o"></i> Roles Permission</a></li>
+                            <li><a href="@Url.Action( "Index","Setting")"><i class="fa fa-circle-o"></i> Setting List</a></li>
+                            <li><a href="@Url.Action( "Index","Menu")"><i class="fa fa-circle-o"></i> Menu List</a></li>
+                            <li><a href="@Url.Action("Index","Permissions")"><i class="fa fa-circle-o"></i> Permissions</a></li>
+                            <li><a href="@Url.Action("Index","User")"><i class="fa fa-circle-o"></i> User List</a></li>
+                            <li><a href="@Url.Action("Index","RoleMenu")"><i class="fa fa-circle-o"></i> Roles Menus</a></li>
+                            <li><a href="@Url.Action("Index","RolePermission")"><i class="fa fa-circle-o"></i> Roles Permission</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -211,8 +211,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="registrations-list"><i class="fa fa-circle-o"></i> Registration List</a></li>
-                            <li><a href="course-list"><i class="fa fa-circle-o"></i> Course List</a></li>
+                            <li><a href="@Url.Action("Index","Registration")"><i class="fa fa-circle-o"></i> Registration List</a></li>
+                            <li><a href="@Url.Action("Index","Course")"><i class="fa fa-circle-o"></i> Course List</a></li>
                         </ul>
                     </li>
                 </ul>
