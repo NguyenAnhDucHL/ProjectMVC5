@@ -1,11 +1,12 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    var lstSubjecs = ViewBag.listSubject;
+
 }
 
 <section class="content-header">
     <h1>
-        Menus List
+        Practice Result List
     </h1>
     <ol class="breadcrumb">
         <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -19,27 +20,19 @@
         <div class="col-xs-12">
             <div class="box">
                 <!-- /.box-header -->
-                @*<div class="row">
-                        <div class="col-sm-2">
-                            <select id="sl_subjects" class="form-control">
-                                <option>All Status</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-2">
-                            <select id="sl_domains" class="form-control">
-                                <option>All Status</option>
-                                <option>Active</option>
-                                <option>Inactive</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-2">
-                            <select id="sl_lessons" class="form-control">
-                                <option>All Status</option>
-                                <option>Active</option>
-                                <option>Inactive</option>
-                            </select>
-                        </div>
-                    </div>*@
+                <div class="row">
+                    <div class="col-sm-2">
+                        <select id="sl_subjects" class="form-control">
+                            <option>All Subject</option>
+                            @{
+                                foreach (string item in lstSubjecs)
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
                 <div class="box-body">
                     <table id="pratice_result" class="table table-bordered table-striped">
                         <thead>
@@ -62,15 +55,16 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready(function() {
-        $('#pratice_result').DataTable({
+        var dataTable;
+      $(document).ready(function() {
+       dataTable = $('#pratice_result').DataTable({
             "ajax": {
                 "url": '@Url.Action("GetAllPracticeResults", "PraticeResult")',
                 "type": "POST",
                 "datatype": "json",
             },
             "columns": [
-  
+
 
                 {
                     "data": "subject_name",
@@ -109,7 +103,17 @@
         "serverSide": "true",
         "order": [[0, "asc"]],
         "searching": false
-       });
-    });
+        });
+            filterListener();
+        });
+
+        function filterListener() {
+            $('#sl_subjects').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                var valueSelected = this.value;
+
+                dataTable.ajax.url('@Url.Action("FilterBySubjectName","PraticeResult")' + '?subjectName=' + valueSelected).load(function (response) { });
+            });
+        }
     </script>
 }
