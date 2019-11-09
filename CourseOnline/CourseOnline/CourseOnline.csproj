@@ -240,6 +240,7 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\PraticeResultController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\RolePermissionController.cs" />
     <Compile Include="Controllers\RollMenuController.cs" />
@@ -300,6 +301,7 @@
     <Compile Include="Models\Post.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PracticeResultModel.cs" />
     <Compile Include="Models\Question.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
@@ -1590,15 +1592,12 @@
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Views\Post\editPost.cshtml" />
     <Content Include="Views\User\Home.cshtml" />
     <Content Include="Views\User\MySubject.cshtml" />
     <Content Include="Views\User\Post.cshtml" />
     <Content Include="Views\User\SubjectDetail.cshtml" />
     <Content Include="Views\User\SubjectList.cshtml" />
     <Content Include="Views\User\TeacherList.cshtml" />
-    <Content Include="Views\CMS\MenuDetail.cshtml" />
-    <Content Include="Views\CMS\MenuList.cshtml" />
     <Content Include="Views\CMS\Permission\PermissionsList.cshtml" />
     <Content Include="Views\CMS\RolesPermission.cshtml" />
     <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml" />
@@ -1607,6 +1606,7 @@
     <Content Include="Views\CMS\Registration\RegistrationList.cshtml" />
     <Content Include="Views\CMS\User\UserDetail.cshtml" />
     <Content Include="Views\CMS\User\AddUser.cshtml" />
+    <Content Include="Views\CMS\PracticeResult\PracticeResultList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
