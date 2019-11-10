@@ -1,0 +1,141 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    var lstStatus = ViewBag.lstStatus;
+    var lstRoles = ViewBag.lstRoles;
+}
+<section class="content-header">
+    <h1>
+        Users List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Users List</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="row">
+                    <div class="col-sm-2">
+                        <button id="btnAdd" type="submit" class="btn btn-block btn-primary" onclick='getAddUser()'>Add User</button>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col col-lg-3 col-md-3 col-sm-3">
+                                    <select id="sl_userStatus" class="form-control">
+                                        <option>All Status</option>
+                                        <option>Active</option>
+                                        <option>Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="col col-lg-3 col-md-3 col-sm-3">
+                                    <select id="sl_userRoles" class="form-control">
+                                        <option>All Roles</option>
+                                        @{
+                                            foreach (string roles in lstRoles)
+                                            {
+                                                <option value="@roles">@roles</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table id="tb_user" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="table-width5">ID</th>
+                                    <th class="table-width20">Name</th>
+                                    <th class="table-width50">Email</th>
+                                    <th class="table-width5">Mobile</th>
+                                    <th class="table-width5">Roles</th>
+                                    <th class="table-width10">Status</th>
+                                    <th class="table-width20">Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+
+         var dataTable;
+    $(document).ready(function() {
+        dataTable= $('#tb_user').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllUser", "User")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "user_id", "name": "user_id", "orderable": true },
+                { "data": "user_fullname", "name": "user_fullname", "orderable": true },
+                { "data": "user_email", "name": "user_email", "orderable": true },
+                { "data": "use_mobile", "name": "use_mobile", "orderable": true },
+                { "data": "role_name", "name": "role_name", "orderable": true },
+                {
+                    "data": "user_status", "name": "user_status", "orderable": true, "render": function (data) {
+                        if (data == 1) return "active"
+                        else return "Inactive"}
+                },
+                {
+                    "data": "user_id", "render": function (data) {
+                            return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdUser('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
+                              "<button class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdMenu('" + data + "') ><i class='fa fa-trash'></i>Delete</button>";
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+        filterListener();
+    });
+
+        function getEditIdUser(id) {
+              if (id != null) {
+               window.location.href ='@Url.Action("UserDetail", "User")?id=' + id;
+            }
+        }
+
+           function getAddUser() {
+               window.location.href ='@Url.Action("AddUser", "User")';
+        }
+
+          function filterListener() {
+             $('#sl_userStatus').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                 var valueSelected = this.value;
+                 dataTable.ajax.url('@Url.Action("FilterByUserStatus","User")' + '?status=' + valueSelected).load(function (response) { });
+             });
+
+                $('#sl_userRoles').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                 var valueSelected = this.value;
+                 dataTable.ajax.url('@Url.Action("FilterByUserRoles","User")' + '?roleUser=' + valueSelected).load(function (response) { });
+             });
+              
+        }
+    </script>
+}
+
+

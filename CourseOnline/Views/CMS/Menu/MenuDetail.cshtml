@@ -1,0 +1,122 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "MenuDetail";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    Menu menu = ViewBag.Menu;
+    int id = ViewBag.id;
+}
+
+<section class="content-header">
+    <h1>
+        Menu Details
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Index","Menu")'>Menus List</a></li>
+        <li class="active">Menu Details</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" disabled class="form-control edit-field" id="inp_name" value="@menu.menu_name">
+                    </div>
+                    <div class="form-group">
+                        <label>Link</label>
+                        <input type="text" disabled class="form-control edit-field" id="inp_link" value="@menu.menu_link">
+                    </div>
+                    <div class="form-group">
+                        <label>Order</label>
+                        <input type="text" disabled class="form-control edit-field" id="inp_order" value="@menu.menu_order">
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="sl_menuStatus" disabled class="form-control edit-field">
+                            @{
+                                if (menu.menu_status == true)
+                                {
+                                    <option>Active</option>
+                                    <option>Inactive</option>
+                                }
+                                else
+                                {
+                                    <option>Inactive</option>
+                                    <option>Active</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Short description</label>
+                        <textarea disabled class="form-control edit-field" rows="3" id="inp_shortDes">@menu.menu_description</textarea>
+                    </div>
+                    <button class="btn btn-info" onclick="turnOnEditMode()">Edit</button>
+                    <button disabled type="submit" onclick="SubmitEditMenu()" class="btn btn-info edit-field">Submit</button>
+                    <button type="submit" class="btn btn-info" onclick='getBackMenuList()'>Back</button>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+@section scripts{
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        var isEnableEditingMode = false;
+        function turnOnEditMode() {
+            if (!isEnableEditingMode) {
+                // bat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', false); isEnableEditingMode = true; }
+                )
+            } else {
+                // tat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', true); isEnableEditingMode = false; }
+                )
+            }
+        };
+
+        function SubmitEditMenu() {
+
+            var menu = {
+                    menuid : @id,
+                    menuName: $("#inp_name").val(),
+                    menuLink: $("#inp_link").val(),
+                    menuOrder: $("#inp_order").val(),
+                    menuStatus: $("#sl_menuStatus").val(),
+                    shortDes: $("#inp_shortDes").val(),
+            };
+
+            var postJson = JSON.stringify(menu);
+
+            $.ajax({
+                url: '@Url.Action("SubmitEditMenu","Menu")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                        turnOnEditMode();
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+
+    // bat su kien back
+    function getBackMenuList() {
+               window.location.href ='@Url.Action("Index", "Menu")';
+        }
+    </script>
+}

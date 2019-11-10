@@ -1,0 +1,211 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "Slider Detail";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Slider Details
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href='@Url.Action("Index","Home")'><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Index","Slider")'>Sliders List</a></li>
+        <li class="active">Slider Details</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="tab-image">
+                        <img class="img-responsive pad" src="../static/customimg/ronaldo.jpg/" alt="Photo">
+                        <div class="row tab-button">
+                            <div class="form-group col-sm-5 col-sm-push-7">
+                            </div>
+                            <div class="form-group col-sm-7 col-sm-pull-5">
+                                <label for="thumbnail">Choose new picture file</label>
+                                <input class="custom-input" type="file" id="thumbnail">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" class="form-control" id="inp_title" placeholder="Enter ...">
+                    </div>
+                    <div class="form-group">
+                        <label>Caption</label>
+                        <input type="text" class="form-control" id="inp_caption" placeholder="Enter ...">
+                    </div>
+                    <div class="form-group">
+                        <label>Link</label>
+                        <input type="text" class="form-control" id="inp_link" placeholder="Enter ...">
+                    </div>
+                    <button type="submit" onclick="draftSlider()" class="btn btn-info">Save draft</button>
+                    <button type="submit" onclick="submitSlider()" class="btn btn-info">Submit</button>
+                    <button type="submit" onclick="publicSlider()" class="btn btn-info">Publish</button>
+                    <button type="submit" onclick="hideSlider()" class="btn btn-info">Hide</button>
+                    <button type="submit" onclick="goBack()" class="btn btn-info">Back</button>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+@section scripts{
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        //draft slider
+        function draftSlider() {
+            var slider = {
+                sliderTitle: $("#inp_title").val(),
+                sliderCaption: $("#inp_caption").val(),
+                sliderLink: $("#inp_link").val(),
+                sliderStatus : "Draft"
+            };
+            var postJson = JSON.stringify(slider);
+            if ($("#inp_title").val() == "") {
+                alert("Title not empty!");
+                return;
+            } else if ($("#inp_caption").val() == "") {
+                alert("Caption not empty!");
+                return;
+            } else if ($("#inp_link").val() == "") {
+                alert("Link is not empty!");
+                return;
+            }
+            $.ajax({
+                url: '@Url.Action("SubmitAddSlider","Slider")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("Submit successful");
+                    } else {
+                        alert("Submit fail");
+                    }
+                },
+                error: (response) => { alert("NetWork problem!") }
+            });
+        };
+
+        //submit slider
+        function submitSlider() {
+            var slider = {
+                sliderTitle: $("#inp_title").val(),
+                sliderCaption: $("#inp_caption").val(),
+                sliderLink: $("#inp_link").val(),
+                sliderStatus: "Submitted"
+            };
+            var sliderJson = JSON.stringify(slider);
+            if ($("#inp_title").val() == "") {
+                alert("Title not empty!");
+                return;
+            } else if ($("#inp_caption").val() == "") {
+                alert("Caption not empty!");
+                return;
+            } else if ($("#inp_link").val() == "") {
+                alert("Link is not empty!");
+                return;
+            }
+            $.ajax({
+                url: '@Url.Action("SubmitAddSlider","Slider")',
+                type: "POST",
+                data: { postJson: sliderJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("Submit successful");
+                    } else {
+                        alert("Submit fail");
+                    }
+                },
+                error: (response) => { alert("NetWork problem!") }
+            });
+        };
+
+        //publish slider
+        function publicSlider() {
+            var slider = {
+                sliderTitle: $("#inp_title").val(),
+                sliderCaption: $("#inp_caption").val(),
+                sliderLink: $("#inp_link").val(),
+                sliderStatus: "Published"
+            };
+            var sliderJson = JSON.stringify(slider);
+            if ($("#inp_title").val() == "") {
+                alert("Title not empty!");
+                return;
+            } else if ($("#inp_caption").val() == "") {
+                alert("Caption not empty!");
+                return;
+            } else if ($("#inp_link").val() == "") {
+                alert("Link is not empty!");
+                return;
+            }
+            $.ajax({
+                url: '@Url.Action("SubmitAddSlider","Slider")',
+                type: "POST",
+                data: { postJson: sliderJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("Submit successful");
+                    } else {
+                        alert("Submit fail");
+                    }
+                },
+                error: (response) => { alert("NetWork problem!") }
+            });
+        };
+
+        //hide slider
+        function hideSlider() {
+            var slider = {
+                sliderTitle: $("#inp_title").val(),
+                sliderCaption: $("#inp_caption").val(),
+                sliderLink: $("#inp_link").val(),
+                sliderStatus: "Hiden"
+            };
+            var sliderJson = JSON.stringify(slider);
+            if ($("#inp_title").val() == "") {
+                alert("Title not empty!");
+                return;
+            } else if ($("#inp_caption").val() == "") {
+                alert("Caption not empty!");
+                return;
+            } else if ($("#inp_link").val() == "") {
+                alert("Link is not empty!");
+                return;
+            }
+            $.ajax({
+                url: '@Url.Action("SubmitAddSlider","Slider")',
+                type: "POST",
+                data: { postJson: sliderJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("Submit successful");
+                    } else {
+                        alert("Submit fail");
+                    }
+                },
+                error: (response) => { alert("NetWork problem!") }
+            });
+        };
+        function goBack() {
+            window.location.href = '@Url.Action("Index","Slider")';
+        }
+    </script>
+
+
+
+
+
+
+}
