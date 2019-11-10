@@ -23,7 +23,7 @@ namespace CourseOnline.Controllers
             var lstSubject = db.Subjects.Take(5).Where(n => n.subject_status == "Submitted").ToList();
             ViewBag.lstSubject = lstSubject;
 
-            var lstPost = db.Posts.Take(4).Where(n => n.post_status == "Submitted").ToList();
+            var lstPost = db.Posts.Take(7).Where(n => n.post_status == "Submitted").ToList();
             ViewBag.lstPost = lstPost;
 
             var lstTeacher = (from u in db.Users

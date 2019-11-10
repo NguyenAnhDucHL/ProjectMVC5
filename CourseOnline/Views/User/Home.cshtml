@@ -128,12 +128,17 @@
                                     <span class="mx-1">/@item.post_category</span>
                                 </div>
                                 <h3 class="post-heading"><a href="#">@item.post_name</a></h3>
-                                <span>@item.post_brief_info</span>
+                                <span>
+                                    @item.post_brief_info
+                                   <a href="#">Read Detail -></a>
+                                </span>
                             </div>
                         </div>
                     }
                 }
+                <div style="text-align:right"><a href="@Url.Action("PostList","News")">Read more --></a></div>
             </div>
+
         </div>
     </div>
 </div>
