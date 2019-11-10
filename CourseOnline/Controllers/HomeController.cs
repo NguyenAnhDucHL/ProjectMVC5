@@ -125,5 +125,13 @@ namespace CourseOnline.Controllers
             Session.Abandon();
             return RedirectToAction("Home_User", "Home");
         }
+        [HttpGet]
+        public ActionResult YourAcountInformation()
+        {
+            string email = Session["Email"].ToString();
+            User userInformation = db.Users.Where(u => u.user_email == email).FirstOrDefault();
+            ViewBag.userInformation = userInformation;
+            return View("/Views/User/AccountInformation.cshtml");
+        }
     }
 }

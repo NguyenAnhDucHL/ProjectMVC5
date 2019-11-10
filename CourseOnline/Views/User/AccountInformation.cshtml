@@ -1,0 +1,101 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "AccountInformation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    User user = ViewBag.userInformation;
+}
+
+<div class="site-section ftco-subscribe-1 site-blocks-cover pb-4" style="background-image: url('../../Assets/IMGUSER/fpt_logo.jpg')">
+    <div class="container">
+        <div class="row align-items-end">
+            <div class="col-lg-7">
+                <h2 class="mb-0">Your Account Information</h2>
+                <p>Wellcome to @user.user_fullname</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="custom-breadcrumns border-bottom">
+    <div class="container">
+        <a href="@Url.Action("Home_User", "Home")">Home</a>
+        <span class="mx-3 icon-keyboard_arrow_right"></span>
+        <span class="current">Your Account</span>
+    </div>
+</div>
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="fname">Full Name</label>
+                <input type="text" id="yname" class="form-control form-control-lg" value="@user.user_fullname">
+            </div>
+            <div class="col-md-6 form-group">
+                <label for="lname">Your Email</label>
+                <input disabled type="text" id="yemail" class="form-control form-control-lg" value="@user.user_email">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="eaddress">Your Mobile</label>
+                <input type="text" id="eaddress" class="form-control form-control-lg" value="@user.use_mobile">
+            </div>
+            <div class="col-md-6 form-group">
+                <label for="tel">User Gender</label>
+                @{
+                    if (user.user_gender == true)
+                    {
+                        <div>
+                            <input class="edit-field" type="radio" name="optionsRadios" id="optionsRadios1"
+                                   value="true" checked>
+                            Mr
+                        </div>
+                        <div>
+                            <input class="edit-field" type="radio" name="optionsRadios" id="optionsRadios2"
+                                   value="false">
+                            Ms
+                        </div>
+                    }
+                    else if (user.user_gender == false)
+                    {
+                        <div>
+                            <input class="edit-field" type="radio" name="optionsRadios" id="optionsRadios1"
+                                   value="true">
+                            Mr
+                        </div>
+                        <div>
+                            <input class="edit-field" type="radio" name="optionsRadios" id="optionsRadios2"
+                                   value="false" checked>
+                            Ms
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <input class="edit-field" type="radio" name="optionsRadios" id="optionsRadios1"
+                                   value="true">
+                            Mr
+                        </div>
+                        <div>
+                            <input class="edit-field" type="radio" name="optionsRadios" id="optionsRadios2"
+                                   value="false">
+                            Ms
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="message">User Description</label>
+                <textarea name="" id="userdescription" cols="30" rows="10" class="form-control"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <input type="submit" value="Update" class="btn btn-primary btn-lg px-5">
+            </div>
+        </div>
+    </div>
+</div>
+
