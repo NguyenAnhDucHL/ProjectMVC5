@@ -2,7 +2,7 @@
 @using CourseOnline.Models
 @{
     ViewBag.Title = "Our Teacher";
-    PagedList.IPagedList<TeacherModel> listTeachers = ViewBag.lstTeacher;
+    PagedList.IPagedList<UserListModel> listTeachers = ViewBag.lstTeacher;
 }
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -44,7 +44,7 @@
                         <img src="@item.user_image" alt="Image" class="img-fluid">
                         <div class="feature-1-content">
                             <h2>@item.user_fullname</h2>
-                            <span class="position mb-3 d-block">@item.user_role</span>
+                            <span class="position mb-3 d-block">@item.user_position</span>
                             <p style="height:150px; overflow:hidden">@item.user_description</p>
                         </div>
                     </div>

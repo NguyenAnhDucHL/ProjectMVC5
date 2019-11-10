@@ -1,4 +1,5 @@
 ﻿using CourseOnline.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -27,11 +28,10 @@ namespace CourseOnline.Controllers
 
             var lstTeacher = (from u in db.Users
                               join ur in db.UserRoles.Where(ur => ur.role_id == 2) on u.user_id equals ur.user_id
-                              join r in db.Roles on ur.role_id equals r.role_id
-                              select new TeacherModel
+                              select new UserListModel
                               {
                                   user_fullname = u.user_fullname,
-                                  user_role = r.role_name,
+                                  user_position = u.user_position,
                                   user_image = u.user_image,
                                   user_description = u.user_description,
                               }).Take(6).ToList();
@@ -74,7 +74,7 @@ namespace CourseOnline.Controllers
                     }
                 }
             }
-            return Json("success");          
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -132,6 +132,37 @@ namespace CourseOnline.Controllers
             User userInformation = db.Users.Where(u => u.user_email == email).FirstOrDefault();
             ViewBag.userInformation = userInformation;
             return View("/Views/User/AccountInformation.cshtml");
+        }
+        [HttpPost]
+        public ActionResult UpdateUser(string userJson)
+        {
+          
+            try
+            {
+                using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                {
+                    dynamic editUser = JValue.Parse(userJson);
+                    int id = editUser.userID;
+                    User user = db.Users.Where(u => u.user_id == id).FirstOrDefault();
+                    if(user!= null)
+                    {
+                        user.user_fullname = editUser.userName;
+                        user.use_mobile = editUser.userMobile;
+                        user.user_description = editUser.userDescription;
+                        user.user_gender = editUser.userGender;
+                        db.SaveChanges();
+                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

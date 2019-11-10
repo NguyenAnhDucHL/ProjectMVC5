@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<Subject> listSubjects = ViewBag.lstSubject;
     List<Post> listPost = ViewBag.lstPost;
-    List<TeacherModel> listTeacher = ViewBag.lstTeacher;
+    List<UserListModel> listTeacher = ViewBag.lstTeacher;
 }
 <div class="hero-slide owl-carousel site-blocks-cover">
     <div class="intro-section" style="background-image: url('../../Assets/IMGUSER/fpt_logo.jpg');">
@@ -157,7 +157,7 @@
                         <img src="@item.user_image" alt="Image" class="img-fluid mr-3" style="height:100px; width:100px; overflow:hidden">
                         <div>
                             <h3>@item.user_fullname</h3>
-                            <span>@item.user_role</span>
+                            <span>@item.user_position</span>
                         </div>
                     </div>
                     <div>

@@ -27,17 +27,17 @@
         <div class="row">
             <div class="col-md-6 form-group">
                 <label for="fname">Full Name</label>
-                <input type="text" id="yname" class="form-control form-control-lg" value="@user.user_fullname">
+                <input type="text" id="inputname" class="form-control form-control-lg" value="@user.user_fullname">
             </div>
             <div class="col-md-6 form-group">
                 <label for="lname">Your Email</label>
-                <input disabled type="text" id="yemail" class="form-control form-control-lg" value="@user.user_email">
+                <input disabled type="text" id="inputEmail" class="form-control form-control-lg" value="@user.user_email">
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 form-group">
                 <label for="eaddress">Your Mobile</label>
-                <input type="text" id="eaddress" class="form-control form-control-lg" value="@user.use_mobile">
+                <input type="text" id="inputMobile" class="form-control form-control-lg" value="@user.use_mobile">
             </div>
             <div class="col-md-6 form-group">
                 <label for="tel">User Gender</label>
@@ -87,15 +87,45 @@
         <div class="row">
             <div class="col-md-12 form-group">
                 <label for="message">User Description</label>
-                <textarea name="" id="userdescription" cols="30" rows="10" class="form-control"></textarea>
+                <textarea name="" id="inp_shortDes" cols="30" rows="10" class="form-control"></textarea>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <input type="submit" value="Update" class="btn btn-primary btn-lg px-5">
+                <button type="submit" class="btn btn-primary btn-lg px-5" onclick="SubmitUpdateUser()">Update</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function SubmitUpdateUser() {
+        var user = {
+                userID: @user.user_id,
+                userName: $("#inputname").val(),
+                userMail: $("#inputEmail").val(),
+                userMobile: $("#inputMobile").val(),
+                userDescription: $("#inp_shortDes").val(),
+                userGender: $("input[name='optionsRadios']:checked").val(),
+            };
+
+            var userJson = JSON.stringify(user);
+
+            $.ajax({
+                url: '@Url.Action("UpdateUser","Home")',
+                type: "POST",
+                data: { userJson : userJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("Update success");
+                    } else {
+                        alert("Update failed");
+                    }
+                },
+                error: (response) => { alert("Network error") }
+            });
+    }
+</script>
 
