@@ -25,6 +25,7 @@ namespace CourseOnline.Controllers
                                   user_image = u.user_image,
                                   user_description = u.user_description,
                               }).OrderBy(n => n.user_fullname).ToPagedList(pageNumber, pageSize);
+
             ViewBag.lstTeacher = lstTeacher;
             return View("/Views/User/TeacherList.cshtml");
         }

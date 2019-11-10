@@ -44,6 +44,7 @@ namespace CourseOnline.Controllers
         {
             Session["Name"] = name;
             Session["Email"] = email;
+            Session["Picture"] = picture;
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
                 using (DbContextTransaction transaction = db.Database.BeginTransaction())
