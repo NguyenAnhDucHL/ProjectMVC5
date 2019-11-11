@@ -50,10 +50,26 @@ namespace CourseOnline.Controllers
 
             Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id && n.subject_status == "Submitted");
 
+            User teacher = (from u in db.Users
+                           join c in db.Courses.Where(c => c.subject_id == id) on u.user_id equals c.teacher_id
+                           select new UserListModel
+                           {
+                              user_fullname = u.user_fullname,
+                              use_mobile = u.use_mobile,
+                              user_email = u.user_email
+                           }
+                           ).FirstOrDefault();
+
+            
             if(subject == null)
             {
                 return HttpNotFound();
             }
+            if(teacher == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.teacher = teacher;
             ViewBag.subject = subject;
             return View("/Views/User/SubjectDetail.cshtml");
         }

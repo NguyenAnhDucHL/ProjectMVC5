@@ -5,6 +5,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     Subject subject = ViewBag.subject;
+    User teacher = ViewBag.teacher;
 }
 
 <div class="site-section ftco-subscribe-1 site-blocks-cover pb-4" style="background-image: url('@subject.picture')">
@@ -41,13 +42,42 @@
                 <h2 class="section-title-underline mb-5">
                     <span>Subject Details</span>
                 </h2>
-                <p>@subject.subject_brief_info</p>
-
+                <p>
+                    <strong class="text-black d-block">Teacher:</strong>
+                    @teacher.user_fullname
+                </p>
+                <p>
+                    <strong class="text-black d-block">Teacher' Email:</strong>
+                    @teacher.user_email
+                </p>
+                <p>
+                    <strong class="text-black d-block">Teacher' Mobile:</strong>
+                    @teacher.use_mobile
+                </p>
+                <p><strong class="text-black d-block">Summary:</strong> @subject.subject_brief_info</p>
                 <p>
                     <a href="#" class="btn btn-primary rounded-0 btn-lg px-5">Enroll</a>
                 </p>
             </div>
         </div>
+        <div class="col-lg-6 ml-auto align-self-center">
+            <h2 class="section-title-underline mb-5">
+                <span>Objective Course</span>
+            </h2>
+               <p>Set up a working environment with the Java programming language.</p>              
+               <p> Understand and apply properties in object-oriented programming.</p>
+               <p> Building a number of simple business programs.</p>
+               <p> Good programming orientation and towards high technology apply object-oriented programming.</p>
+        </div>
+        <div class="col-lg-6 ml-auto align-self-center">
+            <h2 class="section-title-underline mb-5">
+                <span>Course Content</span>
+            </h2>
+            <p>
+                Introduction Lesson
+            </p>
+        </div>
     </div>
 </div>
+
 
