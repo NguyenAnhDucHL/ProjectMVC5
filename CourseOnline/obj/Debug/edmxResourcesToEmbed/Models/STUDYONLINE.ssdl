@@ -36,6 +36,7 @@
     <Property Name="test_id" Type="int" />
     <Property Name="coursework_name" Type="varchar" MaxLength="100" />
     <Property Name="usercreate_id" Type="int" />
+    <Property Name="coursework_weight" Type="int" />
   </EntityType>
   <EntityType Name="Domain">
     <Key>
@@ -102,13 +103,13 @@
     </Key>
     <Property Name="lesson_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="subject_id" Type="int" Nullable="false" />
-    <Property Name="parent_id" Type="int" />
     <Property Name="lesson_name" Type="varchar" MaxLength="50" />
     <Property Name="lesson_order" Type="int" />
     <Property Name="lesson_type" Type="varchar" MaxLength="50" />
     <Property Name="lesson_status" Type="bit" />
     <Property Name="lesson_link" Type="varchar" MaxLength="200" />
     <Property Name="lesson_content" Type="varchar" MaxLength="2000" />
+    <Property Name="parent_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Menu">
     <Key>
@@ -236,6 +237,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary k
     <Property Name="subject_tag_line" Type="varchar" MaxLength="50" />
     <Property Name="subject_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="picture" Type="nvarchar" MaxLength="250" />
+    <Property Name="ObjectiveCourse" Type="nvarchar(max)" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'STUDYONLINE.dbo.SubjectReference' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -496,6 +498,18 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Principal>
       <Dependent Role="Grade">
         <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lesson__parent_i__45BE5BA9">
+    <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
+    <End Role="Lesson1" Type="Self.Lesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lesson">
+        <PropertyRef Name="lesson_id" />
+      </Principal>
+      <Dependent Role="Lesson1">
+        <PropertyRef Name="parent_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -901,6 +915,10 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
     <AssociationSet Name="FK__Grade__user_id__29221CFB" Association="Self.FK__Grade__user_id__29221CFB">
       <End Role="User" EntitySet="User" />
       <End Role="Grade" EntitySet="Grade" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lesson__parent_i__45BE5BA9" Association="Self.FK__Lesson__parent_i__45BE5BA9">
+      <End Role="Lesson" EntitySet="Lesson" />
+      <End Role="Lesson1" EntitySet="Lesson" />
     </AssociationSet>
     <AssociationSet Name="FK__Lesson__subject___74AE54BC" Association="Self.FK__Lesson__subject___74AE54BC">
       <End Role="Subject" EntitySet="Subject" />

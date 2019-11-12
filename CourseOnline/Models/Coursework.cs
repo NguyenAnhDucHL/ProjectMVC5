@@ -29,6 +29,7 @@ namespace CourseOnline.Models
         public Nullable<int> test_id { get; set; }
         public string coursework_name { get; set; }
         public Nullable<int> usercreate_id { get; set; }
+        public Nullable<int> coursework_weight { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual ExamTest ExamTest { get; set; }

@@ -17,19 +17,23 @@ namespace CourseOnline.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Lesson()
         {
+            this.Lesson1 = new HashSet<Lesson>();
             this.Questions = new HashSet<Question>();
         }
     
         public int lesson_id { get; set; }
         public int subject_id { get; set; }
-        public Nullable<int> parent_id { get; set; }
         public string lesson_name { get; set; }
         public Nullable<int> lesson_order { get; set; }
         public string lesson_type { get; set; }
         public Nullable<bool> lesson_status { get; set; }
         public string lesson_link { get; set; }
         public string lesson_content { get; set; }
+        public int parent_id { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lesson> Lesson1 { get; set; }
+        public virtual Lesson Lesson2 { get; set; }
         public virtual Subject Subject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Question> Questions { get; set; }

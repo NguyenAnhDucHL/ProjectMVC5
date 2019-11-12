@@ -1,6 +1,7 @@
-.custom-input{
-    width:100%;
+.custom-input {
+    width: 100%;
 }
+
 .search-box {
     width: 80%;
 }
@@ -8,7 +9,6 @@
 .minimal {
     position: absolute;
     opacity: 0;
-
 }
 
 .icheckbox_minimal-blue {
@@ -56,10 +56,12 @@
 .table-width50 {
     width: 50%;
 }
-.table-width40{
+
+.table-width40 {
     width: 40%;
 }
-.table-width30{
+
+.table-width30 {
     width: 30%;
 }
 
@@ -82,13 +84,15 @@
     margin-right: 35px;
     margin-top: 5px;
 }
-.tab-image img{
+
+.tab-image img {
     height: 80%;
     width: 100%;
     margin: 0;
     padding: 0;
 }
-.tab-button{
+
+.tab-button {
     margin-top: 20px;
 }
 /* Button used to open the contact form - fixed at the bottom of the page */
@@ -122,39 +126,144 @@
     background-color: white;
 }
 
-/* Full-width input fields */
-.form-container input[type=text], .form-container input[type=password] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    border: none;
-    background: #f1f1f1;
+    /* Full-width input fields */
+    .form-container input[type=text], .form-container input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+    }
+
+        /* When the inputs get focus, do something */
+        .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+    /* Set a style for the submit/login button */
+    .form-container .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 10px;
+        opacity: 0.8;
+    }
+
+    /* Add a red background color to the cancel button */
+    .form-container .cancel {
+        background-color: red;
+    }
+
+    /* Add some hover effects to buttons */
+    .form-container .btn:hover, .open-button:hover {
+        opacity: 1;
+    }
+
+.no-padding {
+    padding: 0px;
 }
 
-/* When the inputs get focus, do something */
-.form-container input[type=text]:focus, .form-container input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
+.glyphicon-icon-rpad .glyphicon, .glyphicon-icon-rpad .glyphicon.m8, .fa-icon-rpad .fa, .fa-icon-rpad .fa.m8 {
+    padding-right: 8px;
 }
 
-/* Set a style for the submit/login button */
-.form-container .btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom:10px;
-    opacity: 0.8;
+.glyphicon-icon-lpad .glyphicon, .glyphicon-icon-lpad .glyphicon.m8, .fa-icon-lpad .fa, .fa-icon-lpad .fa.m8 {
+    padding-left: 8px;
 }
 
-/* Add a red background color to the cancel button */
-.form-container .cancel {
-    background-color: red;
+.glyphicon-icon-rpad .glyphicon.m5, .fa-icon-rpad .fa.m5 {
+    padding-right: 5px;
 }
 
-/* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
-    opacity: 1;
+.glyphicon-icon-lpad .glyphicon.m5, .fa-icon-lpad .fa.m5 {
+    padding-left: 5px;
+}
+
+.glyphicon-icon-rpad .glyphicon.m12, .fa-icon-rpad .fa.m12 {
+    padding-right: 12px;
+}
+
+.glyphicon-icon-lpad .glyphicon.m12, .fa-icon-lpad .fa.m12 {
+    padding-left: 12px;
+}
+
+.glyphicon-icon-rpad .glyphicon.m15, .fa-icon-rpad .fa.m15 {
+    padding-right: 15px;
+}
+
+.glyphicon-icon-lpad .glyphicon.m15, .fa-icon-lpad .fa.m15 {
+    padding-left: 15px;
+}
+
+
+
+ul.nav-menu-list-style .nav-header .menu-collapsible-icon {
+    position: absolute;
+    right: 3px;
+    top: 16px;
+    font-size: 9px;
+}
+
+
+
+ul.nav-menu-list-style {
+    margin: 0;
+}
+
+    ul.nav-menu-list-style .nav-header {
+        border-top: 1px solid #FFFFFF;
+        border-bottom: 1px solid #e8e8e8;
+        display: block;
+        margin: 0;
+        line-height: 42px;
+        padding: 0 8px;
+        font-weight: 600;
+    }
+
+    ul.nav-menu-list-style > li {
+        position: relative;
+    }
+
+        ul.nav-menu-list-style > li a {
+            border-top: 1px solid #FFFFFF;
+            border-bottom: 1px solid #e8e8e8;
+            padding: 0 10px;
+            line-height: 32px;
+        }
+
+        ul.nav-menu-list-style > li:first-child a {
+        }
+
+
+ul.nav-menu-list-style {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+    ul.nav-menu-list-style li .badge, ul.nav-menu-list-style li .pull-right, ul.nav-menu-list-style li span.badge, ul.nav-menu-list-style li label.badge {
+        float: right;
+        margin-top: 7px;
+    }
+
+ul.bullets {
+    list-style: inside disc
+}
+
+ul.numerics {
+    list-style: inside decimal
+}
+
+.ul.kas-icon-aero {
+}
+
+ul.kas-icon-aero li a:before {
+    font-family: 'Glyphicons Halflings';
+    font-size: 9px;
+    content: "\e258";
+    padding-right: 8px;
 }

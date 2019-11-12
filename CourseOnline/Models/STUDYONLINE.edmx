@@ -41,6 +41,7 @@
           <Property Name="test_id" Type="int" />
           <Property Name="coursework_name" Type="varchar" MaxLength="100" />
           <Property Name="usercreate_id" Type="int" />
+          <Property Name="coursework_weight" Type="int" />
         </EntityType>
         <EntityType Name="Domain">
           <Key>
@@ -107,13 +108,13 @@
           </Key>
           <Property Name="lesson_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="subject_id" Type="int" Nullable="false" />
-          <Property Name="parent_id" Type="int" />
           <Property Name="lesson_name" Type="varchar" MaxLength="50" />
           <Property Name="lesson_order" Type="int" />
           <Property Name="lesson_type" Type="varchar" MaxLength="50" />
           <Property Name="lesson_status" Type="bit" />
           <Property Name="lesson_link" Type="varchar" MaxLength="200" />
           <Property Name="lesson_content" Type="varchar" MaxLength="2000" />
+          <Property Name="parent_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -241,6 +242,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary k
           <Property Name="subject_tag_line" Type="varchar" MaxLength="50" />
           <Property Name="subject_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="picture" Type="nvarchar" MaxLength="250" />
+          <Property Name="ObjectiveCourse" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'STUDYONLINE.dbo.SubjectReference' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -501,6 +503,18 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
             </Principal>
             <Dependent Role="Grade">
               <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lesson__parent_i__45BE5BA9">
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
+          <End Role="Lesson1" Type="Self.Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="lesson_id" />
+            </Principal>
+            <Dependent Role="Lesson1">
+              <PropertyRef Name="parent_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -907,6 +921,10 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
             <End Role="User" EntitySet="User" />
             <End Role="Grade" EntitySet="Grade" />
           </AssociationSet>
+          <AssociationSet Name="FK__Lesson__parent_i__45BE5BA9" Association="Self.FK__Lesson__parent_i__45BE5BA9">
+            <End Role="Lesson" EntitySet="Lesson" />
+            <End Role="Lesson1" EntitySet="Lesson" />
+          </AssociationSet>
           <AssociationSet Name="FK__Lesson__subject___74AE54BC" Association="Self.FK__Lesson__subject___74AE54BC">
             <End Role="Subject" EntitySet="Subject" />
             <End Role="Lesson" EntitySet="Lesson" />
@@ -1055,6 +1073,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
           <Property Name="test_id" Type="Int32" />
           <Property Name="coursework_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="usercreate_id" Type="Int32" />
+          <Property Name="coursework_weight" Type="Int32" />
           <NavigationProperty Name="Course" Relationship="Self.FK__Coursewor__cours__6EF57B66" FromRole="Coursework" ToRole="Course" />
           <NavigationProperty Name="ExamTest" Relationship="Self.FK__Coursewor__test___2B0A656D" FromRole="Coursework" ToRole="ExamTest" />
           <NavigationProperty Name="User" Relationship="Self.FK__Coursewor__userc__2BFE89A6" FromRole="Coursework" ToRole="User" />
@@ -1141,13 +1160,15 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
           </Key>
           <Property Name="lesson_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="subject_id" Type="Int32" Nullable="false" />
-          <Property Name="parent_id" Type="Int32" />
           <Property Name="lesson_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="lesson_order" Type="Int32" />
           <Property Name="lesson_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="lesson_status" Type="Boolean" />
           <Property Name="lesson_link" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="lesson_content" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="parent_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Lesson1" Relationship="Self.FK__Lesson__parent_i__45BE5BA9" FromRole="Lesson" ToRole="Lesson1" />
+          <NavigationProperty Name="Lesson2" Relationship="Self.FK__Lesson__parent_i__45BE5BA9" FromRole="Lesson1" ToRole="Lesson" />
           <NavigationProperty Name="Subject" Relationship="Self.FK__Lesson__subject___74AE54BC" FromRole="Lesson" ToRole="Subject" />
           <NavigationProperty Name="Questions" Relationship="Self.FK__Question__lesson__151B244E" FromRole="Lesson" ToRole="Question" />
         </EntityType>
@@ -1287,6 +1308,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
           <Property Name="subject_tag_line" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="subject_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="picture" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ObjectiveCourse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Courses" Relationship="Self.FK__Course__subject___6B24EA82" FromRole="Subject" ToRole="Course" />
           <NavigationProperty Name="Domains" Relationship="Self.FK__Domain__subject___6FE99F9F" FromRole="Subject" ToRole="Domain" />
           <NavigationProperty Name="Exams" Relationship="Self.FK__Exam__subject_id__70DDC3D8" FromRole="Subject" ToRole="Exam" />
@@ -1636,6 +1658,18 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Lesson__parent_i__45BE5BA9">
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
+          <End Role="Lesson1" Type="Self.Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="lesson_id" />
+            </Principal>
+            <Dependent Role="Lesson1">
+              <PropertyRef Name="parent_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Lesson__subject___74AE54BC">
           <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
           <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
@@ -1933,6 +1967,10 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
             <End Role="User" EntitySet="Users" />
             <End Role="Grade" EntitySet="Grades" />
           </AssociationSet>
+          <AssociationSet Name="FK__Lesson__parent_i__45BE5BA9" Association="Self.FK__Lesson__parent_i__45BE5BA9">
+            <End Role="Lesson" EntitySet="Lessons" />
+            <End Role="Lesson1" EntitySet="Lessons" />
+          </AssociationSet>
           <AssociationSet Name="FK__Lesson__subject___74AE54BC" Association="Self.FK__Lesson__subject___74AE54BC">
             <End Role="Subject" EntitySet="Subjects" />
             <End Role="Lesson" EntitySet="Lessons" />
@@ -2045,6 +2083,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
                 <ScalarProperty Name="test_id" ColumnName="test_id" />
                 <ScalarProperty Name="coursework_name" ColumnName="coursework_name" />
                 <ScalarProperty Name="usercreate_id" ColumnName="usercreate_id" />
+                <ScalarProperty Name="coursework_weight" ColumnName="coursework_weight" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2117,13 +2156,13 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
               <MappingFragment StoreEntitySet="Lesson">
                 <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
                 <ScalarProperty Name="subject_id" ColumnName="subject_id" />
-                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
                 <ScalarProperty Name="lesson_name" ColumnName="lesson_name" />
                 <ScalarProperty Name="lesson_order" ColumnName="lesson_order" />
                 <ScalarProperty Name="lesson_type" ColumnName="lesson_type" />
                 <ScalarProperty Name="lesson_status" ColumnName="lesson_status" />
                 <ScalarProperty Name="lesson_link" ColumnName="lesson_link" />
                 <ScalarProperty Name="lesson_content" ColumnName="lesson_content" />
+                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2252,6 +2291,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
                 <ScalarProperty Name="subject_tag_line" ColumnName="subject_tag_line" />
                 <ScalarProperty Name="subject_id" ColumnName="subject_id" />
                 <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="ObjectiveCourse" ColumnName="ObjectiveCourse" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

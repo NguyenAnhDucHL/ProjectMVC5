@@ -6,8 +6,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     Subject subject = ViewBag.subject;
     User teacher = ViewBag.teacher;
+    List<LessonModel> lesson = ViewBag.lesson;
 }
-
+<link rel="stylesheet" href="~/Assets/customcss/menu.css">
 <div class="site-section ftco-subscribe-1 site-blocks-cover pb-4" style="background-image: url('@subject.picture')">
     <div class="container">
         <div class="row align-items-end">
@@ -22,9 +23,9 @@
 
 <div class="custom-breadcrumns border-bottom">
     <div class="container">
-        <a href="@Url.Action("Home_User","Home")">Home</a>
+        <a href="@Url.Action("Home_User", "Home")">Home</a>
         <span class="mx-3 icon-keyboard_arrow_right"></span>
-        <a href="@Url.Action("ListSubjects","Subject")">Subjects</a>
+        <a href="@Url.Action("ListSubjects", "Subject")">Subjects</a>
         <span class="mx-3 icon-keyboard_arrow_right"></span>
         <span class="current">@subject.subject_name</span>
     </div>
@@ -60,24 +61,70 @@
                 </p>
             </div>
         </div>
-        <div class="col-lg-6 ml-auto align-self-center">
-            <h2 class="section-title-underline mb-5">
-                <span>Objective Course</span>
-            </h2>
-               <p>Set up a working environment with the Java programming language.</p>              
-               <p> Understand and apply properties in object-oriented programming.</p>
-               <p> Building a number of simple business programs.</p>
-               <p> Good programming orientation and towards high technology apply object-oriented programming.</p>
-        </div>
-        <div class="col-lg-6 ml-auto align-self-center">
-            <h2 class="section-title-underline mb-5">
-                <span>Course Content</span>
-            </h2>
-            <p>
-                Introduction Lesson
-            </p>
+        <h2 class="section-title-underline mb-5">
+            <span>Objective Course</span>
+        </h2>
+        <p>- Set up a working environment with the Java programming language.</p>
+        <p>- Understand and apply properties in object-oriented programming.</p>
+        <p>- Building a number of simple business programs.</p>
+        <p>- Good programming orientation and towards high technology apply object-oriented programming.</p>
+        <h2 class="section-title-underline">
+            <span>Course Content</span>
+        </h2>
+        <div class="col-md-10 ">
+            <div class="well no-padding">
+                <div>
+                    <ul class="nav-list nav-menu-list-style">
+                        @foreach (Lesson item in lesson)
+                        {
+                            int countlesson = 0;
+                            <li>
+                                @if (item.parent_id == item.lesson_id)
+                                {
+                                    foreach (Lesson item1 in lesson)
+                                    {
+                                        if (item1.parent_id != item1.lesson_id && item1.parent_id == item.parent_id)
+                                        {
+                                            countlesson++;
+                                        }
+                                    }
+                                    <label class="tree-toggle nav-header glyphicon-icon-rpad">
+                                        @item.lesson_name :
+                                        <span>@countlesson Lectures</span>
+                                        <span class="menu-collapsible-icon glyphicon glyphicon-chevron-down"></span>
+                                    </label>
+                                    foreach (Lesson item1 in lesson)
+                                    {
+                                        if (item1.parent_id != item1.lesson_id && item1.parent_id == item.parent_id)
+                                        {
+                                            <ul class=" nav-list tree" style="text-align:left">
+                                                <li>@item1.lesson_name</li>
+                                            </ul>
+                                        }
+                                    }
+                                }
+                            </li>
+                            <li class="divider"></li>
+                        }
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+    $('.tree-toggle').click(function () {
+        $(this).parent().children('ul.tree').toggle(200);
+    });
+    $(function () {
+        $('.tree-toggle').parent().children('ul.tree').toggle(200);
+    })
+
+</script>

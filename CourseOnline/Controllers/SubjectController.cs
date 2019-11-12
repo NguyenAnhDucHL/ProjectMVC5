@@ -60,7 +60,17 @@ namespace CourseOnline.Controllers
                            }
                            ).FirstOrDefault();
 
-            
+            List<LessonModel> lesson = (from l in db.Lessons.OrderBy(l => l.parent_id)
+                                        join s in db.Subjects.Where(s => s.subject_id == id) on l.subject_id equals s.subject_id
+                             select new LessonModel
+                             {
+                               lesson_id = l.lesson_id,
+                               lesson_name = l.lesson_name,
+                               lesson_link = l.lesson_link,
+                               lesson_content = l.lesson_content,
+                               parent_id = l.parent_id
+                             }).ToList();
+
             if(subject == null)
             {
                 return HttpNotFound();
@@ -69,6 +79,7 @@ namespace CourseOnline.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.lesson = lesson;
             ViewBag.teacher = teacher;
             ViewBag.subject = subject;
             return View("/Views/User/SubjectDetail.cshtml");

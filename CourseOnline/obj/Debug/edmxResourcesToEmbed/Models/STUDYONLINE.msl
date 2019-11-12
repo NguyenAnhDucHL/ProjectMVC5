@@ -38,6 +38,7 @@
           <ScalarProperty Name="test_id" ColumnName="test_id" />
           <ScalarProperty Name="coursework_name" ColumnName="coursework_name" />
           <ScalarProperty Name="usercreate_id" ColumnName="usercreate_id" />
+          <ScalarProperty Name="coursework_weight" ColumnName="coursework_weight" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -110,13 +111,13 @@
         <MappingFragment StoreEntitySet="Lesson">
           <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
           <ScalarProperty Name="subject_id" ColumnName="subject_id" />
-          <ScalarProperty Name="parent_id" ColumnName="parent_id" />
           <ScalarProperty Name="lesson_name" ColumnName="lesson_name" />
           <ScalarProperty Name="lesson_order" ColumnName="lesson_order" />
           <ScalarProperty Name="lesson_type" ColumnName="lesson_type" />
           <ScalarProperty Name="lesson_status" ColumnName="lesson_status" />
           <ScalarProperty Name="lesson_link" ColumnName="lesson_link" />
           <ScalarProperty Name="lesson_content" ColumnName="lesson_content" />
+          <ScalarProperty Name="parent_id" ColumnName="parent_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -245,6 +246,7 @@
           <ScalarProperty Name="subject_tag_line" ColumnName="subject_tag_line" />
           <ScalarProperty Name="subject_id" ColumnName="subject_id" />
           <ScalarProperty Name="picture" ColumnName="picture" />
+          <ScalarProperty Name="ObjectiveCourse" ColumnName="ObjectiveCourse" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

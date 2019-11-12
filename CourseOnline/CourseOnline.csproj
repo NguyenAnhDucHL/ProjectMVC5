@@ -196,6 +196,7 @@
     <Compile Include="Models\Lesson.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LessonModel.cs" />
     <Compile Include="Models\Menu.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
@@ -256,7 +257,6 @@
     <Compile Include="Models\Tag.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TeacherModel.cs" />
     <Compile Include="Models\TestAnswer.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
@@ -320,8 +320,6 @@
     <Content Include="Assets\bootstrap\js\owl.carousel.min.js" />
     <Content Include="Assets\bootstrap\js\popper.min.js" />
     <Content Include="Assets\customcss\menu.css" />
-    <Content Include="Assets\customimg\photo.jpg" />
-    <Content Include="Assets\customimg\ronaldo.jpg" />
     <Content Include="Assets\customjs\CustomJs.js" />
     <Content Include="Assets\dist\css\AdminLTE.css" />
     <Content Include="Assets\dist\css\AdminLTE.min.css" />
@@ -401,19 +399,6 @@
     <Content Include="Assets\IMGUSER\person_2.jpg" />
     <Content Include="Assets\IMGUSER\person_3.jpg" />
     <Content Include="Assets\IMGUSER\person_4.jpg" />
-    <Content Include="Assets\materialize\css\materialize.css" />
-    <Content Include="Assets\materialize\css\materialize.min.css" />
-    <Content Include="Assets\materialize\images\book.jpg" />
-    <Content Include="Assets\materialize\images\hoctap.jpg" />
-    <Content Include="Assets\materialize\images\ronaldo.jpg" />
-    <Content Include="Assets\materialize\images\study.jpg" />
-    <Content Include="Assets\materialize\images\toan.jpg" />
-    <Content Include="Assets\materialize\js\materialize.js" />
-    <Content Include="Assets\materialize\js\materialize.min.js" />
-    <Content Include="Assets\materialize\materialize\css\materialize.css" />
-    <Content Include="Assets\materialize\materialize\css\materialize.min.css" />
-    <Content Include="Assets\materialize\materialize\js\materialize.js" />
-    <Content Include="Assets\materialize\materialize\js\materialize.min.js" />
     <Content Include="Assets\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Assets\plugins\bootstrap-slider\slider.css" />
     <Content Include="Assets\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
@@ -1322,8 +1307,6 @@
     <Content Include="Assets\bootstrap\fonts\icomoon.woff" />
     <Content Include="Assets\bootstrap\js\bootstrap.min.js.download" />
     <Content Include="Assets\bootstrap\js\dashboard.js.download" />
-    <Content Include="Assets\materialize\materialize\LICENSE" />
-    <Content Include="Assets\materialize\materialize\README.md" />
     <Content Include="Assets\plugins\ckeditor\CHANGES.md" />
     <Content Include="Assets\plugins\ckeditor\LICENSE.md" />
     <Content Include="Assets\plugins\ckeditor\plugins\scayt\CHANGELOG.md" />
@@ -1433,6 +1416,7 @@
     <Content Include="Views\User\SubjectList.cshtml" />
     <Content Include="Views\User\TeacherList.cshtml" />
     <Content Include="Views\User\Home.cshtml" />
+    <Content Include="Views\User\AccountInformation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

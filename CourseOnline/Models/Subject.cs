@@ -33,6 +33,7 @@ namespace CourseOnline.Models
         public string subject_tag_line { get; set; }
         public int subject_id { get; set; }
         public string picture { get; set; }
+        public string ObjectiveCourse { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Course> Courses { get; set; }
