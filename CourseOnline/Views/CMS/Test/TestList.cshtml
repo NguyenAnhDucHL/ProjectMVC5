@@ -3,6 +3,7 @@
     ViewBag.Title = "Test List";
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
     var listExam = ViewBag.listExam;
+    var listTest = ViewBag.listTest;
 }
 
 <section class="content-header">
@@ -39,6 +40,12 @@
                     <div class="col-lg-2">
                         <select class="form-control" id="sl_test">
                                 <option>All test</option>
+                            @{ 
+                                foreach (string test in listTest)
+                                {
+                                    <option value="@test">@test</option>
+                                }
+                            }
                         </select>
                     </div>
                 </div>
@@ -108,7 +115,7 @@
             $('#sl_test').on('change', function (e) {
                 var optionSelected = $("option:selected", this);
                  var valueSelected = this.value;
-                 dataTable.ajax.url('@Url.Action("FilterByExam","Test")' + '?type=' + valueSelected).load(function (response) { });
+                 dataTable.ajax.url('@Url.Action("FilterByTest","Test")' + '?type=' + valueSelected).load(function (response) { });
             });
         }
         //su kien add

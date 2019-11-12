@@ -66,8 +66,6 @@ namespace CourseOnline.Controllers
                     examListModels = examListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
                     return Json(new { success = true, data = examListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
                 }
-
-
             }
         }
 
