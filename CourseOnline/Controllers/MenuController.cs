@@ -117,17 +117,17 @@ namespace CourseOnline.Controllers
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
                 var menu = db.Menus.Where(m => m.menu_id == id).FirstOrDefault();
-                if (menu != null)
+                if(menu != null)
                 {
                     db.Menus.Remove(menu);
                     db.SaveChanges();
-                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true}, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
                     return Json(new { success = false }, JsonRequestBehavior.AllowGet);
                 }
-
+               
 
             }
 
@@ -152,7 +152,7 @@ namespace CourseOnline.Controllers
                 using (STUDYONLINEEntities db = new STUDYONLINEEntities())
                 {
                     dynamic addmenu = JValue.Parse(postJson);
-                    string temp = null;
+                    string temp=null;
 
                     Menu m = new Menu();
                     m.menu_name = addmenu.menuName;
@@ -162,9 +162,7 @@ namespace CourseOnline.Controllers
                     if (temp.Equals("Active"))
                     {
                         m.menu_status = true;
-                    }
-                    else
-                    {
+                    } else {
                         m.menu_status = false;
                     }
                     m.menu_description = addmenu.shortDes;

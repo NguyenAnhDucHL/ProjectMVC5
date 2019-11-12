@@ -66,7 +66,7 @@ namespace CourseOnline.Controllers
             string sortDirection = Request["order[0][dir]"];
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                if (!subjectName.Equals(All.ALL_Subject))
+                if (!subjectName.Equals(All.ALL_SUBJECT))
                 {
                     string sql = "select u.[user_fullname], u.[user_email], s.[subject_name], e.[exam_name], tr.[tested_at], gr.[grade]" +
                              "from [User] u join [TestResult] tr " +

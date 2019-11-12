@@ -96,7 +96,7 @@
                                         <label><h5>Subject: <b>@{@ViewBag.Subject.subject_name}</b></h5></label>
                                     </div>
                                 </div>
-                                <table id="tb_domain" class="table table-bordered table-striped table-responsive" style="min-width : 1000px">
+                                <table id="tb_domain" class="table table-bordered table-responsive">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -117,6 +117,7 @@
 
 
 @section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
         var dataTable;
@@ -138,8 +139,8 @@
                 },
                 {
                     "data": "domain_id", "render": function (data) {
-                            return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin: 0 auto;margin-bottom: 1px; max-width : 100px' onclick=getEditIdDomain('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
-                              "<button class='btn btn-block btn-danger' style='margin: 0 auto;margin-top: 1px; max-width:100px' onclick=getDelIdDomain('" + data + "') ><i class='fa fa-trash'></i>Delete</button>";
+                            return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdDomain('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
+                              "<button class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdDomain('" + data + "') ><i class='fa fa-trash'></i>Delete</button>";
                     },
                     "orderable": false,
                     "searchable": false

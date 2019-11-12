@@ -16,6 +16,7 @@ namespace CourseOnline.Controllers
     {
         private STUDYONLINEEntities db = new STUDYONLINEEntities();
         // GET: Course
+        // GET: Subject
         [Route("SubjectList")]
         public ActionResult Index()
         {
@@ -122,27 +123,24 @@ namespace CourseOnline.Controllers
                 if (!type.Equals(All.ALL_TYPE)) // filter theo type
                 {
                     var typeSubjectList = (from s in db.Subjects
-                                           where s.subject_type.Equals(type)
-                                           select new
-                                           {
-                                               s.subject_id,
-                                               s.subject_category,
-                                               s.subject_name,
-                                               s.subject_brief_info,
-                                               s.subject_type,
-                                               s.subject_status,
-                                               s.subject_tag_line,
-                                           }).ToList();
-                    List<SubjectListModel> arrSubjectList = typeSubjectList.Select(s => new SubjectListModel
-                    {
-                        subject_id = s.subject_id,
-                        subject_category = s.subject_category,
-                        subject_name = s.subject_name,
-                        subject_brief_info = s.subject_brief_info,
-                        subject_type = s.subject_type,
-                        subject_status = s.subject_status,
-                        subject_tag_line = s.subject_tag_line
-                    }).ToList();
+                                    where s.subject_type.Equals(type)
+                                    select new
+                                    {
+                                        s.subject_id,
+                                        s.subject_category,
+                                        s.subject_name,
+                                        s.subject_brief_info,
+                                        s.subject_type,
+                                        s.subject_status,
+                                        s.subject_tag_line,
+                                    }).ToList();
+                    List<SubjectListModel> arrSubjectList = typeSubjectList.Select(s => new SubjectListModel { subject_id = s.subject_id,
+                                                                                                                subject_category =s.subject_category,
+                                                                                                                subject_name = s.subject_name,
+                                                                                                                subject_brief_info = s.subject_brief_info,
+                                                                                                                subject_type = s.subject_type,
+                                                                                                                subject_status = s.subject_status,
+                                                                                                                subject_tag_line = s.subject_tag_line}).ToList();
                     foreach (var sj in arrSubjectList)
                     {
                         var lessons = (from l in db.Lessons
@@ -405,7 +403,7 @@ namespace CourseOnline.Controllers
 
                 List<SubjectListModel> Subjects = db.Database.SqlQuery<SubjectListModel>(sql).ToList();
 
-                foreach (var sj in Subjects)
+                foreach(var sj in Subjects)
                 {
                     var lessons = (from l in db.Lessons
                                    where l.subject_id == sj.subject_id
@@ -532,6 +530,6 @@ namespace CourseOnline.Controllers
             }
         }
 
-
+        
     }
 }

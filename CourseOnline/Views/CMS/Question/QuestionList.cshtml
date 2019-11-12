@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewBag.Title = "QuestionList";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    var listSubject = ViewBag.subjectName;
+    var listDomain = ViewBag.domainName;
+    var listLesson = ViewBag.lessonName;
+    var listLevel = ViewBag.questionLevel;
+    var listStatus = ViewBag.questionStatus;
+}
+
+<section class="content-header">
+    <h1>
+        Questions List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Question List</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="row" style="margin-top : 20px; margin-left : 5px">
+                    <div class="col-sm-2">
+                        <select id="sl_subjectName" class="form-control">
+                            <option>All Subject</option>
+                            @{
+                                foreach (string subject in listSubject)
+                                {
+                                    <option value="@subject">@subject</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="sl_domainName" class="form-control">
+                            <option>All Domain</option>
+                            @{
+                                foreach (string domain in listDomain)
+                                {
+                                    <option value="@domain">@domain</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="sl_lessonName" class="form-control">
+                            <option>All Lesson</option>
+                            @{
+                                foreach (string lesson in listLesson)
+                                {
+                                    <option value="@lesson">@lesson</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top : 20px; margin-left : 5px">
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-block btn-primary" onclick='getAddQuestion()'>Add Question</button>
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="sl_questionLevel" class="form-control">
+                            <option>All Level</option>
+                            @{
+                                foreach (string level in listLevel)
+                                {
+                                    <option value="@level">@level</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="sl_questionStatus" class="form-control">
+                            <option>All Status</option>
+                            @{
+                                foreach (string status in listStatus)
+                                {
+                                    <option value="@status">@status</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <table id="tb_question" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Question</th>
+                                <th>Subject</th>
+                                <th>Domain</th>
+                                <th>Lesson</th>
+                                <th>Level</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        var dataTable;
+    $(document).ready(function() {
+        dataTable = $('#tb_question').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllQuestion", "Question")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "question_id", "name": "question_id", "orderable": true },
+                { "data": "question_name", "name": "question_name", "orderable": true },
+                { "data": "subject_name", "name": "subject_name", "orderable": true },
+                { "data": "lesson_name", "name": "lesson_name", "orderable": true },
+                { "data": "domain_name", "name": "domain_name", "orderable": true },
+                { "data": "question_level", "name": "question_level", "orderable": true },
+                { "data": "question_status", "name": "question_status", "orderable": true },
+                {
+                    "data": "question_id", "render": function (data) {
+                            return "<button class='btn btn-block btn-primary' style='margin-left:5px' onclick=getEditIdQuestion('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
+                                 "<button id='myBtn' class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdQuestion('" + data + "') ><i class='fa fa-trash'></i>Delete</button>" ;
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+        // them su kien cho filter
+        filterListener();
+    });
+    function doFilter() {
+                var valueSelected = {
+                    subjectName : $("#sl_subjectName").val(),
+                    domainName : $("#sl_domainName").val(),
+                    lessonName: $("#sl_lessonName").val(),
+                    questionLevel: $("#sl_questionLevel").val(),
+                    questionStatus : $("#sl_questionStatus").val(),
+                };
+                var valueSelectedJson = JSON.stringify(valueSelected);
+                dataTable.ajax.url('@Url.Action("DoFilter","Question")' + '?filterBy=' + valueSelectedJson).load(function (response) { });
+        }
+    function filterListener() {
+            $('#sl_questionLevel').on('change', function (e) {
+                doFilter();
+            });
+
+             $('#sl_questionStatus').on('change', function (e) {
+                doFilter();
+             });
+
+            $('#sl_subjectName').on('change', function (e) {
+                doFilter();
+            });
+
+            $('#sl_domainName').on('change', function (e) {
+                doFilter();
+            });
+
+            $('#sl_lessonName').on('change', function (e) {
+                doFilter();
+             });
+        }
+
+    // bat su kien add
+    function getAddQuestion() {
+               window.location.href ='@Url.Action("AddQuestion", "Question")';
+        }
+
+    function getDelIdQuestion(id) {
+            if (id != null) {
+                confirmAlert('Xóa', 'Xác nhận xóa', function submit() {
+                    $.ajax({
+                        url:'@Url.Action("deleteQuestion","Question")',
+                        type: "POST",
+                        data: { id: id },
+                        datatype: "json",
+                        success: (response) => {
+                            if (response.success) {
+                                dataTable.ajax.reload(); successAlert("Thành công", "Xóa thành công")
+                            } else {
+                                errorAlert("Thất bại", "Xóa thất bại")
+                            }
+                        },
+                        error: (response) => { errorAlert("Thất bại", "Xóa thất bại") }
+                    });
+                });
+            }
+        }
+
+    //bat su kien edit
+        function getEditIdQuestion(id) {
+            if (id != null) {
+               window.location.href ='@Url.Action("EditQuestion", "Question")?id=' + id;
+
+            }
+        }
+    </script>
+}

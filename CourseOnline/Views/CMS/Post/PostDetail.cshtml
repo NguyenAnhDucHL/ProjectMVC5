@@ -14,7 +14,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="posts-list.html">Post Lists</a></li>
+        <li><a href='@Url.Action("Index", "Post")'>Post Lists</a></li>
         <li class="active">Post Details</li>
     </ol>
 </section>
@@ -106,9 +106,7 @@
                             <!-- /.box-header -->
                             <div class="box-body pad">
                                 <form>
-                                    <textarea id="editor1" name="editor1" rows="10" cols="80">
-                                            This is my textarea to be replaced with CKEditor.
-                    </textarea>
+                                    <textarea disabled id="editor1" class="edit-field" rows="10" cols="80">@post.post_detail_info</textarea>
                                 </form>
                             </div>
                         </div>
@@ -119,10 +117,12 @@
 
             <!-- /.nav-tabs-custom -->
             <button class="btn btn-info" onclick="turnOnEditMode()">Edit</button>
-            <button disabled type="submit" onclick="submitPost()" class="btn btn-info edit-field">Submit</button>
-            <button disabled type="submit" class="btn btn-info edit-field">Public</button>
-            <button disabled type="submit" class="btn btn-info edit-field">Hide</button>
-            <button type="submit" class="btn btn-info">Back</button>
+            <button disabled type="submit" onclick="draftEditPost()" class="btn btn-info edit-field">Draft</button>
+            <button disabled type="submit" onclick="submitEditPost()" class="btn btn-info edit-field">Submit</button>
+            <button disabled type="submit" onclick="publishEditPost()" class="btn btn-info edit-field">Publish</button>
+            <button disabled type="submit" onclick="hideEditPost()" class="btn btn-info edit-field">Hide</button>
+            <button disabled type="submit" onclick="deleteEditPost()" class="btn btn-info edit-field">Delete</button>
+            <button type="submit" onclick="getBackPostList()" class="btn btn-info">Back</button>
         </div>
 
 
@@ -132,6 +132,7 @@
 
 </section>
 @section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
 
@@ -160,15 +161,17 @@
                 )
             }
         };
-
-        function submitPost() {
+        //bat su kien submit
+        function submitEditPost() {
 
             var post = {
                 id : @id,
                 postName: $("#inp_name").val(),
                 shortDes: $("#inp_shortDes").val(),
                 postType: $("#sl_postType").val(),
-                postCategory: $("#sl_PostCategory").val()
+                postCategory: $("#sl_PostCategory").val(),
+                postDetailInfo: $("#editor1").val(),
+                postStatus: "Submitted",
             };
 
             var postJson = JSON.stringify(post);
@@ -189,6 +192,138 @@
                 error: (response) => { alert("co van de ve mang") }
             });
         };
+
+        //bat su kien draft
+        function draftEditPost() {
+
+            var post = {
+                id : @id,
+                postName: $("#inp_name").val(),
+                shortDes: $("#inp_shortDes").val(),
+                postType: $("#sl_postType").val(),
+                postCategory: $("#sl_PostCategory").val(),
+                postDetailInfo: $("#editor1").val(),
+                postStatus: "Draft",
+            };
+
+            var postJson = JSON.stringify(post);
+
+            $.ajax({
+                url: '@Url.Action("SubmitPost","Post")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                        turnOnEditMode();
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+
+        //bat su kien publish
+        function publishEditPost() {
+
+            var post = {
+                id : @id,
+                postName: $("#inp_name").val(),
+                shortDes: $("#inp_shortDes").val(),
+                postType: $("#sl_postType").val(),
+                postCategory: $("#sl_PostCategory").val(),
+                postDetailInfo: $("#editor1").val(),
+                postStatus: "Published",
+            };
+
+            var postJson = JSON.stringify(post);
+
+            $.ajax({
+                url: '@Url.Action("SubmitPost","Post")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                        turnOnEditMode();
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+
+        //bat su kien hide
+        function hideEditPost() {
+
+            var post = {
+                id : @id,
+                postName: $("#inp_name").val(),
+                shortDes: $("#inp_shortDes").val(),
+                postType: $("#sl_postType").val(),
+                postCategory: $("#sl_PostCategory").val(),
+                postDetailInfo: $("#editor1").val(),
+                postStatus: "Hiden",
+            };
+
+            var postJson = JSON.stringify(post);
+
+            $.ajax({
+                url: '@Url.Action("SubmitPost","Post")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                        turnOnEditMode();
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+
+        //bat su kien delete
+        function deleteEditPost() {
+
+            var post = {
+                id : @id,
+                postName: $("#inp_name").val(),
+                shortDes: $("#inp_shortDes").val(),
+                postType: $("#sl_postType").val(),
+                postCategory: $("#sl_PostCategory").val(),
+                postDetailInfo: $("#editor1").val(),
+                postStatus: "Deleted",
+            };
+
+            var postJson = JSON.stringify(post);
+
+            $.ajax({
+                url: '@Url.Action("SubmitPost","Post")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                        turnOnEditMode();
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+        // bat su kien back
+    function getBackPostList() {
+               window.location.href ='@Url.Action("Index", "Post")';
+        }
 
     </script>
 }

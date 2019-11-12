@@ -69,7 +69,7 @@ namespace CourseOnline.Controllers
 
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                if (!subjectName.Equals(All.ALL_Subject))
+                if (!subjectName.Equals(All.ALL_SUBJECT))
                 {
                     var lstRegistration = (from r in db.Registrations
                                            join u in db.Users on r.user_id equals u.user_id

@@ -17,7 +17,7 @@ namespace CourseOnline.Controllers
         [Route("SubjectLessonList")]
         public ActionResult Index()
         {
-            return View("/Views/CMS/SubjectLessonList.cshtml");
+            return View("/Views/CMS/Subject/SubjectLessonList.cshtml");
         }
         [HttpPost]
         public ActionResult GetAllSubjectLesson(int id = -1)

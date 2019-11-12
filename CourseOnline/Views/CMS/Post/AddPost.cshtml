@@ -12,7 +12,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="posts-list.html">Post Lists</a></li>
+        <li><a href='@Url.Action("Index", "Post")'>Post Lists</a></li>
         <li class="active">Post Details</li>
     </ol>
 </section>
@@ -104,9 +104,7 @@
                             <!-- /.box-header -->
                             <div class="box-body pad">
                                 <form>
-                                    <textarea id="editor1" name="editor1" rows="10" cols="80">
-                                            This is my textarea to be replaced with CKEditor.
-                    </textarea>
+                                    <textarea id="editor1" name="editor1" rows="10" cols="80" placeholder="This is my textarea"></textarea>
                                 </form>
                             </div>
                         </div>
@@ -116,28 +114,21 @@
             </div>
 
             <!-- /.nav-tabs-custom -->
+            <button type="submit" onclick="draftPost()" class="btn btn-info edit-field">Draft</button>
             <button type="submit" onclick="submitPost()" class="btn btn-info edit-field">Submit</button>
-            <button type="submit" class="btn btn-info edit-field">Public</button>
-            <button type="submit" class="btn btn-info edit-field">Hide</button>
-            <button type="submit" class="btn btn-info">Back</button>
+            <button type="submit" onclick="publishPost()" class="btn btn-info edit-field">Publish</button>
+            <button type="submit" onclick="hidePost()" class="btn btn-info edit-field">Hide</button>
+            <button type="submit" class="btn btn-info" onclick="getBackPostList()">Back</button>
         </div>
-
-
         <!-- /.col -->
     </div>
     <!-- /.row -->
 
 </section>
 @section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
-
-
-        $(document).ready(function () {
-
-        setValueForComboBox();
-    });
-
 
         function submitPost() {
 
@@ -145,7 +136,9 @@
                 postName: $("#inp_name").val(),
                 shortDes: $("#inp_shortDes").val(),
                 postType: $("#sl_postType").val(),
-                postCategory: $("#sl_PostCategory").val()
+                postCategory: $("#sl_PostCategory").val(),
+                postDetailInfo: $("#editor1").val(),
+                postStatus: "Submitted",
             };
 
             var postJson = JSON.stringify(post);
@@ -157,7 +150,7 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit success");
+                        alert("submit thanh cong");
                     } else {
                         alert("submit that bai");
                     }
@@ -166,5 +159,95 @@
             });
         };
 
+        function draftPost() {
+
+            var post = {
+                postName: $("#inp_name").val(),
+                shortDes: $("#inp_shortDes").val(),
+                postType: $("#sl_postType").val(),
+                postCategory: $("#sl_PostCategory").val(),
+                postDetailInfo: $("#editor1").val(),
+                postStatus: "Draft",
+            };
+
+            var postJson = JSON.stringify(post);
+
+            $.ajax({
+                url: '@Url.Action("SubmitAddPost","Post")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+
+        function publishPost() {
+
+            var post = {
+                postName: $("#inp_name").val(),
+                shortDes: $("#inp_shortDes").val(),
+                postType: $("#sl_postType").val(),
+                postCategory: $("#sl_PostCategory").val(),
+                postDetailInfo: $("#editor1").val(),
+                postStatus: "Published",
+            };
+
+            var postJson = JSON.stringify(post);
+
+            $.ajax({
+                url: '@Url.Action("SubmitAddPost","Post")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+
+        function hidePost() {
+
+            var post = {
+                postName: $("#inp_name").val(),
+                shortDes: $("#inp_shortDes").val(),
+                postType: $("#sl_postType").val(),
+                postCategory: $("#sl_PostCategory").val(),
+                postDetailInfo: $("#editor1").val(),
+                postStatus: "Hiden",
+            };
+
+            var postJson = JSON.stringify(post);
+
+            $.ajax({
+                url: '@Url.Action("SubmitAddPost","Post")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+        // bat su kien back
+    function getBackPostList() {
+               window.location.href ='@Url.Action("Index", "Post")';
+        }
     </script>
 }

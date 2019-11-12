@@ -1,0 +1,217 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "QuestionDetail";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    Question question = ViewBag.Question;
+    List<Subject> listSubject = ViewBag.subjectName;
+    List<Domain> listDomain = ViewBag.domainName;
+    List<Lesson> listLesson = ViewBag.lessonName;
+    var listLevel = ViewBag.levelName;
+    var listStatus = ViewBag.statusName;
+    int id = ViewBag.id;
+}
+
+<section class="content-header">
+    <h1>
+        Question Details
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Index","Question")'>Questions</a></li>
+        <li class="active">Question Details</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <select id="sl_subjectName" disabled class="form-control edit-field">
+                                    @{
+                                        foreach (Subject subject in listSubject)
+                                        {
+                                            <option value="@subject.subject_name">@subject.subject_name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Lesson</label>
+                                <select id="sl_lessonName" disabled class="form-control edit-field">
+                                    @{
+                                        foreach (Lesson lesson in listLesson)
+                                        {
+                                            <option value="@lesson.lesson_name">@lesson.lesson_name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Level</label>
+                                <select id="sl_questionLevel" disabled class="form-control edit-field">
+                                    @{
+                                        foreach (string level in listLevel)
+                                        {
+                                            <option value="@level">@level</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Domain</label>
+                                <select id="sl_domainName" disabled class="form-control edit-field">
+                                    @{
+                                        foreach (Domain domain in listDomain)
+                                        {
+                                            <option value="@domain.domain_name">@domain.domain_name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select id="sl_questionStatus" disabled class="form-control edit-field">
+                                    @{
+                                        foreach (string status in listStatus)
+                                        {
+                                            <option value="@status">@status</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Question Name</label>
+                        <textarea disabled class="form-control edit-field" id="inp_quesName" rows="3">@question.question_name</textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label>Answer Options</label>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary" onclick='getAddOptionQuestion()'>Add Option</button>
+                        </div>
+                    </div>
+                    <table class="table table-bordered" id="optionTable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>Is Key?</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Option 1</td>
+                                <td><input type="text" class="col-lg-10" placeholder="Option 1"></td>
+                                <td><input type="checkbox" class="form-group"></td>
+                                <td><button type="submit" class="btn btn-danger btnDelete" >Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-info" style="margin-top : 20px" onclick="turnOnEditMode()">Edit</button>
+                    <button type="submit" disabled class="btn btn-danger edit-field" style="margin-top : 20px" onclick="SubmitEditQuestion()">Submit</button>
+                    <button type="submit" class="btn btn-info" style="margin-top : 20px" onclick="getBackQuestionList()">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            removeOption();
+            setValueForComboBox();
+    });
+        // dat gia tri cho comb box bang jquerry
+        function setValueForComboBox() {
+            $("#sl_subjectName").val("@ViewBag.quesSubject").trigger('change');
+            $("#sl_lessonName").val("@ViewBag.quesLesson").trigger('change');
+            $("#sl_domainName").val("@ViewBag.quesDomain").trigger('change');
+            $("#sl_questionLevel").val("@question.question_level").trigger('change');
+            $("#sl_questionStatus").val("@question.question_status").trigger('change');
+        };
+
+        var isEnableEditingMode = false;
+        function turnOnEditMode() {
+            if (!isEnableEditingMode) {
+                // bat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', false); isEnableEditingMode = true; }
+                )
+            } else {
+                // tat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', true); isEnableEditingMode = false; }
+                )
+            }
+        };
+
+        function getAddOptionQuestion() {
+
+             row ="<tr>" +
+                              "  <td>Option 1</td>" +
+                             "   <td><input type=\"text\" class=\"col-lg-10\" placeholder=\"Option 1\"></td> " +
+                              "  <td><input type=\"checkbox\" class=\"form-group\"></td> " +
+                              "  <td><button type=\"submit\" class=\"btn btn-danger btnDelete\" >Delete</button></td>" +
+                           " </tr>"
+            $('#optionTable > tbody:last-child').append(row);
+
+        };
+
+        function removeOption() {
+             $("#optionTable").on('click','.btnDelete',function(){
+            $(this).closest('tr').remove();
+     });
+        }
+
+
+
+    //bat su kien submit
+        function SubmitEditQuestion() {
+
+            var ques = {
+                id : @id,
+                quesStatus: $("#sl_questionStatus").val(),
+                quesLevel: $("#sl_questionLevel").val(),
+                quesName: $("#inp_quesName").val(),
+            };
+
+            var postJson = JSON.stringify(ques);
+
+            $.ajax({
+                url: '@Url.Action("SubmitQuestion","Question")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                        turnOnEditMode();
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+
+        // bat su kien back
+    function getBackQuestionList() {
+               window.location.href ='@Url.Action("Index", "Question")';
+        }
+    </script>
+}
