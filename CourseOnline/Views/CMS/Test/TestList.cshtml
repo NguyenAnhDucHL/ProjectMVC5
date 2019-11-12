@@ -1,0 +1,131 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "Test List";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    var listExam = ViewBag.listExam;
+}
+
+<section class="content-header">
+    <h1>
+        Exam Tests List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="exams-list">Exams List</a></li>
+        <li><a class="active">Tests List</a></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <button type="button" class="btn btn-block btn-primary" onclick='getAddTest()'>Add new</button>
+                    </div>
+                    <div class="col-lg-2">
+                        <select class="form-control" id="sl_exam">
+                            <option>All exam</option>
+                            @{ 
+                                foreach (string exam in listExam)
+                                {
+                                    <option value="@exam">@exam</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <select class="form-control" id="sl_test">
+                                <option>All test</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <table id="tb_test" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Exam</th>
+                                <th>Test(s)</th>
+                                <th>Code</th>
+                                <th>Tested</th>
+                                <th>Average</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        var dataTable;
+        $(document).ready(function () {
+            dataTable = $('#tb_test').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllTest", "Test")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "test_id", "name": "test_id", "orderable": true },
+                { "data": "exam_name", "name": "exam_name", "orderable": true },
+                { "data": "test_name", "name": "test_name", "orderable": true },
+                { "data": "test_code", "name": "test_code", "orderable": true },
+                { "data": "tested", "name": "tested", "orderable": true },
+                { "data": "average", "name": "average", "orderable": true },
+                {
+                    "data": "test_id", "render": function (data) {
+                        return "<button class='btn btn-block btn-primary' style='margin-left:5px' onclick=getEditTest('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
+                            "<button class='btn btn-block btn-primary'  style='margin-left:5px' onclick=getResult('" + data + "') ><i class='fa fa-fw fa-file-text'></i>Result</button>";
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+            });
+            filterListener();
+    });
+
+        //filter
+        function filterListener() {
+            $('#sl_exam').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                 var valueSelected = this.value;
+                 dataTable.ajax.url('@Url.Action("FilterByExam","Test")' + '?type=' + valueSelected).load(function (response) { });
+            });
+            $('#sl_test').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                 var valueSelected = this.value;
+                 dataTable.ajax.url('@Url.Action("FilterByExam","Test")' + '?type=' + valueSelected).load(function (response) { });
+            });
+        }
+        //su kien add
+        function getAddTest() {
+            window.location.href ='@Url.Action("AddTest", "Test")';
+        }
+        function getEditTest(id) {
+            if (id != null) {
+                window.location.href = '@Url.Action("EditTest", "Test")?id=' + id;
+            }
+        }
+        function getResult() {
+            window.location.href ='@Url.Action("Result", "Test")';
+        }
+
+    </script>
+}

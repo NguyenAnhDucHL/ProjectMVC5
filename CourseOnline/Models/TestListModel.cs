@@ -5,11 +5,9 @@ using System.Web;
 
 namespace CourseOnline.Models
 {
-    public class TestListModel : Exam
+    public class TestListModel : ExamTest
     {
-        public String test_name { get; set; }
-
-        public String exam_note { get; set; }
+        public String exam_name { get; set; }
 
         public int tested { get; set; }
 

@@ -12,5 +12,6 @@ namespace CourseOnline.Global.Setting
         public static readonly string GUIDE_CATEGORY = "Guide Category";
         public static readonly string SUBJECT_TYPE = "Subject Type";
         public static readonly string LESSON_TYPE = "Lesson Type";
+        public static readonly string EXAM_TYPES = "Exam Types";
     }
 }

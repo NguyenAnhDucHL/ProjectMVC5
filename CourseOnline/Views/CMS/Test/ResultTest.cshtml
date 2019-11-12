@@ -1,0 +1,124 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "ResultTest";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    var listBatch = ViewBag.listBatch;
+    List<TestBatch> batch = ViewBag.batch;
+}
+<section class="content-header">
+    <h1>
+        Exam Tests Result
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="exams-list">Exams List Result</a></li>
+        <li><a class="active">Result List</a></li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col col-xs-12">
+            <div class="row">
+                <div class="col-lg-3">
+                    <select id="sl_listBatch" class="form-control">
+                        <option>All batch</option>
+                        @{ 
+                            foreach (String b in listBatch)
+                            {
+                                <option value="@b">@b</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-body">
+                    <table id="tb_result" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="table-width5">ID</th>
+                                <th class="table-width30">Batch</th>
+                                <th class="table-width20">Name</th>
+                                <th class="table-width5">Email</th>
+                                <th class="table-width10">Tested At</th>
+                                <th class="table-width10">Result</th>
+                                <th class="table-width10">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        var dataTable;
+        $(document).ready(function () {
+            dataTable =  $('#tb_result').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllResult", "ResultTest")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "test_user_id", "name": "test_user_id", "orderable": true },
+                { "data": "batch_name", "name": "batch_name", "orderable": true },
+                { "data": "user_fullname", "name": "user_fullname", "orderable": true },
+                { "data": "user_email", "name": "user_email", "orderable": true },
+                { "data": "tested_at", "name": "tested_at", "orderable": true },
+                { "data": "grade_user", "name": "grade_user", "orderable": true },
+                {
+                    "data": "test_user_id", "render": function (data) {
+                        return "<button class='btn btn-block btn-danger' style='margin-left:5px' onclick=getDeleteId('" + data + "') ><i class='fa fa-trash'></i> Delete</a></button>";
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+        });
+        filterListener();
+        
+        //filter subject
+        function filterListener() {
+            $('#sl_listBatch').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                 var valueSelected = this.value;
+                 dataTable.ajax.url('@Url.Action("FilterByBatch","ResultTest")' + '?type=' + valueSelected).load(function (response) { });
+            });
+        }
+        //delete slider theo id
+        function getDeleteId(id) {
+            if (id != null) {
+                confirmAlert('Delete', 'Delete confirm', function submit() {
+                    $.ajax({
+                        url:'@Url.Action("delExam","Exam")',
+                        type: "POST",
+                        data: { id: id },
+                        datatype: "json",
+                        success: (response) => {
+                            if (response.success) {
+                                dataTable.ajax.reload(); successAlert("Success", "Delete Successful")
+                            } else {
+                                errorAlert("Failed", "Delete failed")
+                            }
+                        },
+                        error: (response) => { errorAlert("Failed", "Delete failed") }
+                    });
+                });
+            }
+        }
+
+    </script>
+}

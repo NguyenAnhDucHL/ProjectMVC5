@@ -19,7 +19,7 @@ namespace CourseOnline.Controllers
         {
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                var listStatus = db.Sliders.Select(s => s.slider_status).Distinct().ToList();
+                var listStatus = db.Sliders.Select(s=>s.slider_status).Distinct().ToList();
                 ViewBag.sliderStatus = listStatus;
 
             }

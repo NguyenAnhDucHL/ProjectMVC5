@@ -1,0 +1,177 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "Exam Detail";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    List<Subject> subjectName = ViewBag.subjectName;
+    List<Setting> listType = ViewBag.examType;
+}
+<section class="content-header">
+    <h1>
+        Exam Details
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href='@Url.Action("Index","Home")'><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Index","Exam")'>Exam Lists</a></li>
+        <li class="active">Exam Details</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="nav-tabs-custom ">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#overview" data-toggle="tab">Overview</a></li>
+                    <li><a href="#content" data-toggle="tab">Content</a></li>
+
+                    <!-- /.tab-content -->
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="overview">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input id="inp_examName" type="text" class="form-control edit-field">
+                        </div>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <div class="row">
+                                <div class="col col-lg-3 col-md-3 col-sm-3">
+                                    <select id="sl_subject" class="form-control edit-field">
+                                        @{ 
+                                            foreach (Subject subject in subjectName)
+                                            {
+                                                <option value="@subject.subject_id">@subject.subject_name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Exam level</label>
+                                    <div class="row">
+                                        <div class="col col-lg-6 col-md-6 col-sm-6">
+                                            <select id="sl_level" class="form-control edit-field">
+                                                <option>Hard</option>
+                                                <option>Medium</option>
+                                                <option>Easy</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Duration(minutes)</label>
+                                    <input id="inp_duration" type="text" class="form-control edit-field">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Pass rate(%)</label>
+                                    <input id="inp_passRate" type="text" class="form-control edit-field">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Test Type</label>
+                                    <div class="row">
+                                        <div class="col col-lg-6 col-md-6 col-sm-6">
+                                            <select id="sl_type" class="form-control edit-field">
+                                                @{ 
+                                                    foreach (Setting setting in listType)
+                                                    {
+                                                        <option value="@setting.setting_name">@setting.setting_name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Short description</label>
+                            <textarea class="form-control edit-field" id="inp_description" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="content">
+                        <div class="form-group">
+                            <label>Sum of questions </label><input type="text" />
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Type of questions</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="radio" name="gender" value="male"> Domain
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="radio" name="gender" value="male"> Topic
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+            </div>
+
+            <!-- /.nav-tabs-custom -->
+            <button type="submit" onclick="submitExam()" class="btn btn-info edit-field">Submit</button>
+            <button type="submit" onclick="goBack()" class="btn btn-info">Back</button>
+        </div>
+
+
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+</section>
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+
+        function submitExam() {
+
+            var exam = {
+                examName: $("#inp_examName").val(),
+                subjectId: $("#sl_subject").val(),
+                examLevel: $("#sl_level").val(),
+                examDuration: $("#inp_duration").val(),
+                examPassRate: $("#inp_passRate").val(),
+                examType: $('#sl_type').val(),
+                examDescription: $('#inp_description').val()
+            };
+
+            var postJson = JSON.stringify(exam);
+            
+            $.ajax({
+                url: '@Url.Action("SubmitExam","Exam")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("submit thanh cong");
+                    } else {
+                        alert("submit that bai");
+                    }
+                },
+                error: (response) => { alert("co van de ve mang") }
+            });
+        };
+        function goBack() {
+            window.location.href = '@Url.Action("Index", "Exam")';
+        }
+
+    </script>
+}

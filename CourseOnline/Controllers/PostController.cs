@@ -267,26 +267,8 @@ namespace CourseOnline.Controllers
 
 
 
-        [HttpGet]
-        public ActionResult editPost()
-        {
-            return View();
-        }
 
 
-
-        [HttpPost]
-        public ActionResult editPost(Post post)
-        {
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
-            {
-                db.Entry(post).State = EntityState.Modified;
-                db.SaveChanges();
-
-                return View();
-            }
-        }
 
 
     }

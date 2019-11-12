@@ -18,5 +18,8 @@ namespace CourseOnline.Global.Setting
         public static readonly string ALL_SUBJECT = "All Subject";
         public static readonly string ALL_DOMAIN = "All Domain";
         public static readonly string ALL_LESSON = "All Lesson";
+        public static readonly string ALL_EXAM = "All exam";
+        public static readonly string ALL_TEST = "All test";
+        public static readonly string ALL_BATCH = "All batch";
     }
 }

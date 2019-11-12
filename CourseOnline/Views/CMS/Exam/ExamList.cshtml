@@ -1,0 +1,155 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "Exam List";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    var listSubject = ViewBag.listSubject;
+    List<Setting> listExamType = ViewBag.examType;
+}
+
+<section class="content-header">
+    <h1>
+        Exam List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Exam List</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col col-xs-12">
+            <div class="row">
+                <div class="col-lg-1">
+                    <button type="button" class="btn btn-block btn-primary" onclick='getAddExam()'>Add new</button>
+                </div>
+                <div class="col-lg-3">
+                    <select id="sl_listSubject" class="form-control">
+                        <option>All subject</option>
+                        @{
+                            foreach (string exam in listSubject)
+                            {
+                                <option value="@exam">@exam</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <select id="sl_listType" class="form-control">
+                        <option>All type</option>
+                        @{
+                            foreach (Setting t in listExamType)
+                            {
+                                <option value="@t.setting_name">@t.setting_name</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-body">
+                    <table id="tb_exam" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="table-width5">ID</th>
+                                <th class="table-width30">Exam</th>
+                                <th class="table-width20">Subject</th>
+                                <th class="table-width5">Level</th>
+                                <th class="table-width10">Dur</th>
+                                <th class="table-width10">Pass Rate</th>
+                                <th class="table-width10">Test Type</th>
+                                <th class="table-width10">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        var dataTable;
+        $(document).ready(function () {
+            dataTable =  $('#tb_exam').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllExam", "Exam")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "exam_id", "name": "exam_id", "orderable": true },
+                { "data": "exam_name", "name": "exam_name", "orderable": true },
+                { "data": "subject_name", "name": "subject_name", "orderable": true },
+                { "data": "exam_level", "name": "exam_level", "orderable": true },
+                { "data": "exam_duration", "name": "exam_duration", "orderable": true },
+                { "data": "pass_rate", "name": "pass_rate", "orderable": true },
+                { "data": "test_type", "name": "test_type", "orderable": true },
+                {
+                    "data": "exam_id", "render": function (data) {
+                        return "<button class='btn btn-block btn-primary' style='margin-left:5px' onclick=getEditExam('" + data + "') ><i class='fa fa-fw fa-edit'></i> Edit</a></button>" +
+                                "<button class='btn btn-block btn-danger' style='margin-left:5px' onclick=getDeleteIdExam('" + data + "') ><i class='fa fa-trash'></i> Delete</a></button>";
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+        });
+        filterListener();
+        //bat su kien add
+        function getAddExam() {
+            window.location.href ='@Url.Action("AddExam", "Exam")';
+        }
+        //su kien edit
+        function getEditExam(id) {
+            if (id != null) {
+                window.location.href = '@Url.Action("EditExam", "Exam")?id=' + id;
+            }
+        }
+        //filter subject
+        function filterListener() {
+            $('#sl_listSubject').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                 var valueSelected = this.value;
+                 dataTable.ajax.url('@Url.Action("FilterBySubject","Exam")' + '?type=' + valueSelected).load(function (response) { });
+            });
+            $('#sl_listType').on('change', function (e) {
+                var optionSelected = $("option:selected", this);
+                 var valueSelected = this.value;
+                 dataTable.ajax.url('@Url.Action("FilterByType","Exam")' + '?type=' + valueSelected).load(function (response) { });
+            });
+        }
+        //delete slider theo id
+        function getDeleteIdExam(id) {
+            if (id != null) {
+                confirmAlert('Delete', 'Delete confirm', function submit() {
+                    $.ajax({
+                        url:'@Url.Action("delExam","Exam")',
+                        type: "POST",
+                        data: { id: id },
+                        datatype: "json",
+                        success: (response) => {
+                            if (response.success) {
+                                dataTable.ajax.reload(); successAlert("Success", "Delete Successful")
+                            } else {
+                                errorAlert("Failed", "Delete failed")
+                            }
+                        },
+                        error: (response) => { errorAlert("Failed", "Delete failed") }
+                    });
+                });
+            }
+        }
+       
+    </script>
+}
