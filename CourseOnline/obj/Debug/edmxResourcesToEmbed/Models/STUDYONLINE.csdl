@@ -36,17 +36,17 @@
     <Property Name="coursework_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="course_id" Type="Int32" Nullable="false" />
     <Property Name="due_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="coursework_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="coursework_status" Type="Boolean" Nullable="false" />
-    <Property Name="assignment_id" Type="Int32" />
-    <Property Name="test_id" Type="Int32" />
     <Property Name="coursework_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="usercreate_id" Type="Int32" />
     <Property Name="coursework_weight" Type="Int32" />
+    <Property Name="coursework_link" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="test_id" Type="Int32" Nullable="false" />
+    <Property Name="coursework_note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Course" Relationship="Self.FK__Coursewor__cours__6EF57B66" FromRole="Coursework" ToRole="Course" />
-    <NavigationProperty Name="ExamTest" Relationship="Self.FK__Coursewor__test___2B0A656D" FromRole="Coursework" ToRole="ExamTest" />
+    <NavigationProperty Name="ExamTest" Relationship="Self.FK__Coursewor__test___4D5F7D71" FromRole="Coursework" ToRole="ExamTest" />
     <NavigationProperty Name="User" Relationship="Self.FK__Coursewor__userc__2BFE89A6" FromRole="Coursework" ToRole="User" />
-    <NavigationProperty Name="Grades" Relationship="Self.FK__Grade__coursewor__2A164134" FromRole="Coursework" ToRole="Grade" />
+    <NavigationProperty Name="Grades" Relationship="Self.FK__Grade__coursewor__57DD0BE4" FromRole="Coursework" ToRole="Grade" />
   </EntityType>
   <EntityType Name="Domain">
     <Key>
@@ -72,6 +72,7 @@
     <Property Name="exam_duration" Type="Int32" Nullable="false" />
     <Property Name="exam_description" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
     <Property Name="test_type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="pass_rate" Type="Double" />
     <NavigationProperty Name="Subject" Relationship="Self.FK__Exam__subject_id__70DDC3D8" FromRole="Exam" ToRole="Subject" />
     <NavigationProperty Name="ExamConfigs" Relationship="Self.FK__ExamConfi__exam___71D1E811" FromRole="Exam" ToRole="ExamConfig" />
     <NavigationProperty Name="ExamTests" Relationship="Self.FK__ExamTest__exam_i__2739D489" FromRole="Exam" ToRole="ExamTest" />
@@ -101,7 +102,7 @@
     <Property Name="exam_note" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
     <Property Name="test_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="note" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Courseworks" Relationship="Self.FK__Coursewor__test___2B0A656D" FromRole="ExamTest" ToRole="Coursework" />
+    <NavigationProperty Name="Courseworks" Relationship="Self.FK__Coursewor__test___4D5F7D71" FromRole="ExamTest" ToRole="Coursework" />
     <NavigationProperty Name="Exam" Relationship="Self.FK__ExamTest__exam_i__2739D489" FromRole="ExamTest" ToRole="Exam" />
     <NavigationProperty Name="TestAnswers" Relationship="Self.FK__TestAnswe__test___01142BA1" FromRole="ExamTest" ToRole="TestAnswer" />
     <NavigationProperty Name="TestQuestions" Relationship="Self.FK__TestQuest__test___03F0984C" FromRole="ExamTest" ToRole="TestQuestion" />
@@ -119,7 +120,7 @@
     <Property Name="grade1" Type="Int32" Nullable="false" />
     <Property Name="grade_comment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Course" Relationship="Self.FK__Grade__course_id__72C60C4A" FromRole="Grade" ToRole="Course" />
-    <NavigationProperty Name="Coursework" Relationship="Self.FK__Grade__coursewor__2A164134" FromRole="Grade" ToRole="Coursework" />
+    <NavigationProperty Name="Coursework" Relationship="Self.FK__Grade__coursewor__57DD0BE4" FromRole="Grade" ToRole="Coursework" />
     <NavigationProperty Name="Registration" Relationship="Self.FK__Grade__registrat__73BA3083" FromRole="Grade" ToRole="Registration" />
     <NavigationProperty Name="User" Relationship="Self.FK__Grade__user_id__29221CFB" FromRole="Grade" ToRole="User" />
   </EntityType>
@@ -194,6 +195,9 @@
     <Property Name="domain_id" Type="Int32" Nullable="false" />
     <Property Name="lesson_id" Type="Int32" Nullable="false" />
     <Property Name="level" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="question_level" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="question_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="question_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="AnswerOptions" Relationship="Self.FK__AnswerOpt__quest__6A30C649" FromRole="Question" ToRole="AnswerOption" />
     <NavigationProperty Name="Domain" Relationship="Self.FK__Question__domain__14270015" FromRole="Question" ToRole="Domain" />
     <NavigationProperty Name="Lesson" Relationship="Self.FK__Question__lesson__151B244E" FromRole="Question" ToRole="Lesson" />
@@ -459,8 +463,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Coursewor__test___2B0A656D">
-    <End Role="ExamTest" Type="Self.ExamTest" Multiplicity="0..1" />
+  <Association Name="FK__Coursewor__test___4D5F7D71">
+    <End Role="ExamTest" Type="Self.ExamTest" Multiplicity="1" />
     <End Role="Coursework" Type="Self.Coursework" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ExamTest">
@@ -483,7 +487,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Grade__coursewor__2A164134">
+  <Association Name="FK__Grade__coursewor__57DD0BE4">
     <End Role="Coursework" Type="Self.Coursework" Multiplicity="1" />
     <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
     <ReferentialConstraint>
@@ -880,7 +884,7 @@
       <End Role="Course" EntitySet="Courses" />
       <End Role="Registration" EntitySet="Registrations" />
     </AssociationSet>
-    <AssociationSet Name="FK__Coursewor__test___2B0A656D" Association="Self.FK__Coursewor__test___2B0A656D">
+    <AssociationSet Name="FK__Coursewor__test___4D5F7D71" Association="Self.FK__Coursewor__test___4D5F7D71">
       <End Role="ExamTest" EntitySet="ExamTests" />
       <End Role="Coursework" EntitySet="Courseworks" />
     </AssociationSet>
@@ -888,7 +892,7 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Coursework" EntitySet="Courseworks" />
     </AssociationSet>
-    <AssociationSet Name="FK__Grade__coursewor__2A164134" Association="Self.FK__Grade__coursewor__2A164134">
+    <AssociationSet Name="FK__Grade__coursewor__57DD0BE4" Association="Self.FK__Grade__coursewor__57DD0BE4">
       <End Role="Coursework" EntitySet="Courseworks" />
       <End Role="Grade" EntitySet="Grades" />
     </AssociationSet>

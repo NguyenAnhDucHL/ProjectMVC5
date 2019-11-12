@@ -110,4 +110,3 @@ E:\Sourcecode\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
 E:\Sourcecode\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
 E:\Sourcecode\CourseOnline\obj\Debug\CourseOnline.dll
 E:\Sourcecode\CourseOnline\obj\Debug\CourseOnline.pdb
-E:\Sourcecode\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache

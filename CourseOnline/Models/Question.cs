@@ -27,6 +27,9 @@ namespace CourseOnline.Models
         public int domain_id { get; set; }
         public int lesson_id { get; set; }
         public string level { get; set; }
+        public string question_level { get; set; }
+        public string question_status { get; set; }
+        public string question_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnswerOption> AnswerOptions { get; set; }

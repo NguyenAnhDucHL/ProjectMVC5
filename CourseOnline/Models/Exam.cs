@@ -30,6 +30,7 @@ namespace CourseOnline.Models
         public int exam_duration { get; set; }
         public string exam_description { get; set; }
         public string test_type { get; set; }
+        public Nullable<double> pass_rate { get; set; }
     
         public virtual Subject Subject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

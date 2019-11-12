@@ -143,11 +143,11 @@
     <Compile Include="Controllers\ExamController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
-    <Compile Include="Controllers\MenuDetailController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\PraticeResultController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\RolePermissionController.cs" />
     <Compile Include="Controllers\RollMenuController.cs" />
@@ -211,6 +211,7 @@
     <Compile Include="Models\Question.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\QuestionListModel.cs" />
     <Compile Include="Models\Registration.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
@@ -390,15 +391,10 @@
     <Content Include="Assets\dist\js\demo.js" />
     <Content Include="Assets\dist\js\pages\dashboard.js" />
     <Content Include="Assets\dist\js\pages\dashboard2.js" />
-    <Content Include="Assets\IMGCMS\duan1.jpg" />
     <Content Include="Assets\IMGUSER\fpt_logo.jpg" />
     <Content Include="Assets\IMGUSER\fpt_logo_2.jpg" />
     <Content Include="Assets\IMGUSER\fpt_logo_3.jpg" />
     <Content Include="Assets\IMGUSER\logo.png" />
-    <Content Include="Assets\IMGUSER\person_1.jpg" />
-    <Content Include="Assets\IMGUSER\person_2.jpg" />
-    <Content Include="Assets\IMGUSER\person_3.jpg" />
-    <Content Include="Assets\IMGUSER\person_4.jpg" />
     <Content Include="Assets\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Assets\plugins\bootstrap-slider\slider.css" />
     <Content Include="Assets\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
@@ -1373,9 +1369,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\CMS\CourseList.cshtml" />
-    <Content Include="Views\CMS\CourseWorkList.cshtml" />
-    <Content Include="Views\CMS\ExamList.cshtml" />
     <Content Include="Views\CMS\Home.cshtml" />
     <Content Include="Views\CMS\Menu\AddMenu.cshtml" />
     <Content Include="Views\CMS\Menu\MenuDetail.cshtml" />
@@ -1405,7 +1398,6 @@
     <Content Include="Views\CMS\Subject\SubjectEditting.cshtml" />
     <Content Include="Views\CMS\Subject\SubjectLessonList.cshtml" />
     <Content Include="Views\CMS\Subject\SubjectList.cshtml" />
-    <Content Include="Views\CMS\TestList.cshtml" />
     <Content Include="Views\CMS\User\AddUser.cshtml" />
     <Content Include="Views\CMS\User\UserDetail.cshtml" />
     <Content Include="Views\CMS\User\UserList.cshtml" />
@@ -1417,9 +1409,20 @@
     <Content Include="Views\User\TeacherList.cshtml" />
     <Content Include="Views\User\Home.cshtml" />
     <Content Include="Views\User\AccountInformation.cshtml" />
+    <Content Include="Views\CMS\Question\QuestionAdding.cshtml" />
+    <Content Include="Views\CMS\Question\QuestionEditting.cshtml" />
+    <Content Include="Views\CMS\Question\QuestionList.cshtml" />
+    <Content Include="Views\CMS\Test\AddTest.cshtml" />
+    <Content Include="Views\CMS\Test\EditTest.cshtml" />
+    <Content Include="Views\CMS\Test\ResultTest.cshtml" />
+    <Content Include="Views\CMS\Test\TestList.cshtml" />
+    <Content Include="Views\CMS\Exam\ExamDetail.cshtml" />
+    <Content Include="Views\CMS\Exam\ExamEdit.cshtml" />
+    <Content Include="Views\CMS\Exam\ExamList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Assets\IMGCMS\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

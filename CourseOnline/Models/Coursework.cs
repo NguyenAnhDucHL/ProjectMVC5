@@ -23,13 +23,13 @@ namespace CourseOnline.Models
         public int coursework_id { get; set; }
         public int course_id { get; set; }
         public string due_date { get; set; }
-        public string coursework_type { get; set; }
         public bool coursework_status { get; set; }
-        public Nullable<int> assignment_id { get; set; }
-        public Nullable<int> test_id { get; set; }
         public string coursework_name { get; set; }
         public Nullable<int> usercreate_id { get; set; }
         public Nullable<int> coursework_weight { get; set; }
+        public string coursework_link { get; set; }
+        public int test_id { get; set; }
+        public string coursework_note { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual ExamTest ExamTest { get; set; }

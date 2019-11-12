@@ -30,13 +30,13 @@
     <Property Name="coursework_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="course_id" Type="int" Nullable="false" />
     <Property Name="due_date" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="coursework_type" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="coursework_status" Type="bit" Nullable="false" />
-    <Property Name="assignment_id" Type="int" />
-    <Property Name="test_id" Type="int" />
     <Property Name="coursework_name" Type="varchar" MaxLength="100" />
     <Property Name="usercreate_id" Type="int" />
     <Property Name="coursework_weight" Type="int" />
+    <Property Name="coursework_link" Type="varchar" MaxLength="200" />
+    <Property Name="test_id" Type="int" Nullable="false" />
+    <Property Name="coursework_note" Type="nvarchar" MaxLength="2000" />
   </EntityType>
   <EntityType Name="Domain">
     <Key>
@@ -60,6 +60,7 @@
     <Property Name="exam_duration" Type="int" Nullable="false" />
     <Property Name="exam_description" Type="varchar" MaxLength="2000" />
     <Property Name="test_type" Type="varchar" MaxLength="200" />
+    <Property Name="pass_rate" Type="float" />
   </EntityType>
   <EntityType Name="ExamConfig">
     <Key>
@@ -168,6 +169,9 @@ warning 6002: The table/view 'STUDYONLINE.dbo.PostTag' does not have a primary k
     <Property Name="domain_id" Type="int" Nullable="false" />
     <Property Name="lesson_id" Type="int" Nullable="false" />
     <Property Name="level" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="question_level" Type="varchar" MaxLength="50" />
+    <Property Name="question_status" Type="varchar" MaxLength="50" />
+    <Property Name="question_name" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Registration">
     <Key>
@@ -381,8 +385,8 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Coursewor__test___2B0A656D">
-    <End Role="ExamTest" Type="Self.ExamTest" Multiplicity="0..1" />
+  <Association Name="FK__Coursewor__test___4D5F7D71">
+    <End Role="ExamTest" Type="Self.ExamTest" Multiplicity="1" />
     <End Role="Coursework" Type="Self.Coursework" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ExamTest">
@@ -465,7 +469,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Grade__coursewor__2A164134">
+  <Association Name="FK__Grade__coursewor__57DD0BE4">
     <End Role="Coursework" Type="Self.Coursework" Multiplicity="1" />
     <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
     <ReferentialConstraint>
@@ -876,7 +880,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       <End Role="Course" EntitySet="Course" />
       <End Role="Coursework" EntitySet="Coursework" />
     </AssociationSet>
-    <AssociationSet Name="FK__Coursewor__test___2B0A656D" Association="Self.FK__Coursewor__test___2B0A656D">
+    <AssociationSet Name="FK__Coursewor__test___4D5F7D71" Association="Self.FK__Coursewor__test___4D5F7D71">
       <End Role="ExamTest" EntitySet="ExamTest" />
       <End Role="Coursework" EntitySet="Coursework" />
     </AssociationSet>
@@ -904,7 +908,7 @@ warning 6002: The table/view 'STUDYONLINE.dbo.TestQuestion' does not have a prim
       <End Role="Course" EntitySet="Course" />
       <End Role="Grade" EntitySet="Grade" />
     </AssociationSet>
-    <AssociationSet Name="FK__Grade__coursewor__2A164134" Association="Self.FK__Grade__coursewor__2A164134">
+    <AssociationSet Name="FK__Grade__coursewor__57DD0BE4" Association="Self.FK__Grade__coursewor__57DD0BE4">
       <End Role="Coursework" EntitySet="Coursework" />
       <End Role="Grade" EntitySet="Grade" />
     </AssociationSet>

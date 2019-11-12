@@ -32,13 +32,13 @@
           <ScalarProperty Name="coursework_id" ColumnName="coursework_id" />
           <ScalarProperty Name="course_id" ColumnName="course_id" />
           <ScalarProperty Name="due_date" ColumnName="due_date" />
-          <ScalarProperty Name="coursework_type" ColumnName="coursework_type" />
           <ScalarProperty Name="coursework_status" ColumnName="coursework_status" />
-          <ScalarProperty Name="assignment_id" ColumnName="assignment_id" />
-          <ScalarProperty Name="test_id" ColumnName="test_id" />
           <ScalarProperty Name="coursework_name" ColumnName="coursework_name" />
           <ScalarProperty Name="usercreate_id" ColumnName="usercreate_id" />
           <ScalarProperty Name="coursework_weight" ColumnName="coursework_weight" />
+          <ScalarProperty Name="coursework_link" ColumnName="coursework_link" />
+          <ScalarProperty Name="test_id" ColumnName="test_id" />
+          <ScalarProperty Name="coursework_note" ColumnName="coursework_note" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -64,6 +64,7 @@
           <ScalarProperty Name="exam_duration" ColumnName="exam_duration" />
           <ScalarProperty Name="exam_description" ColumnName="exam_description" />
           <ScalarProperty Name="test_type" ColumnName="test_type" />
+          <ScalarProperty Name="pass_rate" ColumnName="pass_rate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -170,6 +171,9 @@
           <ScalarProperty Name="domain_id" ColumnName="domain_id" />
           <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
           <ScalarProperty Name="level" ColumnName="level" />
+          <ScalarProperty Name="question_level" ColumnName="question_level" />
+          <ScalarProperty Name="question_status" ColumnName="question_status" />
+          <ScalarProperty Name="question_name" ColumnName="question_name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
