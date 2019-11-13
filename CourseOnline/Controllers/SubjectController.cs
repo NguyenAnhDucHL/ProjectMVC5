@@ -86,6 +86,49 @@ namespace CourseOnline.Controllers
             return View("/Views/User/SubjectDetail.cshtml");
         }
 
+        public ActionResult StudyDetail(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id && n.subject_status == "Submitted");
+
+            User teacher = (from u in db.Users
+                            join c in db.Courses.Where(c => c.subject_id == id) on u.user_id equals c.teacher_id
+                            select new UserListModel
+                            {
+                                user_fullname = u.user_fullname,
+                                use_mobile = u.use_mobile,
+                                user_email = u.user_email
+                            }
+                           ).FirstOrDefault();
+
+            List<LessonModel> lesson = (from l in db.Lessons.OrderBy(l => l.parent_id)
+                                        join s in db.Subjects.Where(s => s.subject_id == id) on l.subject_id equals s.subject_id
+                                        select new LessonModel
+                                        {
+                                            lesson_id = l.lesson_id,
+                                            lesson_name = l.lesson_name,
+                                            lesson_link = l.lesson_link,
+                                            lesson_content = l.lesson_content,
+                                            parent_id = l.parent_id
+                                        }).ToList();
+
+            if (subject == null)
+            {
+                return HttpNotFound();
+            }
+            if (teacher == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.lesson = lesson;
+            ViewBag.teacher = teacher;
+            ViewBag.subject = subject;
+            return View("/Views/User/StudyOnline.cshtml");
+        }
 
         public ActionResult YourSubject(int? page)
         {
