@@ -15,7 +15,7 @@ namespace CourseOnline.Global.Setting
         public static readonly string ALL_ROLE = "All Roles";
         public static readonly string All_Course = "All Course";
         public static readonly string ALL_LEVEL = "All Level";
-        public static readonly string ALL_SUBJECT = "All Subject";
+        public static readonly string ALL_SUBJECT = "All subject";
         public static readonly string ALL_DOMAIN = "All Domain";
         public static readonly string ALL_LESSON = "All Lesson";
         public static readonly string ALL_EXAM = "All exam";

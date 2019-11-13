@@ -22,6 +22,8 @@ namespace CourseOnline.Controllers
                 ViewBag.listBatch = listBatch;
                 var listExam = db.Exams.Select(s => s.exam_name).Distinct().ToList();
                 ViewBag.listExam = listExam;
+                var listTest = db.ExamTests.Select(s => s.test_name).Distinct().ToList();
+                ViewBag.listTest = listTest;
             }
 
                 return View("/Views/CMS/Test/TestList.cshtml");
@@ -91,6 +93,53 @@ namespace CourseOnline.Controllers
                             " where e.exam_name = @ename";
 
                     List<TestListModel> testListModels = db.Database.SqlQuery<TestListModel>(sql, new SqlParameter("ename",type)).ToList();
+
+                    int totalrows = testListModels.Count;
+                    int totalrowsafterfiltering = testListModels.Count;
+                    testListModels = testListModels.Skip(start).Take(length).ToList();
+                    testListModels = testListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                    return Json(new { success = true, data = testListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+        [HttpPost]
+        public ActionResult FilterByTest(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                if (type.Equals(All.ALL_TEST))
+                {
+                    string sql = "select et.test_id, e.exam_name, et.test_name, test_code, tr.tested, tr.average  " +
+                            "from ExamTest et left join Exam e " +
+                            "on et.exam_id = e.exam_id " +
+                            "left join TestResult tr " +
+                            "on et.test_id = tr.test_id";
+
+
+                    List<TestListModel> testListModels = db.Database.SqlQuery<TestListModel>(sql).ToList();
+                    int totalrows = testListModels.Count;
+                    int totalrowsafterfiltering = testListModels.Count;
+                    testListModels = testListModels.Skip(start).Take(length).ToList();
+                    testListModels = testListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                    return Json(new { success = true, data = testListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+                    string sql = "select et.test_id, e.exam_name, et.test_name, et.test_code, tr.tested, tr.average  " +
+                            "from ExamTest et left join Exam e " +
+                            "on et.exam_id = e.exam_id " +
+                            "left join TestResult tr " +
+                            "on et.test_id = tr.test_id" +
+                            " where et.test_name = @ename";
+
+                    List<TestListModel> testListModels = db.Database.SqlQuery<TestListModel>(sql, new SqlParameter("ename", type)).ToList();
 
                     int totalrows = testListModels.Count;
                     int totalrowsafterfiltering = testListModels.Count;
