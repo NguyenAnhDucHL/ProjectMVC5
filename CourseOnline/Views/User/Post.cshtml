@@ -30,34 +30,19 @@
 
 <div class="site-section">
     <div class="container">
-        @for (int index = 0; index < listPosts.Count; index++)
+        @foreach (var post in listPosts)
         {
             <div class="row mb-5">
                 <div class="col-lg-6 mb-lg-0 mb-4">
-                    <img src="@listPosts[index].post_thumbnail" alt="Image" class="img-fluid">
+                    <img src="@post.post_thumbnail" alt="Image" class="img-fluid">
                 </div>
                 <div class="col-lg-5 ml-auto align-self-center">
                     <h2 class="section-title-underline mb-5">
-                        <span>@listPosts[index].post_name</span>
+                        <span>@post.post_name</span>
                     </h2>
-                    <p>@listPosts[index].post_brief_info</p>
+                    <p>@post.post_brief_info</p>
                 </div>
             </div>
-            if (listPosts.Count > 2)
-            {
-                index += 1;
-                <div class="row">
-                    <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
-                        <img src="@listPosts[index].post_thumbnail" alt="Image" class="img-fluid">
-                    </div>
-                    <div class="col-lg-5 mr-auto align-self-center order-2 order-lg-1">
-                        <h2 class="section-title-underline mb-5">
-                            <span>@listPosts[index].post_name</span>
-                        </h2>
-                        <p>@listPosts[index].post_brief_info</p>
-                    </div>
-                </div>
-            }
         }
     </div>
 </div>
