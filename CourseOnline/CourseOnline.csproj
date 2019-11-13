@@ -149,6 +149,7 @@
     <Compile Include="Controllers\PraticeResultController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\ResultTestController.cs" />
     <Compile Include="Controllers\RolePermissionController.cs" />
     <Compile Include="Controllers\RollMenuController.cs" />
     <Compile Include="Controllers\SettingController.cs" />
@@ -157,7 +158,6 @@
     <Compile Include="Controllers\SubjectLessonController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Controllers\TestExamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -216,6 +216,7 @@
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RegistrationListModel.cs" />
+    <Compile Include="Models\ResultModel.cs" />
     <Compile Include="Models\Role.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
@@ -1419,6 +1420,8 @@
     <Content Include="Views\CMS\Exam\ExamDetail.cshtml" />
     <Content Include="Views\CMS\Exam\ExamEdit.cshtml" />
     <Content Include="Views\CMS\Exam\ExamList.cshtml" />
+    <Content Include="Views\User\StudyOnline.cshtml" />
+    <Content Include="Views\Shared\_Study_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
