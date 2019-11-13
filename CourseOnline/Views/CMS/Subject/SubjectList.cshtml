@@ -119,24 +119,26 @@
                 filterListener();
     });
 
+    function doFilter() {
+                var valueSelected = {
+                    subjectType : $("#sl_subjectType").val(),
+                    subjectCategory : $("#sl_subjectCategory").val(),
+                    subjectStatus: $("#sl_subjectStatus").val(),
+                };
+                var valueSelectedJson = JSON.stringify(valueSelected);
+                dataTable.ajax.url('@Url.Action("DoFilter","Subject")' + '?filterBy=' + valueSelectedJson).load(function (response) { });
+        }
     function filterListener() {
             $('#sl_subjectType').on('change', function (e) {
-                var optionSelected = $("option:selected", this);
-                var valueSelected = this.value;
-
-                dataTable.ajax.url('@Url.Action("FilterBySubjectType","Subject")' + '?type=' + valueSelected).load(function (response) { });
+                doFilter();
             });
 
              $('#sl_subjectCategory').on('change', function (e) {
-                var optionSelected = $("option:selected", this);
-                 var valueSelected = this.value;
-                 dataTable.ajax.url('@Url.Action("FilterBySubjectCategory","Subject")' + '?type=' + valueSelected).load(function (response) { });
+                doFilter();
              });
 
              $('#sl_subjectStatus').on('change', function (e) {
-                var optionSelected = $("option:selected", this);
-                 var valueSelected = this.value;
-                 dataTable.ajax.url('@Url.Action("FilterBySubjectStatus","Subject")' + '?type=' + valueSelected).load(function (response) { });
+                doFilter();
             });
         }
 

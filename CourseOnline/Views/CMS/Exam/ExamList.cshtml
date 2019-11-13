@@ -19,34 +19,34 @@
 <section class="content">
     <div class="row">
         <div class="col col-xs-12">
-            <div class="row">
-                <div class="col-lg-1">
-                    <button type="button" class="btn btn-block btn-primary" onclick='getAddExam()'>Add new</button>
-                </div>
-                <div class="col-lg-3">
-                    <select id="sl_listSubject" class="form-control">
-                        <option>All subject</option>
-                        @{
-                            foreach (string exam in listSubject)
-                            {
-                                <option value="@exam">@exam</option>
-                            }
-                        }
-                    </select>
-                </div>
-                <div class="col-lg-3">
-                    <select id="sl_listType" class="form-control">
-                        <option>All type</option>
-                        @{
-                            foreach (Setting t in listExamType)
-                            {
-                                <option value="@t.setting_name">@t.setting_name</option>
-                            }
-                        }
-                    </select>
-                </div>
-            </div>
             <div class="box">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <button type="button" class="btn btn-block btn-primary" onclick='getAddExam()'>Add new</button>
+                    </div>
+                    <div class="col-lg-3">
+                        <select id="sl_listSubject" class="form-control">
+                            <option>All Subject</option>
+                            @{
+                                foreach (string exam in listSubject)
+                                {
+                                    <option value="@exam">@exam</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <select id="sl_listType" class="form-control">
+                            <option>All type</option>
+                            @{
+                                foreach (Setting t in listExamType)
+                                {
+                                    <option value="@t.setting_name">@t.setting_name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
                 <div class="box-body">
                     <table id="tb_exam" class="table table-bordered table-striped">
                         <thead>
@@ -101,9 +101,19 @@
         "serverSide": "true",
         "order": [[0, "asc"]],
         "searching": false
+            });
+            filterListener();
         });
-        });
-        filterListener();
+
+        function doFilter() {
+                var valueSelected = {
+                    subjectName : $("#sl_listSubject").val(),
+                    examType : $("#sl_listType").val(),
+                };
+                var valueSelectedJson = JSON.stringify(valueSelected);
+                dataTable.ajax.url('@Url.Action("DoFilter","Exam")' + '?filterBy=' + valueSelectedJson).load(function (response) { });
+        }
+
         //bat su kien add
         function getAddExam() {
             window.location.href ='@Url.Action("AddExam", "Exam")';
@@ -117,14 +127,10 @@
         //filter subject
         function filterListener() {
             $('#sl_listSubject').on('change', function (e) {
-                var optionSelected = $("option:selected", this);
-                 var valueSelected = this.value;
-                 dataTable.ajax.url('@Url.Action("FilterBySubject","Exam")' + '?type=' + valueSelected).load(function (response) { });
+                doFilter();
             });
             $('#sl_listType').on('change', function (e) {
-                var optionSelected = $("option:selected", this);
-                 var valueSelected = this.value;
-                 dataTable.ajax.url('@Url.Action("FilterByType","Exam")' + '?type=' + valueSelected).load(function (response) { });
+                doFilter();
             });
         }
         //delete slider theo id

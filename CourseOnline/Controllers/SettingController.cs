@@ -141,10 +141,10 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Setting/SettingEdit.cshtml");
             }
         }
-
-        //filter by status
+        
+        //filter 
         [HttpPost]
-        public ActionResult FilterBySettingStatus(string type)
+        public ActionResult DoFilter(string filterBy = "")
         {
             int start = Convert.ToInt32(Request["start"]);
             int length = Convert.ToInt32(Request["length"]);
@@ -152,131 +152,49 @@ namespace CourseOnline.Controllers
             string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
             string sortDirection = Request["order[0][dir]"];
 
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            dynamic filterByJson = JValue.Parse(filterBy);
+
+            string groupValue = filterByJson.settingGroup;
+            string status = filterByJson.settingStatus;
+
+            if (groupValue.Equals(All.ALL_GROUP))
             {
-                if (!type.Equals(All.ALL_STATUS)) // filter theo status
-                {
-                    if (type.Equals(Status.ACTIVE))
-                    {
-                        var settingList = (from s in db.Settings
-                                           where s.setting_status == true
-                                           select new
-                                           {
-                                               setting_id = s.setting_id,
-                                               setting_group_value = s.setting_group_value,
-                                               setting_name = s.setting_name,
-                                               setting_order = s.setting_order,
-                                               setting_description = s.setting_description,
-                                               setting_status = s.setting_status
-                                           }).ToList();
-
-                        int totalrows = settingList.Count;
-                        int totalrowsafterfiltering = settingList.Count;
-                        settingList = settingList.Skip(start).Take(length).ToList();
-                        settingList = settingList.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                        return Json(new { success = true, data = settingList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                    }
-                    else
-                    {
-                        var settingList = (from s in db.Settings
-                                           where s.setting_status == false
-                                           select new
-                                           {
-                                               setting_id = s.setting_id,
-                                               setting_group_value = s.setting_group_value,
-                                               setting_name = s.setting_name,
-                                               setting_order = s.setting_order,
-                                               setting_description = s.setting_description,
-                                               setting_status = s.setting_status
-                                           }).ToList();
-
-                        int totalrows = settingList.Count;
-                        int totalrowsafterfiltering = settingList.Count;
-                        settingList = settingList.Skip(start).Take(length).ToList();
-                        settingList = settingList.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                        return Json(new { success = true, data = settingList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                    }
-
-                }
-                else // lay ra tat ca
-                {
-                    var settingList = (from s in db.Settings
-                                       select new
-                                       {
-                                           setting_id = s.setting_id,
-                                           setting_group_value = s.setting_group_value,
-                                           setting_name = s.setting_name,
-                                           setting_order = s.setting_order,
-                                           setting_description = s.setting_description,
-                                           setting_status = s.setting_status
-                                       }).ToList();
-
-
-                    int totalrows = settingList.Count;
-                    int totalrowsafterfiltering = settingList.Count;
-                    settingList = settingList.Skip(start).Take(length).ToList();
-                    settingList = settingList.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = settingList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                }
-
+                groupValue = "";
             }
-        }
-
-        [HttpPost]
-        public ActionResult FilterBySettingGroup(string type)
-        {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
+            if (status.Equals(All.ALL_STATUS))
+            {
+                status = "";
+            } else if (status.Equals("Active"))
+            {
+                status = "True";
+            } else if (status.Equals("Inactive"))
+            {
+                status = "False";
+            }
 
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                if (!type.Equals(All.ALL_TYPE)) // filter theo group
-                {
-                    var settingList = (from s in db.Settings
-                                       where s.setting_group_value.Equals(type)
+                var settingList = (from s in db.Settings
+                                       where s.setting_group_value.Contains(groupValue)
+                                       && s.setting_status.ToString().Contains(status)
                                        select new
                                        {
-                                           setting_id = s.setting_id,
-                                           setting_group_value = s.setting_group_value,
-                                           setting_name = s.setting_name,
-                                           setting_order = s.setting_order,
-                                           setting_description = s.setting_description,
-                                           setting_status = s.setting_status
+                                           s.setting_id,
+                                           s.setting_group_value,
+                                           s.setting_name,
+                                           s.setting_order,
+                                           s.setting_description,
+                                           s.setting_status
                                        }).ToList();
-
 
                     int totalrows = settingList.Count;
                     int totalrowsafterfiltering = settingList.Count;
                     settingList = settingList.Skip(start).Take(length).ToList();
                     settingList = settingList.OrderBy(sortColumnName + " " + sortDirection).ToList();
                     return Json(new { success = true, data = settingList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                }
-                else // lay ra tat ca
-                {
-                    var settingList = (from s in db.Settings
-                                       select new
-                                       {
-                                           setting_id = s.setting_id,
-                                           setting_group_value = s.setting_group_value,
-                                           setting_name = s.setting_name,
-                                           setting_order = s.setting_order,
-                                           setting_description = s.setting_description,
-                                           setting_status = s.setting_status
-                                       }).ToList();
-
-
-                    int totalrows = settingList.Count;
-                    int totalrowsafterfiltering = settingList.Count;
-                    settingList = settingList.Skip(start).Take(length).ToList();
-                    settingList = settingList.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = settingList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                }
-
             }
         }
+        
 
         //dell setting by id
         [HttpPost]

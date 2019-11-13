@@ -108,9 +108,10 @@ namespace CourseOnline.Controllers
              ViewBag.lstMySubject = lstMySubject;
             return View("/Views/User/MySubject.cshtml");
         }
-        //filter by type subject
+
+        //filter 
         [HttpPost]
-        public ActionResult FilterBySubjectType(string type)
+        public ActionResult DoFilter(string filterBy = "")
         {
             int start = Convert.ToInt32(Request["start"]);
             int length = Convert.ToInt32(Request["length"]);
@@ -118,272 +119,55 @@ namespace CourseOnline.Controllers
             string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
             string sortDirection = Request["order[0][dir]"];
 
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            dynamic filterByJson = JValue.Parse(filterBy);
+
+            string type = filterByJson.subjectType;
+            string category = filterByJson.subjectCategory;
+            string status = filterByJson.subjectStatus;
+
+            if (type.Equals(All.ALL_TYPE))
             {
-                if (!type.Equals(All.ALL_TYPE)) // filter theo type
-                {
-                    var typeSubjectList = (from s in db.Subjects
-                                    where s.subject_type.Equals(type)
-                                    select new
-                                    {
-                                        s.subject_id,
-                                        s.subject_category,
-                                        s.subject_name,
-                                        s.subject_brief_info,
-                                        s.subject_type,
-                                        s.subject_status,
-                                        s.subject_tag_line,
-                                    }).ToList();
-                    List<SubjectListModel> arrSubjectList = typeSubjectList.Select(s => new SubjectListModel { subject_id = s.subject_id,
-                                                                                                                subject_category =s.subject_category,
-                                                                                                                subject_name = s.subject_name,
-                                                                                                                subject_brief_info = s.subject_brief_info,
-                                                                                                                subject_type = s.subject_type,
-                                                                                                                subject_status = s.subject_status,
-                                                                                                                subject_tag_line = s.subject_tag_line}).ToList();
-                    foreach (var sj in arrSubjectList)
-                    {
-                        var lessons = (from l in db.Lessons
-                                       where l.subject_id == sj.subject_id
-                                       select new { l.lesson_id }).ToList();
-                        sj.lesson_count = lessons.Count;
-                    }
-
-
-
-                    int totalrows = arrSubjectList.Count;
-                    int totalrowsafterfiltering = arrSubjectList.Count;
-                    arrSubjectList = arrSubjectList.Skip(start).Take(length).ToList();
-                    arrSubjectList = arrSubjectList.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = arrSubjectList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                }
-                else // lay ra tat ca
-                {
-                    var typeSubjectList = (from s in db.Subjects
-                                           select new
-                                           {
-                                               s.subject_id,
-                                               s.subject_category,
-                                               s.subject_name,
-                                               s.subject_brief_info,
-                                               s.subject_type,
-                                               s.subject_status,
-                                               s.subject_tag_line,
-                                           }).ToList();
-                    List<SubjectListModel> arrSubjectList = typeSubjectList.Select(s => new SubjectListModel
-                    {
-                        subject_id = s.subject_id,
-                        subject_category = s.subject_category,
-                        subject_name = s.subject_name,
-                        subject_brief_info = s.subject_brief_info,
-                        subject_type = s.subject_type,
-                        subject_status = s.subject_status,
-                        subject_tag_line = s.subject_tag_line
-                    }).ToList();
-                    foreach (var sj in arrSubjectList)
-                    {
-                        var lessons = (from l in db.Lessons
-                                       where l.subject_id == sj.subject_id
-                                       select new { l.lesson_id }).ToList();
-                        sj.lesson_count = lessons.Count;
-                    }
-
-
-                    int totalrows = arrSubjectList.Count;
-                    int totalrowsafterfiltering = arrSubjectList.Count;
-                    arrSubjectList = arrSubjectList.Skip(start).Take(length).ToList();
-                    arrSubjectList = arrSubjectList.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = arrSubjectList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                }
-
+                type = "";
             }
-        }
-
-        //filter by category subject
-        [HttpPost]
-        public ActionResult FilterBySubjectCategory(string type)
-        {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (category.Equals(All.ALL_CATEGORY))
             {
-                if (!type.Equals(All.ALL_CATEGORY)) // filter theo type
-                {
-                    var typeSubjectList = (from s in db.Subjects
-                                           where s.subject_category.Equals(type)
-                                           select new
-                                           {
-                                               s.subject_id,
-                                               s.subject_category,
-                                               s.subject_name,
-                                               s.subject_brief_info,
-                                               s.subject_type,
-                                               s.subject_status,
-                                               s.subject_tag_line,
-                                           }).ToList();
-                    List<SubjectListModel> arrSubjectList = typeSubjectList.Select(s => new SubjectListModel
-                    {
-                        subject_id = s.subject_id,
-                        subject_category = s.subject_category,
-                        subject_name = s.subject_name,
-                        subject_brief_info = s.subject_brief_info,
-                        subject_type = s.subject_type,
-                        subject_status = s.subject_status,
-                        subject_tag_line = s.subject_tag_line
-                    }).ToList();
-                    foreach (var sj in arrSubjectList)
-                    {
-                        var lessons = (from l in db.Lessons
-                                       where l.subject_id == sj.subject_id
-                                       select new { l.lesson_id }).ToList();
-                        sj.lesson_count = lessons.Count;
-                    }
-
-
-
-                    int totalrows = arrSubjectList.Count;
-                    int totalrowsafterfiltering = arrSubjectList.Count;
-                    arrSubjectList = arrSubjectList.Skip(start).Take(length).ToList();
-                    arrSubjectList = arrSubjectList.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = arrSubjectList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                }
-                else // lay ra tat ca
-                {
-                    var typeSubjectList = (from s in db.Subjects
-                                           select new
-                                           {
-                                               s.subject_id,
-                                               s.subject_category,
-                                               s.subject_name,
-                                               s.subject_brief_info,
-                                               s.subject_type,
-                                               s.subject_status,
-                                               s.subject_tag_line,
-                                           }).ToList();
-                    List<SubjectListModel> arrSubjectList = typeSubjectList.Select(s => new SubjectListModel
-                    {
-                        subject_id = s.subject_id,
-                        subject_category = s.subject_category,
-                        subject_name = s.subject_name,
-                        subject_brief_info = s.subject_brief_info,
-                        subject_type = s.subject_type,
-                        subject_status = s.subject_status,
-                        subject_tag_line = s.subject_tag_line
-                    }).ToList();
-                    foreach (var sj in arrSubjectList)
-                    {
-                        var lessons = (from l in db.Lessons
-                                       where l.subject_id == sj.subject_id
-                                       select new { l.lesson_id }).ToList();
-                        sj.lesson_count = lessons.Count;
-                    }
-
-
-                    int totalrows = arrSubjectList.Count;
-                    int totalrowsafterfiltering = arrSubjectList.Count;
-                    arrSubjectList = arrSubjectList.Skip(start).Take(length).ToList();
-                    arrSubjectList = arrSubjectList.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = arrSubjectList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                }
-
+                category = "";
             }
-        }
-
-        //filter by status subject
-        [HttpPost]
-        public ActionResult FilterBySubjectStatus(string type)
-        {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
+            if (status.Equals(All.ALL_STATUS))
+            {
+                status = "";
+            }
 
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                if (!type.Equals(All.ALL_STATUS)) // filter theo type
+                var subjectList = (from s in db.Subjects
+                                       where s.subject_type.Contains(type)
+                                       && s.subject_category.Contains(category)
+                                       && s.subject_status.Contains(status)
+                                   select new SubjectListModel
+                                       {
+                                           subject_id = s.subject_id,
+                                           subject_category = s.subject_category,
+                                           subject_name = s.subject_name,
+                                           subject_brief_info = s.subject_brief_info,
+                                           subject_type = s.subject_type,
+                                           subject_status = s.subject_status,
+                                           subject_tag_line = s.subject_tag_line
+                                       }).ToList();
+                    
+                foreach (var sj in subjectList)
                 {
-                    var typeSubjectList = (from s in db.Subjects
-                                           where s.subject_status.Equals(type)
-                                           select new
-                                           {
-                                               s.subject_id,
-                                               s.subject_category,
-                                               s.subject_name,
-                                               s.subject_brief_info,
-                                               s.subject_type,
-                                               s.subject_status,
-                                               s.subject_tag_line,
-                                           }).ToList();
-                    List<SubjectListModel> arrSubjectList = typeSubjectList.Select(s => new SubjectListModel
-                    {
-                        subject_id = s.subject_id,
-                        subject_category = s.subject_category,
-                        subject_name = s.subject_name,
-                        subject_brief_info = s.subject_brief_info,
-                        subject_type = s.subject_type,
-                        subject_status = s.subject_status,
-                        subject_tag_line = s.subject_tag_line
-                    }).ToList();
-                    foreach (var sj in arrSubjectList)
-                    {
-                        var lessons = (from l in db.Lessons
-                                       where l.subject_id == sj.subject_id
-                                       select new { l.lesson_id }).ToList();
-                        sj.lesson_count = lessons.Count;
-                    }
-
-
-
-                    int totalrows = arrSubjectList.Count;
-                    int totalrowsafterfiltering = arrSubjectList.Count;
-                    arrSubjectList = arrSubjectList.Skip(start).Take(length).ToList();
-                    arrSubjectList = arrSubjectList.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = arrSubjectList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                }
-                else // lay ra tat ca
-                {
-                    var typeSubjectList = (from s in db.Subjects
-                                           select new
-                                           {
-                                               s.subject_id,
-                                               s.subject_category,
-                                               s.subject_name,
-                                               s.subject_brief_info,
-                                               s.subject_type,
-                                               s.subject_status,
-                                               s.subject_tag_line,
-                                           }).ToList();
-                    List<SubjectListModel> arrSubjectList = typeSubjectList.Select(s => new SubjectListModel
-                    {
-                        subject_id = s.subject_id,
-                        subject_category = s.subject_category,
-                        subject_name = s.subject_name,
-                        subject_brief_info = s.subject_brief_info,
-                        subject_type = s.subject_type,
-                        subject_status = s.subject_status,
-                        subject_tag_line = s.subject_tag_line
-                    }).ToList();
-                    foreach (var sj in arrSubjectList)
-                    {
-                        var lessons = (from l in db.Lessons
-                                       where l.subject_id == sj.subject_id
-                                       select new { l.lesson_id }).ToList();
-                        sj.lesson_count = lessons.Count;
-                    }
-
-
-                    int totalrows = arrSubjectList.Count;
-                    int totalrowsafterfiltering = arrSubjectList.Count;
-                    arrSubjectList = arrSubjectList.Skip(start).Take(length).ToList();
-                    arrSubjectList = arrSubjectList.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = arrSubjectList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    var lessons = (from l in db.Lessons
+                                   where l.subject_id == sj.subject_id
+                                   select new { l.lesson_id }).ToList();
+                    sj.lesson_count = lessons.Count;
                 }
 
+                int totalrows = subjectList.Count;
+                int totalrowsafterfiltering = subjectList.Count;
+                subjectList = subjectList.Skip(start).Take(length).ToList();
+                subjectList = subjectList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = subjectList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
             }
         }
 

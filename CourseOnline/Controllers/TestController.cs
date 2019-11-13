@@ -37,7 +37,7 @@ namespace CourseOnline.Controllers
 
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                string sql = "select et.test_id, e.exam_name, et.test_name, test_code, tr.tested, tr.average " +
+                string sql = "select et.test_id, e.exam_name, et.test_name, et.test_code " +
                             "from ExamTest et left join Exam e " +
                             "on et.exam_id = e.exam_id " +
                             "left join TestResult tr " +
@@ -64,9 +64,9 @@ namespace CourseOnline.Controllers
 
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                if (type.Equals(All.ALL_EXAM) && type.Equals(All.ALL_TYPE))
+                if (type.Equals(All.ALL_EXAM))
                 {
-                    string sql = "select et.test_id, e.exam_name, et.test_name, test_code, tr.tested, tr.average  " +
+                    string sql = "select et.test_id, e.exam_name, et.test_name, test_code  " +
                             "from ExamTest et left join Exam e " +
                             "on et.exam_id = e.exam_id " +
                             "left join TestResult tr " +
@@ -83,7 +83,7 @@ namespace CourseOnline.Controllers
                 }
                 else
                 {
-                    string sql = "select et.test_id, e.exam_name, et.test_name, et.test_code, tr.tested, tr.average  " +
+                    string sql = "select et.test_id, e.exam_name, et.test_name, et.test_code  " +
                             "from ExamTest et left join Exam e " +
                             "on et.exam_id = e.exam_id " +
                             "left join TestResult tr " +
@@ -100,6 +100,7 @@ namespace CourseOnline.Controllers
                 }
             }
         }
+
 
         [HttpGet]
         public ActionResult AddTest()

@@ -11,7 +11,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="exams-list">Exams List Result</a></li>
+        <li><a href='@Url.Action("Index","Test")'>Exams List Result</a></li>
         <li><a class="active">Result List</a></li>
     </ol>
 </section>
@@ -54,7 +54,6 @@
 </section>
 <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts{
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
         var dataTable;
