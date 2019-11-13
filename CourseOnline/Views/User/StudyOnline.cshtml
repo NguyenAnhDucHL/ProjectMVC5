@@ -1,0 +1,31 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "StudyOnline";
+    Layout = "~/Views/Shared/_Study_Layout.cshtml";
+    List<LessonModel> lesson = ViewBag.lesson;
+}
+<div class="nav-tabs-custom">
+    <ul class="nav nav-tabs nav-justified">
+        <li class="active"><a href="#overview" data-toggle="tab">Lesson Objectives</a></li>
+        <li><a href="#content" data-toggle="tab">Content</a></li>
+        <li><a href="#content" data-toggle="tab">Practice </a></li>
+        <!-- /.tab-content -->
+    </ul>
+    <div class="tab-content">
+        <div class="active tab-pane" id="overview">
+
+        </div>
+        <!-- /.tab-pane -->
+        <div class="tab-pane" id="content">
+
+        </div>
+        <!-- /.tab-pane -->
+    </div>
+</div>
+<style>
+    .active a {
+        font-weight:bold !important;
+        background-color: lightcoral !important;
+    }
+</style>
+

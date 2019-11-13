@@ -57,7 +57,7 @@
                 </p>
                 <p><strong class="text-black d-block">Summary:</strong> @subject.subject_brief_info</p>
                 <p>
-                    <a href="#" class="btn btn-primary rounded-0 btn-lg px-5">Enroll</a>
+                    <a href="@Url.Action("StudyDetail","Subject", new { @id = subject.subject_id})" class="btn btn-primary rounded-0 btn-lg px-5">Enroll</a>
                 </p>
             </div>
         </div>
