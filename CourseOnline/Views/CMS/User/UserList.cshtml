@@ -89,7 +89,7 @@
                 { "data": "role_name", "name": "role_name", "orderable": true },
                 {
                     "data": "user_status", "name": "user_status", "orderable": true, "render": function (data) {
-                        if (data == 1) return "active"
+                        if (data == 1) return "Active"
                         else return "Inactive"}
                 },
                 {
@@ -110,7 +110,22 @@
         });
         filterListener();
     });
+        function doFilter() {
+                var valueSelected = {
+                    userRole : $("#sl_userRoles").val(),
+                    userStatus : $("#sl_userStatus").val(),
+                };
+                var valueSelectedJson = JSON.stringify(valueSelected);
+                dataTable.ajax.url('@Url.Action("DoFilter","User")' + '?filterBy=' + valueSelectedJson).load(function (response) { });
+        }
 
+         function filterListener() {
+             $('#sl_userStatus').on('change', function (e) {
+                doFilter();
+             });
+             $('#sl_userRoles').on('change', function (e) {
+                doFilter();
+             });
         function getEditIdUser(id) {
               if (id != null) {
                window.location.href ='@Url.Action("UserDetail", "User")?id=' + id;
@@ -121,19 +136,6 @@
                window.location.href ='@Url.Action("AddUser", "User")';
         }
 
-          function filterListener() {
-             $('#sl_userStatus').on('change', function (e) {
-                var optionSelected = $("option:selected", this);
-                 var valueSelected = this.value;
-                 dataTable.ajax.url('@Url.Action("FilterByUserStatus","User")' + '?status=' + valueSelected).load(function (response) { });
-             });
-
-                $('#sl_userRoles').on('change', function (e) {
-                var optionSelected = $("option:selected", this);
-                 var valueSelected = this.value;
-                 dataTable.ajax.url('@Url.Action("FilterByUserRoles","User")' + '?roleUser=' + valueSelected).load(function (response) { });
-             });
-              
         }
     </script>
 }

@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-sm-2">
                         <select id="sl_settingGroup" class="form-control">
-                            <option>All type</option>
+                            <option>All setting types</option>
                             @{
                                 foreach (string setting in listGroup)
                                 {
@@ -81,8 +81,8 @@
                 { "data": "setting_order", "name": "setting_order", "orderable": true },
                 {
                     "data": "setting_status", "name": "setting_status", "orderable": true, "render": function (data) {
-                        if (data == 1) return "active"
-                        else return "inactive"}
+                        if (data == 1) return "Active"
+                        else return "Inactive"}
                 },
                 {
                     "data": "setting_id", "render": function (data) {
@@ -104,6 +104,25 @@
             filterListener()
     });
 
+    function doFilter() {
+                var valueSelected = {
+                    settingGroup : $("#sl_settingGroup").val(),
+                    settingStatus : $("#sl_settingStatus").val(),
+                };
+                var valueSelectedJson = JSON.stringify(valueSelected);
+                dataTable.ajax.url('@Url.Action("DoFilter","Setting")' + '?filterBy=' + valueSelectedJson).load(function (response) { });
+        }
+
+    function filterListener() {
+             $('#sl_settingStatus').on('change', function (e) {
+                doFilter();
+             });
+
+            $('#sl_settingGroup').on('change', function (e) {
+                doFilter();
+            });
+        }
+
     // bat su kien add
         function getAddSetting() {
             window.location.href ='@Url.Action("AddSetting", "Setting")';
@@ -115,20 +134,6 @@
             }
         }
 
-        function filterListener() {
-             $('#sl_settingStatus').on('change', function (e) {
-                var optionSelected = $("option:selected", this);
-                 var valueSelected = this.value;
-                 dataTable.ajax.url('@Url.Action("FilterBySettingStatus","Setting")' + '?type=' + valueSelected).load(function (response) { });
-             });
-
-            $('#sl_settingGroup').on('change', function (e) {
-                var optionSelected = $("option:selected", this);
-                var valueSelected = this.value;
-
-                dataTable.ajax.url('@Url.Action("FilterBySettingGroup","Setting")' + '?type=' + valueSelected).load(function (response) { });
-            });
-        }
         function getDelIdSetting(id) {
             if (id != null) {
                 confirmAlert('Xóa', 'Xác nhận xóa', function submit() {

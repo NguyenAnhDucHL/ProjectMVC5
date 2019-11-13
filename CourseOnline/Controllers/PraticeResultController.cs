@@ -34,7 +34,7 @@ namespace CourseOnline.Controllers
             string sortDirection = Request["order[0][dir]"];
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                string sql = "select u.[user_fullname], u.[user_email], s.[subject_name], e.[exam_name], tr.[tested_at], gr.[grade]" +
+                string sql = "select u.[user_fullname], u.[user_email], s.[subject_name], e.[exam_name], tr.[tested_at], gr.[grade_user]" +
                             "from [User] u join [TestResult] tr " +
                             "on u.[user_id] = tr.[user_id] " +
                             "join [Grade] gr " +
@@ -68,7 +68,7 @@ namespace CourseOnline.Controllers
             {
                 if (!subjectName.Equals(All.ALL_SUBJECT))
                 {
-                    string sql = "select u.[user_fullname], u.[user_email], s.[subject_name], e.[exam_name], tr.[tested_at], gr.[grade]" +
+                    string sql = "select u.[user_fullname], u.[user_email], s.[subject_name], e.[exam_name], tr.[tested_at], gr.[grade_user]" +
                              "from [User] u join [TestResult] tr " +
                              "on u.[user_id] = tr.[user_id] " +
                              "join [Grade] gr " +
@@ -87,7 +87,7 @@ namespace CourseOnline.Controllers
                 }
                 else
                 {
-                    string sql = "select u.[user_fullname], u.[user_email], s.[subject_name], e.[exam_name], tr.[tested_at], gr.[grade]" +
+                    string sql = "select u.[user_fullname], u.[user_email], s.[subject_name], e.[exam_name], tr.[tested_at], gr.[grade_user]" +
                              "from [User] u join [TestResult] tr " +
                              "on u.[user_id] = tr.[user_id] " +
                              "join [Grade] gr " +

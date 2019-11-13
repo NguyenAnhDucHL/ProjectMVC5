@@ -3,7 +3,6 @@
     ViewBag.Title = "Test List";
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
     var listExam = ViewBag.listExam;
-    var listTest = ViewBag.listTest;
 }
 
 <section class="content-header">
@@ -12,7 +11,6 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="exams-list">Exams List</a></li>
         <li><a class="active">Tests List</a></li>
     </ol>
 </section>
@@ -37,17 +35,6 @@
                             }
                         </select>
                     </div>
-                    <div class="col-lg-2">
-                        <select class="form-control" id="sl_test">
-                                <option>All test</option>
-                            @{ 
-                                foreach (string test in listTest)
-                                {
-                                    <option value="@test">@test</option>
-                                }
-                            }
-                        </select>
-                    </div>
                 </div>
                 <div class="box-body">
                     <table id="tb_test" class="table table-bordered table-striped">
@@ -55,10 +42,9 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Exam</th>
-                                <th>Test(s)</th>
+                                <th>Test</th>
                                 <th>Code</th>
-                                <th>Tested</th>
-                                <th>Average</th>
+                                
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -84,8 +70,7 @@
                 { "data": "exam_name", "name": "exam_name", "orderable": true },
                 { "data": "test_name", "name": "test_name", "orderable": true },
                 { "data": "test_code", "name": "test_code", "orderable": true },
-                { "data": "tested", "name": "tested", "orderable": true },
-                { "data": "average", "name": "average", "orderable": true },
+                
                 {
                     "data": "test_id", "render": function (data) {
                         return "<button class='btn btn-block btn-primary' style='margin-left:5px' onclick=getEditTest('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
@@ -111,11 +96,6 @@
                 var optionSelected = $("option:selected", this);
                  var valueSelected = this.value;
                  dataTable.ajax.url('@Url.Action("FilterByExam","Test")' + '?type=' + valueSelected).load(function (response) { });
-            });
-            $('#sl_test').on('change', function (e) {
-                var optionSelected = $("option:selected", this);
-                 var valueSelected = this.value;
-                 dataTable.ajax.url('@Url.Action("FilterByTest","Test")' + '?type=' + valueSelected).load(function (response) { });
             });
         }
         //su kien add

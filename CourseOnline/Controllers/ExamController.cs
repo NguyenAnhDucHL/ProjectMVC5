@@ -26,8 +26,9 @@ namespace CourseOnline.Controllers
             return View("/Views/CMS/Exam/ExamList.cshtml");
         }
 
+        //filter 
         [HttpPost]
-        public ActionResult FilterBySubject(string type)
+        public ActionResult DoFilter(string filterBy = "")
         {
             int start = Convert.ToInt32(Request["start"]);
             int length = Convert.ToInt32(Request["length"]);
@@ -35,84 +36,46 @@ namespace CourseOnline.Controllers
             string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
             string sortDirection = Request["order[0][dir]"];
 
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            dynamic filterByJson = JValue.Parse(filterBy);
+
+            string subject = filterByJson.subjectName;
+            string type = filterByJson.examType;
+
+            if (subject.Equals(All.ALL_SUBJECT))
             {
-                if (type.Equals(All.ALL_SUBJECT))
-                {
-                    string sql = "select e.exam_id, e.exam_name,s.subject_name, e.exam_level, e.exam_duration, e.pass_rate, e.test_type, e.exam_description  " +
-                            "from Exam e join [Subject] s " +
-                            "on e.subject_id = s.subject_id";
-
-                    List<ExamListModel> examListModels = db.Database.SqlQuery<ExamListModel>(sql).ToList();
-
-                    int totalrows = examListModels.Count;
-                    int totalrowsafterfiltering = examListModels.Count;
-                    examListModels = examListModels.Skip(start).Take(length).ToList();
-                    examListModels = examListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = examListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    string sql = "select e.exam_id, e.exam_name,s.subject_name, e.exam_level, e.exam_duration, e.pass_rate, e.test_type, e.exam_description  " +
-                            "from Exam e join [Subject] s " +
-                            "on e.subject_id = s.subject_id" +
-                                               " where s.subject_name = @sname";
-
-                    List<ExamListModel> examListModels = db.Database.SqlQuery<ExamListModel>(sql, new SqlParameter("sname", type)).ToList();
-
-                    int totalrows = examListModels.Count;
-                    int totalrowsafterfiltering = examListModels.Count;
-                    examListModels = examListModels.Skip(start).Take(length).ToList();
-                    examListModels = examListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = examListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                }
+                subject = "";
             }
-        }
-
-        [HttpPost]
-        public ActionResult FilterByType(string type)
-        {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
+            if (type.Equals(All.ALL_TYPE))
+            {
+                type = "";
+            }
 
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                if (type.Equals(All.ALL_TYPE))
-                {
-                    string sql = "select e.exam_id, e.exam_name,s.subject_name, e.exam_level, e.exam_duration, e.pass_rate, e.test_type, e.exam_description  " +
-                            "from Exam e join [Subject] s " +
-                            "on e.subject_id = s.subject_id";
+                var examList = (from e in db.Exams
+                                    join s in db.Subjects on e.subject_id equals s.subject_id
+                                    where s.subject_name.Contains(subject)
+                                    && e.test_type.Contains(type)
+                                    select new ExamListModel
+                                    {
+                                        exam_id = e.exam_id,
+                                        exam_name = e.exam_name,
+                                        subject_name = s.subject_name,
+                                        exam_level = e.exam_level,
+                                        exam_duration = e.exam_duration,
+                                        pass_rate = e.pass_rate,
+                                        test_type = e.test_type,
+                                        exam_description = e.exam_description
+                                    }).ToList();
 
-                    List<ExamListModel> examListModels = db.Database.SqlQuery<ExamListModel>(sql).ToList();
-
-                    int totalrows = examListModels.Count;
-                    int totalrowsafterfiltering = examListModels.Count;
-                    examListModels = examListModels.Skip(start).Take(length).ToList();
-                    examListModels = examListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = examListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    string sql = "select e.exam_id, e.exam_name,s.subject_name, e.exam_level, e.exam_duration, e.pass_rate, e.test_type, e.exam_description  " +
-                            "from Exam e join [Subject] s " +
-                            "on e.subject_id = s.subject_id" +
-                             " where e.test_type = @sname";
-
-                    List<ExamListModel> examListModels = db.Database.SqlQuery<ExamListModel>(sql, new SqlParameter("sname", type)).ToList();
-
-                    int totalrows = examListModels.Count;
-                    int totalrowsafterfiltering = examListModels.Count;
-                    examListModels = examListModels.Skip(start).Take(length).ToList();
-                    examListModels = examListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = examListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                }
-
-
+                int totalrows = examList.Count;
+                int totalrowsafterfiltering = examList.Count;
+                examList = examList.Skip(start).Take(length).ToList();
+                examList = examList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = examList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
             }
         }
+
 
         [HttpPost]
         public ActionResult GetAllExam()
