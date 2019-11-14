@@ -43,21 +43,25 @@
                 <h2 class="section-title-underline mb-5">
                     <span>Subject Details</span>
                 </h2>
-                <p>
-                    <strong class="text-black d-block">Teacher:</strong>
-                    @teacher.user_fullname
-                </p>
-                <p>
-                    <strong class="text-black d-block">Teacher' Email:</strong>
-                    @teacher.user_email
-                </p>
-                <p>
-                    <strong class="text-black d-block">Teacher' Mobile:</strong>
-                    @teacher.use_mobile
-                </p>
+                @{ if (ViewBag.teacher != null)
+                    {
+                        <p>
+                            <strong class="text-black d-block">Teacher:</strong>
+                            @teacher.user_fullname
+                        </p>
+                        <p>
+                            <strong class="text-black d-block">Teacher' Email:</strong>
+                            @teacher.user_email
+                        </p>
+                        <p>
+                            <strong class="text-black d-block">Teacher' Mobile:</strong>
+                            @teacher.use_mobile
+                        </p>
+                    }
+                }
                 <p><strong class="text-black d-block">Summary:</strong> @subject.subject_brief_info</p>
                 <p>
-                    <a href="@Url.Action("StudyDetail","Subject", new { @id = subject.subject_id})" class="btn btn-primary rounded-0 btn-lg px-5">Enroll</a>
+                    <a href="@Url.Action("SubjectDetail2","Subject", new { @id = subject.subject_id})" class="btn btn-primary rounded-0 btn-lg px-5">Enroll</a>
                 </p>
             </div>
         </div>

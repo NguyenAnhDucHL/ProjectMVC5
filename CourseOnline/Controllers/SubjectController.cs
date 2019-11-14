@@ -44,50 +44,6 @@ namespace CourseOnline.Controllers
 
         public ActionResult SubjectDetail(int? id)
         {
-            if(id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id && n.subject_status == "Submitted");
-
-            User teacher = (from u in db.Users
-                           join c in db.Courses.Where(c => c.subject_id == id) on u.user_id equals c.teacher_id
-                           select new UserListModel
-                           {
-                              user_fullname = u.user_fullname,
-                              use_mobile = u.use_mobile,
-                              user_email = u.user_email
-                           }
-                           ).FirstOrDefault();
-
-            List<LessonModel> lesson = (from l in db.Lessons.OrderBy(l => l.parent_id)
-                                        join s in db.Subjects.Where(s => s.subject_id == id) on l.subject_id equals s.subject_id
-                             select new LessonModel
-                             {
-                               lesson_id = l.lesson_id,
-                               lesson_name = l.lesson_name,
-                               lesson_link = l.lesson_link,
-                               lesson_content = l.lesson_content,
-                               parent_id = l.parent_id
-                             }).ToList();
-
-            if(subject == null)
-            {
-                return HttpNotFound();
-            }
-            if(teacher == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.lesson = lesson;
-            ViewBag.teacher = teacher;
-            ViewBag.subject = subject;
-            return View("/Views/User/SubjectDetail.cshtml");
-        }
-
-        public ActionResult StudyDetail(int? id)
-        {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -120,13 +76,80 @@ namespace CourseOnline.Controllers
             {
                 return HttpNotFound();
             }
-            if (teacher == null)
+            ViewBag.lesson = lesson;
+            ViewBag.teacher = teacher;
+            ViewBag.subject = subject;
+            return View("/Views/User/SubjectDetail.cshtml");
+        }
+
+        public ActionResult SubjectDetail2(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id && n.subject_status == "Submitted");
+
+            User teacher = (from u in db.Users
+                            join c in db.Courses.Where(c => c.subject_id == id) on u.user_id equals c.teacher_id
+                            select new UserListModel
+                            {
+                                user_fullname = u.user_fullname,
+                                use_mobile = u.use_mobile,
+                                user_email = u.user_email
+                            }
+                           ).FirstOrDefault();
+
+            List<LessonModel> lstlesson = (from l in db.Lessons.OrderBy(l => l.parent_id)
+                                           join s in db.Subjects.Where(s => s.subject_id == id) on l.subject_id equals s.subject_id
+                                           select new LessonModel
+                                           {
+                                               lesson_id = l.lesson_id,
+                                               lesson_name = l.lesson_name,
+                                               lesson_link = l.lesson_link,
+                                               lesson_content = l.lesson_content,
+                                               parent_id = l.parent_id
+                                           }).ToList();
+
+            if (subject == null)
+            {
+                return HttpNotFound();
+            }
+            Session["lstlesson"] = lstlesson;
+            Session["teacher"] = teacher;
+            Session["subject"] = subject;
+            return View("/Views/User/LessonView.cshtml");
+        }
+
+        public ActionResult LessonDetail(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id && n.subject_status == "Submitted");
+
+            //User teacher = (from u in db.Users
+            //                join c in db.Courses.Where(c => c.subject_id == id) on u.user_id equals c.teacher_id
+            //                select new UserListModel
+            //                {
+            //                    user_fullname = u.user_fullname,
+            //                    use_mobile = u.use_mobile,
+            //                    user_email = u.user_email
+            //                }
+            //               ).FirstOrDefault();
+
+            Lesson lesson = db.Lessons.Where(n => n.lesson_id == id).FirstOrDefault();
+            Lesson lesson2 = db.Lessons.Where(n => n.lesson_id == lesson.parent_id).FirstOrDefault();
+            ViewBag.Current2 = lesson2.lesson_name;
+            ViewBag.Current1 = lesson.lesson_name;
+            if (lesson == null)
             {
                 return HttpNotFound();
             }
             ViewBag.lesson = lesson;
-            ViewBag.teacher = teacher;
-            ViewBag.subject = subject;
             return View("/Views/User/StudyOnline.cshtml");
         }
 
@@ -136,19 +159,19 @@ namespace CourseOnline.Controllers
             int pageSize = 6;
             int pageNumber = (page ?? 1);
             var lstMySubject = (from s in db.Subjects
-                               join c in db.Courses on s.subject_id equals c.subject_id
-                               join re in db.Registrations.Where(re => re.registration_status == "Approved") on c.course_id equals re.course_id
-                               join u in db.Users on re.user_id equals u.user_id
-                               select new MySubjectModel
-                               {
-                                   email = u.user_email,
-                                   subject_name = s.subject_name,
-                                   subject_brief_info = s.subject_brief_info,
-                                   picture = s.picture,
-                                   subject_category = s.subject_category,
-                               }).OrderBy(n => n.subject_name).Where(n => n.email == myemail).ToPagedList(pageNumber, pageSize);
-                      
-             ViewBag.lstMySubject = lstMySubject;
+                                join c in db.Courses on s.subject_id equals c.subject_id
+                                join re in db.Registrations.Where(re => re.registration_status == "Approved") on c.course_id equals re.course_id
+                                join u in db.Users on re.user_id equals u.user_id
+                                select new MySubjectModel
+                                {
+                                    email = u.user_email,
+                                    subject_name = s.subject_name,
+                                    subject_brief_info = s.subject_brief_info,
+                                    picture = s.picture,
+                                    subject_category = s.subject_category,
+                                }).OrderBy(n => n.subject_name).Where(n => n.email == myemail).ToPagedList(pageNumber, pageSize);
+
+            ViewBag.lstMySubject = lstMySubject;
             return View("/Views/User/MySubject.cshtml");
         }
 
@@ -184,20 +207,20 @@ namespace CourseOnline.Controllers
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
                 var subjectList = (from s in db.Subjects
-                                       where s.subject_type.Contains(type)
-                                       && s.subject_category.Contains(category)
-                                       && s.subject_status.Contains(status)
+                                   where s.subject_type.Contains(type)
+                                   && s.subject_category.Contains(category)
+                                   && s.subject_status.Contains(status)
                                    select new SubjectListModel
-                                       {
-                                           subject_id = s.subject_id,
-                                           subject_category = s.subject_category,
-                                           subject_name = s.subject_name,
-                                           subject_brief_info = s.subject_brief_info,
-                                           subject_type = s.subject_type,
-                                           subject_status = s.subject_status,
-                                           subject_tag_line = s.subject_tag_line
-                                       }).ToList();
-                    
+                                   {
+                                       subject_id = s.subject_id,
+                                       subject_category = s.subject_category,
+                                       subject_name = s.subject_name,
+                                       subject_brief_info = s.subject_brief_info,
+                                       subject_type = s.subject_type,
+                                       subject_status = s.subject_status,
+                                       subject_tag_line = s.subject_tag_line
+                                   }).ToList();
+
                 foreach (var sj in subjectList)
                 {
                     var lessons = (from l in db.Lessons
@@ -230,7 +253,7 @@ namespace CourseOnline.Controllers
 
                 List<SubjectListModel> Subjects = db.Database.SqlQuery<SubjectListModel>(sql).ToList();
 
-                foreach(var sj in Subjects)
+                foreach (var sj in Subjects)
                 {
                     var lessons = (from l in db.Lessons
                                    where l.subject_id == sj.subject_id
@@ -357,6 +380,6 @@ namespace CourseOnline.Controllers
             }
         }
 
-        
+
     }
 }

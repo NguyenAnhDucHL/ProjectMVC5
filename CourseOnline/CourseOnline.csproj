@@ -396,6 +396,7 @@
     <Content Include="Assets\IMGUSER\fpt_logo_2.jpg" />
     <Content Include="Assets\IMGUSER\fpt_logo_3.jpg" />
     <Content Include="Assets\IMGUSER\logo.png" />
+    <Content Include="Assets\IMGUSER\logo_study.png" />
     <Content Include="Assets\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Assets\plugins\bootstrap-slider\slider.css" />
     <Content Include="Assets\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
@@ -1422,6 +1423,7 @@
     <Content Include="Views\CMS\Exam\ExamList.cshtml" />
     <Content Include="Views\User\StudyOnline.cshtml" />
     <Content Include="Views\Shared\_Study_Layout.cshtml" />
+    <Content Include="Views\User\LessonView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
