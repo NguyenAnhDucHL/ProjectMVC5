@@ -178,7 +178,7 @@
         };
 
         function submitUser() {
-
+        tinyMCE.triggerSave();
             var user = {
                 userID : @id,
                 userName: $("#inputname").val(),

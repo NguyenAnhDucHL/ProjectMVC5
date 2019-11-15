@@ -83,7 +83,7 @@
     <script>
         // bat su kien submit
         function SubmitAddSubject() {
-
+            tinyMCE.triggerSave();
             var subject = {
                 subjectName: $("#inp_name").val(),
                 subjectCategory: $("#sl_subjectCategory").val(),
@@ -112,7 +112,7 @@
 
         // bat su kien draft
         function DraftAddSubject() {
-
+            tinyMCE.triggerSave();
             var subject = {
                 subjectName: $("#inp_name").val(),
                 subjectCategory: $("#sl_subjectCategory").val(),
@@ -141,7 +141,7 @@
 
         // bat su kien approve
         function ApproveAddSubject() {
-
+            tinyMCE.triggerSave();
             var subject = {
                 subjectName: $("#inp_name").val(),
                 subjectCategory: $("#sl_subjectCategory").val(),
@@ -170,7 +170,7 @@
 
         // bat su kien publish
         function PublishAddSubject() {
-
+            tinyMCE.triggerSave();
             var subject = {
                 subjectName: $("#inp_name").val(),
                 subjectCategory: $("#sl_subjectCategory").val(),
@@ -199,7 +199,7 @@
 
         // bat su kien hide
         function HideAddSubject() {
-
+            tinyMCE.triggerSave();
             var subject = {
                 subjectName: $("#inp_name").val(),
                 subjectCategory: $("#sl_subjectCategory").val(),

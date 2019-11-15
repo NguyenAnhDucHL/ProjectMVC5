@@ -116,7 +116,7 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Exam/ExamDetail.cshtml");
             }
         }
-
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitExam(string postJson)
         {
@@ -181,6 +181,7 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Exam/ExamEdit.cshtml");
             }
         }
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitExamEdit(string postJson)
         {

@@ -285,7 +285,7 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Subject/SubjectAdding.cshtml");
             }
         }
-
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitAddSubject(string postJson)
         {
@@ -332,7 +332,7 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Subject/SubjectEditting.cshtml");
             }
         }
-
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitEditSubject(string postJson)
         {

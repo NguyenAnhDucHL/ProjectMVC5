@@ -79,7 +79,7 @@
     <script>
 
     function SubmitAddLesson() {
-
+            tinyMCE.triggerSave();
             var lesson = {
                 subjectId: @subject_id,
                 lessonName: $("#inp_name").val(),

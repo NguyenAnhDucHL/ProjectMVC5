@@ -211,7 +211,7 @@
 
     //bat su kien submit
     function SubmitEditSubject() {
-
+            tinyMCE.triggerSave();
             var subject = {
                     subjectId : @subject_id,
                     subjectName: $("#inp_name").val(),
@@ -242,7 +242,7 @@
 
     //bat su kien draft
     function DraftEditSubject() {
-
+        tinyMCE.triggerSave();
             var subject = {
                     subjectId : @subject_id,
                     subjectName: $("#inp_name").val(),
@@ -273,7 +273,7 @@
 
     //bat su kien approve
     function ApproveEditSubject() {
-
+        tinyMCE.triggerSave();
             var subject = {
                     subjectId : @subject_id,
                     subjectName: $("#inp_name").val(),
@@ -304,7 +304,7 @@
 
     //bat su kien publish
     function PublishEditSubject() {
-
+        tinyMCE.triggerSave();
             var subject = {
                     subjectId : @subject_id,
                     subjectName: $("#inp_name").val(),
@@ -335,7 +335,7 @@
 
     //bat su kien hide
     function HideEditSubject() {
-
+        tinyMCE.triggerSave();
             var subject = {
                     subjectId : @subject_id,
                     subjectName: $("#inp_name").val(),

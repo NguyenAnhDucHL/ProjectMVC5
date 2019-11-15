@@ -137,7 +137,7 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Post/PostDetail.cshtml");
             }
         }
-
+        [ValidateInput(false)]
         [HttpGet]
         public ActionResult AddPost()
         {
@@ -155,8 +155,9 @@ namespace CourseOnline.Controllers
             }
         }
 
+        [ValidateInput(false)]
         [HttpPost]
-        public ActionResult SubmitPost(string postJson)
+        public ActionResult SubmitPost(string postJson )
         {
             try
             {
@@ -189,7 +190,7 @@ namespace CourseOnline.Controllers
             }
 
         }
-
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitAddPost(string postJson)
         {

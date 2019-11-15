@@ -107,7 +107,7 @@
         };
 
         function SubmitEditLesson() {
-
+            tinyMCE.triggerSave();
             var lesson = {
                     lessonid: @lesson_id,
                     subjectid: @subject_id,

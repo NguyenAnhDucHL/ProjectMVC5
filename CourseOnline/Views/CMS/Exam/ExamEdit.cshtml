@@ -146,7 +146,7 @@
 
         $(document).ready(function () {
             setValueForComboBox();
-        
+
         });
         function setValueForComboBox() {
             @*$("#sl_subject").val("@sj.subject_name").trigger('change');*@
@@ -172,7 +172,7 @@
 
 
         function submitExam() {
-
+        tinyMCE.triggerSave();
             var exam = {
                 id : @id,
                 examName: $("#inp_examName").val(),

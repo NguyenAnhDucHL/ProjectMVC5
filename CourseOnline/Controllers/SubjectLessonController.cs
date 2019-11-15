@@ -140,7 +140,7 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Subject/LessonAdding.cshtml");
             }
         }
-
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitAddLesson(string postJson)
         {
@@ -208,7 +208,7 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Subject/LessonEditting.cshtml");
             }
         }
-
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitEditLesson(string postJson)
         {

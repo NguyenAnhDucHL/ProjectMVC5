@@ -131,7 +131,7 @@
     <script>
 
         function submitPost() {
-
+            tinyMCE.triggerSave();
             var post = {
                 postName: $("#inp_name").val(),
                 shortDes: $("#inp_shortDes").val(),
@@ -160,7 +160,7 @@
         };
 
         function draftPost() {
-
+            tinyMCE.triggerSave();
             var post = {
                 postName: $("#inp_name").val(),
                 shortDes: $("#inp_shortDes").val(),
@@ -189,7 +189,7 @@
         };
 
         function publishPost() {
-
+            tinyMCE.triggerSave();
             var post = {
                 postName: $("#inp_name").val(),
                 shortDes: $("#inp_shortDes").val(),
@@ -218,7 +218,7 @@
         };
 
         function hidePost() {
-
+            tinyMCE.triggerSave();
             var post = {
                 postName: $("#inp_name").val(),
                 shortDes: $("#inp_shortDes").val(),

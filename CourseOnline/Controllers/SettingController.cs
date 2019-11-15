@@ -58,7 +58,7 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Setting/SettingDetail.cshtml");
             }
         }
-
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitAddSetting(string postJson)
         {
@@ -84,7 +84,7 @@ namespace CourseOnline.Controllers
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitSetting(string postJson)
         {
