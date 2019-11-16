@@ -140,7 +140,7 @@
                         <li class="treeview  @(ViewBag.Current2 == item.lesson_name ? "active" : "")">
                             @if (item.parent_id == item.lesson_id)
                             {
-                                <a  href="@Url.Action("LessonDetail","Subject",new { @id = item.lesson_id})">
+                                <a href="@Url.Action("LessonDetail","Subject",new { @id = item.lesson_id})">
                                     <i class="fa fa-fw fa-file-text"></i> <span>@item.lesson_name</span>
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>

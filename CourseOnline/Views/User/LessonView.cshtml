@@ -6,4 +6,24 @@
     Layout = "~/Views/Shared/_Study_Layout.cshtml";
 }
 
-<button type="button" class="btn btn-block btn-success">Start Learning</button>
+<section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-3 text-center" style="margin-left: 400px">
+                   <button type="button" class="btn btn-block btn-success" onclick="StartLearning()">Start Learning</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /.box -->
+
+</section>
+<script>
+    function StartLearning() {
+        window.location.href = '@Url.Action("LessonDetail", "Subject",new { @id = 8 })';
+    }
+</script>

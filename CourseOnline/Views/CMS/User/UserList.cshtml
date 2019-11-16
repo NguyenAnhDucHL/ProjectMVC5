@@ -120,13 +120,14 @@
                 dataTable.ajax.url('@Url.Action("DoFilter","User")' + '?filterBy=' + valueSelectedJson).load(function (response) { });
         }
 
-         function filterListener() {
-             $('#sl_userStatus').on('change', function (e) {
+        function filterListener() {
+            $('#sl_userStatus').on('change', function (e) {
                 doFilter();
-             });
-             $('#sl_userRoles').on('change', function (e) {
+            });
+            $('#sl_userRoles').on('change', function (e) {
                 doFilter();
-             });
+            });
+        }
         function getEditIdUser(id) {
               if (id != null) {
                window.location.href ='@Url.Action("UserDetail", "User")?id=' + id;
@@ -137,7 +138,7 @@
                window.location.href ='@Url.Action("AddUser", "User")';
         }
 
-        }
+        
     </script>
 }
 
