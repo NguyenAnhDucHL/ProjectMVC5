@@ -34,13 +34,13 @@
         {
             <div class="row mb-5">
                 <div class="col-lg-6 mb-lg-0 mb-4">
-                    <img src="@post.post_thumbnail" alt="Image" class="img-fluid">
+                    <img src="@Url.Content("" +@post.post_thumbnail)" alt="Image" class="img-fluid">
                 </div>
                 <div class="col-lg-5 ml-auto align-self-center">
                     <h2 class="section-title-underline mb-5">
                         <span>@post.post_name</span>
                     </h2>
-                    <p>@post.post_brief_info</p>
+                    <p>@Html.Raw(post.post_brief_info)</p>
                 </div>
             </div>
         }

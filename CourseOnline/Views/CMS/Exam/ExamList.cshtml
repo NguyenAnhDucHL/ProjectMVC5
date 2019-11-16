@@ -5,7 +5,6 @@
     var listSubject = ViewBag.listSubject;
     List<Setting> listExamType = ViewBag.examType;
 }
-<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <section class="content-header">
     <h1>
         Exam List
@@ -68,6 +67,7 @@
     </div>
 </section>
 @section scripts{
+    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
         var dataTable;
@@ -154,6 +154,6 @@
                 });
             }
         }
-       
+
     </script>
 }

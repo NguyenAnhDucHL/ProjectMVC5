@@ -138,7 +138,6 @@
 
 </section>
 @section scripts{
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
 
@@ -193,12 +192,12 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        alert("submit success");
                     } else {
-                        alert("submit that bai");
+                        alert("submit fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { alert("Error") }
             });
         };
         function goBack() {

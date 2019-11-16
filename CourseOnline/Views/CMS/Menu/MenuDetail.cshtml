@@ -104,13 +104,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        alert("submit success");
                         turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        alert("submit failed");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { alert("Error") }
             });
         };
 

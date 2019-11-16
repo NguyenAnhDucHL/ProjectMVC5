@@ -73,7 +73,8 @@ namespace CourseOnline.Controllers
                                 user_gender = u.user_gender,
                                 user_description = u.user_description,
                                 user_position = u.user_position,
-                                role_name = r.role_name
+                                role_name = r.role_name,
+                                user_image = u.user_image,
                             }).FirstOrDefault();
 
                 ViewBag.User = User;
@@ -105,9 +106,18 @@ namespace CourseOnline.Controllers
                     dynamic editUser = JValue.Parse(postJson);
                     int id = editUser.userID;
                     string roleName = editUser.userRole;
+
+                   
                     User user = db.Users.Where(p => p.user_id == id).FirstOrDefault();
                     UserRole userRole = db.UserRoles.Where(p => p.user_id == id).FirstOrDefault();
                     var idRole = db.Roles.Where(r => r.role_name == roleName).Select(r => r.role_id).FirstOrDefault();
+                    string imageValue = editUser.userImage;
+                    var ava = imageValue.Substring(imageValue.IndexOf(",")+1);
+                    var hinhanh = Convert.FromBase64String(ava);
+                    string relative_path = "~/Path/" + editUser.userID + ".png";
+                    string path = Server.MapPath (relative_path);
+                    System.IO.File.WriteAllBytes(path, hinhanh);
+                    Session["Picture"] = relative_path;
                     if (user != null)
                     {
                         userRole.role_id = Convert.ToInt32(idRole);
@@ -119,6 +129,7 @@ namespace CourseOnline.Controllers
                         user.user_description = editUser.userDescription;
                         user.check_recieveInformation = editUser.userCheckReceive;
                         user.user_gender = editUser.userGender;
+                        user.user_image = relative_path;
                         temp = editUser.userStatus;
                         if (temp.Equals("Active"))
                         {

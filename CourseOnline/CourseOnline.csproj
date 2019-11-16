@@ -1285,6 +1285,7 @@
       <DependentUpon>STUDYONLINE.edmx</DependentUpon>
       <LastGenOutput>STUDYONLINE.cs</LastGenOutput>
     </Content>
+    <Content Include="Path\nhat%40gmail.com.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Assets\bootstrap\css\bootstrap-theme.css.map" />

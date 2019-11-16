@@ -4,7 +4,6 @@
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
     var listExam = ViewBag.listExam;
 }
-<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <section class="content-header">
     <h1>
         Exam Tests List
@@ -27,7 +26,7 @@
                     <div class="col-lg-2">
                         <select class="form-control" id="sl_exam">
                             <option>All exam</option>
-                            @{ 
+                            @{
                                 foreach (string exam in listExam)
                                 {
                                     <option value="@exam">@exam</option>
@@ -44,7 +43,7 @@
                                 <th>Exam</th>
                                 <th>Test</th>
                                 <th>Code</th>
-                                
+
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -55,6 +54,7 @@
     </div>
 </section>
 @section scripts{
+    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
         var dataTable;
@@ -70,7 +70,7 @@
                 { "data": "exam_name", "name": "exam_name", "orderable": true },
                 { "data": "test_name", "name": "test_name", "orderable": true },
                 { "data": "test_code", "name": "test_code", "orderable": true },
-                
+
                 {
                     "data": "test_id", "render": function (data) {
                         return "<button class='btn btn-block btn-primary' style='margin-left:5px' onclick=getEditTest('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +

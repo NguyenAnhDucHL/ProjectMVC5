@@ -44,7 +44,7 @@ namespace CourseOnline.Controllers
         {
             Session["Name"] = name;
             Session["Email"] = email;
-            Session["Picture"] = picture;
+
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
                 using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -64,13 +64,26 @@ namespace CourseOnline.Controllers
                                  new SqlParameter("user_image", picture)
                                 );
                             db.SaveChanges();
+                            int id_new = db.Users.DefaultIfEmpty().Max(u => u == null ? 0 : u.user_id);
+
+                            String sql2 = "insert into [UserRole](user_id,role_id) values (@user_id,@role_id)";
+                            db.Database.ExecuteSqlCommand(sql2,
+                                new SqlParameter("user_id", id_new),
+                                new SqlParameter("role_id", 3)
+                                );
+                            Session["Picture"] = picture;
+                            db.SaveChanges();
                             transaction.Commit();
                         }
-
+                        else
+                        {
+                            string userPicture = db.Users.Where(u => u.user_email == email).Select(u => u.user_image).FirstOrDefault();
+                            Session["Picture"] = userPicture;
+                        }
                     }
                     catch (Exception e)
                     {
-                        
+
                         transaction.Rollback();
                     }
                 }
@@ -138,7 +151,7 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult UpdateUser(string userJson)
         {
-          
+
             try
             {
                 using (STUDYONLINEEntities db = new STUDYONLINEEntities())
@@ -146,7 +159,7 @@ namespace CourseOnline.Controllers
                     dynamic editUser = JValue.Parse(userJson);
                     int id = editUser.userID;
                     User user = db.Users.Where(u => u.user_id == id).FirstOrDefault();
-                    if(user!= null)
+                    if (user != null)
                     {
                         user.user_fullname = editUser.userName;
                         user.use_mobile = editUser.userMobile;
@@ -167,6 +180,6 @@ namespace CourseOnline.Controllers
             }
         }
 
-      
+
     }
 }

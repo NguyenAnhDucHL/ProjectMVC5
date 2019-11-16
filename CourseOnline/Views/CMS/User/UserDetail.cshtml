@@ -127,11 +127,11 @@
                             </div>
                         </div>
                         <div class="tab-pane tab-image" id="photo">
-                            <img class="img-responsive pad" src="@userListModel.user_image" alt="Photo">
+                            <img id ="image_user" class="img-responsive pad" src="@Url.Content("" + @userListModel.user_image)" alt="Photo">
                             <div class="row tab-button">
                                 <div class="form-group col-sm-5 col-sm-push-7">
                                     <label for="exampleChange">Add/Change image</label>
-                                    <input class="custom-input" type="file" id="exampleChange">
+                                    <input  onchange="readURL(this);"  class="custom-input" type="file" id="exampleChange">
                                 </div>
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                 </div>
                 <button class="btn btn-info" onclick="turnOnEditMode()">Edit</button>
                 <button disabled type="submit" onclick="submitUser()" class="btn btn-info edit-field">Submit</button>
-                <button type="submit" class="btn btn-info">Back</button>
+                <button type="submit" class="btn btn-info" onclick="getBackUserList()">Back</button>
             </div>
 
         </div>
@@ -178,7 +178,7 @@
         };
 
         function submitUser() {
-        tinyMCE.triggerSave();
+            tinyMCE.triggerSave();
             var user = {
                 userID : @id,
                 userName: $("#inputname").val(),
@@ -189,7 +189,8 @@
                 userGender: $("input[name='optionsRadios']:checked").val(),
                 userCheckReceive: $("#check_receive").val(),
                 userRole: $("#input_role").val(),
-                userStatus: $("#sl_userStatus").val()
+                userStatus: $("#sl_userStatus").val(),
+                userImage: $('#image_user').attr('src'),
             };
 
             var postJson = JSON.stringify(user);
@@ -211,5 +212,22 @@
             });
         };
 
+        function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image_user')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+        }
+            function getBackUserList() {
+               window.location.href ='@Url.Action("Index", "User")';
+        }
     </script>
 }

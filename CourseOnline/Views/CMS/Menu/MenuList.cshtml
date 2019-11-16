@@ -114,7 +114,7 @@
 
     function getDelIdMenu(id) {
             if (id != null) {
-                confirmAlert('Xóa', 'Xác nhận xóa', function submit() {
+                confirmAlert('Delete', 'Confirm Delete', function submit() {
                     $.ajax({
                         url:'@Url.Action("deleteMenu","Menu")',
                         type: "POST",
@@ -122,12 +122,12 @@
                         datatype: "json",
                         success: (response) => {
                             if (response.success) {
-                                dataTable.ajax.reload(); successAlert("Thành công", "Xóa thành công")
+                                dataTable.ajax.reload(); successAlert("Success", "Delete Success")
                             } else {
-                                errorAlert("Thất bại", "Xóa thất bại")
+                                errorAlert("Failed", "Delete Failed")
                             }
                         },
-                        error: (response) => { errorAlert("Thất bại", "Xóa thất bại") }
+                        error: (response) => { errorAlert("Erorr", "Delete Error") }
                     });
                 });
             }
