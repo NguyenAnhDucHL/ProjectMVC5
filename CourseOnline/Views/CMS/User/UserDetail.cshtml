@@ -127,7 +127,7 @@
                             </div>
                         </div>
                         <div class="tab-pane tab-image" id="photo">
-                            <img id ="image_user" class="img-responsive pad" src="@Url.Content("" + @userListModel.user_image)" alt="Photo">
+                            <img id ="image_user" class="img-responsive pad" src="@(userListModel.user_image == null ? "" : Url.Content(@userListModel.user_image))" alt="Photo">
                             <div class="row tab-button">
                                 <div class="form-group col-sm-5 col-sm-push-7">
                                     <label for="exampleChange">Add/Change image</label>
@@ -178,7 +178,6 @@
         };
 
         function submitUser() {
-            tinyMCE.triggerSave();
             var user = {
                 userID : @id,
                 userName: $("#inputname").val(),

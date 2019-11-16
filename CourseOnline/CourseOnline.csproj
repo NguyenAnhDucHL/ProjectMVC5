@@ -1285,7 +1285,6 @@
       <DependentUpon>STUDYONLINE.edmx</DependentUpon>
       <LastGenOutput>STUDYONLINE.cs</LastGenOutput>
     </Content>
-    <Content Include="Path\nhat%40gmail.com.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Assets\bootstrap\css\bootstrap-theme.css.map" />
@@ -1429,6 +1428,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assets\IMGCMS\" />
+    <Folder Include="Path\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

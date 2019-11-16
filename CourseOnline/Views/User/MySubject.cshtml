@@ -41,7 +41,7 @@
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="course-single.html"><img src="@Url.Content("" +@item.picture)" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
+                                <a href="course-single.html"><img src="@(item.picture == null ? "" : Url.Content(@item.picture))" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
                                 <div class="category"><h3>@item.subject_category</h3></div>
                             </figure>
                             <div class="course-1-content pb-4">

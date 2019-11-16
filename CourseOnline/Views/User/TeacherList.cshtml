@@ -41,7 +41,7 @@
             {
                 <div class="col-lg-4 col-md-6 mb-5 mb-lg-5">
                     <div class="feature-1 border person text-center">
-                        <img src="@Url.Content("" + @item.user_image)" alt="Image" class="img-fluid">
+                        <img src="@(item.user_image == null ? "" : Url.Content(@item.user_image))" alt="Image" class="img-fluid">
                         <div class="feature-1-content">
                             <h2>@item.user_fullname</h2>
                             <span class="position mb-3 d-block">@item.user_position</span>

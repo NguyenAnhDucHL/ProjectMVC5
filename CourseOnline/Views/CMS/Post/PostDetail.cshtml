@@ -8,6 +8,7 @@
     int id = ViewBag.id;
 }
 
+
 <section class="content-header">
     <h1>
         Post Details
@@ -133,6 +134,8 @@
 </section>
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/ggfbhz52km8705qzardmaj5wi5nimvcagr9owfw523rin98f/tinymce/5/tinymce.min.js"></script>
+    <script>tinymce.init({ selector: 'textarea' });</script>
     <script>
 
      var isEnableEditingMode = false;
@@ -191,7 +194,7 @@
                 error: (response) => { alert("co van de ve mang") }
             });
         };
-       
+
 
         function draftEditPost() {
             tinyMCE.triggerSave();
@@ -226,7 +229,6 @@
 
         //bat su kien publish
         function publishEditPost() {
-            tinyMCE.triggerSave();
             var post = {
                 id : @id,
                 postName: $("#inp_name").val(),
@@ -258,7 +260,6 @@
 
         //bat su kien hide
         function hideEditPost() {
-            tinyMCE.triggerSave();
             var post = {
                 id : @id,
                 postName: $("#inp_name").val(),
@@ -290,7 +291,6 @@
 
         //bat su kien delete
         function deleteEditPost() {
-             tinyMCE.triggerSave();
             var post = {
                 id : @id,
                 postName: $("#inp_name").val(),

@@ -64,7 +64,7 @@
                     {
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="@Url.Action("SubjectDetail","Subject", new { @id = item.subject_id})"><img src="@Url.Content("" +@item.picture)" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
+                                <a href="@Url.Action("SubjectDetail","Subject", new { @id = item.subject_id})"><img src="@(item.picture == null ? "" : Url.Content(@item.picture))" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
                                 <div class="category"><h3>@item.subject_category</h3></div>
                             </figure>
                             <div class="course-1-content pb-4">
@@ -105,7 +105,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="post-entry-big">
-                    <a href="#" class="img-link"><img src="@Url.Content("" +@listPost[0].post_thumbnail)" alt="Image" class="img-fluid"></a>
+                    <a href="#" class="img-link"><img src="@(listPost[0].post_thumbnail == null ? "" : Url.Content(@listPost[0].post_thumbnail))" alt="Image" class="img-fluid"></a>
                     <div class="post-content">
                         <div class="post-meta">
                             <a href="#">@listPost[0].post_date</a>
@@ -121,7 +121,7 @@
                     foreach (var item in listPost)
                     {
                         <div class="post-entry-big horizontal d-flex mb-4">
-                            <a href="#" class="img-link mr-4"><img src="@Url.Content("" +@item.post_thumbnail)" alt="Image" class="img-fluid"></a>
+                            <a href="#" class="img-link mr-4"><img src="@(item.post_thumbnail == null ? "" : Url.Content(@item.post_thumbnail))" alt="Image" class="img-fluid"></a>
                             <div class="post-content">
                                 <div class="post-meta">
                                     <a href="#">@item.post_date</a>
@@ -159,7 +159,7 @@
             {
                 <div class="ftco-testimonial-1">
                     <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-                        <img src="@Url.Content("" +@item.user_image)" alt="Image" class="img-fluid mr-3" style="height:100px; width:100px; overflow:hidden">
+                        <img src="@(item.user_image == null ? "" : Url.Content(@item.user_image))" alt="Image" class="img-fluid mr-3" style="height:100px; width:100px; overflow:hidden">
                         <div>
                             <h3>@item.user_fullname</h3>
                             <span>@item.user_position</span>
