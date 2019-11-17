@@ -102,7 +102,7 @@
                 user = resp;
                 getData();
             },
-        })        
+        })
     }
         function getData() {
              $.ajax({
@@ -157,13 +157,13 @@
                                         <!-- User Account: style can be found in dropdown.less -->
                                         <li class="dropdown user user-menu">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                <img src="@(Session["Picture"] == null ? "" :  Url.Content(@Session["Picture"].ToString()))" class="user-image" alt="User Image">
+                                                <img src="@(Session["Picture"] == null ? "" : Url.Content(@Session["Picture"].ToString()))" class="user-image" alt="User Image">
                                                 <span class="hidden-xs">@Session["Name"]</span>
                                             </a>
                                             <ul class="dropdown-menu">
                                                 <!-- User image -->
                                                 <li class="user-header">
-                                                    <img src="@(Session["Picture"] == null ? "" :  Url.Content(@Session["Picture"].ToString()))" class="img-circle" alt="User Image">
+                                                    <img src="@(Session["Picture"] == null ? "" : Url.Content(@Session["Picture"].ToString()))" class="img-circle" alt="User Image">
                                                     <p>
                                                         @Session["Name"]
                                                     </p>
@@ -173,7 +173,7 @@
                                                 <li class="user-body">
                                                     <div class="row">
                                                         <div class="col-xs-4 text-center">
-                                                            <a href="@Url.Action("YourSubject","Subject")">My Subjects</a>
+                                                            <a href="@Url.Action("YourSubject", "Subject")">My Subjects</a>
                                                         </div>
                                                     </div>
                                                     <!-- /.row -->
@@ -181,7 +181,7 @@
                                                 <!-- Menu Footer-->
                                                 <li class="user-footer">
                                                     <div class="pull-left">
-                                                        <a href="@Url.Action("YourAcountInformation","Home")" class="btn btn-default btn-flat">Profile</a>
+                                                        <a href="@Url.Action("YourAcountInformation", "Home")" class="btn btn-default btn-flat">Profile</a>
                                                     </div>
                                                     <div class="pull-right">
                                                         @using (Html.BeginForm("LogOff", "Home", FormMethod.Post, new { id = "logoutForm" }))
@@ -207,7 +207,7 @@
             <div class="container">
                 <div class="d-flex align-items-center">
                     <div class="site-logo">
-                        <a href="@Url.Action("Home_User","Home")" class="d-block">
+                        <a href="@Url.Action("Home_User", "Home")" class="d-block">
                             <img src="~/Assets/IMGUSER/logo.png" alt="Image" class="img-fluid" height="36" width="144">
                         </a>
                     </div>
@@ -215,7 +215,7 @@
                         <nav class="site-navigation position-relative text-right" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                                 <li class="active">
-                                    <a href="@Url.Action("Home_User","Home")" class="nav-link text-left">Home</a>
+                                    <a href="@Url.Action("Home_User", "Home")" class="nav-link text-left">Home</a>
                                 </li>
                                 <li>
                                     <a href="#" class="nav-link text-left fa fa-fw fa-sort-desc">Introduction</a>
@@ -224,11 +224,21 @@
                                     <a href="#" class="nav-link text-left">Resources</a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("ListSubjects","Subject")" class="nav-link text-left">Subjects</a>
+                                    <a href="@Url.Action("ListSubjects", "Subject")" class="nav-link text-left">Subjects</a>
                                 </li>
                                 <li>
                                     <a href="#" class="nav-link text-left">Practice Test</a>
                                 </li>
+                                @if (Session["permission"] != null)
+                                {
+                                    if (Session["permission"].Equals("Permission 1") || Session["permission"].Equals("Permission 2"))
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Home_CMS", "Home")" class="nav-link text-left">Go Back To CMS</a>
+                                        </li>
+
+                                    }
+                                }
                             </ul>
                         </nav>
 
