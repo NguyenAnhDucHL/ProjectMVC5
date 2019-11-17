@@ -147,7 +147,6 @@ namespace CourseOnline.Controllers
             ViewBag.userInformation = userInformation;
             return View("/Views/User/AccountInformation.cshtml");
         }
-        [ValidateInput(false)]
         [HttpPost]
         public ActionResult UpdateUser(string userJson)
         {

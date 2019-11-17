@@ -55,7 +55,6 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Subject/DomainAdding.cshtml");
             }
         }
-        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitAddDomain(string postJson)
         {
@@ -123,7 +122,6 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Subject/DomainEditting.cshtml");
             }
         }
-        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitEditDomain(string postJson)
         {

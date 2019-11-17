@@ -150,7 +150,6 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Question/QuestionAdding.cshtml");
             }
         }
-        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitAddQuestion(string postJson)
         {
@@ -233,7 +232,6 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Question/QuestionEditting.cshtml");
             }
         }
-        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitQuestion(string postJson)
         {

@@ -94,7 +94,6 @@ namespace CourseOnline.Controllers
             }
             return View("/Views/CMS/User/AddUser.cshtml");
         }
-        [ValidateInput(false)] 
         [HttpPost]
         public ActionResult SubmitUser(string postJson)
         {
@@ -154,7 +153,6 @@ namespace CourseOnline.Controllers
             }
 
         }
-        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitAddUser(string postJson)
         {

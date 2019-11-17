@@ -143,7 +143,6 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Menu/AddMenu.cshtml");
             }
         }
-        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitAddMenu(string postJson)
         {
@@ -190,7 +189,6 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Menu/MenuDetail.cshtml");
             }
         }
-        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitEditMenu(string postJson)
         {
