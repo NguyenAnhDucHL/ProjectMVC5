@@ -153,7 +153,7 @@
                             else
                             {
                                 <div class="navbar-custom-menu">
-                                    <ul class="nav navbar-nav">
+                                    <ul class="nav navbar-nav" style="min-width: 280px">
                                         <!-- User Account: style can be found in dropdown.less -->
                                         <li class="dropdown user user-menu">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -241,11 +241,16 @@
                                 }
                             </ul>
                         </nav>
-
+                    </div>
+                    <div class="col-lg-2">
+                        <form action="" class="d-flex" style="margin-top:10px">
+                            <input type="text" class="rounded form-control" placeholder="Find The Subject" style="width: 170px">
+                            <button class="btn btn-primary rounded" style="margin-left:5px" type="submit">Find</button>
+                        </form>
                     </div>
                     <div class="ml-auto">
                         <div class="social-wrap">
-                            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black">
+                            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black active">
                                 <span class="icon-menu h3"></span>
                             </a>
                         </div>
@@ -309,7 +314,6 @@
     <!-- .site-wrap -->
     <!-- loader -->
     <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#51be78" /></svg></div>
-
     <script src="~/Assets/bootstrap/js/jquery-3.3.1.min.js"></script>
     <script src="~/Assets/bootstrap/js/jquery-migrate-3.0.1.min.js"></script>
     <script src="~/Assets/bootstrap/js/jquery-ui.js"></script>
