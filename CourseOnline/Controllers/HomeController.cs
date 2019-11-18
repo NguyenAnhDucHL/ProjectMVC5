@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using PagedList;
 
 namespace CourseOnline.Controllers
 {
@@ -178,7 +179,34 @@ namespace CourseOnline.Controllers
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
+        [HttpGet]
+        public ActionResult SubjectFound(string keyword, int? page)
+        {
+            if (Request.HttpMethod != "GET")
+            {
+                page = 1;
+            }
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
+            var lstSubject = db.Subjects.Where(n => n.subject_name.Contains(keyword) && n.subject_status == "Online");
+            ViewBag.KeyWord = keyword;
+            ViewBag.FoundSubject = lstSubject.OrderBy(n => n.subject_name).ToPagedList(pageNumber, pageSize);
+            return View("/Views/User/SubjectFound.cshtml");
+        }
 
+        [HttpPost]
+        public ActionResult GetKeyWord(string keyword)
+        {
+            return RedirectToAction("SubjectFound", new { @keyword = keyword });
+        }
+
+        public ActionResult SubjectFoundPartialView(string keyword)
+        {
+            var lstSubject = db.Subjects.Where(s => s.subject_name.Contains(keyword) && s.subject_status == "Online");
+            ViewBag.keyword = keyword;
+            ViewBag.lstSubject = lstSubject.OrderBy(n => n.subject_name).ToList();
+            return PartialView("/Views/User/SubjectFoundPartialView.cshtml");
+        }
 
     }
 }

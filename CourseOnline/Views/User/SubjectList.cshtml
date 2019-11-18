@@ -55,10 +55,10 @@
                     </div>
                 </div>
             }
-            <div class="dlink">
-                Page @(listSubjects.PageCount < listSubjects.PageNumber ? 0 : listSubjects.PageNumber)/@listSubjects.PageCount
-                @Html.PagedListPager(listSubjects, page => Url.Action("ListSubjects","Subject", new { page = page }))
-            </div>
+        </div>
+        <div class="dlink">
+            Page @(listSubjects.PageCount < listSubjects.PageNumber ? 0 : listSubjects.PageNumber)/@listSubjects.PageCount
+            @Html.PagedListPager(listSubjects, page => Url.Action("ListSubjects", "Subject", new { page = page }))
         </div>
     </div>
 </div>

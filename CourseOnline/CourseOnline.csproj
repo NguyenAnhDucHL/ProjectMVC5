@@ -1356,6 +1356,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1424,6 +1425,8 @@
     <Content Include="Views\User\StudyOnline.cshtml" />
     <Content Include="Views\Shared\_Study_Layout.cshtml" />
     <Content Include="Views\User\LessonView.cshtml" />
+    <Content Include="Views\User\SubjectFound.cshtml" />
+    <Content Include="Views\User\SubjectFoundPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

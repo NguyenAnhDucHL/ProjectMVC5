@@ -236,17 +236,19 @@
                                         <li>
                                             <a href="@Url.Action("Home_CMS", "Home")" class="nav-link text-left">Go Back To CMS</a>
                                         </li>
-
                                     }
                                 }
                             </ul>
                         </nav>
                     </div>
                     <div class="col-lg-2">
-                        <form action="" class="d-flex" style="margin-top:10px">
-                            <input type="text" class="rounded form-control" placeholder="Find The Subject" style="width: 170px">
-                            <button class="btn btn-primary rounded" style="margin-left:5px" type="submit">Find</button>
-                        </form>
+                        @using (Html.BeginForm("GetKeyWord", "Home"))
+                        {
+                            <div class="d-flex" style="margin-top:10px">
+                                <input type="text" class="rounded form-control" placeholder="Search Subject ... " style="min-width: 200px" name="keyword">
+                                <button class="btn btn-primary rounded" style="margin-left:5px" type="submit">Search</button>
+                            </div>
+                        }
                     </div>
                     <div class="ml-auto">
                         <div class="social-wrap">
