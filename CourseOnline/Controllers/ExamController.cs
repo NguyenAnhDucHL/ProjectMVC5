@@ -224,7 +224,7 @@ namespace CourseOnline.Controllers
                                     where et.subject_id == subjectID
                                     join ex in db.Exams on et.exam_id equals ex.exam_id
                                     join tq in db.TestQuestions on et.test_id equals tq.test_id
-                                    join q in db.Questions on tq.question_id equals q.question_id
+                                    join q in db.Questions.Where(q => q.question_status == "Published") on tq.question_id equals q.question_id
                                     join ter in db.TestResults on et.exam_id equals ter.exam_id
                                     join ta in db.TestAnswers on ter.test_user_id equals ta.test_user_id
                                     join ao in db.AnswerOptions on q.question_id equals ao.question_id
@@ -236,7 +236,7 @@ namespace CourseOnline.Controllers
                                         question_name = q.question_name,
                                         answer_text = ao.answer_text,
                                         answer_correct = ao.answer_corect,
-                                    }).ToList();
+                                    }).FirstOrDefault();
                     ViewBag.examtest = examtest;
                     return View("/Views/User/StudyOnline.cshtml");
                 }

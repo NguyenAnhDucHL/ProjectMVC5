@@ -21,10 +21,10 @@ namespace CourseOnline.Controllers
         }
         public ActionResult Home_User()
         {
-            var lstSubject = db.Subjects.Take(5).Where(n => n.subject_status == "Submitted").ToList();
+            var lstSubject = db.Subjects.Take(5).Where(n => n.subject_status == "Online").ToList();
             ViewBag.lstSubject = lstSubject;
 
-            var lstPost = db.Posts.Take(7).Where(n => n.post_status == "Submitted").ToList();
+            var lstPost = db.Posts.Take(7).Where(n => n.post_status == "Published").ToList();
             ViewBag.lstPost = lstPost;
 
             var lstTeacher = (from u in db.Users
