@@ -214,38 +214,12 @@ namespace CourseOnline.Controllers
             }
         }
 
-        public ActionResult GetExam(int subjectID)
-        {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
-            {
-                if (subjectID != 0)
-                {
-                    var examtest = (from et in db.ExamTests
-                                    where et.subject_id == subjectID
-                                    join ex in db.Exams on et.exam_id equals ex.exam_id
-                                    join tq in db.TestQuestions on et.test_id equals tq.test_id
-                                    join q in db.Questions.Where(q => q.question_status == "Published") on tq.question_id equals q.question_id
-                                    join ter in db.TestResults on et.exam_id equals ter.exam_id
-                                    join ta in db.TestAnswers on ter.test_user_id equals ta.test_user_id
-                                    join ao in db.AnswerOptions on q.question_id equals ao.question_id
-                                    select new TestExamModel
-                                    {
-                                        test_id = et.exam_id,
-                                        exam_level = ex.exam_level,
-                                        exam_name = ex.exam_name,
-                                        question_name = q.question_name,
-                                        answer_text = ao.answer_text,
-                                        answer_correct = ao.answer_corect,
-                                    }).FirstOrDefault();
-                    ViewBag.examtest = examtest;
-                    return View("/Views/User/StudyOnline.cshtml");
-                }
-                else
-                {
-                    ViewBag.examtest = null;
-                    return View("/Views/User/StudyOnline.cshtml");
-                }
-            }
-        }
+        //public ActionResult GetExam(int subjectID)
+        //{
+        //    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+        //    {
+                
+        //    }
+        //}
     }
 }

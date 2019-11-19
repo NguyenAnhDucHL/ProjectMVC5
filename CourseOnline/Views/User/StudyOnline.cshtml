@@ -3,7 +3,57 @@
     ViewBag.Title = "StudyOnline";
     Layout = "~/Views/Shared/_Study_Layout.cshtml";
     Lesson lesson = ViewBag.lesson;
+    TestExamModel testExamModel = ViewBag.examtest;
 }
+<script>
+    var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, correct = 0;
+    var questions = [
+        ["Which is a reserved word in the Java programming language?", "method", "native", "subclasses", "B"],
+        ["Which is a valid keyword in java?", "interface", "string", "Float", "A"],
+        ["Which is the valid declarations within an interface definition?", "public double methoda();", "public final double methoda();", "static void methoda(double d1);", "A"],
+        ["Which one is a valid declaration of a boolean?", "boolean b3 = false;", "boolean b2 = 'false';", "boolean b4 = Boolean.false();", "A"]
+    ];
+    function _(x) {
+        return document.getElementById(x);
+    }
+    function renderQuestion() {
+        test = _("test");
+        if (pos >= questions.length) {
+            test.innerHTML = "<h2>You got " + correct + " of " + questions.length + " questions correct</h2>";
+            _("test_status").innerHTML = "Test Completed";
+            pos = 0;
+            correct = 0;
+            return false;
+        }
+        _("test_status").innerHTML = "Question " + (pos + 1) + " of " + questions.length;
+        question = questions[pos][0];
+        chA = questions[pos][1];
+        chB = questions[pos][2];
+        chC = questions[pos][3];
+        test.innerHTML = "<h5>" + question + "</h5>";
+        test.innerHTML += "<input type='radio' name='choices' value='A'> " + chA + "<br>";
+        test.innerHTML += "<input type='radio' name='choices' value='B'> " + chB + "<br>";
+        test.innerHTML += "<input type='radio' name='choices' value='C'> " + chC + "<br><br>";
+        test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
+    }
+    function checkAnswer() {
+        choices = document.getElementsByName("choices");
+        for (var i = 0; i < choices.length; i++) {
+            if (choices[i].checked) {
+                choice = choices[i].value;
+            }
+        }
+        if (choice == questions[pos][4]) {
+            correct++;
+        }
+        pos++;
+        renderQuestion();
+    }
+    /*$(document).ready( function() {
+           $('#deletesuccess').delay(10000).fadeOut();
+         });*/
+    window.addEventListener("load", renderQuestion, false);
+</script>
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs nav-justified">
         <li class="active"><a href="#overview" data-toggle="tab">Lesson Objectives</a></li>
@@ -30,111 +80,114 @@
         </div>
         <!-- /.tab-pane -->
         <div class="tab-pane" id="practice">
-            <div class="grid">
-                <div id="quiz">
-                    <h1>Quiz</h1>
-                    <hr style="margin-bottom: 20px">
+            <div class="timecounter">
+                <script type="text/javascript">
+                    function countDown(secs, elem) {
+                        var element = document.getElementById(elem);
+                        element.innerHTML = "Time-Left : " + secs + " s";
+                        if (secs < 1) {
+                            clearTimeout(timer);
 
-                    <p id="question"></p>
+                            element.innerHTML = '<br><br><h1 style="color:red;font-family:arial;">!! Test Completed !!</h1>';
+                            element.innerHTML += 'Your Test Succesfully Submitted !!';
 
-                    <div class="buttons">
-                        <button id="btn0"><span id="choice0"></span></button>
-                        <button id="btn1"><span id="choice1"></span></button>
-                        <button id="btn2"><span id="choice2"></span></button>
-                        <button id="btn3"><span id="choice3"></span></button>
-                    </div>
+                        }
+                        secs--;
+                        var timer = setTimeout('countDown(' + secs + ',"' + elem + '")', 1000);
+                    }
 
-                    <hr style="margin-top: 50px">
-                    <footer>
-                        <p id="progress">Question x of y</p>
-                    </footer>
-                </div>
+
+                </script>
+                <div id="status"></div>
+                <script type="text/javascript">
+                    countDown(120, "status");
+                </script>
             </div>
+            <h2 id="test_status"></h2>
+            <div id="test"></div>
         </div>
         <!-- /.tab-pane -->
     </div>
 </div>
-
 <style>
-    .youtube-responsive-container {
-        position: relative;
-        padding-bottom: 56.25%;
-        padding-top: 30px;
-        height: 0;
-        overflow: hidden;
+    #test:before, #test:after {
+        z-index: -1;
+        position: absolute;
+        content: "";
+        bottom: 25px;
+        left: 10px;
+        width: 50%;
+        top: 80%;
+        max-width: 300px;
+        background: #777;
+        -webkit-box-shadow: 0 35px 20px #777;
+        -moz-box-shadow: 0 35px 20px #777;
+        box-shadow: 0 35px 20px #777;
+        -webkit-transform: rotate(-8deg);
+        -moz-transform: rotate(-8deg);
+        -o-transform: rotate(-8deg);
+        -ms-transform: rotate(-8deg);
+        transform: rotate(-8deg);
     }
 
-        .youtube-responsive-container iframe, .youtube-responsive-container object, .youtube-responsive-container embed {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-    body {
-        background-color: #eeeeee;
+    #test:after {
+        -webkit-transform: rotate(8deg);
+        -moz-transform: rotate(8deg);
+        -o-transform: rotate(8deg);
+        -ms-transform: rotate(8deg);
+        transform: rotate(8deg);
+        right: 10px;
+        left: auto;
     }
 
-    .grid {
-        width: 600px;
-        height: 500px;
-        margin: 0 auto;
-        background-color: #fff;
-        padding: 10px 50px 50px 50px;
-        border-radius: 50px;
-        border: 2px solid #cbcbcb;
-        box-shadow: 10px 15px 5px #cbcbcb;
+    #test_status {
+        color: white;
+        width: 565px;
+        height: 30px;
+        background-color: red;
+        margin-left: 400px;
+        margin-top: 130px;
+        padding-left: 15px;
+        padding-top: 3px;
+        border-radius: 13px;
     }
 
-        .grid h1 {
-            font-family: "sans-serif";
-            background-color: #57636e;
-            font-size: 60px;
-            text-align: center;
-            color: #ffffff;
-            padding: 2px 0px;
-            border-radius: 50px;
-        }
-
-    #score {
-        color: #5A6772;
-        text-align: center;
-        font-size: 30px;
+    input {
+        margin-left: 50px;
     }
 
-    .grid #question {
-        font-family: "monospace";
-        font-size: 30px;
-        color: #5A6772;
+    button {
+        background: #d93434;
+        background-image: -webkit-linear-gradient(top, #d93434, #b8b82b);
+        background-image: -moz-linear-gradient(top, #d93434, #b8b82b);
+        background-image: -o-linear-gradient(top, #d93434, #b8b82b);
+        background-image: linear-gradient(to bottom, #d93434, #b8b82b);
+        -webkit-border-radius: 19;
+        -moz-border-radius: 19;
+        border-radius: 19px;
+        text-shadow: 0px 6px 6px #666666;
+        font-family: Arial;
+        color: #ffffff;
+        font-size: 19px;
+        padding: 6px 21px 11px 20px;
+        text-decoration: none;
+        cursor: pointer;
     }
 
-    .buttons {
-        margin-top: 30px;
-    }
-
-    #btn0, #btn1, #btn2, #btn3 {
-        background-color: #778897;
-        width: 250px;
-        font-size: 20px;
-        color: #fff;
-        border: 1px solid #1D3C6A;
-        border-radius: 50px;
-        margin: 10px 40px 10px 0px;
-        padding: 10px 10px;
-    }
-
-        #btn0:hover, #btn1:hover, #btn2:hover, #btn3:hover {
+        button:hover {
+            background: #d90f0f;
+            background-image: -webkit-linear-gradient(top, #d90f0f, #38070f);
+            background-image: -moz-linear-gradient(top, #d90f0f, #38070f);
+            background-image: -ms-linear-gradient(top, #d90f0f, #38070f);
+            background-image: -o-linear-gradient(top, #d90f0f, #38070f);
+            background-image: linear-gradient(to bottom, #d90f0f, #38070f);
+            text-decoration: none;
             cursor: pointer;
-            background-color: #57636e;
         }
 
-        #btn0:focus, #btn1:focus, #btn2:focus, #btn3:focus {
-            outline: 0;
-        }
-
-    #progress {
-        color: #2b2b2b;
-        font-size: 18px;
+    .timecounter {
+        color: white;
+        margin-left: 85%;
+        margin-top: 30px;
     }
 </style>

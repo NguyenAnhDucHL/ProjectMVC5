@@ -151,7 +151,34 @@ namespace CourseOnline.Controllers
                 return HttpNotFound();
             }
             ViewBag.lesson = lesson;
-            return View("/Views/User/StudyOnline.cshtml");
+
+            if (lesson.exam_test_id != 0)
+            {
+                var examtest = (from et in db.ExamTests
+                                join l in db.Lessons on et.exam_id equals l.exam_test_id
+                                where l.lesson_id == id
+                                join ex in db.Exams on et.exam_id equals ex.exam_id
+                                join tq in db.TestQuestions on et.test_id equals tq.test_id
+                                join q in db.Questions.Where(q => q.question_status == "Published") on tq.question_id equals q.question_id
+                                join ao in db.AnswerOptions on q.question_id equals ao.question_id
+
+                                select new TestExamModel
+                                {
+                                    test_id = et.exam_id,
+                                    exam_level = ex.exam_level,
+                                    exam_name = ex.exam_name,
+                                    question_name = q.question_name,
+                                    answer_text = ao.answer_text,
+                                    answer_correct = ao.answer_corect,
+                                }).FirstOrDefault();
+                ViewBag.examtest = examtest;
+                return View("/Views/User/StudyOnline.cshtml");
+            }
+            else
+            {
+                ViewBag.examtest = null;
+                return View("/Views/User/StudyOnline.cshtml");
+            }
         }
 
         public ActionResult YourSubject(int? page)
