@@ -265,6 +265,7 @@
     <Compile Include="Models\TestBatch.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TestExamModel.cs" />
     <Compile Include="Models\TestListModel.cs" />
     <Compile Include="Models\TestQuestion.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>

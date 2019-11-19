@@ -53,20 +53,20 @@ namespace CourseOnline.Controllers
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
                 var examList = (from e in db.Exams
-                                    join s in db.Subjects on e.subject_id equals s.subject_id
-                                    where s.subject_name.Contains(subject)
-                                    && e.test_type.Contains(type)
-                                    select new ExamListModel
-                                    {
-                                        exam_id = e.exam_id,
-                                        exam_name = e.exam_name,
-                                        subject_name = s.subject_name,
-                                        exam_level = e.exam_level,
-                                        exam_duration = e.exam_duration,
-                                        pass_rate = e.pass_rate,
-                                        test_type = e.test_type,
-                                        exam_description = e.exam_description
-                                    }).ToList();
+                                join s in db.Subjects on e.subject_id equals s.subject_id
+                                where s.subject_name.Contains(subject)
+                                && e.test_type.Contains(type)
+                                select new ExamListModel
+                                {
+                                    exam_id = e.exam_id,
+                                    exam_name = e.exam_name,
+                                    subject_name = s.subject_name,
+                                    exam_level = e.exam_level,
+                                    exam_duration = e.exam_duration,
+                                    pass_rate = e.pass_rate,
+                                    test_type = e.test_type,
+                                    exam_description = e.exam_description
+                                }).ToList();
 
                 int totalrows = examList.Count;
                 int totalrowsafterfiltering = examList.Count;
@@ -137,7 +137,7 @@ namespace CourseOnline.Controllers
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
@@ -190,7 +190,7 @@ namespace CourseOnline.Controllers
                     dynamic edtExam = JValue.Parse(postJson);
                     int id = edtExam.id;
                     Exam ex = db.Exams.Where(e => e.exam_id == id).FirstOrDefault();
-                    if(ex != null)
+                    if (ex != null)
                     {
                         ex.subject_id = edtExam.subjectId;
                         ex.exam_name = edtExam.examName;
@@ -211,6 +211,40 @@ namespace CourseOnline.Controllers
             catch
             {
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetExam(int subjectID)
+        {
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                if (subjectID != 0)
+                {
+                    var examtest = (from et in db.ExamTests
+                                    where et.subject_id == subjectID
+                                    join ex in db.Exams on et.exam_id equals ex.exam_id
+                                    join tq in db.TestQuestions on et.test_id equals tq.test_id
+                                    join q in db.Questions on tq.question_id equals q.question_id
+                                    join ter in db.TestResults on et.exam_id equals ter.exam_id
+                                    join ta in db.TestAnswers on ter.test_user_id equals ta.test_user_id
+                                    join ao in db.AnswerOptions on q.question_id equals ao.question_id
+                                    select new TestExamModel
+                                    {
+                                        test_id = et.exam_id,
+                                        exam_level = ex.exam_level,
+                                        exam_name = ex.exam_name,
+                                        question_name = q.question_name,
+                                        answer_text = ao.answer_text,
+                                        answer_correct = ao.answer_corect,
+                                    }).ToList();
+                    ViewBag.examtest = examtest;
+                    return View("/Views/User/StudyOnline.cshtml");
+                }
+                else
+                {
+                    ViewBag.examtest = null;
+                    return View("/Views/User/StudyOnline.cshtml");
+                }
             }
         }
     }

@@ -49,7 +49,7 @@ namespace CourseOnline.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id && n.subject_status == "Submitted");
+            Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id);
 
             User teacher = (from u in db.Users
                             join c in db.Courses.Where(c => c.subject_id == id) on u.user_id equals c.teacher_id
@@ -89,7 +89,7 @@ namespace CourseOnline.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id && n.subject_status == "Submitted");
+            Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id);
 
             User teacher = (from u in db.Users
                             join c in db.Courses.Where(c => c.subject_id == id) on u.user_id equals c.teacher_id
@@ -116,6 +116,7 @@ namespace CourseOnline.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Subject = lstlesson.FirstOrDefault().lesson_id;
             Session["lstlesson"] = lstlesson;
             Session["teacher"] = teacher;
             Session["subject"] = subject;

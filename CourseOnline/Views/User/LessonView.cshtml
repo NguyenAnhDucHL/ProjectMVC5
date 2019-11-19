@@ -24,6 +24,6 @@
 </section>
 <script>
     function StartLearning() {
-        window.location.href = '@Url.Action("LessonDetail", "Subject",new { @id = 8 })';
+        window.location.href = '@Url.Action("LessonDetail", "Subject",new { @id = ViewBag.Subject})';
     }
 </script>
