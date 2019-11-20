@@ -4,7 +4,7 @@
             title: title,
             text: text,
             type: 'success',
-            confirmButtonText: 'Đóng'
+            confirmButtonText: 'Close'
         })
     }
    
@@ -13,7 +13,7 @@
             title: title,
             text: text,
             type: 'error',
-            confirmButtonText: 'Đóng'
+            confirmButtonText: 'Close'
         })
     };
 
@@ -73,8 +73,8 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d63ab616',
             cancelButtonColor: '#979993',
-            cancelButtonText: 'Hủy',
-            confirmButtonText: 'Đồng ý'
+            cancelButtonText: 'Cancel',
+            confirmButtonText: 'OK'
         }).then((result) => {
             if (result.value) {
                func();

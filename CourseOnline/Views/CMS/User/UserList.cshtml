@@ -96,7 +96,7 @@
                 {
                     "data": "user_id", "render": function (data) {
                             return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdUser('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
-                              "<button class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdMenu('" + data + "') ><i class='fa fa-trash'></i>Delete</button>";
+                              "<button class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdUser('" + data + "') ><i class='fa fa-trash'></i>Delete</button>";
                     },
                     "orderable": false,
                     "searchable": false
@@ -138,7 +138,26 @@
                window.location.href ='@Url.Action("AddUser", "User")';
         }
 
-        
+        function getDelIdUser(id) {
+            if (id != null) {
+                confirmAlert('Xóa', 'Xác nhận xóa', function submit() {
+                    $.ajax({
+                        url:'@Url.Action("deleteUser","User")',
+                        type: "POST",
+                        data: { id: id },
+                        datatype: "json",
+                        success: (response) => {
+                            if (response.success) {
+                                dataTable.ajax.reload(); successAlert("Thành công", "Xóa thành công")
+                            } else {
+                                errorAlert("Thất bại", "Xóa thất bại")
+                            }
+                        },
+                        error: (response) => { errorAlert("Thất bại", "Xóa thất bại") }
+                    });
+                });
+            }
+        }
     </script>
 }
 

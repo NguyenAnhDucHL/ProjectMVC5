@@ -113,7 +113,7 @@ namespace CourseOnline.Controllers
                     string imageValue = editUser.userImage;
                     var ava = imageValue.Substring(imageValue.IndexOf(",")+1);
                     var hinhanh = Convert.FromBase64String(ava);
-                    string relative_path = "~/Path/" + editUser.userID + ".png";
+                    string relative_path = "~/Path/" + "user"+ editUser.userID + ".png";
                     string path = Server.MapPath (relative_path);
                     System.IO.File.WriteAllBytes(path, hinhanh);
                     Session["Picture"] = relative_path;
@@ -373,6 +373,27 @@ namespace CourseOnline.Controllers
                     userListModels = userListModels.Skip(start).Take(length).ToList();
                     userListModels = userListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
                     return Json(new { success = true, data = userListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+        [HttpPost]
+        public ActionResult deleteUser(int id)
+        {
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var user = db.Users.Where(u => u.user_id == id).FirstOrDefault();
+                var userrole = db.UserRoles.Where(u => u.user_id == id).FirstOrDefault();
+
+                if (user != null)
+                {
+                    db.UserRoles.Remove(userrole);
+                    db.Users.Remove(user);
+                    db.SaveChanges();
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false }, JsonRequestBehavior.AllowGet);
                 }
             }
         }
