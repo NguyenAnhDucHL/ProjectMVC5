@@ -93,11 +93,11 @@
                             </div>
                         </div>
                         <div class="tab-pane tab-image" id="photo">
-                            <img class="img-responsive pad" src="" alt="Photo">
+                            <img id ="image_user" class="img-responsive pad" src="" alt="Photo">
                             <div class="row tab-button">
                                 <div class="form-group col-sm-5 col-sm-push-7">
                                     <label for="exampleChange">Add/Change image</label>
-                                    <input class="custom-input" type="file" id="exampleChange">
+                                    <input onchange="readURL(this);" class="custom-input" type="file" id="exampleChange">
                                 </div>
                             </div>
                         </div>
@@ -134,7 +134,8 @@
                 userGender: $("input[name='optionsRadios']:checked").val(),
                 userCheckReceive: $("#check_receive").val(),
                 userRole: $("#input_role").val(),
-                userStatus: $("#sl_userStatus").val()
+                userStatus: $("#sl_userStatus").val(),
+                userImage: $('#image_user').attr('src'),
             };
 
             var postJson = JSON.stringify(user);
@@ -154,7 +155,20 @@
                 error: (response) => { alert("Network error") }
             });
         };
+        function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
+            reader.onload = function (e) {
+                $('#image_user')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+        }
     // bat su kien back
          function getBackUser() {
                window.location.href ='@Url.Action("Index", "User")';

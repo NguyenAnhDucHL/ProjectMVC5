@@ -163,6 +163,12 @@ namespace CourseOnline.Controllers
                     string temp = null;
                     dynamic editUser = JValue.Parse(postJson);
                     string roleName = editUser.userRole;
+                    string imageValue = editUser.userImage;
+                    var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
+                    var hinhanh = Convert.FromBase64String(ava);
+                    string relative_path = "~/Path/" + editUser.userMail + ".png";
+                    string path = Server.MapPath(relative_path);
+                    System.IO.File.WriteAllBytes(path, hinhanh);
                     User user = new User();
                     UserRole userRole = new UserRole();
                     var idRole = db.Roles.Where(r => r.role_name == roleName).Select(r => r.role_id).FirstOrDefault();
@@ -175,6 +181,7 @@ namespace CourseOnline.Controllers
                         user.user_description = editUser.userDescription;
                         user.check_recieveInformation = editUser.userCheckReceive;
                         user.user_gender = editUser.userGender;
+                        user.user_image = relative_path;
                         temp = editUser.userStatus;
                         if (temp.Equals("Active"))
                         {
