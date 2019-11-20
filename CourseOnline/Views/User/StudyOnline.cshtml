@@ -3,57 +3,10 @@
     ViewBag.Title = "StudyOnline";
     Layout = "~/Views/Shared/_Study_Layout.cshtml";
     Lesson lesson = ViewBag.lesson;
-    TestExamModel testExamModel = ViewBag.examtest;
+    List<QuestionModel> examtest = ViewBag.examtest;
+    int count = 1, countR = 0;
 }
-<script>
-    var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, correct = 0;
-    var questions = [
-        ["Which is a reserved word in the Java programming language?", "method", "native", "subclasses", "B"],
-        ["Which is a valid keyword in java?", "interface", "string", "Float", "A"],
-        ["Which is the valid declarations within an interface definition?", "public double methoda();", "public final double methoda();", "static void methoda(double d1);", "A"],
-        ["Which one is a valid declaration of a boolean?", "boolean b3 = false;", "boolean b2 = 'false';", "boolean b4 = Boolean.false();", "A"]
-    ];
-    function _(x) {
-        return document.getElementById(x);
-    }
-    function renderQuestion() {
-        test = _("test");
-        if (pos >= questions.length) {
-            test.innerHTML = "<h2>You got " + correct + " of " + questions.length + " questions correct</h2>";
-            _("test_status").innerHTML = "Test Completed";
-            pos = 0;
-            correct = 0;
-            return false;
-        }
-        _("test_status").innerHTML = "Question " + (pos + 1) + " of " + questions.length;
-        question = questions[pos][0];
-        chA = questions[pos][1];
-        chB = questions[pos][2];
-        chC = questions[pos][3];
-        test.innerHTML = "<h5>" + question + "</h5>";
-        test.innerHTML += "<input type='radio' name='choices' value='A'> " + chA + "<br>";
-        test.innerHTML += "<input type='radio' name='choices' value='B'> " + chB + "<br>";
-        test.innerHTML += "<input type='radio' name='choices' value='C'> " + chC + "<br><br>";
-        test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
-    }
-    function checkAnswer() {
-        choices = document.getElementsByName("choices");
-        for (var i = 0; i < choices.length; i++) {
-            if (choices[i].checked) {
-                choice = choices[i].value;
-            }
-        }
-        if (choice == questions[pos][4]) {
-            correct++;
-        }
-        pos++;
-        renderQuestion();
-    }
-    /*$(document).ready( function() {
-           $('#deletesuccess').delay(10000).fadeOut();
-         });*/
-    window.addEventListener("load", renderQuestion, false);
-</script>
+
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs nav-justified">
         <li class="active"><a href="#overview" data-toggle="tab">Lesson Objectives</a></li>
@@ -80,114 +33,123 @@
         </div>
         <!-- /.tab-pane -->
         <div class="tab-pane" id="practice">
-            <div class="timecounter">
-                <script type="text/javascript">
-                    function countDown(secs, elem) {
-                        var element = document.getElementById(elem);
-                        element.innerHTML = "Time-Left : " + secs + " s";
-                        if (secs < 1) {
-                            clearTimeout(timer);
+            <div class="Quiz">
 
-                            element.innerHTML = '<br><br><h1 style="color:red;font-family:arial;">!! Test Completed !!</h1>';
-                            element.innerHTML += 'Your Test Succesfully Submitted !!';
+                <h4 style="margin-top: 4%;"> <span class="label label-info">Questions :</span> </h4>
 
-                        }
-                        secs--;
-                        var timer = setTimeout('countDown(' + secs + ',"' + elem + '")', 1000);
+                @if (examtest != null && examtest.Any())
+                {
+
+                    foreach (var question in examtest)
+                    {
+                        <div class="BlockQ" style="border: 1px solid #bdbdbd; width: 75%; border-radius: 4px; margin-top: 40px; background-color: #f0ffff; padding: 8px;">
+
+                            <div class="Question" style="padding: 2%;">
+                                <span class="label label-warning"> @string.Format("{0}{1}.", "Q", count)</span>
+                                <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.questionID</span>
+                                <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.questiontext</p>
+                            </div>
+
+                            <div class="Choices" style="margin-left: 8%;">
+
+                                @foreach (var answer in question.answers)
+                                {
+                                    <label class="radio-inline">
+                                        <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@answer.answertext" style="margin-left: -16px;"> @answer.answertext
+                                    </label><br />
+                                    countR++;
+                                }
+
+                            </div> <!--END Choices-->
+
+                            <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
+
+
+                            </div>
+
+                        </div> <!-- END BlockQ -->
+                        count++;
                     }
+                    <span id="countQuections" style="display:none;">@count</span>
+                    <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;" value="Submit Quiz"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </button>
+                    <button type="button" id="TestAgain" style="display:none;" class="btn btn-default" style="margin-top: 10px;" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </button>
 
+                }
 
-                </script>
-                <div id="status"></div>
-                <script type="text/javascript">
-                    countDown(120, "status");
-                </script>
             </div>
-            <h2 id="test_status"></h2>
-            <div id="test"></div>
+            <!-- /.tab-pane -->
         </div>
-        <!-- /.tab-pane -->
     </div>
 </div>
-<style>
-    #test:before, #test:after {
-        z-index: -1;
-        position: absolute;
-        content: "";
-        bottom: 25px;
-        left: 10px;
-        width: 50%;
-        top: 80%;
-        max-width: 300px;
-        background: #777;
-        -webkit-box-shadow: 0 35px 20px #777;
-        -moz-box-shadow: 0 35px 20px #777;
-        box-shadow: 0 35px 20px #777;
-        -webkit-transform: rotate(-8deg);
-        -moz-transform: rotate(-8deg);
-        -o-transform: rotate(-8deg);
-        -ms-transform: rotate(-8deg);
-        transform: rotate(-8deg);
-    }
+@section scripts
+{
+    <script type="text/javascript">
 
-    #test:after {
-        -webkit-transform: rotate(8deg);
-        -moz-transform: rotate(8deg);
-        -o-transform: rotate(8deg);
-        -ms-transform: rotate(8deg);
-        transform: rotate(8deg);
-        right: 10px;
-        left: auto;
-    }
+        $(document).ready(function () {
+                $('#SubmitQuiz').on('click', function () {
 
-    #test_status {
-        color: white;
-        width: 565px;
-        height: 30px;
-        background-color: red;
-        margin-left: 400px;
-        margin-top: 130px;
-        padding-left: 15px;
-        padding-top: 3px;
-        border-radius: 13px;
-    }
+                //count Questions
+                var sel = $('#countQuections').text();
 
-    input {
-        margin-left: 50px;
-    }
+                console.log(sel);
 
-    button {
-        background: #d93434;
-        background-image: -webkit-linear-gradient(top, #d93434, #b8b82b);
-        background-image: -moz-linear-gradient(top, #d93434, #b8b82b);
-        background-image: -o-linear-gradient(top, #d93434, #b8b82b);
-        background-image: linear-gradient(to bottom, #d93434, #b8b82b);
-        -webkit-border-radius: 19;
-        -moz-border-radius: 19;
-        border-radius: 19px;
-        text-shadow: 0px 6px 6px #666666;
-        font-family: Arial;
-        color: #ffffff;
-        font-size: 19px;
-        padding: 6px 21px 11px 20px;
-        text-decoration: none;
-        cursor: pointer;
-    }
+                var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
 
-        button:hover {
-            background: #d90f0f;
-            background-image: -webkit-linear-gradient(top, #d90f0f, #38070f);
-            background-image: -moz-linear-gradient(top, #d90f0f, #38070f);
-            background-image: -ms-linear-gradient(top, #d90f0f, #38070f);
-            background-image: -o-linear-gradient(top, #d90f0f, #38070f);
-            background-image: linear-gradient(to bottom, #d90f0f, #38070f);
-            text-decoration: none;
-            cursor: pointer;
-        }
+                for (var i = 1; i < countQuestion; i++) {
+                    question = {
+                        questionID: $('#ID_Q'+ i).text(),
+                        questiontext: $('#Q' + i).text(),
+                        answertext: $('input[name=inlineRadioOptions' + i + ']:checked').val()
+                    }
 
-    .timecounter {
-        color: white;
-        margin-left: 85%;
-        margin-top: 30px;
-    }
-</style>
+                    resultQuiz.push(question);
+                }
+
+                $.ajax({
+
+                    type: 'POST',
+                    url: '@Url.Action("SubmitQuiz", "Subject")',
+                    data: { resultQuiz },
+
+                    success: function (response) {
+
+                        if (response.result.length > 0)
+                        {
+                            for(var i = 0; i <response.result.length; i++ )
+                            {
+                                if(response.result[i].isCorrect == true)
+                                {
+
+                                    $('#AnsQ' + j).html('<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Correct answer</div>');
+                                }
+                                else
+                                {
+                                    $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Incorrect answer - The Correct Answer is <b>' + response.result[i].answercorrect + '</b></div>');
+                                }
+                                j++;
+                            }
+                        }
+                        else
+                        {
+                            alert("Something Wrong");
+                        }
+
+                    $("#SubmitQuiz").hide();
+                    $("#TestAgain").show();
+                    },
+                    error: function (response) {
+
+                    }
+                });
+
+                console.log(resultQuiz);
+
+            });
+
+            $('#TestAgain').on('click', function () {
+                 window.location.href = '@Url.Action("LessonDetail","Subject",new { @id = lesson.lesson_id})'
+            })
+        });
+
+    </script>
+}

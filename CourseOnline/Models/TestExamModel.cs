@@ -16,8 +16,7 @@ namespace CourseOnline.Models
         public string average { get; set; }
         public int tested { get; set; }
         public string question_name { get; set; }
-        public string answer_text { get; set; }
-        public bool answer_correct { get; set; }
-
+        public ICollection<AnswerOption> answers { get; set; }
+        public int question_id { get; set; }
     }
 }

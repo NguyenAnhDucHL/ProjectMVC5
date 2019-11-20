@@ -154,24 +154,34 @@ namespace CourseOnline.Controllers
 
             if (lesson.exam_test_id != 0)
             {
-                var examtest = (from et in db.ExamTests
-                                join l in db.Lessons on et.exam_id equals l.exam_test_id
-                                where l.lesson_id == id
-                                join ex in db.Exams on et.exam_id equals ex.exam_id
-                                join tq in db.TestQuestions on et.test_id equals tq.test_id
-                                join q in db.Questions.Where(q => q.question_status == "Published") on tq.question_id equals q.question_id
-                                join ao in db.AnswerOptions on q.question_id equals ao.question_id
+                //questions = db.Questions.Where(q => q.lesson_id == id).Select(q => new QuestionModel
+                //{
+                //    questionID = q.question_id,
+                //    questiontext = q.question_name,
+                //    answers = q.AnswerOptions.Select(tq => new AnswerModel
+                //    {
+                //        answerID = tq.answer_option_id,
+                //        answertext = tq.answer_text,
+                //        isCorrect = tq.answer_corect,
+                //    }).ToList()
+                //}).ToList();
 
-                                select new TestExamModel
-                                {
-                                    test_id = et.exam_id,
-                                    exam_level = ex.exam_level,
-                                    exam_name = ex.exam_name,
-                                    question_name = q.question_name,
-                                    answer_text = ao.answer_text,
-                                    answer_correct = ao.answer_corect,
-                                }).FirstOrDefault();
-                ViewBag.examtest = examtest;
+                List<QuestionModel> questions = (from q in db.Questions
+                                                 where q.lesson_id == id && q.question_status == "Published"
+                                                 select new QuestionModel
+                                                 {
+                                                     questionID = q.question_id,
+                                                     questiontext = q.question_name,
+                                                     answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                     {
+                                                         answerID = tq.answer_option_id,
+                                                         answertext = tq.answer_text,
+                                                         isCorrect = tq.answer_corect,
+                                                     }).ToList()
+                                                 }).ToList();
+
+
+                ViewBag.examtest = questions;
                 return View("/Views/User/StudyOnline.cshtml");
             }
             else
@@ -180,6 +190,8 @@ namespace CourseOnline.Controllers
                 return View("/Views/User/StudyOnline.cshtml");
             }
         }
+
+
 
         public ActionResult YourSubject(int? page)
         {
@@ -406,6 +418,27 @@ namespace CourseOnline.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult SubmitQuiz(List<QuizResultModel> resultQuiz)
+            {
+            List<QuizResultModel> finalResultQuiz = new List<QuizResultModel>();
 
+            foreach (QuizResultModel answser in resultQuiz)
+            {
+                string corrrectresult = db.AnswerOptions.Where(ao => ao.question_id == answser.questionID && ao.answer_corect == true).Select(ao => ao.answer_text).FirstOrDefault();
+    
+                QuizResultModel result = db.AnswerOptions.Where(ao => ao.question_id == answser.questionID && ao.answer_text == answser.answertext).Select(
+                    ao => new QuizResultModel
+                    {
+                        questionID = ao.question_id,
+                        answertext = ao.answer_text,
+                        isCorrect = ao.answer_corect,
+                        answercorrect = corrrectresult,
+                    }).FirstOrDefault();
+                finalResultQuiz.Add(result);
+            }
+
+            return Json(new { result = finalResultQuiz }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
