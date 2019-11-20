@@ -137,6 +137,10 @@ namespace CourseOnline.Controllers
                 List<Setting> listLessonType = db.Settings.Where(s => s.setting_group_value.Equals(SettingGroup.LESSON_TYPE) && s.setting_status == SettingStatus.ACTIVE).ToList();
                 ViewBag.LessonType = listLessonType;
 
+                string sql = "select parent_id, lesson_name from Lesson where parent_id = lesson_id";
+                List<LessonModel> listParent = db.Database.SqlQuery<LessonModel>(sql).ToList();
+                ViewBag.LessonParent = listParent;
+
                 return View("/Views/CMS/Subject/LessonAdding.cshtml");
             }
         }
@@ -167,8 +171,24 @@ namespace CourseOnline.Controllers
                     l.lesson_order = addlesson.lessonOrder;
                     l.lesson_link = addlesson.lessonLink;
                     l.lesson_content = addlesson.lessonContent;
-                    db.Lessons.Add(l);
-                    db.SaveChanges();
+                    l.parent_id = addlesson.parentId;
+                    
+                    if(l.parent_id != 0)
+                    {
+                        db.Lessons.Add(l);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        int id_new = db.Lessons.DefaultIfEmpty().Max(les => les == null ? 0 : les.lesson_id);
+                        l.parent_id = id_new + 1;
+                        //String query = "UPDATE Lesson set parent_id = @lesson_id where parent_id = 0";
+                        //db.Database.ExecuteSqlCommand(query,
+                        //    new SqlParameter("lesson_id", id_new + 1)
+                        //    );
+                        db.Lessons.Add(l);
+                        db.SaveChanges();
+                    }
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
             }
