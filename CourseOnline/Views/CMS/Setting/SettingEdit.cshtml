@@ -54,7 +54,7 @@
                     </select>
                     <br>
                     <button class="btn btn-info" onclick="turnOnEditMode()">Edit</button>
-                    <button type="submit" onclick="submitSetting()" class="btn btn-info edit-field">Submit</button>
+                    <button type="submit" disabled onclick="submitSetting()" class="btn btn-info edit-field">Submit</button>
                     <button type="submit" class="btn btn-info" onclick="goBack()">Back</button>
                 </div>
             </div>
@@ -104,6 +104,13 @@
                 settingStatus: $("#sl_status").val()
             };
             var postJson = JSON.stringify(setting);
+            if ($("#inp_settingName").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            } else if ($.isNumeric($("#inp_order").val()) == false) {
+                errorAlert("Order is must number!");
+                return;
+            } 
 
             $.ajax({
                 url: '@Url.Action("SubmitSetting", "Setting")',
@@ -112,12 +119,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 

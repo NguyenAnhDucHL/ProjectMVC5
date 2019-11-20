@@ -23,7 +23,7 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label>Setting group</label>
-                        <select id="sl_settingGroup" class="form-control">
+                        <select id="sl_settingGroup" class="form-control edit-field">
                             @{
                                 foreach (string setting in listSetting)
                                 {
@@ -35,15 +35,15 @@
                     </div>
                     <div class="form-group">
                         <label>Setting name</label>
-                        <input id="inp_settingName" type="text" class="form-control" placeholder="Enter ...">
+                        <input id="inp_settingName" type="text" class="form-control edit-field" placeholder="Enter ...">
                     </div>
                     <div class="form-group">
                         <label>Order</label>
-                        <input id="inp_order" type="text" class="form-control" placeholder="Enter ...">
+                        <input id="inp_order" type="text" class="form-control edit-field" placeholder="Enter ...">
                     </div>
                     <div class="form-group">
                         <label>Short description</label>
-                        <textarea id="text_description" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                        <textarea id="text_description" class="form-control edit-field" rows="3" placeholder="Enter ..."></textarea>
                     </div>
                     <button type="submit" onclick="submitSetting()" class="btn btn-info edit-field">Submit</button>
                     <button type="submit" onclick="goBack()" class="btn btn-info">Back</button>
@@ -61,6 +61,19 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
+        var isEnableEditingMode = true;
+
+        $(document).ready(function () {
+            setValueForComboBox();
+        });
+
+        function turnOnEditMode() {
+                // bat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', true); isEnableEditingMode = true; }
+                )
+        };
+
         function submitSetting() {
             var setting = {
                 settingGroup: $("#sl_settingGroup").val(),
@@ -69,6 +82,13 @@
                 settingDescription: $("#text_description").val()
             };
             var postJson = JSON.stringify(setting);
+            if ($("#inp_settingName").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            } else if ($.isNumeric($("#inp_order").val()) == false) {
+                errorAlert("Order is must number!");
+                return;
+            }
 
             $.ajax({
                 url: '@Url.Action("SubmitAddSetting", "Setting")',
@@ -77,12 +97,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
     };
     function goBack() {
