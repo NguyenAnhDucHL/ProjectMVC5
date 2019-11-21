@@ -11,7 +11,7 @@
         Post Details
     </h1>
     <ol class="breadcrumb">
-        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index", "Post")'>Post Lists</a></li>
         <li class="active">Post Details</li>
     </ol>
@@ -40,11 +40,12 @@
                             <label>Short description</label>
                             <textarea class="form-control edit-field" id="inp_shortDes" rows="3"></textarea>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col col-lg-3 col-md-3 col-sm-3 ">
-                                    <label for="thumbnail">Thumbnail</label>
-                                    <input class="custom-input" type="file" id="thumbnail">
+                        <div class="tab-pane tab-image" id="photo">
+                            <img id="image_post" class="img-responsive pad" src="" alt="Photo">
+                            <div class="row tab-button">
+                                <div class="form-group col-sm-5 col-sm-push-7">
+                                    <label for="exampleChange">Thumbnail image</label>
+                                    <input onchange="readURL(this);" class="custom-input" type="file" id="exampleChange">
                                 </div>
                             </div>
                         </div>
@@ -131,6 +132,27 @@
     <script>tinymce.init({ selector: 'textarea' });</script>
     <script>
 
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image_post')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        var isEnableEditingMode = true;
+        function turnOnEditMode() {
+                // bat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', true); isEnableEditingMode = true; }
+                )
+        };
+
         function submitPost() {
             tinyMCE.triggerSave();
             var post = {
@@ -140,10 +162,17 @@
                 postCategory: $("#sl_PostCategory").val(),
                 postDetailInfo: $("#editor1").val(),
                 postStatus: "Submitted",
+                postThumbnail: $('#image_post').attr('src'),
             };
 
             var postJson = JSON.stringify(post);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name is not empty!");
+                return;
+            } else if ($("#inp_shortDes").val() == "") {
+                errorAlert("Brief info is not empty!")
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitAddPost","Post")',
                 type: "POST",
@@ -151,12 +180,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit failed");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps! Something wrong!") }
             });
         };
 
@@ -169,10 +199,17 @@
                 postCategory: $("#sl_PostCategory").val(),
                 postDetailInfo: $("#editor1").val(),
                 postStatus: "Draft",
+                postThumbnail: $('#image_post').attr('src'),
             };
 
             var postJson = JSON.stringify(post);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name is not empty!");
+                return;
+            } else if ($("#inp_shortDes").val() == "") {
+                errorAlert("Brief info is not empty!")
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitAddPost","Post")',
                 type: "POST",
@@ -180,12 +217,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit failed");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps! Something wrong!") }
             });
         };
 
@@ -198,10 +236,17 @@
                 postCategory: $("#sl_PostCategory").val(),
                 postDetailInfo: $("#editor1").val(),
                 postStatus: "Published",
+                postThumbnail: $('#image_post').attr('src'),
             };
 
             var postJson = JSON.stringify(post);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name is not empty!");
+                return;
+            } else if ($("#inp_shortDes").val() == "") {
+                errorAlert("Brief info is not empty!")
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitAddPost","Post")',
                 type: "POST",
@@ -209,12 +254,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit failed");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps! Something wrong!") }
             });
         };
 
@@ -227,10 +273,17 @@
                 postCategory: $("#sl_PostCategory").val(),
                 postDetailInfo: $("#editor1").val(),
                 postStatus: "Hiden",
+                postThumbnail: $('#image_post').attr('src'),
             };
 
             var postJson = JSON.stringify(post);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name is not empty!");
+                return;
+            } else if ($("#inp_shortDes").val() == "") {
+                errorAlert("Brief info is not empty!")
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitAddPost","Post")',
                 type: "POST",
@@ -238,12 +291,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit failed");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps! Something wrong!") }
             });
         };
         // bat su kien back

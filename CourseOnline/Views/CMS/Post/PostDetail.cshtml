@@ -39,15 +39,18 @@
                             <label>Post name</label>
                             <input disabled type="text" class="form-control edit-field" value="@post.post_name" id="inp_name">
                         </div>
-                        <div class="form-group">
+                        <div disabled class="form-group">
                             <label>Short description</label>
                             <textarea disabled class="form-control edit-field" id="inp_shortDes" rows="3">@post.post_brief_info</textarea>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col col-lg-3 col-md-3 col-sm-3 ">
-                                    <label for="thumbnail">Thumbnail</label>
-                                    <input class="custom-input" type="file" id="thumbnail">
+                        <div dis disabled class="form-group">
+                            <div class="tab-pane tab-image" id="photo">
+                                <img id="image_post" class="img-responsive pad" src="@(post.post_thumbnail == null ? "" : Url.Content(post.post_thumbnail))" alt="Photo">
+                                <div class="row tab-button edit-field">
+                                    <div class="form-group col-sm-5 col-sm-push-7">
+                                        <label for="exampleChange">Add/Change image</label>
+                                        <input onchange="readURL(this);" class="custom-input" type="file" id="exampleChange">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +87,7 @@
 
                     </div>
                     <!-- /.tab-pane -->
-                    <div class="tab-pane" id="content">
+                    <div disabled class="tab-pane edit-field" id="content">
                         <div class="box box-info">
                             <div class="box-header">
                                 <h3 class="box-title">
@@ -143,7 +146,21 @@
         $(document).ready(function () {
 
         setValueForComboBox();
-    });
+        });
+        //su kien load anh
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image_post')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
         // dat gia tri cho comb box bang jquerry
         function setValueForComboBox() {
             $("#sl_postType").val("@post.post_type").trigger('change');
@@ -174,10 +191,16 @@
                 postCategory: $("#sl_PostCategory").val(),
                 postDetailInfo: $("#editor1").val(),
                 postStatus: "Submitted",
+                postThumbnail: $('#image_post').attr('src'),
             };
-
             var postJson = JSON.stringify(post);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name is not empty!");
+                return;
+            } else if ($("#inp_shortDes").val() == "") {
+                errorAlert("Brief info is not empty!")
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitPost","Post")',
                 type: "POST",
@@ -185,13 +208,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
-                        turnOnEditMode();
+                        successAlert("Submit success");
+                        getBackPostList();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit failed");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps! Something wrong!") }
             });
         };
 
@@ -206,10 +229,17 @@
                 postCategory: $("#sl_PostCategory").val(),
                 postDetailInfo: $("#editor1").val(),
                 postStatus: "Draft",
+                postThumbnail: $('#image_post').attr('src'),
             };
 
             var postJson = JSON.stringify(post);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name is not empty!");
+                return;
+            } else if ($("#inp_shortDes").val() == "") {
+                errorAlert("Brief info is not empty!")
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitPost","Post")',
                 type: "POST",
@@ -217,13 +247,12 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
-                        turnOnEditMode();
+                        successAlert("Submit success");
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit failed");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps! Something wrong!") }
             });
         };
 
@@ -237,10 +266,17 @@
                 postCategory: $("#sl_PostCategory").val(),
                 postDetailInfo: $("#editor1").val(),
                 postStatus: "Published",
+                postThumbnail: $('#image_post').attr('src'),
             };
 
             var postJson = JSON.stringify(post);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name is not empty!");
+                return;
+            } else if ($("#inp_shortDes").val() == "") {
+                errorAlert("Brief info is not empty!")
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitPost","Post")',
                 type: "POST",
@@ -248,13 +284,12 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
-                        turnOnEditMode();
+                        successAlert("Submit success");
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit failed");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps! Something wrong!") }
             });
         };
 
@@ -268,10 +303,17 @@
                 postCategory: $("#sl_PostCategory").val(),
                 postDetailInfo: $("#editor1").val(),
                 postStatus: "Hiden",
+                postThumbnail: $('#image_post').attr('src'),
             };
 
             var postJson = JSON.stringify(post);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name is not empty!");
+                return;
+            } else if ($("#inp_shortDes").val() == "") {
+                errorAlert("Brief info is not empty!")
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitPost","Post")',
                 type: "POST",
@@ -279,13 +321,12 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
-                        turnOnEditMode();
+                        successAlert("Submit success");
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit failed");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps! Something wrong!") }
             });
         };
 
@@ -299,10 +340,17 @@
                 postCategory: $("#sl_PostCategory").val(),
                 postDetailInfo: $("#editor1").val(),
                 postStatus: "Deleted",
+                postThumbnail: $('#image_post').attr('src'),
             };
 
             var postJson = JSON.stringify(post);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name is not empty!");
+                return;
+            } else if ($("#inp_shortDes").val() == "") {
+                errorAlert("Brief info is not empty!")
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitPost","Post")',
                 type: "POST",
@@ -310,13 +358,12 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
-                        turnOnEditMode();
+                        successAlert("Submit success");
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit failed");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps! Something wrong!") }
             });
         };
         // bat su kien back

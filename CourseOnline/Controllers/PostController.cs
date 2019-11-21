@@ -100,14 +100,14 @@ namespace CourseOnline.Controllers
                 var postList = (from p in db.Posts
                                 select new
                                 {
-                                    post_id = p.post_id,
-                                    post_thumbnail = p.post_thumbnail,
-                                    post_name = p.post_name,
-                                    post_category = p.post_category,
-                                    post_type = p.post_type,
-                                    post_brief_info = p.post_brief_info,
-                                    post_status = p.post_status,
-                                    post_detail_info = p.post_detail_info,
+                                    p.post_id,
+                                    p.post_thumbnail,
+                                    p.post_name,
+                                    p.post_category,
+                                    p.post_type,
+                                    p.post_brief_info,
+                                    p.post_status,
+                                    p.post_detail_info,
                                 }).ToList();
                 
                 int totalrows = postList.Count;
@@ -165,16 +165,23 @@ namespace CourseOnline.Controllers
                 {
                     dynamic edtpost = JValue.Parse(postJson);
                     int id = edtpost.id;
-
+                    string imageValue = edtpost.postThumbnail;
+                    var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
+                    var hinhanh = Convert.FromBase64String(ava);
+                    string relative_path = "/Assets/dist/img/" + "post" + edtpost.id + ".png";
+                    string path = Server.MapPath(relative_path);
+                    System.IO.File.WriteAllBytes(path, hinhanh);
                     Post p = db.Posts.Where(pp => pp.post_id == id).FirstOrDefault();
                     if (p != null)
                     {
                         p.post_name = edtpost.postName;
+                        p.post_thumbnail = relative_path;
                         p.post_brief_info = edtpost.shortDes;
                         p.post_type = edtpost.postType;
                         p.post_category = edtpost.postCategory;
                         p.post_detail_info = edtpost.postDetailInfo;
                         p.post_status = edtpost.postStatus;
+
                         db.SaveChanges();
                         return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                     }
@@ -188,7 +195,6 @@ namespace CourseOnline.Controllers
             {
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
-
         }
         [ValidateInput(false)]
         [HttpPost]
@@ -198,18 +204,33 @@ namespace CourseOnline.Controllers
             {
                 using (STUDYONLINEEntities db = new STUDYONLINEEntities())
                 {
+                    Random rnd = new Random();
                     dynamic edtpost = JValue.Parse(postJson);
-
+                    string imageValue = edtpost.postThumbnail;
+                    var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
+                    var hinhanh = Convert.FromBase64String(ava);
+                    int num = rnd.Next(1000);
+                    string relative_path = "/Assets/dist/img/" + "post" + num + ".png";
+                    string path = Server.MapPath(relative_path);
+                    System.IO.File.WriteAllBytes(path, hinhanh);
                     Post p = new Post();
-                    p.post_name = edtpost.postName;
-                    p.post_brief_info = edtpost.shortDes;
-                    p.post_type = edtpost.postType;
-                    p.post_category = edtpost.postCategory;
-                    p.post_detail_info = edtpost.postDetailInfo;
-                    p.post_status = edtpost.postStatus;
-                    db.Posts.Add(p);
-                    db.SaveChanges();
-                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    if(p != null)
+                    {
+                        p.post_name = edtpost.postName;
+                        p.post_thumbnail = relative_path;
+                        p.post_brief_info = edtpost.shortDes;
+                        p.post_type = edtpost.postType;
+                        p.post_category = edtpost.postCategory;
+                        p.post_detail_info = edtpost.postDetailInfo;
+                        p.post_status = edtpost.postStatus;
+                        db.Posts.Add(p);
+                        db.SaveChanges();
+                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                    }
                 }
             }
             catch (Exception e)
