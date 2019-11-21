@@ -72,7 +72,7 @@
                     }
                     <span id="countQuections" style="display:none;">@count</span>
                     <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;" value="Submit Quiz"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </button>
-                    <button type="button" id="TestAgain" style="display:none;" class="btn btn-default" style="margin-top: 10px;" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </button>
+                    <button type="button" id="TestAgain" style="display:none;margin-top: 5px" class="btn btn-default" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </button>
 
                 }
 
@@ -95,13 +95,17 @@
 
                 var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
 
-                for (var i = 1; i < countQuestion; i++) {
+                    for (var i = 1; i < countQuestion; i++) {
+                        if ($('input[name=inlineRadioOptions' + i + ']:checked').val() == null) {
+                            errorAlert("Question " + i + " is not empty");
+                            $('#AnsQ' + i).html('<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> You need to answer this question</div>');
+                            return;
+                        }
                     question = {
                         questionID: $('#ID_Q'+ i).text(),
                         questiontext: $('#Q' + i).text(),
                         answertext: $('input[name=inlineRadioOptions' + i + ']:checked').val()
                     }
-
                     resultQuiz.push(question);
                 }
 
@@ -131,14 +135,14 @@
                         }
                         else
                         {
-                            alert("Something Wrong");
+                            errorAlert("Something Wrong");
                         }
 
                     $("#SubmitQuiz").hide();
                     $("#TestAgain").show();
                     },
                     error: function (response) {
-
+                        errorAlert("Somthing wrong");
                     }
                 });
 
