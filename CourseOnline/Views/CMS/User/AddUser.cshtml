@@ -93,7 +93,7 @@
                             </div>
                         </div>
                         <div class="tab-pane tab-image" id="photo">
-                            <img id ="image_user" class="img-responsive pad" src="" alt="Photo">
+                            <img id="image_user" class="img-responsive pad" src="" alt="Photo">
                             <div class="row tab-button">
                                 <div class="form-group col-sm-5 col-sm-push-7">
                                     <label for="exampleChange">Add/Change image</label>
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-info edit-field"  onclick="SubmitAddUser()">Submit</button>
+                <button type="submit" class="btn btn-info edit-field" onclick="SubmitAddUser()">Submit</button>
                 <button type="submit" class="btn btn-info" onclick='getBackUser()'>Back</button>
             </div>
 
@@ -147,12 +147,17 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit success");
-                    } else {
-                        alert("submit failed");
+                        successAlert("submit success");
+                    } else if (response.postJson == "")
+                    {
+                        $("#inputEmail").css('border-color', 'red');
+                        errorAlert("Email is already existed");
+                    }
+                    else {
+                        errorAlert("submit failed");
                     }
                 },
-                error: (response) => { alert("Network error") }
+                error: (response) => { errorAlert("Network error") }
             });
         };
         function readURL(input) {

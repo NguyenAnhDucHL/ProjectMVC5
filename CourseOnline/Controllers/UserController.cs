@@ -162,49 +162,59 @@ namespace CourseOnline.Controllers
                 {
                     string temp = null;
                     dynamic editUser = JValue.Parse(postJson);
-                    string roleName = editUser.userRole;
-                    string imageValue = editUser.userImage;
-                    var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
-                    var hinhanh = Convert.FromBase64String(ava);
-                    string relative_path = "~/Path/" + editUser.userMail + ".png";
-                    string path = Server.MapPath(relative_path);
-                    System.IO.File.WriteAllBytes(path, hinhanh);
-                    User user = new User();
-                    UserRole userRole = new UserRole();
-                    var idRole = db.Roles.Where(r => r.role_name == roleName).Select(r => r.role_id).FirstOrDefault();
-                    if (user != null)
+                    string email = editUser.userMail;
+                    int duplicate = (from checkuser in db.Users where checkuser.user_email == email select checkuser).Count();
+                    if(duplicate == 0)
                     {
-                        user.user_fullname = editUser.userName;
-                        user.user_email = editUser.userMail;
-                        user.use_mobile = editUser.userMobile;
-                        user.user_position = editUser.userPosition;
-                        user.user_description = editUser.userDescription;
-                        user.check_recieveInformation = editUser.userCheckReceive;
-                        user.user_gender = editUser.userGender;
-                        user.user_image = relative_path;
-                        temp = editUser.userStatus;
-                        if (temp.Equals("Active"))
+                        string roleName = editUser.userRole;
+                        string imageValue = editUser.userImage;
+                        var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
+                        var hinhanh = Convert.FromBase64String(ava);
+                        string relative_path = "~/Path/" + editUser.userMail + ".png";
+                        string path = Server.MapPath(relative_path);
+                        System.IO.File.WriteAllBytes(path, hinhanh);
+                        User user = new User();
+                        UserRole userRole = new UserRole();
+                        var idRole = db.Roles.Where(r => r.role_name == roleName).Select(r => r.role_id).FirstOrDefault();
+                        if (user != null)
                         {
-                            user.user_status = true;
+                            user.user_fullname = editUser.userName;
+                            user.user_email = editUser.userMail;
+                            user.use_mobile = editUser.userMobile;
+                            user.user_position = editUser.userPosition;
+                            user.user_description = editUser.userDescription;
+                            user.check_recieveInformation = editUser.userCheckReceive;
+                            user.user_gender = editUser.userGender;
+                            user.user_image = relative_path;
+                            temp = editUser.userStatus;
+                            if (temp.Equals("Active"))
+                            {
+                                user.user_status = true;
+                            }
+                            else
+                            {
+                                user.user_status = false;
+                            }
+                            db.Users.Add(user);
+                            db.SaveChanges();
+                            string useremail = editUser.userMail;
+                            userRole.role_id = Convert.ToInt32(idRole);
+                            var idUsers = db.Users.Select(r => r.user_id).Max();
+                            userRole.user_id = idUsers;
+                            db.UserRoles.Add(userRole);
+                            db.SaveChanges();
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                         }
                         else
                         {
-                            user.user_status = false;
+                            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
                         }
-                        db.Users.Add(user);
-                        db.SaveChanges();
-                        string useremail = editUser.userMail;
-                        userRole.role_id = Convert.ToInt32(idRole);
-                        var idUsers = db.Users.Select(r => r.user_id).Max();
-                        userRole.user_id = idUsers;
-                        db.UserRoles.Add(userRole);
-                        db.SaveChanges();
-                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
-                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        return Json(new { postJson = "" }, JsonRequestBehavior.AllowGet);
                     }
+                    
                 }
             }
             catch (Exception e)
