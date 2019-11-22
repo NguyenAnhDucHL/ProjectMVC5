@@ -15,6 +15,7 @@ namespace CourseOnline.Controllers
     public class SubjectController : Controller
     {
         private STUDYONLINEEntities db = new STUDYONLINEEntities();
+        public static string errorMesage = "";
         // GET: Course
         // GET: Subject
         [Route("SubjectList")]
@@ -76,6 +77,18 @@ namespace CourseOnline.Controllers
             {
                 return HttpNotFound();
             }
+            if (errorMesage.Equals("You haven't registrated this course yet !"))
+            {
+                ViewBag.ErrorMessage = errorMesage;
+            }
+            else if (errorMesage.Equals("You need to login your account !"))
+            {
+                ViewBag.ErrorMessage = errorMesage;
+            }
+            else
+            {
+                ViewBag.ErrorMessage = null;
+            }
             ViewBag.lesson = lesson;
             ViewBag.teacher = teacher;
             ViewBag.subject = subject;
@@ -84,43 +97,73 @@ namespace CourseOnline.Controllers
 
         public ActionResult SubjectDetail2(int? id)
         {
-            if (id == null)
+            if (Session["Email"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                string email = Session["Email"].ToString();
+                var checkYourSubject = (from s in db.Subjects.Where(s => s.subject_id == id)
+                                        join c in db.Courses on s.subject_id equals c.subject_id
+                                        join re in db.Registrations.Where(re => re.registration_status == "Approved") on c.course_id equals re.course_id
+                                        join u in db.Users.Where(u => u.user_email == email) on re.user_id equals u.user_id
+                                        select new MySubjectModel
+                                        {
+                                            email = u.user_email,
+                                            subject_name = s.subject_name,
+                                            subject_brief_info = s.subject_brief_info,
+                                            picture = s.picture,
+                                            subject_category = s.subject_category,
+                                        }).FirstOrDefault();
+                if (checkYourSubject != null)
+                {
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+
+                    Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id);
+
+                    User teacher = (from u in db.Users
+                                    join c in db.Courses.Where(c => c.subject_id == id) on u.user_id equals c.teacher_id
+                                    select new UserListModel
+                                    {
+                                        user_fullname = u.user_fullname,
+                                        use_mobile = u.use_mobile,
+                                        user_email = u.user_email
+                                    }
+                                   ).FirstOrDefault();
+
+                    List<LessonModel> lstlesson = (from l in db.Lessons.OrderBy(l => l.parent_id)
+                                                   join s in db.Subjects.Where(s => s.subject_id == id) on l.subject_id equals s.subject_id
+                                                   select new LessonModel
+                                                   {
+                                                       lesson_id = l.lesson_id,
+                                                       lesson_name = l.lesson_name,
+                                                       lesson_link = l.lesson_link,
+                                                       lesson_content = l.lesson_content,
+                                                       parent_id = l.parent_id
+                                                   }).ToList();
+
+                    if (subject == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    ViewBag.Subject = lstlesson.FirstOrDefault().lesson_id;
+                    Session["lstlesson"] = lstlesson;
+                    Session["teacher"] = teacher;
+                    Session["subject"] = subject;
+                    return View("/Views/User/LessonView.cshtml");
+                }
+                else
+                {
+                    errorMesage = "You haven't registrated this course yet !";
+                    return RedirectToAction("SubjectDetail", "Subject", new { @id = id });
+                }
+            }
+            else
+            {
+                errorMesage = "You need to login your account !";
+                return RedirectToAction("SubjectDetail", "Subject", new { @id = id });
             }
 
-            Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id);
-
-            User teacher = (from u in db.Users
-                            join c in db.Courses.Where(c => c.subject_id == id) on u.user_id equals c.teacher_id
-                            select new UserListModel
-                            {
-                                user_fullname = u.user_fullname,
-                                use_mobile = u.use_mobile,
-                                user_email = u.user_email
-                            }
-                           ).FirstOrDefault();
-
-            List<LessonModel> lstlesson = (from l in db.Lessons.OrderBy(l => l.parent_id)
-                                           join s in db.Subjects.Where(s => s.subject_id == id) on l.subject_id equals s.subject_id
-                                           select new LessonModel
-                                           {
-                                               lesson_id = l.lesson_id,
-                                               lesson_name = l.lesson_name,
-                                               lesson_link = l.lesson_link,
-                                               lesson_content = l.lesson_content,
-                                               parent_id = l.parent_id
-                                           }).ToList();
-
-            if (subject == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Subject = lstlesson.FirstOrDefault().lesson_id;
-            Session["lstlesson"] = lstlesson;
-            Session["teacher"] = teacher;
-            Session["subject"] = subject;
-            return View("/Views/User/LessonView.cshtml");
         }
 
         public ActionResult LessonDetail(int? id)
@@ -420,13 +463,13 @@ namespace CourseOnline.Controllers
 
         [HttpPost]
         public ActionResult SubmitQuiz(List<QuizResultModel> resultQuiz)
-            {
+        {
             List<QuizResultModel> finalResultQuiz = new List<QuizResultModel>();
 
             foreach (QuizResultModel answser in resultQuiz)
             {
                 string corrrectresult = db.AnswerOptions.Where(ao => ao.question_id == answser.questionID && ao.answer_corect == true).Select(ao => ao.answer_text).FirstOrDefault();
-    
+
                 QuizResultModel result = db.AnswerOptions.Where(ao => ao.question_id == answser.questionID && ao.answer_text == answser.answertext).Select(
                     ao => new QuizResultModel
                     {
