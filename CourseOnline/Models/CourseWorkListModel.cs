@@ -10,5 +10,6 @@ namespace CourseOnline.Models
         public String course_name { set; get; }
         public String test_name { set; get; }
         public String user_email { set; get; }
+        public String test_code { set; get; }
     }
 }

@@ -1,0 +1,93 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "Grade";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    int courseid = ViewBag.courseid;
+}
+
+<section class="content-header">
+    <h1>
+        Courses List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/course-list">Courses List</a></li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <table id="tb_grade" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Trainee Name</th>
+                                <th>Email</th>
+                                <th>Test 1</th>
+                                <th>Test 2</th>
+                                <th>Test 3</th>
+                                <th>Test 4</th>
+                                <th>Test 5</th>
+                                <th>Test 6</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        var dataTable;
+        $(document).ready(function () {
+
+            dataTable=$('#tb_grade').DataTable({
+            "ajax": {
+                    "url": '@Url.Action("GetAllGrade", "Course")',
+                    "data": {id : @ViewBag.courseid},
+                    "type": "POST",
+                    "dataType": "json",
+            },
+            "columns": [
+                { "data": "user_fullname", "name": "user_fullname", "orderable": true },
+                { "data": "user_email", "name": "user_email", "orderable": true },
+                { "data": "Test1", "name": "Test1", "orderable": true },
+                { "data": "Test2", "name": "Test2", "orderable": true },
+                { "data": "Test3", "name": "Test3", "orderable": true },
+                { "data": "Test4", "name": "Test4", "orderable": true },
+                { "data": "Test5", "name": "Test5", "orderable": true },
+                { "data": "Test6", "name": "Test6", "orderable": true },
+                { "data": "Total", "name": "Total", "orderable": true }, 
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+        filterListener();
+    });
+
+        function filterListener() {
+             $('#sl_subjectName').on('change', function (e) {
+                 var optionSelected = $("option:selected", this);
+                 var valueSelected = this.value;
+                 dataTable.ajax.url('@Url.Action("FilterBySubjectName","Course")' + '?type=' + valueSelected).load(function (response) { });
+            });
+        }
+       
+    </script>
+}
+
+

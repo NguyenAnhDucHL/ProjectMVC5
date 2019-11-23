@@ -1,0 +1,233 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "CourseWorkDetail";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    List<ExamTest> examtestName = ViewBag.ExamTestName;
+    Coursework coursework = ViewBag.coursework;
+    Course course = ViewBag.course;
+    String testName = ViewBag.TestName;
+
+}
+
+<section class="content-header">
+    <h1>
+        Course Works Details
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Index","Course")'>Course List</a></li>
+        <li><a href='@Url.Action("CourseWorkList", "Course")/@course.course_id' >Courseworks</a></li>
+        <li class="active">Course works detail</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row col-sm-9">
+                        <div class="form-group">
+                            <label>Coursework Name</label>
+                            <input disabled type="text" class="form-control edit-field" id="inp_name" value="@coursework.coursework_name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label>Code(Sort Name)</label>
+                            <input disabled id="inp_code" type="text" class="form-control" value="@ViewBag.testCode">
+                        </div>
+                        <div class="form-group col-sm-4" style="margin-left : 70px">
+                            <label>Weight</label>
+                            <input disabled id="inp_weight" type="text" class="form-control edit-field" value="@coursework.coursework_weight">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-6">
+                            <label>Status</label>
+                            <select disabled id="sl_courseworkStatus" class="form-control edit-field">
+                                @{
+                                    if (coursework.coursework_status == true)
+                                    {
+                                        <option>Active</option>
+                                        <option>Inactive</option>
+                                    }
+                                    else
+                                    {
+                                        <option>Inactive</option>
+                                        <option>Active</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label>Choose Test</label>
+                            <select disabled id="sl_testid" class="form-control edit-field">
+                                @{
+                                    foreach (ExamTest ex in examtestName)
+                                    {
+                                        <option value="@ex.test_id">@ex.test_id</option>
+                                        
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row col-sm-9">
+                        <div class="form-group">
+                            <label>Link</label>
+                            <input disabled id="inp_courseworklink" type="text" class="form-control edit-field" value="@coursework.coursework_link">
+                        </div>
+                    </div>
+                    <div class="row col-sm-9">
+                        <div class="form-group">
+                            <label>Deadline:</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input disabled type="text" class="form-control pull-right edit-field" id="inp_Deadline" value="@coursework.due_date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-sm-9">
+                        <div class="form-group">
+                            <label>Coursework start:</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input disabled type="text" class="form-control pull-right" id="inp_start" value="@course.course_start_date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-sm-9">
+                        <div class="form-group">
+                            <label>Coursework end:</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input disabled type="text" class="form-control pull-right" id="inp_end" value="@course.course_end_date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-sm-9">
+                        <div class="form-group">
+                            <label>Short description</label>
+                            <textarea disabled id="coursework_description" class="form-control edit-field" rows="3">@coursework.coursework_note</textarea>
+                        </div>
+                    </div>
+                    <div class="row col-sm-9">
+                        <button class="btn btn-info" onclick="turnOnEditMode()">Edit</button>
+                        <button disabled type="submit" class="btn btn-info edit-field" onclick="SubmitEditCourseWork()">Submit</button>
+                        <button type="submit" onclick="goBack()" class="btn btn-info">Back</button>
+                    </div>
+                </div>
+            </div>
+</section>
+
+@section scripts{
+    <script src="~/Assets/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            setValueForComboBox();
+        });
+        // dat gia tri cho comb box bang jquerry
+        function setValueForComboBox() {
+            $("#sl_testid").val("@ViewBag.testid").trigger('change');
+        };
+        var isEnableEditingMode = false;
+        function turnOnEditMode() {
+            if (!isEnableEditingMode) {
+                // bat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', false); isEnableEditingMode = true; }
+                )
+            } else {
+                // tat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', true); isEnableEditingMode = false; }
+                )
+            }
+        };
+        $(function () {
+            $('#inp_Deadline').datepicker({
+                autoclose: true
+            });
+        });
+
+            
+
+          //submit coursework
+        function SubmitEditCourseWork() {
+            var StartDate = $("#inp_start").val().toString();
+            var datearray = StartDate.split("/");
+            var sd = datearray[2] + '/' + datearray[0] + '/' + datearray[1];         
+
+            var EndDate = $("#inp_end").val().toString();
+            var datearray = EndDate.split("/");
+            var ed = datearray[2] + '/' + datearray[0] + '/' + datearray[1];
+
+            var Deadline = $("#inp_Deadline").val().toString();
+            var datearray = Deadline.split("/");
+            var dl = datearray[2] + '/' + datearray[0] + '/' + datearray[1];
+
+            var n1 = dl.localeCompare(sd);
+            var n2 = dl.localeCompare(ed);
+
+            var coursework = {
+                coursework_id: @coursework.coursework_id,
+                course_id: @course.course_id,
+                courseworkDeadline: Deadline,
+                courseworkStatus: $("#sl_courseworkStatus").val(),
+                courseworkName: $("#inp_name").val(),
+                usercreate_id: 3,
+                courseworkWeight: $("#inp_weight").val(),
+                courseworkLink: $("#inp_courseworklink").val(),
+                test_id: $("#sl_testid").val(),
+                courseworkNote: $("#coursework_description").val(),
+            };
+
+
+            var courseworkJson = JSON.stringify(coursework);
+            if ($("#inp_name").val() == "") {
+                alert("Coursework Name not empty!");
+                return;
+            } else if (n1 == -1 || n2 == 1) {
+                alert("Please select coursework deadline in [ " + StartDate + " , " + EndDate + " ]");
+                return;
+            } else if ($("#sl_testid").val() == "") {
+                alert("Please Choose test not empty!");
+                return;
+            } 
+
+            $.ajax({
+                url: '@Url.Action("SubmitEditCourseWork","CourseWork")',
+                type: "POST",
+                data: { postJson: courseworkJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("Submit success");
+                        turnOnEditMode();
+                    } else {
+                        alert("Submit fail");
+                    }
+                },
+                error: (response) => { alert("NetWork problem!") }
+            });
+        };
+
+        function goBack() {
+            window.location.href = '@Url.Action("BackCourseWorkList","CourseWork")/@course.course_id';
+        }
+    </script>
+}
+

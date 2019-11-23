@@ -1,0 +1,97 @@
+﻿@using CourseOnline.Models;
+@{
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    Course course = ViewBag.course;
+}
+
+<section class="content-header">
+    <h1>
+        Course Works
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Index","Course")'>Course List</a></li>
+        <li class="active">Course works</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="col-lg-2">
+                    <button type="button" class="btn btn-block btn-primary" style="margin-top: 0px;" onclick='getAddCourseWork()'>Add new</button>
+                </div>                
+                <div class="box-body">
+                    <table id="tb_course_work" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Course</th>
+                                <th>Coursework Name</th>
+                                <th>Test Code</th>
+                                <th>Create by</th>
+                                <th>Deadline</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#tb_course_work').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllCourseWork", "CourseWork")',
+                "type": "POST",
+                "data": {"id" : @course.course_id},
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "coursework_id", "name": "coursework_id", "orderable": true },
+                { "data": "course_name", "name": "course_name", "orderable": true },
+                { "data": "coursework_name", "name": "coursework_name", "orderable": true },
+                { "data": "test_code", "name": "test_code", "orderable": true },
+                { "data": "user_email", "name": "user_email", "orderable": true },
+                { "data": "due_date", "name": "due_date", "orderable": true },
+                {
+                    "data": "coursework_status", "name": "menu_status", "orderable": true, "render": function (data) {
+                        if (data == 1 ) return "Active"
+                        else return "Inactive"}
+                },
+                {
+                    "data": "coursework_id", "render": function (data) {
+                        return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdCourseWork('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>"
+                    },
+                    "orderable": false,
+                    "searchable": false
+                },
+            ],
+        "paging": true,
+        "pageLength": 5,
+        "ordering": true,
+        "serverSide": "true",
+        "order": [[0, "asc"]],
+        "searching": false
+        });
+    });
+        function getAddCourseWork(id) {
+            window.location.href = '@Url.Action("AddCourseWork","CourseWork")?courseid='+ @course.course_id;
+        }
+        function getEditIdCourseWork(id) {
+            if (id != null) {
+               window.location.href ='@Url.Action("CourseWorkEdit", "CourseWork")?courseworkid=' + id +"&courseid=" + @course.course_id;
+            }
+        }
+    </script>
+}
+

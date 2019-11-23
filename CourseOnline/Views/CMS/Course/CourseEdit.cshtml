@@ -1,0 +1,214 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "CourseDetail";
+    Layout = "~/Views/Shared/_CMS_Layout.cshtml";
+    List<Subject> subject = ViewBag.Subjects;
+    List<User> user = ViewBag.Users;
+    Course course = ViewBag.Course;
+}
+<section class="content-header">
+    <h1>
+        Course Details
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href='@Url.Action("Index","Home")'><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Index","Course")'>Course List</a></li>
+        <li class="active">Course Details</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="row col-lg-12">
+                        <div class="col col-lg-6">
+                            <label>Name</label>
+                            <input disabled type="text" class="form-control edit-field" id="inp_name" value="@course.course_name">
+                        </div>
+                        <div class="col col-lg-6">
+                            <label>Status</label>
+                            <select disabled id="sl_courseStatus" class="form-control edit-field">
+                                @{
+                                    if (course.course_status == true)
+                                    {
+                                        <option>Active</option>
+                                        <option>Inactive</option>
+                                    }
+                                    else
+                                    {
+                                        <option>Inactive</option>
+                                        <option>Active</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12">
+                        <div class="col col-lg-6">
+                            <label>Subject</label>
+                            <select disabled id="sl_courseSubject" class="form-control" >
+                                @{
+                                    foreach (Subject s in subject)
+                                    {
+                                        <option value="@s.subject_id ">@s.subject_name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col col-lg-6">
+                            <label>Teacher</label>
+                            <select disabled id="sl_courseTeacher" class="form-control">
+                                @{
+                                    foreach (User u in user)
+                                    {
+                                        <option value="@u.user_id ">@u.user_fullname</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12">
+                        <div class="col col-lg-6">
+                            <div class="form-group">
+                                <label>Start-Date:</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input disabled type="text" class="form-control pull-right edit-field" id="inp_StartDate" value="@course.course_start_date">
+                                </div>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="col col-lg-6">
+                            <div class="form-group">
+                                <label>End-Date:</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input disabled type="text" class="form-control pull-right edit-field" id="inp_EndDate" value="@course.course_end_date">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12">
+                        <div class="form-group">
+                            <label>Short description</label>
+                            <textarea disabled id="text_description" class="form-control edit-field" rows="3">@course.course_note</textarea>
+                        </div>
+                    </div>
+                    <button onclick="turnOnEditMode()" class="btn btn-info">Edit</button>
+                    <button disabled type="submit" onclick="SubmitEditCourse()" class="btn btn-info edit-field">Submit</button>
+                    <button type="submit" onclick="goBack()" class="btn btn-info">Back</button>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- bootstrap datepicker -->
+
+
+
+@section scripts{
+    <script src="~/Assets/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    
+
+    <script>
+        var isEnableEditingMode = false;
+        function turnOnEditMode() {
+            if (!isEnableEditingMode) {
+                // bat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', false); isEnableEditingMode = true; }
+                )
+            } else {
+                // tat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', true); isEnableEditingMode = false; }
+                )
+            }
+        };
+        $(function () {
+            $('#inp_StartDate').datepicker({
+                autoclose: true
+            });
+        });
+        $(function () {
+            $('#inp_EndDate').datepicker({
+                autoclose: true
+            });
+        });
+
+
+
+        //submit course
+        function SubmitEditCourse() {
+
+            var StartDate = $("#inp_StartDate").val().toString();
+            var datearray = StartDate.split("/");
+            var sd = datearray[2] + '/' + datearray[0] + '/' + datearray[1];
+
+            var EndDate = $("#inp_EndDate").val().toString();
+            var datearray = EndDate.split("/");
+            var ed = datearray[2] + '/' + datearray[0] + '/' + datearray[1];
+
+            var n = sd.localeCompare(ed);
+            var course = {
+                courseid : @course.course_id,
+                courseName: $("#inp_name").val(),
+                courseStatus: $("#sl_courseStatus").val(),
+                courseSubject: $("#sl_courseSubject").val(),
+                courseTeacher: $("#sl_courseTeacher").val(),
+                courseStartDate: StartDate,
+                courseEndDate: EndDate,
+                courseNote: $("#text_description").val(),
+            };
+            
+
+            var courseJson = JSON.stringify(course);
+            if ($("#inp_name").val() == "") {
+                alert("Name not empty!");
+                return;
+            } else if ($("#inp_StartDate").val() == "") {
+                alert("Start-Date not empty!");
+                return;
+            } else if ($("#inp_EndDate").val() == "") {
+                alert("End-Date is not empty!");
+                return;
+            } else if (n==1 || n==0) {
+                alert("End-Date is wrong!");
+                return;
+            }
+
+            $.ajax({
+                url: '@Url.Action("SubmitEditCourse","Course")',
+                type: "POST",
+                data: { postJson: courseJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        alert("Submit success");
+                        turnOnEditMode();
+                    } else {
+                        alert("Submit fail");
+                    }
+                },
+                error: (response) => { alert("NetWork problem!") }
+            });
+        };
+
+
+        function goBack() {
+            window.location.href = '@Url.Action("Index","Course")';
+        }
+    </script>
+}
+

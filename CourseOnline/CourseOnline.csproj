@@ -193,6 +193,7 @@
     <Compile Include="Models\Grade.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GradeModels.cs" />
     <Compile Include="Models\Lesson.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
@@ -1429,6 +1430,13 @@
     <Content Include="Views\User\LessonView.cshtml" />
     <Content Include="Views\User\SubjectFound.cshtml" />
     <Content Include="Views\User\SubjectFoundPartialView.cshtml" />
+    <Content Include="Views\CMS\Course\CourseAdd.cshtml" />
+    <Content Include="Views\CMS\Course\CourseEdit.cshtml" />
+    <Content Include="Views\CMS\Course\CourseList.cshtml" />
+    <Content Include="Views\CMS\Course\CourseWorkAdd.cshtml" />
+    <Content Include="Views\CMS\Course\CourseWorkEdit.cshtml" />
+    <Content Include="Views\CMS\Course\CourseWorkList.cshtml" />
+    <Content Include="Views\CMS\Course\Grade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
