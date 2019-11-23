@@ -124,6 +124,13 @@
         })
     </script>
     <script>
+    function ValidateEmail(email){
+    var expr=/^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    return expr.test(email);
+};
+    </script>
+    <script>
+
         function SubmitAddUser() {
             var user = {
                 userName: $("#inputname").val(),
@@ -139,7 +146,21 @@
             };
 
             var postJson = JSON.stringify(user);
+            var regex = /^\d+$/;
 
+            if ($("#inputname").val() == "") {
+                $("#inputname").css('border-color', 'red');
+                errorAlert("Name is not empty!");
+                return;
+            } else if (!ValidateEmail($("#inputEmail").val())) {
+                $("#inputEmail").css('border-color', 'red');
+                errorAlert("Email invalid!");
+                return;
+            } else if ($("#inputMobile").val().length < 10 || !regex.test($("#inputMobile").val())) {
+                $("#inputMobile").css('border-color', 'red');
+                errorAlert("Please enter phone valid!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitAddUser","User")',
                 type: "POST",
@@ -155,9 +176,10 @@
                     }
                     else {
                         errorAlert("submit failed");
+                        alert("submit success");
                     }
                 },
-                error: (response) => { errorAlert("Network error") }
+                error: (response) => { alert("Network error") }
             });
         };
         function readURL(input) {
