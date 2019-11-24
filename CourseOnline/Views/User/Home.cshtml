@@ -112,7 +112,10 @@
                             <span class="mx-1">/@listPost[0].post_category</span>
                         </div>
                         <h3 class="post-heading"><a href="#">@listPost[0].post_name</a></h3>
-                        <span>@Html.Raw(listPost[0].post_brief_info)</span>
+                        <span>
+                            @Html.Raw(listPost[0].post_brief_info)
+                            <a href="#">Read Detail -></a>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -154,10 +157,10 @@
                 <a href="@Url.Action("listAllTeacher","Teacher")">See more teachers</a>
             </div>
         </div>
-        <div class="owl-slide owl-carousel">
+        <div class="owl-slide-3 owl-carousel">
             @foreach (var item in listTeacher)
             {
-                <div class="ftco-testimonial-1">
+                <div class="ftco-testimonial-1" style="margin-left:30px">
                     <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
                         <img src="@(item.user_image == null ? "" : Url.Content(@item.user_image))" alt="Image" class="img-fluid mr-3" style="height:100px; width:100px; overflow:hidden">
                         <div>
@@ -166,7 +169,7 @@
                         </div>
                     </div>
                     <div>
-                        <p style="height:100px; width:500px; overflow:hidden">@item.user_description</p>
+                        <p style="height:100px; min-width:300px; overflow:hidden">@item.user_description</p>
                     </div>
                 </div>
             }
