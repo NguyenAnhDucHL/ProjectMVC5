@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using PagedList;
+using CourseOnline.Global.Setting;
 
 namespace CourseOnline.Controllers
 {
@@ -21,6 +22,15 @@ namespace CourseOnline.Controllers
         }
         public ActionResult Home_User()
         {
+
+            if(All.Error_Message.Equals("You need to login to join the Pratice Test"))
+            {
+                ViewBag.ErrorMessage = All.Error_Message;
+            }
+            else
+            {
+                ViewBag.ErrorMessage = null;
+            }
             var lstSubject = db.Subjects.Take(5).Where(n => n.subject_status == "Online").ToList();
             ViewBag.lstSubject = lstSubject;
 
@@ -45,7 +55,6 @@ namespace CourseOnline.Controllers
         {
             Session["Name"] = name;
             Session["Email"] = email;
-
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
                 using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -211,6 +220,11 @@ namespace CourseOnline.Controllers
         [HttpGet]
         public ActionResult SelectSubjectToQuiz()
         {
+            if (Session["Email"] == null)
+            {
+                All.Error_Message = "You need to login to join the Pratice Test";
+                return RedirectToAction("Home_User");
+            }
             string myemail = Session["Email"].ToString();
             var lstMySubject = (from s in db.Subjects
                                 join c in db.Courses on s.subject_id equals c.subject_id
@@ -232,7 +246,7 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult SelectQuizz(string subjectid)
         {
-   
+
             List<QuestionModel> questions = (from q in db.Questions
                                              where q.lesson_id == 8 && q.question_status == "Published"
                                              select new QuestionModel
@@ -246,13 +260,13 @@ namespace CourseOnline.Controllers
                                                      isCorrect = tq.answer_corect,
                                                  }).ToList()
                                              }).ToList();
-            
-            if(questions != null)
+
+            if (questions != null)
             {
                 Session["testquizz"] = questions;
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
-           return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult TestOnline()

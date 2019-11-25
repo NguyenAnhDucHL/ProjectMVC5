@@ -52,6 +52,8 @@
     </div>
 </div>
 
+@section scripts
+{
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -123,5 +125,6 @@
                  @*window.location.href = '@Url.Action("LessonDetail","Subject",new { @id = lesson.lesson_id})'*@
             })
         });
-    </script>
 
+    </script>
+}

@@ -7,7 +7,6 @@
     Subject subject = ViewBag.subject;
     User teacher = ViewBag.teacher;
     List<LessonModel> lesson = ViewBag.lesson;
-    string message = ViewBag.ErrorMessage;
 }
 <link rel="stylesheet" href="~/Assets/customcss/menu.css">
 <div class="site-section ftco-subscribe-1 site-blocks-cover pb-4" style="background-image: url('@subject.picture')">
@@ -131,11 +130,4 @@
     $(function () {
         $('.tree-toggle').parent().children('ul.tree').toggle(200);
     })
-    window.onload = function () {
-        if ("@message" == "") {
-            return;
-        } else {
-            alert("@message");
-        }
-    }
 </script>

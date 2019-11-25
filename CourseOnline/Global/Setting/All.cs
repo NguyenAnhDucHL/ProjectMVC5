@@ -23,5 +23,7 @@ namespace CourseOnline.Global.Setting
         public static readonly string ALL_BATCH = "All batch";
         public static readonly int ALL_ID_SUBJECT = 187697411;
         public static readonly int ALL_COURSE = 0837060716;
+        public static string Error_Message = "";
+    
     }
 }

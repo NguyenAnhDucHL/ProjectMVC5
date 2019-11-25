@@ -15,7 +15,6 @@ namespace CourseOnline.Controllers
     public class SubjectController : Controller
     {
         private STUDYONLINEEntities db = new STUDYONLINEEntities();
-        public static string errorMesage = "";
         // GET: Course
         // GET: Subject
         [Route("SubjectList")]
@@ -77,13 +76,15 @@ namespace CourseOnline.Controllers
             {
                 return HttpNotFound();
             }
-            if (errorMesage.Equals("You haven't registrated this course yet !"))
+            if (All.Error_Message.Equals("You have not registrated this course yet !"))
             {
-                ViewBag.ErrorMessage = errorMesage;
+                ViewBag.ErrorMessage = All.Error_Message;
+                All.Error_Message = "";
             }
-            else if (errorMesage.Equals("You need to login your account !"))
+            else if (All.Error_Message.Equals("You need to login your account !"))
             {
-                ViewBag.ErrorMessage = errorMesage;
+                ViewBag.ErrorMessage = All.Error_Message;
+                All.Error_Message = "";
             }
             else
             {
@@ -155,13 +156,13 @@ namespace CourseOnline.Controllers
                 }
                 else
                 {
-                    errorMesage = "You haven't registrated this course yet !";
+                    All.Error_Message = "You have not registrated this course yet !";
                     return RedirectToAction("SubjectDetail", "Subject", new { @id = id });
                 }
             }
             else
             {
-                errorMesage = "You need to login your account !";
+                All.Error_Message = "You need to login your account !";
                 return RedirectToAction("SubjectDetail", "Subject", new { @id = id });
             }
 
