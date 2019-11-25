@@ -106,6 +106,7 @@ namespace CourseOnline.Controllers
                                         join u in db.Users.Where(u => u.user_email == email) on re.user_id equals u.user_id
                                         select new MySubjectModel
                                         {
+                                            subject_id = s.subject_id,
                                             email = u.user_email,
                                             subject_name = s.subject_name,
                                             subject_brief_info = s.subject_brief_info,
@@ -247,6 +248,7 @@ namespace CourseOnline.Controllers
                                 join u in db.Users on re.user_id equals u.user_id
                                 select new MySubjectModel
                                 {
+                                    subject_id = s.subject_id,
                                     email = u.user_email,
                                     subject_name = s.subject_name,
                                     subject_brief_info = s.subject_brief_info,

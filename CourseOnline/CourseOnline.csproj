@@ -1437,6 +1437,8 @@
     <Content Include="Views\CMS\Course\CourseWorkEdit.cshtml" />
     <Content Include="Views\CMS\Course\CourseWorkList.cshtml" />
     <Content Include="Views\CMS\Course\Grade.cshtml" />
+    <Content Include="Views\User\SelectSubjectToQuiz.cshtml" />
+    <Content Include="Views\User\PraticeOnlineTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,44 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "SelectSubjectToQuiz";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<MySubjectModel> listSubjects = ViewBag.lstMySubject;
+}
+<div class="container">
+    <div class="SelQuiz">
+        <div class="panel panel-default" style="width: 37%; margin: 20% 32%;">
+            <div class="panel-heading">Select Your Quiz  ^_^</div>
+            <div class="panel-body">
+                <select id="sl_listSubject" class="form-control">
+                    <option>All Subject</option>
+                    @foreach (MySubjectModel mySubject in listSubjects)
+                    {
+                        <option value="@mySubject.subject_id">@mySubject.subject_name</option>
+                    }
+                </select>
+                <br />
+                <button onclick="getData()" id="Enter" class="btn btn-success btn-lg" style="width:100%;"><span class="glyphicon glyphicon-ok"></span>   Let's GO </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script>
+    function getData() {
+       $.ajax({
+                url: '@Url.Action("SelectQuizz","Home")',
+                type: "POST",
+                data: { subjectid : $("#sl_listSubject").val() },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        window.location.href = '@Url.Action("TestOnline", "Home")';
+                    } else {
+                        alert("Get test failed");
+                    }
+                },
+                error: (response) => { alert("Network error") }
+            });
+     }  
+</script>

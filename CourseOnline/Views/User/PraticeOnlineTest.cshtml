@@ -1,0 +1,127 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "StudyOnline";
+     Layout = "";
+    List<QuestionModel> examtest = ViewBag.examtest;  
+    int count = 1, countR = 0;
+}
+<div class="container">
+    <div class="Quiz">
+
+        <h4 style="margin-top: 4%;"> <span class="label label-info">Questions :</span> </h4>
+
+        @if (examtest != null && examtest.Any())
+        {
+
+            foreach (var question in examtest)
+            {
+                <div class="BlockQ" style="border: 1px solid #bdbdbd; width: 75%; border-radius: 4px; margin-top: 40px; background-color: #f0ffff; padding: 8px;">
+
+                    <div class="Question" style="padding: 2%;">
+                        <span class="label label-warning"> @string.Format("{0}{1}.", "Q", count)</span>
+                        <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.questionID</span>
+                        <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.questiontext</p>
+                    </div>
+
+                    <div class="Choices" style="margin-left: 8%;">
+
+                        @foreach (var answer in question.answers)
+                        {
+                            <label class="radio-inline">
+                                <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@answer.answertext" style="margin-left: -16px;"> @answer.answertext
+                            </label><br />
+                            countR++;
+                        }
+
+                    </div> <!--END Choices-->
+
+                    <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
+
+
+                    </div>
+
+                </div> <!-- END BlockQ -->
+                count++;
+            }
+            <span id="countQuections" style="display:none;">@count</span>
+            <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;" value="Submit Quiz"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </button>
+            <button type="button" id="TestAgain" style="display:none;margin-top: 5px" class="btn btn-default" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </button>
+
+        }
+
+    </div>
+</div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+                $('#SubmitQuiz').on('click', function () {
+
+                //count Questions
+                var sel = $('#countQuections').text();
+
+                console.log(sel);
+
+                var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
+
+                    for (var i = 1; i < countQuestion; i++) {
+                        if ($('input[name=inlineRadioOptions' + i + ']:checked').val() == null) {
+                            errorAlert("Question " + i + " is not empty");
+                            $('#AnsQ' + i).html('<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> You need to answer this question</div>');
+                            return;
+                        }
+                    question = {
+                        questionID: $('#ID_Q'+ i).text(),
+                        questiontext: $('#Q' + i).text(),
+                        answertext: $('input[name=inlineRadioOptions' + i + ']:checked').val()
+                    }
+                    resultQuiz.push(question);
+                }
+
+                $.ajax({
+
+                    type: 'POST',
+                    url: '@Url.Action("SubmitQuiz", "Subject")',
+                    data: { resultQuiz },
+
+                    success: function (response) {
+
+                        if (response.result.length > 0)
+                        {
+                            for(var i = 0; i <response.result.length; i++ )
+                            {
+                                if(response.result[i].isCorrect == true)
+                                {
+
+                                    $('#AnsQ' + j).html('<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Correct answer</div>');
+                                }
+                                else
+                                {
+                                    $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Incorrect answer - The Correct Answer is <b>' + response.result[i].answercorrect + '</b></div>');
+                                }
+                                j++;
+                            }
+                        }
+                        else
+                        {
+                            errorAlert("Something Wrong");
+                        }
+
+                    $("#SubmitQuiz").hide();
+                    $("#TestAgain").show();
+                    },
+                    error: function (response) {
+                        errorAlert("Somthing wrong");
+                    }
+                });
+
+                console.log(resultQuiz);
+
+            });
+
+            $('#TestAgain').on('click', function () {
+                 @*window.location.href = '@Url.Action("LessonDetail","Subject",new { @id = lesson.lesson_id})'*@
+            })
+        });
+    </script>
+

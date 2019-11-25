@@ -208,5 +208,58 @@ namespace CourseOnline.Controllers
             return PartialView("/Views/User/SubjectFoundPartialView.cshtml");
         }
 
+        [HttpGet]
+        public ActionResult SelectSubjectToQuiz()
+        {
+            string myemail = Session["Email"].ToString();
+            var lstMySubject = (from s in db.Subjects
+                                join c in db.Courses on s.subject_id equals c.subject_id
+                                join re in db.Registrations.Where(re => re.registration_status == "Approved") on c.course_id equals re.course_id
+                                join u in db.Users on re.user_id equals u.user_id
+                                select new MySubjectModel
+                                {
+                                    subject_id = s.subject_id,
+                                    email = u.user_email,
+                                    subject_name = s.subject_name,
+                                    subject_brief_info = s.subject_brief_info,
+                                    picture = s.picture,
+                                    subject_category = s.subject_category,
+                                }).OrderBy(n => n.subject_name).Where(n => n.email == myemail).ToList();
+            ViewBag.lstMySubject = lstMySubject;
+            return View("/Views/User/SelectSubjectToQuiz.cshtml");
+        }
+
+        [HttpPost]
+        public ActionResult SelectQuizz(string subjectid)
+        {
+   
+            List<QuestionModel> questions = (from q in db.Questions
+                                             where q.lesson_id == 8 && q.question_status == "Published"
+                                             select new QuestionModel
+                                             {
+                                                 questionID = q.question_id,
+                                                 questiontext = q.question_name,
+                                                 answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                 {
+                                                     answerID = tq.answer_option_id,
+                                                     answertext = tq.answer_text,
+                                                     isCorrect = tq.answer_corect,
+                                                 }).ToList()
+                                             }).ToList();
+            
+            if(questions != null)
+            {
+                Session["testquizz"] = questions;
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+           return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult TestOnline()
+        {
+            var testquizz = Session["testquizz"];
+            ViewBag.examtest = testquizz;
+            return View("/Views/User/PraticeOnlineTest.cshtml");
+        }
     }
 }
