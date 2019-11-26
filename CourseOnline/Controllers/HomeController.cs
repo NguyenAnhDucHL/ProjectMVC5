@@ -26,6 +26,7 @@ namespace CourseOnline.Controllers
             if(All.Error_Message.Equals("You need to login to join the Pratice Test"))
             {
                 ViewBag.ErrorMessage = All.Error_Message;
+                All.Error_Message = "";
             }
             else
             {
