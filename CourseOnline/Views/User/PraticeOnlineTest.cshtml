@@ -1,64 +1,109 @@
 ﻿@using CourseOnline.Models;
 @{
     ViewBag.Title = "StudyOnline";
-     Layout = "";
-    List<QuestionModel> examtest = ViewBag.examtest;  
-    int count = 1, countR = 0;
+    QuestionModel examtest = ViewBag.examtest;
+    var totalQuestions = ViewBag.totalQuestion;
+    int countR = 0;
+    int index = ViewBag.index;
+    var endTime = DateTime.UtcNow.AddSeconds(30);
+    var timer = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds.ToString("#");
+    Layout = "~/Views/Shared/_Test_Layout.cshtml";
 }
+
 <div class="container">
+    <div class="userInfor" style="border:2px dashed #cecaca; border-radius: 10px; margin-top: 3%;">
+        @{ Html.RenderPartial("_TestInfor");}
+    </div>
     <div class="Quiz">
-
-        <h4 style="margin-top: 4%;"> <span class="label label-info">Questions :</span> </h4>
-
-        @if (examtest != null && examtest.Any())
+        <h4 style="margin-top: 4%;"> <span class="label label-info">Questions : @(index +1)</span> </h4>
+        <h5 style="margin-top: 4%;"> <span class="label label-info">Time : <span id="minRemaining"></span> : <span id="secRemaining"></span></span> </h5>
+        @if (examtest != null)
         {
+            <div class="BlockQ" style="border: 1px solid #bdbdbd; width: 75%; border-radius: 4px; margin-top: 40px; background-color: #f0ffff; padding: 8px;">
 
-            foreach (var question in examtest)
-            {
-                <div class="BlockQ" style="border: 1px solid #bdbdbd; width: 75%; border-radius: 4px; margin-top: 40px; background-color: #f0ffff; padding: 8px;">
+                <div class="Question" style="padding: 2%;">
+                    <span class="label label-warning"> @string.Format("{0}{1}.", "Q", index + 1)</span>
+                    <span id="@string.Format("{0}{1}", "ID_Q", index)" style="display:none;">@examtest.questionID</span>
+                    <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", index + 1)">@examtest.questiontext</p>
+                </div>
 
-                    <div class="Question" style="padding: 2%;">
-                        <span class="label label-warning"> @string.Format("{0}{1}.", "Q", count)</span>
-                        <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.questionID</span>
-                        <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.questiontext</p>
-                    </div>
+                <div class="Choices" style="margin-left: 8%;">
 
-                    <div class="Choices" style="margin-left: 8%;">
+                    @foreach (var answer in @examtest.answers)
+                    {
+                        <label class="radio-inline">
+                            <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",index)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@answer.answertext" style="margin-left: -16px;"> @answer.answertext
+                        </label><br />
+                        countR++;
+                    }
 
-                        @foreach (var answer in question.answers)
-                        {
-                            <label class="radio-inline">
-                                <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@answer.answertext" style="margin-left: -16px;"> @answer.answertext
-                            </label><br />
-                            countR++;
-                        }
+                </div> <!--END Choices-->
 
-                    </div> <!--END Choices-->
-
-                    <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
+                <div id="@string.Format("{0}{1}{2}", "Ans","Q", index + 1)">
 
 
-                    </div>
+                </div>
 
-                </div> <!-- END BlockQ -->
-                count++;
-            }
-            <span id="countQuections" style="display:none;">@count</span>
-            <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;" value="Submit Quiz"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </button>
-            <button type="button" id="TestAgain" style="display:none;margin-top: 5px" class="btn btn-default" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </button>
+            </div> <!-- END BlockQ -->
+            <div class="row" style="margin-top: 30px">
+                <div class="col-md-10">
+                    <table>
+                        <tr>
+                            <td><a id="PreviousQuiz" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Previous Quiz </a></td>
+                            @for (int i = 0; i < totalQuestions; i++)
+                            {
+                                <td><a href="@Url.Action("TestOnline","Home",new { @count = i})" class="btn @(examtest.questionID == (i + 1) ? "btn-primary": "btn-default" )">@(i + 1)</a></td>
+                            }
+                            <td><a id="NextQuiz" class="btn btn-default"> Next Quiz <span class="glyphicon glyphicon-arrow-right"></span></a></td>
+                            <td><a id="SubmitQuiz" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </a></td>
+                            <td><a id="TestAgain" style="display:none" class="btn btn-default" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
 
         }
 
     </div>
 </div>
-
 @section scripts
 {
     <script type="text/javascript">
+        var timeremain = @timer;
+        var secondsCounter = timeremain % 60;
 
+        function formatnumber(number) {
+            if (number < 10) return '0' + number;
+            else return '' + number;
+        }
+        function startTick() {
+            document.getElementById('minRemaining').innerText = formatnumber(parseInt(timeremain / 60));
+            document.getElementById('secRemaining').innerText = formatnumber(secondsCounter);
+            var _tick = setInterval(function () {
+                if (timeremain > 0) {
+                    timeremain = timeremain - 1;
+                    secondsCounter = secondsCounter - 1;
+                    document.getElementById('minRemaining').innerText = formatnumber(parseInt(timeremain / 60));
+                    document.getElementById('secRemaining').innerText = formatnumber(secondsCounter);
+                    if (secondsCounter == 0) {
+                        secondsCounter = 60;
+                    }
+                } else {
+                    alert("Your Time is finish");
+                    clearInterval(_tick);
+                }
+            }, 1000);
+           }
+         startTick();
         $(document).ready(function () {
-                $('#SubmitQuiz').on('click', function () {
 
+            $('#NextQuiz').on('click', function () {
+                window.location.href = '@Url.Action("TestOnline","Home",new { @count = index + 1 })';
+            });
+             $('#PreviousQuiz').on('click', function () {
+                window.location.href = '@Url.Action("TestOnline","Home",new { @count = index - 1 })';
+            });
+            $('#SubmitQuiz').on('click', function () {
                 //count Questions
                 var sel = $('#countQuections').text();
 

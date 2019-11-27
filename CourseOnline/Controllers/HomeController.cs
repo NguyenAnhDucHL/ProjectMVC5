@@ -247,13 +247,16 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult SelectQuizz(string subjectid)
         {
-
+            int subject_id = Convert.ToInt32(subjectid);
             List<QuestionModel> questions = (from q in db.Questions
-                                             where q.lesson_id == 8 && q.question_status == "Published"
+                                             where q.lesson_id == 8 && q.question_status == "Published" && q.subject_id == subject_id
+                                             join s in db.Subjects
+                                             on q.subject_id equals s.subject_id
                                              select new QuestionModel
                                              {
                                                  questionID = q.question_id,
                                                  questiontext = q.question_name,
+                                                 subjectname = s.subject_name,
                                                  answers = q.AnswerOptions.Select(tq => new AnswerModel
                                                  {
                                                      answerID = tq.answer_option_id,
@@ -270,11 +273,40 @@ namespace CourseOnline.Controllers
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
-        public ActionResult TestOnline()
+        public ActionResult TestOnline(int? count)
         {
-            var testquizz = Session["testquizz"];
-            ViewBag.examtest = testquizz;
-            return View("/Views/User/PraticeOnlineTest.cshtml");
+            if(Session["testquizz"] != null)
+            {
+                List<QuestionModel> testquizz = Session["testquizz"] as List<QuestionModel>;
+                int totalQuestions = testquizz.Count;
+                if (count == totalQuestions)
+                {
+                    count = totalQuestions - 1;
+                }
+                else if (count == -1)
+                {
+                    count = 0;
+                }
+                int index = 0;
+                try
+                {
+                    index = (int)count;
+                }
+                catch (Exception)
+                {
+
+                    index = 0;
+                }
+                ViewBag.totalQuestion = totalQuestions;
+                ViewBag.index = index;
+                ViewBag.examtest = testquizz[index];
+                return View("/Views/User/PraticeOnlineTest.cshtml");
+            }
+            else
+            {
+                return RedirectToAction("Home_User", "Home");
+            }
+            
         }
     }
 }

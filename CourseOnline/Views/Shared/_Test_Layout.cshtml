@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Index";
+    string message = ViewBag.ErrorMessage;
+}
+﻿@using CourseOnline.Models
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>FPT Online Course</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="~/Assets/bootstrap/fonts/style.css">
+    <link rel="stylesheet" href="~/Assets/bootstrap/css_user/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/jquery-ui.css">
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/flaticon.css">
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/Assets/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/aos.css">
+    <link href="~/Assets/bootstrap/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/style.css">
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/bootstrap.min.css">
+    <link href="~/Assets/studyonlinealert/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Assets/studyonlinealert/alert-js.js"></script>
+    <script src="~/Assets/studyonlinealert/sweetalert2.all.min.js"></script>
+    <script src="~/Assets/studyonlinealert/sweetalert2.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+    <div class="site-wrap">
+
+        <div class="site-mobile-menu site-navbar-target">
+            <div class="site-mobile-menu-header">
+                <div class="site-mobile-menu-close mt-3">
+                    <span class="icon-close2 js-menu-toggle"></span>
+                </div>
+            </div>
+            <div class="site-mobile-menu-body"></div>
+        </div>
+
+
+        <div class="py-2 bg-light">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-9 d-none d-lg-block">
+                        <a href="#" class="small mr-3"><span class="icon-question-circle-o mr-2"></span> Have a questions?</a>
+                        <a href="#" class="small mr-3"><span class="icon-phone2 mr-2"></span> 0942624944</a>
+                        <a href="mailto:ducnase04962@fpt.edu.vn" class="small mr-3"><span class="icon-envelope-o mr-2"></span>sro.hn@fpt.edu.vn</a>
+                    </div>
+                    <div class="col-lg-3 text-right">
+                        @{ if (Session["Name"] == null)
+                            {
+                                <div>
+                                    <button class="btn btn-default" style="background-color: #51be78" id="GoogleLogin" onclick="login()"><i class="fa fa-google-plus"></i><font color="white"> Sign in with Google</font></button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="navbar-custom-menu">
+                                    <ul class="nav navbar-nav" style="min-width: 280px">
+                                        <!-- User Account: style can be found in dropdown.less -->
+                                        <li class="dropdown user user-menu">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                <img src="@(Session["Picture"] == null ? "" : Url.Content(@Session["Picture"].ToString()))" class="user-image" alt="User Image">
+                                                <span class="hidden-xs">@Session["Name"]</span>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <!-- User image -->
+                                                <li class="user-header">
+                                                    <img src="@(Session["Picture"] == null ? "" : Url.Content(@Session["Picture"].ToString()))" class="img-circle" alt="User Image">
+                                                    <p>
+                                                        @Session["Name"]
+                                                    </p>
+                                                    <p>@Session["Email"]</p>
+                                                </li>
+                                                <!-- Menu Body -->
+                                                <li class="user-body">
+                                                    <div class="row">
+                                                        <div class="col-xs-4 text-center">
+                                                            <a href="@Url.Action("YourSubject", "Subject")">My Subjects</a>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.row -->
+                                                </li>
+                                                <!-- Menu Footer-->
+                                                <li class="user-footer">
+                                                    <div class="pull-left">
+                                                        <a href="@Url.Action("YourAcountInformation", "Home")" class="btn btn-default btn-flat">Profile</a>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        @using (Html.BeginForm("LogOff", "Home", FormMethod.Post, new { id = "logoutForm" }))
+                                                        {
+                                                            <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat"> Sign Out</a>
+                                                        }
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <!-- Control Sidebar Toggle Button -->
+                                    </ul>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        @RenderBody()
+    </div>
+    <!-- .site-wrap -->
+    <!-- loader -->
+    <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#51be78" /></svg></div>
+    <script src="~/Assets/bootstrap/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Assets/bootstrap/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="~/Assets/bootstrap/js/jquery-ui.js"></script>
+    <script src="~/Assets/bootstrap/js/popper.min.js"></script>
+    <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Assets/bootstrap/js/owl.carousel.min.js"></script>
+    <script src="~/Assets/bootstrap/js/jquery.stellar.min.js"></script>
+    <script src="~/Assets/bootstrap/js/jquery.countdown.min.js"></script>
+    <script src="~/Assets/bootstrap/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Assets/bootstrap/js/jquery.easing.1.3.js"></script>
+    <script src="~/Assets/bootstrap/js/aos.js"></script>
+    <script src="~/Assets/bootstrap/js/jquery.fancybox.min.js"></script>
+    <script src="~/Assets/bootstrap/js/jquery.sticky.js"></script>
+    <script src="~/Assets/bootstrap/js/jquery.mb.YTPlayer.min.js"></script>
+    <script src="~/Assets/bootstrap/js/main.js"></script>
+    <script src="~/Assets/bootstrap/js/bootstrap.min.js.download"></script>
+    <script src="~/Assets/studyonlinealert/alert-js.js"></script>
+</body>
+
+</html>
+@RenderSection("scripts", required: false)
+<script>
+    window.onload = function () {
+        if ("@message" == "") {
+            return;
+        } else {
+            alert("@message");
+        }
+    }
+</script>
+

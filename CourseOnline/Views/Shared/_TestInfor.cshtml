@@ -1,0 +1,26 @@
+﻿@using CourseOnline.Models;
+@{
+    List<QuestionModel> quizSeleted = Session["testquizz"] as List<QuestionModel>;
+}
+@if (Session["Name"] != null)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@(Session["Picture"] == null ? "" : Url.Content(@Session["Picture"].ToString()))" class="img-circle" style="width: 12%;" />
+            <span> <b>Welcome :</b> @Session["Name"]</span>
+        </div>
+        <div class="col-md-4" style="margin-top: 15px;">
+            @if (quizSeleted != null && !string.IsNullOrEmpty(quizSeleted[0].subjectname))
+            {
+                <span> <b>Quiz Selected :</b> @quizSeleted[0].subjectname</span>
+            }
+            else
+            {
+                <span> <b>Please Select your Quiz </b></span>
+            }
+        </div>
+        <div class="col-md-4" style="margin-top: 15px;">
+            <span> <b>Date :</b> @DateTime.Now</span>
+        </div>
+    </div>
+}
