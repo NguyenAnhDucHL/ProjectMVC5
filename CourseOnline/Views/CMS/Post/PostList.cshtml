@@ -115,9 +115,9 @@
                         { "data": "post_status", "name": "post_status", "orderable": true },
                         {
                             "data": "post_id", "render": function (data) {
-                                return "<div class='row'><div class='col-lg-6'><button class='btn btn-block btn-primary' onclick=getEditIdPost('" + data + "') style='width=100%;' ><i class='fa fa-fw fa-edit'></i></button>" +
+                                return "<div class='row'><div class='col-lg-6'><a onclick=getEditIdPost('" + data + "') style='width=100%; cursor: pointer;' ><i class='fa fa-fw fa-edit'></i></a>" +
                                     "</div>" + 
-                                    "<div class='col-lg-6'><button id='myBtn' class='btn btn-block btn-danger' onclick=getDelIdPost('" + data + "') style='width=100%;' ><i class='fa fa-trash'></i></button>" +
+                                    "<div class='col-lg-6 pull-left'><a id='myBtn' onclick=getDelIdPost('" + data + "') style='width=100%; cursor: pointer;' ><i class='fa fa-trash'></i></a>" +
 								 "</div>" +
 								 "</div>";
                             },
