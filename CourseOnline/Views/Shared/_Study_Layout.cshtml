@@ -1,8 +1,6 @@
 ﻿@using CourseOnline.Models
 @{
-
     List<LessonModel> lstlesson = (List<LessonModel>)Session["lstlesson"];
-    Subject subject = (Subject)Session["subject"];
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +70,6 @@
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" style="text-align:center">
                 <!-- Sidebar toggle button-->
-                <span style=" font-size:35px;  font-weight:bold;color: white">@subject.subject_name</span>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <!-- User Account: style can be found in dropdown.less -->

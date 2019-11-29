@@ -4,82 +4,99 @@
     Layout = "~/Views/Shared/_Study_Layout.cshtml";
     Lesson lesson = ViewBag.lesson;
     List<QuestionModel> examtest = ViewBag.examtest;
+    Subject subject = (Subject)Session["subject"];
     int count = 1, countR = 0;
 }
-
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs nav-justified">
-        <li class="active"><a href="#overview" data-toggle="tab">Lesson Objectives</a></li>
-        <li><a href="#content" data-toggle="tab">Content</a></li>
-        <li><a href="#practice" data-toggle="tab">Practice </a></li>
-        <!-- /.tab-content -->
+        <li class="active"><a href="#overview" data-toggle="tab" style="font-weight:bold; font-size: 40px">@subject.subject_name</a></li>
     </ul>
-    <div class="tab-content">
-        <div class="active tab-pane" id="overview">
-            <h2>Lesson Objectives</h2>
-            <div class="form-group">
-                <label>@lesson.lesson_objecttive</label>
-            </div>
-            <h2>Description</h2>
-            <div class="form-group">
-                <label>@lesson.lesson_support</label>
+    @if (examtest.Count() == 0)
+    {
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs nav-justified">
+                <li class="active"><a href="#overview" data-toggle="tab">Content Lesson</a></li>
+                <li><a href="#content" data-toggle="tab">Video Lesson</a></li>
+                <!-- /.tab-content -->
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="overview">
+                    <h2>Lesson Objectives</h2>
+                    <div class="form-group">
+                        <label>@lesson.lesson_objecttive</label>
+                    </div>
+                    <h2>Description</h2>
+                    <div class="form-group">
+                        <label>@lesson.lesson_support</label>
+                    </div>
+                </div>
+                <div class="tab-pane" id="content">
+                    <div class="youtube-responsive-container">
+                        <iframe width="560" height="315" src="@lesson.lesson_link" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+
             </div>
         </div>
-        <div class="tab-pane" id="content">
-            <div class="youtube-responsive-container">
-                <iframe width="560" height="315" src="@lesson.lesson_link" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-                </iframe>
-            </div>
-        </div>
-        <!-- /.tab-pane -->
-        <div class="tab-pane" id="practice">
-            <div class="Quiz">
+    }
+    else
+    {
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs nav-justified">
+                <li><a href="#practice" data-toggle="tab">Practice </a></li>
+                <!-- /.tab-content -->
+            </ul>
+            <div class="tab-pane" id="practice">
+                <div class="Quiz">
 
-                <h4 style="margin-top: 4%;"> <span class="label label-info">Questions :</span> </h4>
+                    <h4 style="margin-top: 4%;"> <span class="label label-info">Questions :</span> </h4>
 
-                @if (examtest != null && examtest.Any())
-                {
-
-                    foreach (var question in examtest)
+                    @if (examtest != null && examtest.Any())
                     {
-                        <div class="BlockQ" style="border: 1px solid #bdbdbd; width: 75%; border-radius: 4px; margin-top: 40px; background-color: #f0ffff; padding: 8px;">
 
-                            <div class="Question" style="padding: 2%;">
-                                <span class="label label-warning"> @string.Format("{0}{1}.", "Q", count)</span>
-                                <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.questionID</span>
-                                <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.questiontext</p>
-                            </div>
+                        foreach (var question in examtest)
+                        {
+                            <div class="BlockQ" style="border: 1px solid #bdbdbd; width: 75%; border-radius: 4px; margin-top: 40px; background-color: #f0ffff; padding: 8px;">
 
-                            <div class="Choices" style="margin-left: 8%;">
+                                <div class="Question" style="padding: 2%;">
+                                    <span class="label label-warning"> @string.Format("{0}{1}.", "Q", count)</span>
+                                    <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.questionID</span>
+                                    <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.questiontext</p>
+                                </div>
 
-                                @foreach (var answer in question.answers)
-                                {
-                                    <label class="radio-inline">
-                                        <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@answer.answertext" style="margin-left: -16px;"> @answer.answertext
-                                    </label><br />
-                                    countR++;
-                                }
+                                <div class="Choices" style="margin-left: 8%;">
 
-                            </div> <!--END Choices-->
+                                    @foreach (var answer in question.answers)
+                                    {
+                                        <label class="radio-inline">
+                                            <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@answer.answertext" style="margin-left: -16px;"> @answer.answertext
+                                        </label><br />
+                                        countR++;
+                                    }
 
-                            <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
+                                </div> <!--END Choices-->
+
+                                <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
 
 
-                            </div>
+                                </div>
 
-                        </div> <!-- END BlockQ -->
-                        count++;
+                            </div> <!-- END BlockQ -->
+                            count++;
+                        }
+                        <span id="countQuections" style="display:none;">@count</span>
+                        <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;" value="Submit Quiz"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </button>
+                        <button type="button" id="TestAgain" style="display:none;margin-top: 5px" class="btn btn-default" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </button>
+
                     }
-                    <span id="countQuections" style="display:none;">@count</span>
-                    <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;" value="Submit Quiz"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </button>
-                    <button type="button" id="TestAgain" style="display:none;margin-top: 5px" class="btn btn-default" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </button>
-
-                }
-
+                </div>
             </div>
             <!-- /.tab-pane -->
         </div>
-    </div>
+    }
+
 </div>
 @section scripts
 {
