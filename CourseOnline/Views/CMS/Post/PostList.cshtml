@@ -26,59 +26,56 @@
                 <!-- /.box-header -->
                 <div class="row">
                     <div class="col-sm-2">
-                        <button id="myBtn" type="button" class="btn btn-block btn-primary" onclick='getAddPost()'>Add new</button>
+                        <select id="sl_postType" class="form-control">
+                            <option>All type</option>
+                            @{
+                                foreach (Setting setting in listType)
+                                {
+                                    <option value="@setting.setting_name">@setting.setting_name</option>
+                                }
+                            }
+                        </select>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <select id="sl_postType" class="form-control">
-                                <option>All type</option>
-                                @{
-                                    foreach (Setting setting in listType)
-                                    {
-                                        <option value="@setting.setting_name">@setting.setting_name</option>
-                                    }
+                    <div class="col-sm-2">
+                        <select id="sl_postCategory" class="form-control">
+                            <option>All Category</option>
+                            @{
+                                foreach (Setting setting in listCategory)
+                                {
+                                    <option value="@setting.setting_name">@setting.setting_name</option>
                                 }
-                            </select>
-                        </div>
-                        <div class="col-sm-2">
-                            <select id="sl_postCategory" class="form-control">
-                                <option>All Category</option>
-                                @{
-                                    foreach (Setting setting in listCategory)
-                                    {
-                                        <option value="@setting.setting_name">@setting.setting_name</option>
-                                    }
-                                }
-                            </select>
-                        </div>
-                        <div class="col-sm-2">
-                            <select id="sl_postStatus" class="form-control">
-                                <option>All Status</option>
-                                @{
-                                    foreach (string post in listStatus)
-                                    {
-                                        <option value="@post">@post</option>
-                                    }
-                                }
-                            </select>
-                        </div>
+                            }
+                        </select>
                     </div>
+                    <div class="col-sm-2">
+                        <select id="sl_postStatus" class="form-control">
+                            <option>All Status</option>
+                            @{
+                                foreach (string post in listStatus)
+                                {
+                                    <option value="@post">@post</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-lg-2 pull-right">
+                        <button type="button" class="btn btn-link" onclick="getAddPost()" style="float:right;">Add new</button>
+                    </div>
+                </div>
+            </div>
                 </div>
                 <div class="box-body table-responsive">
                     <table id="tb_post" class="table table-bordered table-striped table-responsive">
                         <thead>
                             <tr>
-                                <th rowspan="2">ID</th>
-                                <th rowspan="2">Thumbnail</th>
-                                <th colspan="3" class="text-center">Post</th>
-                                <th rowspan="2">Brief Info</th>
-                                <th rowspan="2">Status</th>
-                                <th rowspan="2">Action</th>
-                            </tr>
-                            <tr>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Type</th>
+                                <th>ID</th>
+                                <th class="col-sm-2">Thumbnail</th>
+                                <th class="col-sm-2">Name</th>
+                                <th class="col-sm-2">Category</th>
+                                <th class="col-sm-2">Type</th>
+                                <th class="col-sm-2">Brief Info</th>
+                                <th class="col-sm-1">Status</th>
+                                <th class="col-sm-2">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -89,7 +86,6 @@
         </div>
 
         <!-- /.col -->
-    </div>
     <!-- /.row -->
 </section>
 
@@ -116,7 +112,7 @@
                     "columns": [
                         { "data": "post_id", "name": "post_id", "orderable": true },
                         { "data": "post_thumbnail", "name": "post_thumbnail", "render": function(data) {
-                            return "<img src='"+data+"' style='height:20%;'>";
+                            return "<img src='"+data+"' style='height:200px;'>";
                         } },
                         { "data": "post_name", "name": "post_name", "orderable": true },
                         { "data": "post_category", "name": "post_category", "orderable": true },
@@ -125,8 +121,11 @@
                         { "data": "post_status", "name": "post_status", "orderable": true },
                         {
                             "data": "post_id", "render": function (data) {
-                                return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdPost('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
-                                 "<button id='myBtn' class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdPost('" + data + "') ><i class='fa fa-trash'></i>Delete</button>" ;
+                                return "<div class='row'><div class='col-lg-6'><button class='btn btn-block btn-primary' onclick=getEditIdPost('" + data + "') style='width=100%;' ><i class='fa fa-fw fa-edit'></i></button>" +
+                                    "</div>" + 
+                                    "<div class='col-lg-6'><button id='myBtn' class='btn btn-block btn-danger' onclick=getDelIdPost('" + data + "') style='width=100%;' ><i class='fa fa-trash'></i></button>" +
+								 "</div>" +
+								 "</div>";
                             },
 
                             "orderable": false,

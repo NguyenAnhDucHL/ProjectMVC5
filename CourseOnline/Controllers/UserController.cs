@@ -116,7 +116,10 @@ namespace CourseOnline.Controllers
                     string relative_path = "~/Path/" + "user"+ editUser.userID + ".png";
                     string path = Server.MapPath (relative_path);
                     System.IO.File.WriteAllBytes(path, hinhanh);
-                    Session["Picture"] = relative_path;
+                    if(Session["Email"].Equals(user.user_email))
+                    {
+                        Session["Picture"] = relative_path;
+                    }
                     if (user != null)
                     {
                         userRole.role_id = Convert.ToInt32(idRole);
@@ -164,6 +167,7 @@ namespace CourseOnline.Controllers
                     dynamic editUser = JValue.Parse(postJson);
                     string email = editUser.userMail;
                     int duplicate = (from checkuser in db.Users where checkuser.user_email == email select checkuser).Count();
+                    
                     if(duplicate == 0)
                     {
                         string roleName = editUser.userRole;

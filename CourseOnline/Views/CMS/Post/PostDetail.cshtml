@@ -171,7 +171,8 @@
             if (!isEnableEditingMode) {
                 // bat trang thai edit
                 $(".edit-field").each(
-                    function () { $(this).prop('disabled', false); isEnableEditingMode = true; }
+                    function () {
+                        $(this).prop('disabled', false); isEnableEditingMode = true;}
                 )
             } else {
                 // tat trang thai edit
@@ -209,6 +210,7 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit success");
+                        turnOnEditMode();
                     } else {
                         errorAlert("Submit failed");
                     }

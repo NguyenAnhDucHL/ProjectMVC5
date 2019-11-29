@@ -28,9 +28,14 @@
                         <div class="row tab-button">
                             <div class="form-group col-sm-5 col-sm-push-7">
                             </div>
-                            <div class="form-group col-sm-7 col-sm-pull-5">
-                                <label for="thumbnail">Choose new picture file</label>
-                                <input class="custom-input" type="file" id="thumbnail">
+                            <div class="tab-pane tab-image" id="photo">
+                                <img id="image_post" class="img-responsive pad" src="" alt="Photo">
+                                <div class="row tab-button">
+                                    <div class="form-group col-sm-5 col-sm-push-7">
+                                        <label for="exampleChange">Add/Change image</label>
+                                        <input onchange="readURL(this);" class="custom-input" type="file" id="exampleChange">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
