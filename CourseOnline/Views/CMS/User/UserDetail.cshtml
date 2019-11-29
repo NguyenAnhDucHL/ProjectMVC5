@@ -6,18 +6,16 @@
     var lstRole = ViewBag.Roles;
 }
 
+<h1>
+    User Details Edit
+</h1>
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href='@Url.Action("Index", "User")'>User List</a></li>
+    <li class="active">User details</li>
+</ol>
 <div class="content">
     <!-- Content Header (Page header) -->
-
-    <h1>
-        User Details
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href='@Url.Action("Index", "User")'>User List</a></li>
-        <li class="active">User details</li>
-    </ol>
-
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -127,11 +125,11 @@
                             </div>
                         </div>
                         <div class="tab-pane tab-image" id="photo">
-                            <img id ="image_user" class="img-responsive pad" src="@(userListModel.user_image == null ? "" : Url.Content(@userListModel.user_image))" alt="Photo">
+                            <img id="image_user" class="img-responsive pad" src="@(userListModel.user_image == null ? "" : Url.Content(@userListModel.user_image))" alt="Photo">
                             <div class="row tab-button">
                                 <div class="form-group col-sm-5 col-sm-push-7">
                                     <label for="exampleChange">Add/Change image</label>
-                                    <input  onchange="readURL(this);"  class="custom-input" type="file" id="exampleChange">
+                                    <input onchange="readURL(this);" class="custom-input" type="file" id="exampleChange">
                                 </div>
                             </div>
                         </div>
@@ -181,7 +179,7 @@
                 )
             }
         };
-    
+
 
         function submitUser() {
             var user = {

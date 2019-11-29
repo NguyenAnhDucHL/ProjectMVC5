@@ -155,8 +155,8 @@
                 reader.onload = function (e) {
                     $('#image_post')
                         .attr('src', e.target.result)
-                        .width(150)
-                        .height(200);
+                        .width(200)
+                        .height(300);
                 };
                 reader.readAsDataURL(input.files[0]);
             }
