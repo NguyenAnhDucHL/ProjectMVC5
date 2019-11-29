@@ -9,7 +9,9 @@ namespace CourseOnline.Models
     {
         public int questionID { get; set; }
         public string questiontext { get; set; }
+        public string subjectname { get; set; }
         public ICollection<AnswerModel> answers { get; set; }
+
     }
     public class AnswerModel
     {
