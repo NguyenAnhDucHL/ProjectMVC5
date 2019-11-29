@@ -117,7 +117,36 @@ namespace CourseOnline.Controllers
                 return Json(new { success = true, data = postList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
             }
         }
-
+        [HttpPost]
+        public ActionResult SearchByName(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var postList = (from p in db.Posts
+                                where p.post_name.Contains(type)
+                                select new
+                                {
+                                    p.post_id,
+                                    p.post_thumbnail,
+                                    p.post_name,
+                                    p.post_category,
+                                    p.post_type,
+                                    p.post_brief_info,
+                                    p.post_status,
+                                    p.post_detail_info,
+                                }).ToList();
+                int totalrows = postList.Count;
+                int totalrowsafterfiltering = postList.Count;
+                postList = postList.Skip(start).Take(length).ToList();
+                postList = postList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = postList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
         [HttpGet]
         public ActionResult PostDetail(int id)
         {
