@@ -112,41 +112,74 @@ namespace CourseOnline.Controllers
                     var idRole = db.Roles.Where(r => r.role_name == roleName).Select(r => r.role_id).FirstOrDefault();
                     string imageValue = editUser.userImage;
                     var ava = imageValue.Substring(imageValue.IndexOf(",")+1);
-                    var hinhanh = Convert.FromBase64String(ava);
-                    string relative_path = "~/Path/" + "user"+ editUser.userID + ".png";
-                    string path = Server.MapPath (relative_path);
-                    System.IO.File.WriteAllBytes(path, hinhanh);
-                    if(Session["Email"].Equals(user.user_email))
+                    if(ava == "/Path/" + "user"+ editUser.userID + ".png")
                     {
-                        Session["Picture"] = relative_path;
-                    }
-                    if (user != null)
-                    {
-                        userRole.role_id = Convert.ToInt32(idRole);
-                        userRole.user_id = id;
-                        user.user_fullname = editUser.userName;
-                        user.user_email = editUser.userMail;
-                        user.use_mobile = editUser.userMobile;
-                        user.user_position = editUser.userPosition;
-                        user.user_description = editUser.userDescription;
-                        user.check_recieveInformation = editUser.userCheckReceive;
-                        user.user_gender = editUser.userGender;
-                        user.user_image = relative_path;
-                        temp = editUser.userStatus;
-                        if (temp.Equals("Active"))
+                        if (user != null)
                         {
-                            user.user_status = true;
+                            userRole.role_id = Convert.ToInt32(idRole);
+                            userRole.user_id = id;
+                            user.user_fullname = editUser.userName;
+                            user.user_email = editUser.userMail;
+                            user.use_mobile = editUser.userMobile;
+                            user.user_position = editUser.userPosition;
+                            user.user_description = editUser.userDescription;
+                            user.check_recieveInformation = editUser.userCheckReceive;
+                            user.user_gender = editUser.userGender;
+                            user.user_image = editUser.userImage;
+                            temp = editUser.userStatus;
+                            if (temp.Equals("Active"))
+                            {
+                                user.user_status = true;
+                            }
+                            else
+                            {
+                                user.user_status = false;
+                            }
+                            db.SaveChanges();
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                         }
                         else
                         {
-                            user.user_status = false;
+                            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
                         }
-                        db.SaveChanges();
-                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-                    }
-                    else
+                    } else
                     {
-                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        var hinhanh = Convert.FromBase64String(ava);
+                        string relative_path = "/Path/" + "user" + editUser.userID + ".png";
+                        string path = Server.MapPath(relative_path);
+                        System.IO.File.WriteAllBytes(path, hinhanh);
+                        if (Session["Email"].Equals(user.user_email))
+                        {
+                            Session["Picture"] = relative_path;
+                        }
+                        if (user != null)
+                        {
+                            userRole.role_id = Convert.ToInt32(idRole);
+                            userRole.user_id = id;
+                            user.user_fullname = editUser.userName;
+                            user.user_email = editUser.userMail;
+                            user.use_mobile = editUser.userMobile;
+                            user.user_position = editUser.userPosition;
+                            user.user_description = editUser.userDescription;
+                            user.check_recieveInformation = editUser.userCheckReceive;
+                            user.user_gender = editUser.userGender;
+                            user.user_image = relative_path;
+                            temp = editUser.userStatus;
+                            if (temp.Equals("Active"))
+                            {
+                                user.user_status = true;
+                            }
+                            else
+                            {
+                                user.user_status = false;
+                            }
+                            db.SaveChanges();
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        }
                     }
                 }
             }

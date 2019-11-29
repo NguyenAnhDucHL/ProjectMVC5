@@ -147,7 +147,6 @@
 </div>
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
         $(function () {
             $("#check_receive").on('change', function () {
@@ -158,6 +157,12 @@
                 }
             })
         })
+    </script>
+    <script>
+        function ValidateEmail(email) {
+            var expr = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            return expr.test(email);
+        };
     </script>
     <script>
 
@@ -176,10 +181,11 @@
                 )
             }
         };
+    
 
         function submitUser() {
             var user = {
-                userID : @id,
+                userID: @id,
                 userName: $("#inputname").val(),
                 userMail: $("#inputEmail").val(),
                 userMobile: $("#inputMobile").val(),
@@ -193,7 +199,21 @@
             };
 
             var postJson = JSON.stringify(user);
+            var regex = /^\d+$/;
 
+            if ($("#inputname").val() == "") {
+                $("#inputname").css('border-color', 'red');
+                errorAlert("Name is not empty!");
+                return;
+            } else if (!ValidateEmail($("#inputEmail").val())) {
+                $("#inputEmail").css('border-color', 'red');
+                errorAlert("Email invalid!");
+                return;
+            } else if ($("#inputMobile").val().length < 10 || $("#inputMobile").val().length > 11 || !regex.test($("#inputMobile").val())) {
+                $("#inputMobile").css('border-color', 'red');
+                errorAlert("Please enter phone valid!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitUser","User")',
                 type: "POST",
@@ -201,13 +221,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit success");
-                        turnOnEditMode();
-                    } else {
-                        alert("submit fail");
+                        successAlert("submit success");
+                    }
+                    else {
+                        errorAlert("submit failed");
                     }
                 },
-                error: (response) => { alert("Error connection") }
+                error: (response) => { alert("Network error") }
             });
         };
 

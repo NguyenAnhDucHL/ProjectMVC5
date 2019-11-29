@@ -21,20 +21,17 @@
             <div class="box">
                 <!-- /.box-header -->
                 <div class="row">
-                    <div class="col-sm-2">
-                        <button id="btnAdd" type="submit" class="btn btn-block btn-primary" onclick='getAddUser()'>Add User</button>
-                    </div>
                     <div class="col-lg-7">
                         <div class="form-group">
                             <div class="row">
-                                <div class="col col-lg-3 col-md-3 col-sm-3">
+                                <div class="col-sm-2">
                                     <select id="sl_userStatus" class="form-control">
                                         <option>All Status</option>
                                         <option>Active</option>
                                         <option>Inactive</option>
                                     </select>
                                 </div>
-                                <div class="col col-lg-3 col-md-3 col-sm-3">
+                                <div class="col-sm-2">
                                     <select id="sl_userRoles" class="form-control">
                                         <option>All Roles</option>
                                         @{
@@ -49,17 +46,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-2 pull-right">
+                        <button type="button" class="btn btn-link" onclick="getAddUser()" style="float:right;">Add new</button>
+                    </div>
                     <div class="box-body">
-                        <table id="tb_user" class="table table-bordered table-striped">
+                        <table id="tb_user" class="table table-bordered table-striped table-responsive">
                             <thead>
                                 <tr>
-                                    <th class="table-width5">ID</th>
-                                    <th class="table-width20">Name</th>
-                                    <th class="table-width50">Email</th>
-                                    <th class="table-width5">Mobile</th>
-                                    <th class="table-width5">Roles</th>
-                                    <th class="table-width10">Status</th>
-                                    <th class="table-width20">Action</th>
+                                    <th>ID</th>
+                                    <th class="col-sm-2">Name</th>
+                                    <th class="col-sm-2">Email</th>
+                                    <th class="col-sm-2">Mobile</th>
+                                    <th class="col-sm-2">Roles</th>
+                                    <th class="col-sm-2">Status</th>
+                                    <th class="col-sm-1">Action</th>
                                 </tr>
                             </thead>
                         </table>
@@ -95,8 +95,11 @@
                 },
                 {
                     "data": "user_id", "render": function (data) {
-                            return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdUser('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
-                              "<button class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdUser('" + data + "') ><i class='fa fa-trash'></i>Delete</button>";
+                            return "<div class='row'><div class='col-lg-6'><a onclick=getEditIdUser('" + data + "') style='width=100%; cursor: pointer;' ><i class='fa fa-fw fa-edit'></i></a>" +
+                                    "</div>" + 
+                                    "<div class='col-lg-6 pull-left'><a id='myBtn' onclick=getDelIdUser('" + data + "') style='width=100%; cursor: pointer;' ><i class='fa fa-trash'></i></a>" +
+								 "</div>" +
+								 "</div>";
                     },
                     "orderable": false,
                     "searchable": false
