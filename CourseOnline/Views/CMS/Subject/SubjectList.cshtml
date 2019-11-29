@@ -22,10 +22,7 @@
             <div class="box">
                 <!-- /.box-header -->
                 <div class="row">
-                    <div class="col-sm-2">
-                        <button id="btnAdd" type="button" class="btn btn-block btn-primary" onclick='getAddSubject()'>Add new</button>
-                    </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2" style="margin-left : 10px; margin-top : 10px">
                         <select id="sl_subjectType" class="form-control">
                             <option>All type</option>
                             @{
@@ -36,7 +33,7 @@
                             }
                         </select>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2" style="margin-top : 10px">
                         <select id="sl_subjectCategory" class="form-control">
                             <option>All Category</option>
                             @{
@@ -47,7 +44,7 @@
                             }
                         </select>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2" style="margin-top : 10px">
                         <select id="sl_subjectStatus" class="form-control">
                             <option>All Status</option>
                             @{
@@ -57,6 +54,9 @@
                                 }
                             }
                         </select>
+                    </div>
+                    <div class="col-sm-2 pull-right">
+                        <button type="button" class="btn btn-link" onclick="getAddSubject()" style="float:right;">Add new</button>
                     </div>
                 </div>
                 <div class="box-body">
@@ -69,7 +69,7 @@
                                 <th>Category</th>
                                 <th>Lessons</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th class="col-sm-1">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -99,10 +99,13 @@
                 { "data": "subject_category", "name": "subject_category", "orderable": true },
                 { "data": "lesson_count", "name": "lesson_count", "orderable": true },
                 { "data": "subject_status", "name": "subject_status", "orderable": true },
-                {
+                {   
                     "data": "subject_id", "render": function (data) {
-                        return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdSubject('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
-                            "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getSubjectLesson('" + data + "') ><i class='fa fa-file'></i>Lessons</button>";
+                        return "<div class='row'><div class='col-sm-6'><a onclick=getEditIdSubject('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>" +
+                                    "</div>" + 
+                                    "<div class='col-sm-6'><a onclick=getSubjectLesson('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Lessons'><i class='fa fa-file'></i></a>" +
+								 "</div>" +
+								 "</div>";
                     },
                     "orderable": false,
                     "searchable": false

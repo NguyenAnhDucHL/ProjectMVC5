@@ -8,9 +8,11 @@
     List<Lesson> listLesson = ViewBag.lessonName;
     var listLevel = ViewBag.levelName;
     var listStatus = ViewBag.statusName;
+    List<AnswerOption> lstAnswer = ViewBag.answers;
     int id = ViewBag.id;
+    int count = 0;
 }
-
+<input id="giang" value="@count" />
 <section class="content-header">
     <h1>
         Question Details
@@ -100,24 +102,33 @@
                         <div class="col-sm-2">
                             <button type="submit" class="btn btn-primary" onclick='getAddOptionQuestion()'>Add Option</button>
                         </div>
+                        <div class="col-sm-2" style="margin-left : 380px">
+                            <label>Is Key?</label>
+                        </div>
+                        <div class="col-sm-1" style="margin-left : -80px">
+                            <label>Action</label>
+                        </div>
                     </div>
                     <table class="table table-bordered" id="optionTable">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th>Is Key?</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Option 1</td>
-                                <td><input type="text" class="col-lg-10" placeholder="Option 1"></td>
-                                <td><input type="checkbox" class="form-group"></td>
-                                <td><button type="submit" class="btn btn-danger btnDelete" >Delete</button></td>
-                            </tr>
-                        </tbody>
+                        @foreach (AnswerOption answer in lstAnswer)
+                        {
+                            count++;
+                            <tbody>
+                                <tr>
+                                    <td>Option</td>
+                                    <td><input id="@string.Format("{0}{1}", "optionText",count)" type="text" class="col-lg-10" value="@answer.answer_text"></td>
+                                    @if (answer.answer_corect == true)
+                                    {
+                                        <td><input  type="radio" id="@string.Format("{0}{1}", "optionsCheck",count)" name="@string.Format("{0}{1}", "optionsCheckName",count)" class="form-group" checked></td>
+                                    }
+                                    else
+                                    {
+                                        <td><input type="radio" id="@string.Format("{0}{1}", "optionsCheck",count)" name="@string.Format("{0}{1}", "optionsCheckName",count)" class="form-group"></td>
+                                    }
+                                    <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
+                                </tr>
+                            </tbody>
+                        }
                     </table>
                     <button class="btn btn-info" style="margin-top : 20px" onclick="turnOnEditMode()">Edit</button>
                     <button type="submit" disabled class="btn btn-danger edit-field" style="margin-top : 20px" onclick="SubmitEditQuestion()">Submit</button>
@@ -131,9 +142,14 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
+
+         $('#giang').val(@count);
         $(document).ready(function () {
             removeOption();
             setValueForComboBox();
+        $('input[type=radio]').change(function() {
+        $('input[type=radio]:checked').not(this).prop('checked', false);
+        });
     });
         // dat gia tri cho comb box bang jquerry
         function setValueForComboBox() {
@@ -162,25 +178,37 @@
         function getAddOptionQuestion() {
 
              row ="<tr>" +
-                              "  <td>Option 1</td>" +
-                             "   <td><input type=\"text\" class=\"col-lg-10\" placeholder=\"Option 1\"></td> " +
-                              "  <td><input type=\"checkbox\" class=\"form-group\"></td> " +
+                              "  <td>Option </td>" +
+                             "   <td><input type=\"text\" class=\"col-lg-10\" placeholder=\"Option\"></td> " +
+                              "  <td><input type=\"radio\" class=\"form-group\" name=\"optionsCheck\"></td> " +
                               "  <td><button type=\"submit\" class=\"btn btn-danger btnDelete\" >Delete</button></td>" +
                            " </tr>"
             $('#optionTable > tbody:last-child').append(row);
-
+              var giiang =  +$('#giang').val() + 1;
+            $('#giang').val(giiang);
         };
 
         function removeOption() {
              $("#optionTable").on('click','.btnDelete',function(){
-            $(this).closest('tr').remove();
+                 $(this).closest('tr').remove();
+            var giiang =  +$('#giang').val() - 1;
+            $('#giang').val(giiang);
      });
-        }
+        };
 
 
 
     //bat su kien submit
         function SubmitEditQuestion() {
+            var testAnswer= [];
+            var answerOption = {};
+            for (var i = 1; i <= $('#giang').val(); i++) {
+                answerOption = {
+                    answer_text: $('#optionText' + i).val(),
+                    answer_corect: $('input[name=optionsCheckName'+ i +']:checked').val(),
+                }
+                testAnswer.push(answerOption);
+            }
             var ques = {
                 id : @id,
                 quesStatus: $("#sl_questionStatus").val(),
@@ -188,12 +216,13 @@
                 quesName: $("#inp_quesName").val(),
             };
 
-            var postJson = JSON.stringify(ques);
 
+            var postJson = JSON.stringify(ques);
+            var postJson2 = JSON.stringify(testAnswer);
             $.ajax({
                 url: '@Url.Action("SubmitQuestion","Question")',
                 type: "POST",
-                data: { postJson : postJson },
+                data: { postJson: postJson,postJson2 : postJson2},
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {

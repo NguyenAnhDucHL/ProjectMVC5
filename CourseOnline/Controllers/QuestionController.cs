@@ -228,26 +228,58 @@ namespace CourseOnline.Controllers
                 var listLevel = db.Questions.Select(q => q.question_level).Distinct().ToList();
                 ViewBag.levelName = listLevel;
 
+                var lstAnswer = db.AnswerOptions.Where(ao => ao.question_id == id).ToList();
+                ViewBag.answers = lstAnswer;
                 ViewBag.id = id;
                 return View("/Views/CMS/Question/QuestionEditting.cshtml");
             }
         }
         [HttpPost]
-        public ActionResult SubmitQuestion(string postJson)
+        public ActionResult SubmitQuestion(string postJson, string postJson2)
         {
             try
             {
                 using (STUDYONLINEEntities db = new STUDYONLINEEntities())
                 {
                     dynamic edtQues = JValue.Parse(postJson);
+                    dynamic edtQues2 = JValue.Parse(postJson2);
                     int id = edtQues.id;
 
                     Question q = db.Questions.Where(ques => ques.question_id == id).FirstOrDefault();
-                    if (q != null)
+                    List<AnswerOption> answerOptions = db.AnswerOptions.Where(a => a.question_id == id).ToList();
+                    foreach(AnswerOption answerOption in answerOptions)
                     {
+                        db.AnswerOptions.Remove(answerOption);
+                        db.SaveChanges();
+                    }
+                    List<AnswerOption> answerOptionsNew = new List<AnswerOption>();
+                    if (q != null && answerOptions != null)
+                    {
+                        
                         q.question_name = edtQues.quesName;
                         q.question_level = edtQues.quesLevel;
                         q.question_status = edtQues.quesStatus;
+                        
+                        foreach(var e in edtQues2)
+                        {
+                            AnswerOption answeroption = new AnswerOption();
+                            answeroption.answer_text = e.answer_text ;
+                            if(e.answer_corect == "on")
+                            {
+                                answeroption.answer_corect = true;
+                            }
+                            else
+                            {
+                                answeroption.answer_corect = false;
+                            }
+                            answeroption.question_id = id;
+                            answerOptionsNew.Add(answeroption);
+
+                        }
+                        foreach (AnswerOption answerOption in answerOptionsNew)
+                        {
+                            db.AnswerOptions.Add(answerOption);
+                        }
                         db.SaveChanges();
                         return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                     }

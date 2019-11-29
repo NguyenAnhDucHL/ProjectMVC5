@@ -20,30 +20,30 @@
             <div class="box">
                 <!-- /.box-header -->
                 <div class="row">
-                    <div class="col-sm-2">
-                        <button id="btnAdd" type="button" class="btn btn-block btn-primary" onclick='getAddLesson()'>Add Lesson</button>
-                    </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2" style="margin-left : 10px; margin-top : 10px">
                         <select id="sl_lessonStatus" class="form-control">
                             <option>All Status</option>
                             <option>Active</option>
                             <option>Inactive</option>
                         </select>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <label><h5>Subject: <b>@{@ViewBag.Subject.subject_name}</b></h5></label>
+                    </div>
+                    <div class="col-sm-2 pull-right">
+                        <button type="button" class="btn btn-link" onclick="getAddLesson()" style="float:right;">Add Lesson</button>
                     </div>
                 </div>
                 <div class="box-body">
                     <table id="tb_subject_lesson" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th class="table-width5">ID</th>
-                                <th class="table-width20">Lesson</th>
-                                <th class="table-width50">Order</th>
-                                <th class="table-width5">Type</th>
-                                <th class="table-width5">Status</th>
-                                <th class="table-width10">Action</th>
+                                <th>ID</th>
+                                <th>Lesson</th>
+                                <th>Order</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th class="col-sm-1">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -58,7 +58,7 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
         var dataTable;
-    $(document).ready(function() {
+        $(document).ready(function () {
         dataTable = $('#tb_subject_lesson').DataTable({
             "ajax": {
                 "url": '@Url.Action("GetAllSubjectLesson", "SubjectLesson")',
@@ -76,10 +76,13 @@
                         if (data == 1) return "Active"
                         else return "Inactive"}
                 },
-                {
+                {   
                     "data": "lesson_id", "render": function (data) {
-                            return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdLesson('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
-                              "<button class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdLesson('" + data + "') ><i class='fa fa-trash'></i>Delete</button>";
+                           return "<div class='row'><div class='col-sm-6'><a onclick=getEditIdLesson('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>" +
+                                    "</div>" + 
+                                    "<div class='col-sm-6'><a onclick=getDelIdLesson('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Delete'><i class='fa fa-trash'></i></a>" +
+								 "</div>" +
+								 "</div>";
                     },
                     "orderable": false,
                     "searchable": false

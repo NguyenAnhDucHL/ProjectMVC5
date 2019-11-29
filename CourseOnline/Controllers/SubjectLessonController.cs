@@ -182,10 +182,6 @@ namespace CourseOnline.Controllers
                     {
                         int id_new = db.Lessons.DefaultIfEmpty().Max(les => les == null ? 0 : les.lesson_id);
                         l.parent_id = id_new + 1;
-                        //String query = "UPDATE Lesson set parent_id = @lesson_id where parent_id = 0";
-                        //db.Database.ExecuteSqlCommand(query,
-                        //    new SqlParameter("lesson_id", id_new + 1)
-                        //    );
                         db.Lessons.Add(l);
                         db.SaveChanges();
                     }
