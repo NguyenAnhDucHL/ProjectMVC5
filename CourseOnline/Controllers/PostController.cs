@@ -183,16 +183,15 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Post/AddPost.cshtml");
             }
         }
-
         [ValidateInput(false)]
         [HttpPost]
-        public ActionResult SubmitPost(string postJson )
+        public ActionResult SubmitPost(string postJson)
         {
             try
             {
                 using (STUDYONLINEEntities db = new STUDYONLINEEntities())
                 {
-                    
+
                     dynamic edtpost = JValue.Parse(postJson);
                     int id = edtpost.id;
                     Post p = db.Posts.Where(pp => pp.post_id == id).FirstOrDefault();
@@ -217,7 +216,8 @@ namespace CourseOnline.Controllers
                         {
                             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
                         }
-                    } else
+                    }
+                    else
                     {
                         var hinhanh = Convert.FromBase64String(ava);
                         string relative_path = "/Assets/dist/img/" + "post" + edtpost.id + ".png";
@@ -257,13 +257,13 @@ namespace CourseOnline.Controllers
             {
                 using (STUDYONLINEEntities db = new STUDYONLINEEntities())
                 {
-                    Random rnd = new Random();
+                    int temp = db.Posts.DefaultIfEmpty().Max(pos => pos == null ? 0 : pos.post_id);
+                    int id_new = temp + 1;
                     dynamic edtpost = JValue.Parse(postJson);
                     string imageValue = edtpost.postThumbnail;
                     var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
                     var hinhanh = Convert.FromBase64String(ava);
-                    int num = rnd.Next(1000);
-                    string relative_path = "/Assets/dist/img/" + "post" + num + ".png";
+                    string relative_path = "/Assets/dist/img/" + "post" + id_new + ".png";
                     string path = Server.MapPath(relative_path);
                     System.IO.File.WriteAllBytes(path, hinhanh);
                     Post p = new Post();
@@ -326,26 +326,5 @@ namespace CourseOnline.Controllers
             return Json(new { success = true, data = detailPost, draw = Request["draw"] }, JsonRequestBehavior.AllowGet);
 
         }
-
-        //[HttpPost]
-        //public ActionResult getDetailPost()
-        //{
-        //    STUDYONLINEEntities db = new STUDYONLINEEntities();
-
-        //    var detailPost = (from p in db.Posts
-        //                      select new
-        //                      {
-        //                          post_name = p.post_name
-        //                      });
-        //    return Json(new { success = true, data = detailPost, draw = Request["draw"] }, JsonRequestBehavior.AllowGet);
-
-        //}
-
-
-
-
-
-
-
     }
 }
