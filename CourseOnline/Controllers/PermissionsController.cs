@@ -45,6 +45,35 @@ namespace CourseOnline.Controllers
                 return Json(new { success = true, data = permissionList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpPost]
+        public ActionResult SearchByName(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var permissionList = (from p in db.Permissions
+                                   where p.permission_name.Contains(type)
+                                   select new
+                                   {
+                                       p.permission_id,
+                                       p.permission_name,
+                                       p.permission_link,
+                                       p.permission_status,
+                                       p.permission_describe,
+                                   }).ToList();
+                int totalrows = permissionList.Count;
+                int totalrowsafterfiltering = permissionList.Count;
+                permissionList = permissionList.Skip(start).Take(length).ToList();
+                permissionList = permissionList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = permissionList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpGet]
         public ActionResult PermissionsDetail(int id)
         {

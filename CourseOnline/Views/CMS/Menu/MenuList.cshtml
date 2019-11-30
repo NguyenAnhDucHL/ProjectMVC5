@@ -20,27 +20,32 @@
             <div class="box">
                 <!-- /.box-header -->
                 <div class="row">
-                    <div class="col-sm-2">
-                        <button id="btnAdd" type="submit" class="btn btn-block btn-primary" onclick='getAddMenu()'>Add Menu</button>
-                    </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2" style="margin-left : 10px; margin-top : 10px">
                         <select id="sl_menuStatus" class="form-control">
                             <option>All Status</option>
                             <option>Active</option>
                             <option>Inactive</option>
                         </select>
                     </div>
+                    <div class="col-sm-4" style="margin-top : 10px">
+                        Search:
+                        <input type="text" placeholder="Search" id="inp_search" style="height:34px; margin-left:10px;" />
+                        <a onclick="doSearch()" style="cursor: pointer;" data-toggle='tooltip' title='Search'><i class='fa fa-fw fa-search'></i></a>
+                    </div>
+                    <div class="col-sm-2 pull-right">
+                        <button type="button" class="btn btn-link" onclick="getAddMenu()" style="float:right;">Add Menu</button>
+                    </div>
                 </div>
                 <div class="box-body">
                     <table id="tb_menu" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th class="table-width5">ID</th>
-                                <th class="table-width20">Menu</th>
-                                <th class="table-width50">Link</th>
-                                <th class="table-width5">Order</th>
-                                <th class="table-width5">Status</th>
-                                <th class="table-width10">Action</th>
+                                <th>ID</th>
+                                <th>Menu</th>
+                                <th>Link</th>
+                                <th>Order</th>
+                                <th>Status</th>
+                                <th class="col-sm-1">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -72,10 +77,13 @@
                         if (data == 1) return "Active"
                         else return "Inactive"}
                 },
-                {
+                { 
                     "data": "menu_id", "render": function (data) {
-                            return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdMenu('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
-                              "<button class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdMenu('" + data + "') ><i class='fa fa-trash'></i>Delete</button>";
+                            return "<div class='row'><div class='col-sm-6'><a onclick=getEditIdMenu('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>" +
+                                    "</div>" + 
+                                    "<div class='col-sm-6'><a onclick=getDelIdMenu('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Delete'><i class='fa fa-trash'></i></a>" +
+								 "</div>" +
+								 "</div>";
                     },
                     "orderable": false,
                     "searchable": false
@@ -88,8 +96,20 @@
         "order": [[0, "asc"]],
         "searching": false
        });
-       filterListener();
+        //them su kien cho filter
+        filterListener();
+        //them su kien cho search
+        doSearch()
     });
+
+    //bat su kien search
+        function doSearch() {
+            
+            $('#inp_search').on('change', function (e) {
+                var valueSelected = this.value;
+                dataTable.ajax.url('@Url.Action("SearchByName","Menu")' + '?type=' + valueSelected).load(function (response) { });
+            });
+        }
 
     function filterListener() {
              $('#sl_menuStatus').on('change', function (e) {
@@ -114,7 +134,7 @@
 
     function getDelIdMenu(id) {
             if (id != null) {
-                confirmAlert('Delete', 'Confirm Delete', function submit() {
+                confirmAlert('Delete', 'Do you want to delete?', function submit() {
                     $.ajax({
                         url:'@Url.Action("deleteMenu","Menu")',
                         type: "POST",

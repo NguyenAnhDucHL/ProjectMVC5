@@ -48,6 +48,36 @@ namespace CourseOnline.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult SearchByName(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var settingList = (from s in db.Settings
+                                where s.setting_name.Contains(type)
+                                || s.setting_group_value.Contains(type)
+                                select new
+                                {
+                                    s.setting_id,
+                                    s.setting_group_value,
+                                    s.setting_name,
+                                    s.setting_order,
+                                    s.setting_description,
+                                    s.setting_status
+                                }).ToList();
+                int totalrows = settingList.Count;
+                int totalrowsafterfiltering = settingList.Count;
+                settingList = settingList.Skip(start).Take(length).ToList();
+                settingList = settingList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = settingList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpGet]
         public ActionResult AddSetting()
         {

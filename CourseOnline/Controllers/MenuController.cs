@@ -41,6 +41,35 @@ namespace CourseOnline.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult SearchByName(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var menuList = (from m in db.Menus
+                                   where m.menu_name.Contains(type)
+                                   select new
+                                   {
+                                       m.menu_id,
+                                       m.menu_name,
+                                       m.menu_link,
+                                       m.menu_order,
+                                       m.menu_status,
+                                       m.menu_description,
+                                   }).ToList();
+                int totalrows = menuList.Count;
+                int totalrowsafterfiltering = menuList.Count;
+                menuList = menuList.Skip(start).Take(length).ToList();
+                menuList = menuList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = menuList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         //filter by status
         [HttpPost]
         public ActionResult FilterByMenuStatus(string type)
