@@ -23,28 +23,28 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" id="inp_name">
+                        <input type="text" class="form-control edit-field" id="inp_name">
                     </div>
                     <div class="form-group">
                         <label>Link</label>
-                        <input type="text" class="form-control" id="inp_link">
+                        <input type="text" class="form-control edit-field" id="inp_link">
                     </div>
                     <div class="form-group">
                         <label>Order</label>
-                        <input type="text" class="form-control" id="inp_order">
+                        <input type="text" class="form-control edit-field" id="inp_order">
                     </div>
                     <div class="form-group">
                         <label>Status</label>
-                        <select id="sl_menuStatus" class="form-control">
+                        <select id="sl_menuStatus" class="form-control edit-field">
                             <option>Active</option>
                             <option>Inactive</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Short description</label>
-                        <textarea class="form-control" rows="3" id="inp_shortDes"></textarea>
+                        <textarea class="form-control edit-field" rows="3" id="inp_shortDes"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-info" onclick="SubmitAddMenu()">Submit</button>
+                    <button type="submit" class="btn btn-info edit-field" onclick="SubmitAddMenu()">Submit</button>
                     <button type="submit" class="btn btn-info" onclick='getBackMenuList()'>Back</button>
                 </div>
             </div>
@@ -65,7 +65,13 @@
         $(document).ready(function () {
 
     });
-
+        var isEnableEditingMode = true;
+        function turnOnEditMode() {
+                // bat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', true); isEnableEditingMode = true; }
+                )
+        };
 
         function SubmitAddMenu() {
             var menu = {
@@ -77,6 +83,16 @@
             };
 
             var postJson = JSON.stringify(menu);
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            } else if ($("#inp_link").val() == "") {
+                errorAlert("Link not empty!");
+                return;
+            } else if ($.isNumeric($("#inp_order").val()) == false) {
+                errorAlert("Order is must number!");
+                return;
+            }
 
             $.ajax({
                 url: '@Url.Action("SubmitAddMenu","Menu")',
@@ -85,12 +101,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit success");
+                        successAlert("Submit Success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit failed");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("Error") }
+                error: (response) => { alert("Opps!! Something wrong!") }
             });
         };
 

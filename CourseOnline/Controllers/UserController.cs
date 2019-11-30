@@ -55,6 +55,38 @@ namespace CourseOnline.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult SearchByName(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var userList = (from ur in db.UserRoles
+                                join u in db.Users on ur.user_id equals u.user_id
+                                join r in db.Roles on ur.role_id equals r.role_id
+                                where u.user_fullname.Contains(type)
+                                   select new
+                                   {
+                                       user_id = u.user_id,
+                                       user_fullname = u.user_fullname,
+                                       user_email = u.user_email,
+                                       use_mobile = u.use_mobile,
+                                       user_gender = u.user_gender,
+                                       user_status = u.user_status,
+                                       role_name = r.role_name
+                                   }).ToList();
+                int totalrows = userList.Count;
+                int totalrowsafterfiltering = userList.Count;
+                userList = userList.Skip(start).Take(length).ToList();
+                userList = userList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = userList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpGet]
         public ActionResult UserDetail(int id)
         {

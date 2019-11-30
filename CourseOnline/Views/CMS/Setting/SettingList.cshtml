@@ -22,10 +22,7 @@
             <div class="box">
                 <!-- /.box-header -->
                 <div class="row">
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-block btn-primary" onclick='getAddSetting()'>Add new</button>
-                    </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2" style="margin-left : 10px; margin-top : 10px">
                         <select id="sl_settingGroup" class="form-control">
                             <option>All setting types</option>
                             @{
@@ -36,24 +33,32 @@
                             }
                         </select>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2" style="margin-top : 10px">
                         <select id="sl_settingStatus" class="form-control">
                             <option>All Status</option>
                             <option>Active</option>
                             <option>Inactive</option>
                         </select>
                     </div>
+                    <div class="col-sm-4" style="margin-top : 10px">
+                        Search:
+                        <input type="text" placeholder="Search" id="inp_search" style="height:34px; margin-left:10px;" />
+                        <a onclick="doSearch()" style="cursor: pointer;" data-toggle='tooltip' title='Search'><i class='fa fa-fw fa-search'></i></a>
+                    </div>
+                    <div class="col-sm-2  pull-right">
+                        <button type="button" class="btn btn-link" onclick="getAddSetting()" style="float:right;">Add new</button>
+                    </div>
                 </div>
                 <div class="box-body">
                     <table id="tb_setting" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th class="table-width5">ID</th>
-                                <th class="table-width20">Group</th>
-                                <th class="table-width50">Name</th>
-                                <th class="table-width5">Order</th>
-                                <th class="table-width5">Status</th>
-                                <th class="table-width10">Action</th>
+                                <th>ID</th>
+                                <th>Group</th>
+                                <th>Name</th>
+                                <th>Order</th>
+                                <th>Status</th>
+                                <th class="col-sm-1">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -84,10 +89,13 @@
                         if (data == 1) return "Active"
                         else return "Inactive"}
                 },
-                {
+                { 
                     "data": "setting_id", "render": function (data) {
-                                return "<button class='btn btn-block btn-primary' style='margin-left:5px' onclick=getEditSetting('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
-                                 "<button id='myBtn' class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdSetting('" + data + "') ><i class='fa fa-trash'></i>Delete</button>" ;
+                                return "<div class='row'><div class='col-sm-6'><a onclick=getEditSetting('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>" +
+                                    "</div>" + 
+                                    "<div class='col-sm-6'><a onclick=getDelIdSetting('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Delete'><i class='fa fa-trash'></i></a>" +
+								 "</div>" +
+								 "</div>";
                             },
                     "orderable": false,
                     "searchable": false
@@ -102,7 +110,18 @@
             });
             //them su kien cho filter
             filterListener()
+            //them su kien cho search
+            doSearch()
     });
+
+    //bat su kien search
+        function doSearch() {
+            
+            $('#inp_search').on('change', function (e) {
+                var valueSelected = this.value;
+                dataTable.ajax.url('@Url.Action("SearchByName","Setting")' + '?type=' + valueSelected).load(function (response) { });
+            });
+        }
 
     function doFilter() {
                 var valueSelected = {

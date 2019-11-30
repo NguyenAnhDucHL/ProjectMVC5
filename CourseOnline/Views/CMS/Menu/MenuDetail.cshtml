@@ -95,6 +95,16 @@
             };
 
             var postJson = JSON.stringify(menu);
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            } else if ($("#inp_link").val() == "") {
+                errorAlert("Link not empty!");
+                return;
+            } else if ($.isNumeric($("#inp_order").val()) == false) {
+                errorAlert("Order is must number!");
+                return;
+            }
 
             $.ajax({
                 url: '@Url.Action("SubmitEditMenu","Menu")',
@@ -103,13 +113,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit success");
+                        successAlert("Submit Success");
                         turnOnEditMode();
                     } else {
-                        alert("submit failed");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("Error") }
+                error: (response) => { alert("Opps!! Something wrong!") }
             });
         };
 

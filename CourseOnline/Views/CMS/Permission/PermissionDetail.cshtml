@@ -92,6 +92,13 @@
             };
 
             var postJson = JSON.stringify(permission);
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            } else if ($("#inp_link").val() == "") {
+                errorAlert("Link not empty!");
+                return;
+            }
 
             $.ajax({
                 url: '@Url.Action("SubmitEditPermission","Permissions")',
@@ -100,13 +107,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit success");
+                        successAlert("Submit Success");
                         turnOnEditMode();
                     } else {
-                        alert("submit error");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("network error") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 
