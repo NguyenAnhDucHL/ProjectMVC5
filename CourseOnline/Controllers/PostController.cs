@@ -209,7 +209,7 @@ namespace CourseOnline.Controllers
                             p.post_category = edtpost.postCategory;
                             p.post_detail_info = edtpost.postDetailInfo;
                             p.post_status = edtpost.postStatus;
-
+                            p.post_date = DateTime.Now.ToString();
                             db.SaveChanges();
                             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                         }
@@ -276,6 +276,7 @@ namespace CourseOnline.Controllers
                         p.post_category = edtpost.postCategory;
                         p.post_detail_info = edtpost.postDetailInfo;
                         p.post_status = edtpost.postStatus;
+                        p.post_date = DateTime.Now.ToString();
                         db.Posts.Add(p);
                         db.SaveChanges();
                         return Json(new { success = true }, JsonRequestBehavior.AllowGet);

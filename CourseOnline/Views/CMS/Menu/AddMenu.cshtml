@@ -9,7 +9,7 @@
         Menu Details
     </h1>
     <ol class="breadcrumb">
-        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Menu")'>Menus List</a></li>
         <li class="active">Menu Details</li>
     </ol>
@@ -83,13 +83,14 @@
             };
 
             var postJson = JSON.stringify(menu);
+            var regex = /^\d+$/;
             if ($("#inp_name").val() == "") {
                 errorAlert("Name not empty!");
                 return;
             } else if ($("#inp_link").val() == "") {
                 errorAlert("Link not empty!");
                 return;
-            } else if ($.isNumeric($("#inp_order").val()) == false) {
+            } else if (!regex.test($("#inp_order").val())) {
                 errorAlert("Order is must number!");
                 return;
             }

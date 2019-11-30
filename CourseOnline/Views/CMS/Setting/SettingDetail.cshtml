@@ -9,7 +9,7 @@
         Setting Details
     </h1>
     <ol class="breadcrumb">
-        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Setting")'>Settings List</a></li>
         <li class="active">Setting Details</li>
     </ol>
@@ -82,10 +82,11 @@
                 settingDescription: $("#text_description").val()
             };
             var postJson = JSON.stringify(setting);
+            var regex = /^\d+$/;
             if ($("#inp_settingName").val() == "") {
                 errorAlert("Name not empty!");
                 return;
-            } else if ($.isNumeric($("#inp_order").val()) == false) {
+            } else if (!regex.test($("#inp_order").val())) {
                 errorAlert("Order is must number!");
                 return;
             }

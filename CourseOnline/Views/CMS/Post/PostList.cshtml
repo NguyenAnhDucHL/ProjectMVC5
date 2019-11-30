@@ -13,19 +13,17 @@
         Posts List
     </h1>
     <ol class="breadcrumb">
-        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Home_CMS", "Home")'><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Posts List</li>
     </ol>
 </section>
 <!-- Main content -->
 <section class="content">
-
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <!-- /.box-header -->
                 <div class="row">
-                    <div class="col-sm-2">
+                    <div class="col-sm-2" style="margin-left : 10px; margin-top : 10px">
                         <select id="sl_postType" class="form-control">
                             <option>All type</option>
                             @{
@@ -36,7 +34,7 @@
                             }
                         </select>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2" style="margin-top : 10px">
                         <select id="sl_postCategory" class="form-control">
                             <option>All Category</option>
                             @{
@@ -47,7 +45,7 @@
                             }
                         </select>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2" style="margin-top : 10px">
                         <select id="sl_postStatus" class="form-control">
                             <option>All Status</option>
                             @{
@@ -58,17 +56,16 @@
                             }
                         </select>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3" style="margin-top : 10px">
                         Search:
                         <input type="text" placeholder="Search for name" id="inp_search" style="height:34px; margin-left:10px;" />
-                        <a onclick="doSearch()" style="cursor: pointer;"><i class='fa fa-fw fa-search'></i></a>
+                        <a onclick="doSearch()" style="cursor: pointer;" data-toggle='tooltip' title='Search'><i class='fa fa-fw fa-search'></i></a>
                     </div>
-                    <div class="col-lg-2 pull-right">
+                    <div class="col-sm-2 pull-right">
                         <button type="button" class="btn btn-link" onclick="getAddPost()" style="float:right;">Add new</button>
                     </div>
                 </div>
-            </div>
-                </div>
+
                 <div class="box-body table-responsive">
                     <table id="tb_post" class="table table-bordered table-striped table-responsive">
                         <thead>
@@ -84,9 +81,9 @@
                         </thead>
                     </table>
                 </div>
-                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
+        </div>
+    </div>
 </section>
 
 @section scripts{
@@ -120,9 +117,9 @@
                         { "data": "post_status", "name": "post_status", "orderable": true },
                         {
                             "data": "post_id", "render": function (data) {
-                                return "<div class='row'><div class='col-lg-6'><a onclick=getEditIdPost('" + data + "') style='width=100%; cursor: pointer;' ><i class='fa fa-fw fa-edit'></i></a>" +
-                                    "</div>" + 
-                                    "<div class='col-lg-6 pull-left'><a id='myBtn' onclick=getDelIdPost('" + data + "') style='width=100%; cursor: pointer;' ><i class='fa fa-trash'></i></a>" +
+                                return "<div class='row'><div class='col-lg-6'><a onclick=getEditIdPost('" + data + "') style='width=100%; cursor: pointer;' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>" +
+                                    "</div>" +
+                                    "<div class='col-lg-6 pull-left'><a id='myBtn' onclick=getDelIdPost('" + data + "') style='width=100%; cursor: pointer;' data-toggle='tooltip' title='Delete'><i class='fa fa-trash'></i></a>" +
 								 "</div>" +
 								 "</div>";
                             },
@@ -146,7 +143,7 @@
     });
         //bat su kien search
         function doSearch() {
-            
+
             $('#inp_search').on('change', function (e) {
                 var valueSelected = this.value;
                 dataTable.ajax.url('@Url.Action("SearchByName","Post")' + '?type=' + valueSelected).load(function (response) { });
@@ -214,32 +211,6 @@
                 });
             }
         }
-
-        //// Get the modal
-        //var modal = document.getElementById("myModal");
-
-        //// Get the button that opens the modal
-        //var btn = document.getElementById("myBtn");
-
-        //// Get the <span> element that closes the modal
-        //var span = document.getElementsByClassName("close")[0];
-
-        //// When the user clicks the button, open the modal
-        //btn.onclick = function () {
-        //    modal.style.display = "block";
-        //}
-
-        //// When the user clicks on <span> (x), close the modal
-        //span.onclick = function () {
-        //    modal.style.display = "none";
-        //}
-
-        //// When the user clicks anywhere outside of the modal, close it
-        //window.onclick = function (event) {
-        //    if (event.target == modal) {
-        //        modal.style.display = "none";
-        //    }
-
     </script>
 }
 

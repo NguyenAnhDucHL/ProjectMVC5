@@ -196,15 +196,12 @@
             var regex = /^\d+$/;
 
             if ($("#inputname").val() == "") {
-                $("#inputname").css('border-color', 'red');
                 errorAlert("Name is not empty!");
                 return;
             } else if (!ValidateEmail($("#inputEmail").val())) {
-                $("#inputEmail").css('border-color', 'red');
                 errorAlert("Email invalid!");
                 return;
             } else if ($("#inputMobile").val().length < 10 || $("#inputMobile").val().length > 11 || !regex.test($("#inputMobile").val())) {
-                $("#inputMobile").css('border-color', 'red');
                 errorAlert("Please enter phone valid!");
                 return;
             }
