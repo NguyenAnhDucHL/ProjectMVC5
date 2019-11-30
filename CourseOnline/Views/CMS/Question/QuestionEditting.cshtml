@@ -12,7 +12,7 @@
     int id = ViewBag.id;
     int count = 0;
 }
-<input id="giang" value="@count" />
+<input id="giang" hidden value="@count" />
 <section class="content-header">
     <h1>
         Question Details
@@ -119,7 +119,7 @@
                                     <td><input id="@string.Format("{0}{1}", "optionText",count)" type="text" class="col-lg-10" value="@answer.answer_text"></td>
                                     @if (answer.answer_corect == true)
                                     {
-                                        <td><input  type="radio" id="@string.Format("{0}{1}", "optionsCheck",count)" name="@string.Format("{0}{1}", "optionsCheckName",count)" class="form-group" checked></td>
+                                        <td><input type="radio" id="@string.Format("{0}{1}", "optionsCheck",count)" name="@string.Format("{0}{1}", "optionsCheckName",count)" class="form-group" checked></td>
                                     }
                                     else
                                     {
@@ -142,8 +142,7 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
-
-         $('#giang').val(@count);
+        $('#giang').val(@count);
         $(document).ready(function () {
             removeOption();
             setValueForComboBox();
@@ -176,16 +175,18 @@
         };
 
         function getAddOptionQuestion() {
-
+            var giiang =  +$('#giang').val() + 1;
+            $('#giang').val(giiang);
              row ="<tr>" +
                               "  <td>Option </td>" +
-                             "   <td><input type=\"text\" class=\"col-lg-10\" placeholder=\"Option\"></td> " +
-                              "  <td><input type=\"radio\" class=\"form-group\" name=\"optionsCheck\"></td> " +
+                             "   <td><input type=\"text\" class=\"col-lg-10\" placeholder=\"Option\" id=\"optionText" + giiang +"\"></td> " +
+                              "  <td><input type=\"radio\" class=\"form-group\" name=\"optionsCheckName" + giiang +"\"></td> " +
                               "  <td><button type=\"submit\" class=\"btn btn-danger btnDelete\" >Delete</button></td>" +
                            " </tr>"
-            $('#optionTable > tbody:last-child').append(row);
-              var giiang =  +$('#giang').val() + 1;
-            $('#giang').val(giiang);
+           $('#optionTable > tbody:last-child').append(row);
+           $('input[type=radio]').change(function() {
+           $('input[type=radio]:checked').not(this).prop('checked', false);
+        });
         };
 
         function removeOption() {
