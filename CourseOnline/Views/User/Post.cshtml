@@ -24,31 +24,43 @@
     <div class="container">
         <a href="@Url.Action("Home_User","Home")">Home</a>
         <span class="mx-3 icon-keyboard_arrow_right"></span>
-        <span class="current">Posts</span>
+        <span class="current">@ViewData["PostType"]</span>
     </div>
 </div>
 
-<div class="site-section">
-    <div class="container">
-        @foreach (var post in listPosts)
-        {
-            <div class="row mb-5">
-                <div class="col-lg-6 mb-lg-0 mb-4">
-                    <img src="@(post.post_thumbnail == null ? "" : Url.Content(@post.post_thumbnail))" alt="Image" class="img-fluid">
-                </div>
-                <div class="col-lg-5 ml-auto align-self-center">
-                    <h2 class="section-title-underline mb-5">
-                        <span>@post.post_name</span>
-                    </h2>
-                    <p>@Html.Raw(post.post_brief_info)</p>
-                </div>
-            </div>
-        }
+@if (listPosts.Count() == 0)
+{
+    <div class="site-section">
+        <div class="container">
+            <h2>Don't have any @ViewData["PostType"]</h2>
+        </div>
     </div>
-</div>
-<div class="dlink">
-    Page @(listPosts.PageCount < listPosts.PageNumber ? 0 : listPosts.PageNumber)/@listPosts.PageCount
-    @Html.PagedListPager(listPosts, page => Url.Action("PostList", new { page = page }))
-</div>
+}
+else
+{
+    <div class="site-section">
+        <div class="container">
+            @foreach (var post in listPosts)
+            {
+                <div class="row mb-5">
+                    <div class="col-lg-6 mb-lg-0 mb-4">
+                        <img src="@(post.post_thumbnail == null ? "" : Url.Content(@post.post_thumbnail))" alt="Image" class="img-fluid">
+                    </div>
+                    <div class="col-lg-5 ml-auto align-self-center">
+                        <h2 class="section-title-underline mb-5">
+                            <span>@post.post_name</span>
+                        </h2>
+                        <p>@Html.Raw(post.post_brief_info)</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="dlink" style="text-align:center">
+        Page @(listPosts.PageCount < listPosts.PageNumber ? 0 : listPosts.PageNumber)/@listPosts.PageCount
+        @Html.PagedListPager(listPosts, page => Url.Action("PostList", new { page = page }))
+    </div>
+}
+
 
 
