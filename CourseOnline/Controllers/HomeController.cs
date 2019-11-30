@@ -249,7 +249,7 @@ namespace CourseOnline.Controllers
         {
             int subject_id = Convert.ToInt32(subjectid);
             List<QuestionModel> questions = (from q in db.Questions
-                                             where q.lesson_id == 8 && q.question_status == "Published" && q.subject_id == subject_id
+                                             where q.lesson_id == 23 && q.question_status == "Published" && q.subject_id == subject_id
                                              join s in db.Subjects
                                              on q.subject_id equals s.subject_id
                                              select new QuestionModel
@@ -278,28 +278,7 @@ namespace CourseOnline.Controllers
             if(Session["testquizz"] != null)
             {
                 List<QuestionModel> testquizz = Session["testquizz"] as List<QuestionModel>;
-                int totalQuestions = testquizz.Count;
-                if (count == totalQuestions)
-                {
-                    count = totalQuestions - 1;
-                }
-                else if (count == -1)
-                {
-                    count = 0;
-                }
-                int index = 0;
-                try
-                {
-                    index = (int)count;
-                }
-                catch (Exception)
-                {
-
-                    index = 0;
-                }
-                ViewBag.totalQuestion = totalQuestions;
-                ViewBag.index = index;
-                ViewBag.examtest = testquizz[index];
+                ViewBag.examtest = testquizz;
                 return View("/Views/User/PraticeOnlineTest.cshtml");
             }
             else

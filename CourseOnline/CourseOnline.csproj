@@ -325,7 +325,9 @@
     <Content Include="Assets\bootstrap\js\owl.carousel.min.js" />
     <Content Include="Assets\bootstrap\js\popper.min.js" />
     <Content Include="Assets\customcss\menu.css" />
+    <Content Include="Assets\customcss\pagination.css" />
     <Content Include="Assets\customjs\CustomJs.js" />
+    <Content Include="Assets\customjs\pagination.js" />
     <Content Include="Assets\dist\css\AdminLTE.css" />
     <Content Include="Assets\dist\css\AdminLTE.min.css" />
     <Content Include="Assets\dist\css\alt\AdminLTE-bootstrap-social.css" />
