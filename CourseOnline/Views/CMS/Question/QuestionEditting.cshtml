@@ -110,10 +110,11 @@
                         </div>
                     </div>
                     <table class="table table-bordered" id="optionTable">
-                        @foreach (AnswerOption answer in lstAnswer)
-                        {
-                            count++;
-                            <tbody>
+                        <tbody>
+                            @foreach (AnswerOption answer in lstAnswer)
+                            {
+                                count++;
+
                                 <tr>
                                     <td>Option</td>
                                     <td><input id="@string.Format("{0}{1}", "optionText",count)" type="text" class="col-lg-10" value="@answer.answer_text"></td>
@@ -127,9 +128,10 @@
                                     }
                                     <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
                                 </tr>
-                            </tbody>
-                        }
-                    </table>
+
+                            }
+                        </tbody>
+                        </table>
                     <button class="btn btn-info" style="margin-top : 20px" onclick="turnOnEditMode()">Edit</button>
                     <button type="submit" disabled class="btn btn-danger edit-field" style="margin-top : 20px" onclick="SubmitEditQuestion()">Submit</button>
                     <button type="submit" class="btn btn-info" style="margin-top : 20px" onclick="getBackQuestionList()">Back</button>
