@@ -148,6 +148,8 @@ namespace CourseOnline.Controllers
                     {
                         return HttpNotFound();
                     }
+                    List<ExamTest> lstExamTests = db.ExamTests.Where(et => et.subject_id == id).ToList();
+                    Session["lstExamTests"] = lstExamTests;
                     ViewBag.Subject = lstlesson.FirstOrDefault().lesson_id;
                     Session["lstlesson"] = lstlesson;
                     Session["teacher"] = teacher;
@@ -168,69 +170,56 @@ namespace CourseOnline.Controllers
 
         }
 
-        public ActionResult LessonDetail(int? id)
+        public ActionResult LessonDetail(int? id, int? testexamid)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            //Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id && n.subject_status == "Submitted");
-
-            //User teacher = (from u in db.Users
-            //                join c in db.Courses.Where(c => c.subject_id == id) on u.user_id equals c.teacher_id
-            //                select new UserListModel
-            //                {
-            //                    user_fullname = u.user_fullname,
-            //                    use_mobile = u.use_mobile,
-            //                    user_email = u.user_email
-            //                }
-            //               ).FirstOrDefault();
-
-            Lesson lesson = db.Lessons.Where(n => n.lesson_id == id).FirstOrDefault();
-            Lesson lesson2 = db.Lessons.Where(n => n.lesson_id == lesson.parent_id).FirstOrDefault();
-            ViewBag.Current2 = lesson2.lesson_name;
-            ViewBag.Current1 = lesson.lesson_name;
-            if (lesson == null)
+            ViewBag.Current2 = null;
+            ViewBag.Current1 = null;
+            ViewBag.lesson = null;
+            if (id != -1)
             {
-                return HttpNotFound();
+                Lesson lesson = db.Lessons.Where(n => n.lesson_id == id).FirstOrDefault();
+                Lesson lesson2 = db.Lessons.Where(n => n.lesson_id == lesson.parent_id).FirstOrDefault();
+
+                ViewBag.Current2 = lesson2.lesson_name;
+                ViewBag.Current1 = lesson.lesson_name;
+                ViewBag.lesson = lesson;
             }
-            ViewBag.lesson = lesson;
-
-            if (lesson.exam_test_id != 0)
+            List<ExamTest> testExamModels = null;
+     
+            if (testexamid !=-1)
             {
-                //questions = db.Questions.Where(q => q.lesson_id == id).Select(q => new QuestionModel
-                //{
-                //    questionID = q.question_id,
-                //    questiontext = q.question_name,
-                //    answers = q.AnswerOptions.Select(tq => new AnswerModel
-                //    {
-                //        answerID = tq.answer_option_id,
-                //        answertext = tq.answer_text,
-                //        isCorrect = tq.answer_corect,
-                //    }).ToList()
-                //}).ToList();
+                testExamModels = db.ExamTests.Where(et => et.test_id == testexamid).ToList();
+                List<int> questionID = db.TestQuestions.Where(tq => tq.test_id == testexamid).Select(tq => tq.question_id).ToList();
+                List<QuestionModel> questionModels = new List<QuestionModel>();
+                foreach (int idques in questionID)
+                {
+                    List<QuestionModel> questions = (from q in db.Questions
+                                               where q.question_id == idques && q.question_status == "Published"
+                                               select new QuestionModel
+                                               {
+                                                   questionID = q.question_id,
+                                                   questiontext = q.question_name,
+                                                   answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                   {
+                                                       answerID = tq.answer_option_id,
+                                                       answertext = tq.answer_text,
+                                                       isCorrect = tq.answer_corect,
+                                                   }).ToList()
+                                               }).ToList();
+                    questionModels.AddRange(questions);
+                }
 
-                List<QuestionModel> questions = (from q in db.Questions
-                                                 where q.lesson_id == id && q.question_status == "Published"
-                                                 select new QuestionModel
-                                                 {
-                                                     questionID = q.question_id,
-                                                     questiontext = q.question_name,
-                                                     answers = q.AnswerOptions.Select(tq => new AnswerModel
-                                                     {
-                                                         answerID = tq.answer_option_id,
-                                                         answertext = tq.answer_text,
-                                                         isCorrect = tq.answer_corect,
-                                                     }).ToList()
-                                                 }).ToList();
-
-
-                ViewBag.examtest = questions;
+                ViewBag.testExamModels = testExamModels;
+                ViewBag.examtest = questionModels;
                 return View("/Views/User/StudyOnline.cshtml");
             }
             else
             {
+                ViewBag.testExamModels = null;
                 ViewBag.examtest = null;
                 return View("/Views/User/StudyOnline.cshtml");
             }

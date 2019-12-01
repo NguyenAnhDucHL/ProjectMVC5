@@ -3,15 +3,17 @@
     ViewBag.Title = "StudyOnline";
     Layout = "~/Views/Shared/_Study_Layout.cshtml";
     Lesson lesson = ViewBag.lesson;
-    List<QuestionModel> examtest = ViewBag.examtest;
+    List<QuestionModel> questionModels = ViewBag.examtest;
+    List<ExamTest> lstExamTests = ViewBag.testExamModels;
     Subject subject = (Subject)Session["subject"];
     int count = 1, countR = 0;
 }
+<link href="~/Assets/customcss/pagination.css" rel="stylesheet" />
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs nav-justified">
         <li class="active"><a href="#overview" data-toggle="tab" style="font-weight:bold; font-size: 40px">@subject.subject_name</a></li>
     </ul>
-    @if (examtest.Count() == 0)
+    @if (ViewBag.lesson != null)
     {
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs nav-justified">
@@ -41,7 +43,7 @@
             </div>
         </div>
     }
-    else
+    @if (ViewBag.testExamModels != null)
     {
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs nav-justified">
@@ -52,44 +54,44 @@
                 <div class="Quiz">
 
                     <h4 style="margin-top: 4%;"> <span class="label label-info">Questions :</span> </h4>
-
-                    @if (examtest != null && examtest.Any())
+                    <h4 style="margin-top: 4%;"> <span class="label label-info">Total Question : @questionModels.Count() </span> </h4>
+                    @if (questionModels != null && questionModels.Any())
                     {
+                        <div class="contents">
+                            @foreach (var question in questionModels)
+                            {
+                                <div class="BlockQ" style="border: 1px solid #bdbdbd; width: 75%; border-radius: 4px; margin-top: 40px; background-color: #f0ffff; padding: 8px;">
 
-                        foreach (var question in examtest)
-                        {
-                            <div class="BlockQ" style="border: 1px solid #bdbdbd; width: 75%; border-radius: 4px; margin-top: 40px; background-color: #f0ffff; padding: 8px;">
+                                    <div class="Question" style="padding: 2%;">
+                                        <span class="label label-warning"> @string.Format("{0}{1}.", "Q", count)</span>
+                                        <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.questionID</span>
+                                        <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.questiontext</p>
+                                    </div>
 
-                                <div class="Question" style="padding: 2%;">
-                                    <span class="label label-warning"> @string.Format("{0}{1}.", "Q", count)</span>
-                                    <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.questionID</span>
-                                    <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.questiontext</p>
-                                </div>
+                                    <div class="Choices" style="margin-left: 8%;">
 
-                                <div class="Choices" style="margin-left: 8%;">
+                                        @foreach (var answer in question.answers)
+                                        {
+                                            <label class="radio-inline">
+                                                <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@answer.answertext" style="margin-left: -16px;"> @answer.answertext
+                                            </label><br />
+                                            countR++;
+                                        }
 
-                                    @foreach (var answer in question.answers)
-                                    {
-                                        <label class="radio-inline">
-                                            <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@answer.answertext" style="margin-left: -16px;"> @answer.answertext
-                                        </label><br />
-                                        countR++;
-                                    }
+                                    </div> <!--END Choices-->
 
-                                </div> <!--END Choices-->
-
-                                <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
+                                    <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
 
 
-                                </div>
+                                    </div>
 
-                            </div> <!-- END BlockQ -->
-                            count++;
-                        }
+                                </div> <!-- END BlockQ -->
+                                count++;
+                            }
+                        </div>
                         <span id="countQuections" style="display:none;">@count</span>
                         <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;" value="Submit Quiz"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </button>
                         <button type="button" id="TestAgain" style="display:none;margin-top: 5px" class="btn btn-default" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </button>
-
                     }
                 </div>
             </div>
@@ -100,9 +102,16 @@
 </div>
 @section scripts
 {
+    <script src="~/Assets/customjs/pagination.js"></script>
     <script type="text/javascript">
-
         $(document).ready(function () {
+                $("#tab").pagination({
+                  items: 1,
+                  contents: 'contents',
+                  previous: 'Previous',
+                  next: 'Next',
+                  position: 'bottom',
+                  });
                 $('#SubmitQuiz').on('click', function () {
 
                 //count Questions
@@ -168,7 +177,7 @@
             });
 
             $('#TestAgain').on('click', function () {
-                 window.location.href = '@Url.Action("LessonDetail","Subject",new { @id = lesson.lesson_id})'
+                 @*window.location.href = '@Url.Action("LessonDetail","Subject",new { @id = lesson.lesson_id})'*@
             })
         });
 
