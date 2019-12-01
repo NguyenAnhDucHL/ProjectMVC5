@@ -400,12 +400,20 @@ namespace CourseOnline.Controllers
                 using (STUDYONLINEEntities db = new STUDYONLINEEntities())
                 {
                     dynamic addsubject = JValue.Parse(postJson);
-
+                    int temp = db.Subjects.DefaultIfEmpty().Max(sub => sub == null ? 0 : sub.subject_id);
+                    int id_new = temp + 1;
+                    string imageValue = addsubject.subjectImage;
+                    var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
+                    var hinhanh = Convert.FromBase64String(ava);
+                    string relative_path = "/Assets/dist/img/" + "subject" + id_new + ".png";
+                    string path = Server.MapPath(relative_path);
+                    System.IO.File.WriteAllBytes(path, hinhanh);
                     Subject s = new Subject();
                     s.subject_name = addsubject.subjectName;
                     s.subject_category = addsubject.subjectCategory;
                     s.subject_type = addsubject.subjectType;
                     s.subject_brief_info = addsubject.shortDes;
+                    s.picture = relative_path;
                     s.subject_status = addsubject.subjectStatus;
                     db.Subjects.Add(s);
                     db.SaveChanges();
@@ -447,21 +455,48 @@ namespace CourseOnline.Controllers
                 {
                     dynamic editsubject = JValue.Parse(postJson);
                     int id = editsubject.subjectId;
-
                     Subject s = db.Subjects.Where(subject => subject.subject_id == id).FirstOrDefault();
-                    if (s != null)
+                    string imageValue = editsubject.subjectImage;
+                    var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
+                    if (ava == "/Assets/dist/img/" + "subject" + editsubject.id + ".png")
                     {
-                        s.subject_name = editsubject.subjectName;
-                        s.subject_category = editsubject.subjectCategory;
-                        s.subject_type = editsubject.subjectType;
-                        s.subject_brief_info = editsubject.shortDes;
-                        s.subject_status = editsubject.subjectStatus;
-                        db.SaveChanges();
-                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        if (s != null)
+                        {
+                            s.subject_name = editsubject.subjectName;
+                            s.subject_category = editsubject.subjectCategory;
+                            s.subject_type = editsubject.subjectType;
+                            s.subject_brief_info = editsubject.shortDes;
+                            s.picture = editsubject.subjectImage;
+                            s.subject_status = editsubject.subjectStatus;
+                            db.SaveChanges();
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        }
                     }
                     else
                     {
-                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        var hinhanh = Convert.FromBase64String(ava);
+                        string relative_path = "/Assets/dist/img/" + "subject" + editsubject.id + ".png";
+                        string path = Server.MapPath(relative_path);
+                        System.IO.File.WriteAllBytes(path, hinhanh);
+                        if (s != null)
+                        {
+                            s.subject_name = editsubject.subjectName;
+                            s.subject_category = editsubject.subjectCategory;
+                            s.subject_type = editsubject.subjectType;
+                            s.subject_brief_info = editsubject.shortDes;
+                            s.picture = relative_path;
+                            s.subject_status = editsubject.subjectStatus;
+                            db.SaveChanges();
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        }
                     }
                 }
             }

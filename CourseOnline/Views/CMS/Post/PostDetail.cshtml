@@ -47,7 +47,7 @@
                             <div class="tab-pane tab-image" id="photo">
                                 <img style="width:200px; height:300px;" id="image_post" class="img-responsive pad" src="@(post.post_thumbnail == null ? "" : Url.Content(post.post_thumbnail))" alt="Photo">
                                 <div class="row tab-button edit-field">
-                                    <div style="margin-left:-768px;" class="form-group col-sm-5 col-sm-push-7">
+                                    <div class="form-group col-sm-5 col-sm-push-7 pull-left">
                                         <label  for="exampleChange">Add/Change image</label>
                                         <input disabled onchange="readURL(this);" class="custom-input edit-field" type="file" id="exampleChange">
                                     </div>
