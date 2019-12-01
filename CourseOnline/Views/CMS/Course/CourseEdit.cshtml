@@ -11,7 +11,7 @@
         Course Details
     </h1>
     <ol class="breadcrumb">
-        <li><a href='@Url.Action("Index","Home")'><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Course")'>Course List</a></li>
         <li class="active">Course Details</li>
     </ol>
@@ -20,7 +20,7 @@
 <section class="content">
     <div class="row">
         <div class="col-lg-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <div class="box-body">
                     <div class="row col-lg-12">
                         <div class="col col-lg-6">
@@ -48,25 +48,11 @@
                     <div class="row col-lg-12">
                         <div class="col col-lg-6">
                             <label>Subject</label>
-                            <select disabled id="sl_courseSubject" class="form-control" >
-                                @{
-                                    foreach (Subject s in subject)
-                                    {
-                                        <option value="@s.subject_id ">@s.subject_name</option>
-                                    }
-                                }
-                            </select>
+                            <input disabled type="text" class="form-control" id="sl_courseSubject" value="@ViewBag.SubjectName">
                         </div>
                         <div class="col col-lg-6">
                             <label>Teacher</label>
-                            <select disabled id="sl_courseTeacher" class="form-control">
-                                @{
-                                    foreach (User u in user)
-                                    {
-                                        <option value="@u.user_id ">@u.user_fullname</option>
-                                    }
-                                }
-                            </select>
+                            <input disabled type="text" class="form-control" id="sl_courseTeacher" value="@ViewBag.UserName">
                         </div>
                     </div>
                     <div class="row col-lg-12">
@@ -101,9 +87,9 @@
                             <textarea disabled id="text_description" class="form-control edit-field" rows="3">@course.course_note</textarea>
                         </div>
                     </div>
-                    <button onclick="turnOnEditMode()" class="btn btn-info">Edit</button>
-                    <button disabled type="submit" onclick="SubmitEditCourse()" class="btn btn-info edit-field">Submit</button>
-                    <button type="submit" onclick="goBack()" class="btn btn-info">Back</button>
+                    <button onclick="turnOnEditMode()" class="btn btn-info" style="width : 8%;">Edit</button>
+                    <button disabled type="submit" onclick="SubmitEditCourse()" class="btn btn-info edit-field" style="width : 8%;">Submit</button>
+                    <button type="submit" onclick="goBack()" class="btn btn-info" style="width : 8%;">Back</button>
 
                 </div>
             </div>
@@ -120,8 +106,11 @@
     <script src="~/Assets/plugins/datepicker/bootstrap-datepicker.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     
-
     <script>
+        $(document).ready(function () {
+            
+        });
+
         var isEnableEditingMode = false;
         function turnOnEditMode() {
             if (!isEnableEditingMode) {
@@ -165,8 +154,8 @@
                 courseid : @course.course_id,
                 courseName: $("#inp_name").val(),
                 courseStatus: $("#sl_courseStatus").val(),
-                courseSubject: $("#sl_courseSubject").val(),
-                courseTeacher: $("#sl_courseTeacher").val(),
+                courseSubject: @course.subject_id,
+                courseTeacher: @course.teacher_id,
                 courseStartDate: StartDate,
                 courseEndDate: EndDate,
                 courseNote: $("#text_description").val(),

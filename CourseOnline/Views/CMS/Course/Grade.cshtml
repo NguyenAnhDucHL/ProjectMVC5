@@ -7,17 +7,18 @@
 
 <section class="content-header">
     <h1>
-        Courses List
+        Grade
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="/course-list">Courses List</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Index","Course")'>Course List</a></li>
+        <li class="active">Grades</li>
     </ol>
 </section>
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <div class="box-body">
                     <table id="tb_grade" class="table table-bordered table-striped">
                         <thead>
@@ -76,17 +77,9 @@
         "order": [[0, "asc"]],
         "searching": false
         });
-        filterListener();
+        
     });
 
-        function filterListener() {
-             $('#sl_subjectName').on('change', function (e) {
-                 var optionSelected = $("option:selected", this);
-                 var valueSelected = this.value;
-                 dataTable.ajax.url('@Url.Action("FilterBySubjectName","Course")' + '?type=' + valueSelected).load(function (response) { });
-            });
-        }
-       
     </script>
 }
 

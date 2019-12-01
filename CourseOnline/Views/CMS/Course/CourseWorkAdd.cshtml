@@ -11,7 +11,7 @@
         Course Works Details
     </h1>
     <ol class="breadcrumb">
-        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Course")'>Course List</a></li>
         <li><a href='@Url.Action("CourseWorkList", "Course")/@course.course_id'>Courseworks</a></li>
         <li class="active">Course works detail</li>
@@ -22,69 +22,63 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="row col-sm-9">
                         <div class="form-group">
                             <label>Coursework Name</label>
-                            <input type="text" class="form-control" id="inp_name">
+                            <input type="text" class="form-control edit-field" id="inp_name">
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-sm-4">
-                            <label>Code(Sort Name)</label>
-                            <input id="inp_code" type="text" class="form-control">
-                        </div>
-                        <div class="form-group col-sm-4" style="margin-left : 70px">
-                            <label>Weight</label>
-                            <input id="inp_weight" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-lg-6">
+                    <div class="row col-sm-9">
+                        <div class="col form-group ">
                             <label>Status</label>
-                            <select id="sl_courseworkStatus" class="form-control">
-                                    <option>Active</option>
-                                    <option>Inactive</option>
-                                   
-                                }
+                            <select id="sl_courseworkStatus" class="form-control edit-field">
+                                <option>Active</option>
+                                <option>Inactive</option>
                             </select>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-sm-4">
+                    <div class="row col-sm-9">
+                        <div class="form-group">
                             <label>Choose Test</label>
-                            <select id="sl_testid" class="form-control">
+                            <select id="sl_testid" class="form-control edit-field">
                                 @{
                                     foreach (ExamTest ex in examtestName)
                                     {
-                                        <option value="@ex.test_id ">@ex.test_name</option>
+                                        <option value="@ex.test_id ">@ex.test_name + Test code:@ex.test_code</option>
                                     }
                                 }
                             </select>
                         </div>
                     </div>
                     <div class="row col-sm-9">
-                        <div class="form-group">
-                            <label>Link</label>
-                            <input id="inp_courseworklink" type="text" class="form-control">
+                        <div class="col form-group">
+                            <label>Weight</label>
+                            <input id="inp_weight" type="text" class="form-control edit-field">
                         </div>
                     </div>
                     <div class="row col-sm-9">
                         <div class="form-group">
-                            <label>Deadline:</label>
+                            <label>Link</label>
+                            <input id="inp_courseworklink" type="text" class="form-control edit-field">
+                        </div>
+                    </div>
+                    <div class="row col-sm-9">
+                        <div class="form-group">
+                            <label>Coursework Deadline:</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="text" class="form-control pull-right" id="inp_Deadline">
+                                <input type="text" class="form-control pull-right edit-field" id="inp_Deadline">
                             </div>
                         </div>
                     </div>
                     <div class="row col-sm-9">
                         <div class="form-group">
-                            <label>Coursework start:</label>
+                            <label>Course start:</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -95,7 +89,7 @@
                     </div>
                     <div class="row col-sm-9">
                         <div class="form-group">
-                            <label>Coursework end:</label>
+                            <label>Course end:</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -107,12 +101,12 @@
                     <div class="row col-sm-9">
                         <div class="form-group">
                             <label>Short description</label>
-                            <textarea id="coursework_description" class="form-control" rows="3" placeholder="Enter..."></textarea>
+                            <textarea id="coursework_description" class="form-control edit-field" rows="3" placeholder="Enter..."></textarea>
                         </div>
                     </div>
                     <div class="row col-sm-9">
-                        <button type="submit" class="btn btn-info" onclick="SubmitEditCourseWork()">Submit</button>
-                        <button type="submit" onclick="goBack()" class="btn btn-info">Back</button>
+                        <button type="submit" class="btn btn-info edit-field" onclick="SubmitAddCourseWork()" style="width : 8%;">Submit</button>
+                        <button type="submit" onclick="goBack()" class="btn btn-info" style="width : 8%;">Back</button>
                     </div>
                 </div>
             </div>
@@ -120,38 +114,40 @@
 
 @section scripts{
     <script src="~/Assets/plugins/datepicker/bootstrap-datepicker.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-
     <script>
         $(function () {
             $('#inp_Deadline').datepicker({
                 autoclose: true
             });
         });
-
-
+        var isEnableEditingMode = true;
+        function turnOnEditMode() {
+                // bat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', true); isEnableEditingMode = true; }
+                )
+        };
 
           //submit coursework
-        function SubmitEditCourseWork() {
+        function SubmitAddCourseWork() {
             var StartDate = $("#inp_start").val().toString();
-            var datearray = date.split("/");
+            var datearray = StartDate.split("/");
             var sd = datearray[2] + '/' + datearray[0] + '/' + datearray[1];
 
             var EndDate = $("#inp_end").val().toString();
-            var datearray = date.split("/");
+            var datearray = EndDate.split("/");
             var ed = datearray[2] + '/' + datearray[0] + '/' + datearray[1];
 
             var date = $("#inp_Deadline").val().toString();
             var datearray = date.split("/");
             var dl = datearray[2] + '/' + datearray[0] + '/' + datearray[1];
-            var Deadline = datearray[1] + '/' + datearray[0] + '/' + datearray[2];
 
             var n1 = dl.localeCompare(sd);
             var n2 = dl.localeCompare(ed);
 
             var coursework = {
                 course_id: @course.course_id,
-                courseworkDeadline: Deadline,
+                courseworkDeadline: date,
                 courseworkStatus: $("#sl_courseworkStatus").val(),
                 courseworkName: $("#inp_name").val(),
                 usercreate_id: 3,
@@ -163,16 +159,20 @@
 
 
             var courseworkJson = JSON.stringify(coursework);
+            var regex = /^\d+$/;
             if ($("#inp_name").val() == "") {
-                alert("Coursework Name not empty!");
+                errorAlert("Coursework Name not empty!");
                 return;
             } else if (n1 == -1 || n2 == 1) {
-                alert("Please select coursework deadline in [ " + StartDate + " , " + EndDate + " ]");
+                errorAlert("Please select coursework deadline in [ " + StartDate + " , " + EndDate + " ]");
                 return;
-            } else if ($("#sl_testid").val() == @ViewBag.testName) {
-                alert("Please Choose test not empty!");
+            } else if (!regex.test($("#inp_weight").val())) {
+                errorAlert("Order is must weight!");
                 return;
-            } 
+            } else if ($("#inp_courseworklink").val() == "") {
+                errorAlert("Link not empty!");
+                return;
+            }
 
             $.ajax({
                 url: '@Url.Action("SubmitAddCourseWork","CourseWork")',
@@ -181,13 +181,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("Submit success");
+                        successAlert("Submit Success");
                         turnOnEditMode();
                     } else {
-                        alert("Submit fail");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("NetWork problem!") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 

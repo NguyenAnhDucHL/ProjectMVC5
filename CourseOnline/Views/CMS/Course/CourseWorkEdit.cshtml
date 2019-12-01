@@ -14,7 +14,7 @@
         Course Works Details
     </h1>
     <ol class="breadcrumb">
-        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Course")'>Course List</a></li>
         <li><a href='@Url.Action("CourseWorkList", "Course")/@course.course_id' >Courseworks</a></li>
         <li class="active">Course works detail</li>
@@ -25,27 +25,17 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="row col-sm-9">
-                        <div class="form-group">
+                        <div class="col form-group">
                             <label>Coursework Name</label>
                             <input disabled type="text" class="form-control edit-field" id="inp_name" value="@coursework.coursework_name">
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-sm-4">
-                            <label>Code(Sort Name)</label>
-                            <input disabled id="inp_code" type="text" class="form-control" value="@ViewBag.testCode">
-                        </div>
-                        <div class="form-group col-sm-4" style="margin-left : 70px">
-                            <label>Weight</label>
-                            <input disabled id="inp_weight" type="text" class="form-control edit-field" value="@coursework.coursework_weight">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-lg-6">
+                    <div class="row col-lg-9">
+                        <div class="col form-group">
                             <label>Status</label>
                             <select disabled id="sl_courseworkStatus" class="form-control edit-field">
                                 @{
@@ -63,15 +53,21 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-sm-4">
+                    <div class="row  col-sm-9">
+                        <div class="col form-group">
+                            <label>Weight</label>
+                            <input disabled id="inp_weight" type="text" class="form-control edit-field" value="@coursework.coursework_weight">
+                        </div>
+                    </div>
+                    <div class="row col-sm-9">
+                        <div class="form-group">
                             <label>Choose Test</label>
                             <select disabled id="sl_testid" class="form-control edit-field">
                                 @{
                                     foreach (ExamTest ex in examtestName)
                                     {
-                                        <option value="@ex.test_id">@ex.test_id</option>
-                                        
+                                        <option value="@ex.test_id">@ex.test_id Test Code: @ex.test_code</option>
+
                                     }
                                 }
                             </select>
@@ -96,7 +92,7 @@
                     </div>
                     <div class="row col-sm-9">
                         <div class="form-group">
-                            <label>Coursework start:</label>
+                            <label>Course start:</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -107,7 +103,7 @@
                     </div>
                     <div class="row col-sm-9">
                         <div class="form-group">
-                            <label>Coursework end:</label>
+                            <label>Course end:</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -123,9 +119,9 @@
                         </div>
                     </div>
                     <div class="row col-sm-9">
-                        <button class="btn btn-info" onclick="turnOnEditMode()">Edit</button>
-                        <button disabled type="submit" class="btn btn-info edit-field" onclick="SubmitEditCourseWork()">Submit</button>
-                        <button type="submit" onclick="goBack()" class="btn btn-info">Back</button>
+                        <button class="btn btn-info" onclick="turnOnEditMode()" style="width : 8%;">Edit</button>
+                        <button disabled type="submit" class="btn btn-info edit-field" onclick="SubmitEditCourseWork()" style="width : 8%;">Submit</button>
+                        <button type="submit" onclick="goBack()" class="btn btn-info" style="width : 8%;">Back</button>
                     </div>
                 </div>
             </div>
@@ -133,8 +129,6 @@
 
 @section scripts{
     <script src="~/Assets/plugins/datepicker/bootstrap-datepicker.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-
     <script>
         $(document).ready(function () {
             setValueForComboBox();
@@ -197,16 +191,23 @@
 
 
             var courseworkJson = JSON.stringify(coursework);
+            var regex = /^\d+$/;
             if ($("#inp_name").val() == "") {
-                alert("Coursework Name not empty!");
+                errorAlert("Coursework Name not empty!");
                 return;
             } else if (n1 == -1 || n2 == 1) {
-                alert("Please select coursework deadline in [ " + StartDate + " , " + EndDate + " ]");
+                errorAlert("Please select coursework deadline in [ " + StartDate + " , " + EndDate + " ]");
                 return;
             } else if ($("#sl_testid").val() == "") {
-                alert("Please Choose test not empty!");
+                errorAlert("Please Choose test not empty!");
                 return;
-            } 
+            } else if (!regex.test($("#inp_weight").val())) {
+                errorAlert("Order is must weight!");
+                return;
+            } else if ($("#inp_courseworklink").val() == "") {
+                errorAlert("Link not empty!");
+                return;
+            }
 
             $.ajax({
                 url: '@Url.Action("SubmitEditCourseWork","CourseWork")',
@@ -215,13 +216,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("Submit success");
+                        successAlert("Submit Success");
                         turnOnEditMode();
                     } else {
-                        alert("Submit fail");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("NetWork problem!") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 
