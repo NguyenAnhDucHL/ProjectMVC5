@@ -86,26 +86,8 @@
                         </div>
                     </div>
                     <!-- /.tab-pane -->
-                    <div disabled class="tab-pane edit-field" id="content">
+                    <div class="tab-pane edit-field" id="content">
                         <div class="box box-info">
-                            <div class="box-header">
-                                <h3 class="box-title">
-                                    CK Editor
-                                    <small>Advanced and full of features</small>
-                                </h3>
-                                <!-- tools box -->
-                                <div class="pull-right box-tools">
-                                    <button type="button" class="btn btn-info btn-sm" data-widget="collapse"
-                                            data-toggle="tooltip" title="Collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-info btn-sm" data-widget="remove"
-                                            data-toggle="tooltip" title="Remove">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                                <!-- /. tools -->
-                            </div>
                             <!-- /.box-header -->
                             <div class="box-body pad">
                                 <form>
@@ -137,13 +119,13 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/ggfbhz52km8705qzardmaj5wi5nimvcagr9owfw523rin98f/tinymce/5/tinymce.min.js"></script>
-    <script>tinymce.init({ selector: 'textarea' });</script>
+    <script>tinymce.init({ selector: '#editor1' });</script>
     <script>
 
      var isEnableEditingMode = false;
          
         $(document).ready(function () {
-            tinyMCE.get('inp_shortDes').setMode('readonly');
+            tinyMCE.get('editor1').setMode('readonly');
         setValueForComboBox();
         });
         //su kien load anh
@@ -171,7 +153,7 @@
                 // bat trang thai edit
                 $(".edit-field").each(
                     function () {
-                        tinyMCE.get('inp_shortDes').setMode('design');
+                        tinyMCE.get('editor1').setMode('design');
                         $(this).prop('disabled', false); isEnableEditingMode = true;}
                 )
             } else {
@@ -179,7 +161,7 @@
                 $(".edit-field").each(
                     function () {
                         $(this).prop('disabled', true); isEnableEditingMode = false;
-                        tinyMCE.get('inp_shortDes').setMode('readonly');
+                        tinyMCE.get('editor1').setMode('readonly');
                     }
                 )
             }
