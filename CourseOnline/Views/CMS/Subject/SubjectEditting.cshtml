@@ -13,7 +13,7 @@
         Subject Editting
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Subject")'>Subjects List</a></li>
         <li class="active">Subject Editting</li>
     </ol>
@@ -22,172 +22,78 @@
 <section class="content">
     <div class="row">
         <div class="col-lg-12">
-            <div class="nav-tabs-custom ">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#overview" data-toggle="tab">Overview</a></li>
-                    <li><a href="#domain" data-toggle="tab">Domain</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div class="active tab-pane" id="overview">
-                        <div class="box">
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="col-sm-7">
-                                        <div class="form-group">
-                                            <label>Subject Name</label>
-                                            <input type="text" disabled class="form-control edit-field" id="inp_name" value="@subject.subject_name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Category</label>
-                                            <div>
-                                                <select id="sl_subjectCategory" disabled class="form-control edit-field">
-                                                    @{
-                                                        foreach (Setting setting in listSettingCategory)
-                                                        {
-                                                            <option value="@setting.setting_name">@setting.setting_name</option>
-                                                        }
-                                                    }
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-5">
-                                        <div class="form-group">
-                                            <label>Type</label>
-                                            <div>
-                                                <select id="sl_subjectType" disabled class="form-control edit-field">
-                                                    @{
-                                                        foreach (Setting setting in listSettingType)
-                                                        {
-                                                            <option value="@setting.setting_name">@setting.setting_name</option>
-                                                        }
-                                                    }
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleChange">Add/Change image</label>
-                                            <input class="custom-input" type="file" id="exampleChange">
-                                        </div>
-                                    </div>
+            <div class="box table-responsive">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <div class="form-group">
+                                <label>Subject Name</label>
+                                <input type="text" disabled class="form-control edit-field" id="inp_name" value="@subject.subject_name">
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <div>
+                                    <select id="sl_subjectCategory" disabled class="form-control edit-field">
+                                        @{
+                                            foreach (Setting setting in listSettingCategory)
+                                            {
+                                                <option value="@setting.setting_name">@setting.setting_name</option>
+                                            }
+                                        }
+                                    </select>
                                 </div>
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea class="form-control edit-field" disabled rows="3" id="inp_shortDes">@subject.subject_brief_info</textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label>Type</label>
+                                <div>
+                                    <select id="sl_subjectType" disabled class="form-control edit-field">
+                                        @{
+                                            foreach (Setting setting in listSettingType)
+                                            {
+                                                <option value="@setting.setting_name">@setting.setting_name</option>
+                                            }
+                                        }
+                                    </select>
                                 </div>
-                                <button class="btn btn-info" onclick="turnOnEditMode()">Edit</button>
-                                <button type="submit" disabled class="btn btn-info edit-field" onclick="DraftEditSubject()">Save Draft</button>
-                                <button type="submit" disabled class="btn btn-info edit-field" onclick="SubmitEditSubject()">Submit</button>
-                                <button type="submit" disabled class="btn btn-info edit-field" onclick="ApproveEditSubject()">Approve</button>
-                                <button type="submit" disabled class="btn btn-info edit-field" onclick="PublishEditSubject()">Publish Online</button>
-                                <button type="submit" disabled class="btn btn-info edit-field" onclick="HideEditSubject()">Hide</button>
-                                <button type="submit" class="btn btn-info" onclick="getBackSubjectList()">Back</button>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleChange">Add/Change image</label>
+                                <input disabled class="custom-input edit-field" type="file" id="exampleChange">
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="domain">
-                        <div class="box">
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <button id="btnAdd" type="button" class="btn btn-block btn-primary" onclick='getAddDomain()'>Add Domain</button>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <label><h5>Subject: <b>@{@ViewBag.Subject.subject_name}</b></h5></label>
-                                    </div>
-                                </div>
-                                <table id="tb_domain" class="table table-bordered table-responsive">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Domain</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control edit-field" disabled rows="3" id="inp_shortDes">@subject.subject_brief_info</textarea>
                     </div>
+                    <button class="btn btn-info" onclick="turnOnEditMode()">Edit</button>
+                    <button type="submit" disabled class="btn btn-info edit-field" onclick="DraftEditSubject()">Save Draft</button>
+                    <button type="submit" disabled class="btn btn-info edit-field" onclick="SubmitEditSubject()">Submit</button>
+                    <button type="submit" disabled class="btn btn-info edit-field" onclick="ApproveEditSubject()">Approve</button>
+                    <button type="submit" disabled class="btn btn-info edit-field" onclick="PublishEditSubject()">Publish Online</button>
+                    <button type="submit" disabled class="btn btn-info edit-field" onclick="HideEditSubject()">Hide</button>
+                    <button type="submit" class="btn btn-info" onclick="getBackSubjectList()">Back</button>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts{
-    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
-        var dataTable;
-    $(document).ready(function () {
-        dataTable = $('#tb_domain').DataTable({
-            "ajax": {
-                "url": '@Url.Action("GetAllDomain", "Domain")',
-                "type": "POST",
-                "data": { "id" : @ViewBag.id },
-                "datatype": "json",
-            },
-            "columns": [
-                { "data": "domain_id", "name": "domain_id", "orderable": true },
-                { "data": "domain_name", "name": "domain_name", "orderable": true },
-                {
-                    "data": "domain_status", "name": "domain_status", "orderable": true, "render": function (data) {
-                        if (data == 1) return "Active"
-                        else return "Inactive"}
-                },
-                {
-                    "data": "domain_id", "render": function (data) {
-                            return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdDomain('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
-                              "<button class='btn btn-block btn-danger'  style='margin-left:5px' onclick=getDelIdDomain('" + data + "') ><i class='fa fa-trash'></i>Delete</button>";
-                    },
-                    "orderable": false,
-                    "searchable": false
-                },
-            ],
-        "paging": true,
-        "pageLength": 5,
-        "ordering": true,
-        "serverSide": "true",
-        "order": [[0, "asc"]],
-        "searching": false
+
+        $(document).ready(function () {
+            setValueForComboBox();
         });
-    });
 
-    // bat su kien add
-        function getAddDomain() {
-               window.location.href ='@Url.Action("AddDomain", "Domain")/@ViewBag.id';
-        }
-
-    //bat su kien edit
-    function getEditIdDomain(id) {
-            if (id != null) {
-               window.location.href ='@Url.Action("EditDomain", "Domain")?domainId=' + id +"&subjectId=" + @ViewBag.id;
-            }
-        }
-
-    //bat su kien delete
-    function getDelIdDomain(id) {
-            if (id != null) {
-                confirmAlert('Xóa', 'Xác nhận xóa', function submit() {
-                    $.ajax({
-                        url:'@Url.Action("deleteDomain","Domain")',
-                        type: "POST",
-                        data: { id: id },
-                        datatype: "json",
-                        success: (response) => {
-                            if (response.success) {
-                                dataTable.ajax.reload(); successAlert("Thành công", "Xóa thành công")
-                            } else {
-                                errorAlert("Thất bại", "Xóa thất bại")
-                            }
-                        },
-                        error: (response) => { errorAlert("Thất bại", "Xóa thất bại") }
-                    });
-                });
-            }
-    }
+    function setValueForComboBox() {
+            $("#sl_subjectCategory").val("@subject.subject_category").trigger('change');
+            $("#sl_subjectType").val("@subject.subject_type").trigger('change');
+        };
 
     var isEnableEditingMode = false;
         function turnOnEditMode() {
@@ -221,7 +127,10 @@
             };
 
             var postJson = JSON.stringify(subject);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitEditSubject","Subject")',
                 type: "POST",
@@ -229,13 +138,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
                         turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 
@@ -251,7 +160,10 @@
             };
 
             var postJson = JSON.stringify(subject);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitEditSubject","Subject")',
                 type: "POST",
@@ -259,13 +171,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
                         turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 
@@ -281,7 +193,10 @@
             };
 
             var postJson = JSON.stringify(subject);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitEditSubject","Subject")',
                 type: "POST",
@@ -289,13 +204,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
                         turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 
@@ -311,7 +226,10 @@
             };
 
             var postJson = JSON.stringify(subject);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitEditSubject","Subject")',
                 type: "POST",
@@ -319,13 +237,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
                         turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 
@@ -341,7 +259,10 @@
             };
 
             var postJson = JSON.stringify(subject);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitEditSubject","Subject")',
                 type: "POST",
@@ -349,13 +270,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
                         turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
     </script>

@@ -1131,6 +1131,7 @@
     <Content Include="Views\User\PraticeOnlineTest.cshtml" />
     <Content Include="Views\Shared\_TestInfor.cshtml" />
     <Content Include="Views\Shared\_Test_Layout.cshtml" />
+    <Content Include="Views\CMS\Subject\DomainList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

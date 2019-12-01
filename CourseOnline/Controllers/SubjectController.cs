@@ -250,6 +250,38 @@ namespace CourseOnline.Controllers
             return View("/Views/User/MySubject.cshtml");
         }
 
+        //search
+        [HttpPost]
+        public ActionResult SearchByName(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var subjectList = (from s in db.Subjects
+                                   where s.subject_name.Contains(type)
+                                   select new SubjectListModel
+                                   {
+                                       subject_id = s.subject_id,
+                                       subject_category = s.subject_category,
+                                       subject_name = s.subject_name,
+                                       subject_brief_info = s.subject_brief_info,
+                                       subject_type = s.subject_type,
+                                       subject_status = s.subject_status,
+                                       subject_tag_line = s.subject_tag_line
+                                   }).ToList();
+                int totalrows = subjectList.Count;
+                int totalrowsafterfiltering = subjectList.Count;
+                subjectList = subjectList.Skip(start).Take(length).ToList();
+                subjectList = subjectList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = subjectList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
         //filter 
         [HttpPost]
         public ActionResult DoFilter(string filterBy = "")
@@ -450,6 +482,19 @@ namespace CourseOnline.Controllers
                 Subject subject = db.Subjects.Where(s => s.subject_id == id).FirstOrDefault();
                 ViewBag.Subject = subject;
                 return View("/Views/CMS/Subject/SubjectLessonList.cshtml");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult DomainList(int id)
+        {
+
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                ViewBag.id = id;
+                Subject subject = db.Subjects.Where(s => s.subject_id == id).FirstOrDefault();
+                ViewBag.Subject = subject;
+                return View("/Views/CMS/Subject/DomainList.cshtml");
             }
         }
 

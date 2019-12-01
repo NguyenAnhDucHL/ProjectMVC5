@@ -44,6 +44,34 @@ namespace CourseOnline.Controllers
             }
         }
 
+        //search
+        [HttpPost]
+        public ActionResult SearchByName(string type, int subject_id)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var domainList = (from d in db.Domains
+                                  where d.domain_name.Contains(type) & d.subject_id == subject_id
+                                  select new
+                                  {
+                                      d.domain_id,
+                                      d.subject_id,
+                                      d.domain_name,
+                                      d.domain_status,
+                                  }).ToList();
+                int totalrows = domainList.Count;
+                int totalrowsafterfiltering = domainList.Count;
+                domainList = domainList.Skip(start).Take(length).ToList();
+                domainList = domainList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = domainList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpGet]
         public ActionResult AddDomain(int id)
         {
@@ -105,7 +133,7 @@ namespace CourseOnline.Controllers
 
                 List<Setting> listSettingCategory = db.Settings.Where(s => (s.setting_group_value.Equals(SettingGroup.SUBJECT_CATEGORY) || s.setting_group_value.Equals(SettingGroup.GUIDE_CATEGORY)) && s.setting_status == SettingStatus.ACTIVE).ToList();
                 ViewBag.SettingCategory = listSettingCategory;
-                return View("/Views/CMS/Subject/SubjectEditting.cshtml");
+                return View("/Views/CMS/Subject/DomainList.cshtml");
             }
         }
 
@@ -164,26 +192,6 @@ namespace CourseOnline.Controllers
 
         }
 
-        [HttpPost]
-        public ActionResult deleteDomain(int id)
-        {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
-            {
-                var domain = db.Domains.Where(d => d.domain_id == id).FirstOrDefault();
-                if (domain != null)
-                {
-                    db.Domains.Remove(domain);
-                    db.SaveChanges();
-                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json(new { success = false }, JsonRequestBehavior.AllowGet);
-                }
-
-
-            }
-
-        }
+        
     }
 }
