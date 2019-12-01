@@ -64,12 +64,20 @@ namespace CourseOnline.Controllers
             {
                 using (STUDYONLINEEntities db = new STUDYONLINEEntities())
                 {
-
+                    int temp = db.Sliders.DefaultIfEmpty().Max(pos => pos == null ? 0 : pos.slider_id);
+                    int id_new = temp + 1;
                     dynamic addSlider = JValue.Parse(postJson);
+                    string imageValue = addSlider.sliderImage;
+                    var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
+                    var hinhanh = Convert.FromBase64String(ava);
+                    string relative_path = "/Assets/dist/img/" + "slider" + id_new + ".png";
+                    string path = Server.MapPath(relative_path);
+                    System.IO.File.WriteAllBytes(path, hinhanh);
                     Slider s = new Slider();
                     s.slider_title = addSlider.sliderTitle;
                     s.slider_caption = addSlider.sliderCaption;
                     s.slider_back_link = addSlider.sliderLink;
+                    s.slider_picture_url = relative_path;
                     s.slider_status = addSlider.sliderStatus;
                     db.Sliders.Add(s);
                     db.SaveChanges();
@@ -81,6 +89,7 @@ namespace CourseOnline.Controllers
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
+
         [HttpPost]
         public ActionResult FilterBySliderStatus(string type)
         {
@@ -98,12 +107,12 @@ namespace CourseOnline.Controllers
                                       where s.slider_status.Equals(type)
                                       select new
                                       {
-                                          slider_id = s.slider_id,
-                                          slider_picture_url = s.slider_picture_url,
-                                          slider_title = s.slider_title,
-                                          slider_back_link = s.slider_back_link,
-                                          slider_caption = s.slider_caption,
-                                          slider_status = s.slider_status
+                                          s.slider_id,
+                                          s.slider_picture_url,
+                                          s.slider_title,
+                                          s.slider_back_link,
+                                          s.slider_caption,
+                                          s.slider_status
                                       }).ToList();
 
                     int totalrows = sliderList.Count;
@@ -117,12 +126,12 @@ namespace CourseOnline.Controllers
                     var sliderList = (from s in db.Sliders
                                       select new
                                       {
-                                          slider_id = s.slider_id,
-                                          slider_picture_url = s.slider_picture_url,
-                                          slider_title = s.slider_title,
-                                          slider_back_link = s.slider_back_link,
-                                          slider_caption = s.slider_caption,
-                                          slider_status = s.slider_status
+                                          s.slider_id,
+                                          s.slider_picture_url,
+                                          s.slider_title,
+                                          s.slider_back_link,
+                                          s.slider_caption,
+                                          s.slider_status
                                       }).ToList();
 
                     int totalrows = sliderList.Count;
@@ -156,18 +165,45 @@ namespace CourseOnline.Controllers
                     int id = edtSlider.id;
 
                     Slider s = db.Sliders.Where(ss => ss.slider_id == id).FirstOrDefault();
-                    if (s != null)
+                    string imageValue = edtSlider.sliderImage;
+                    var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
+                    if (ava == "/Assets/dist/img/" + "slider" + edtSlider.id + ".png")
                     {
-                        s.slider_title = edtSlider.sliderTitle;
-                        s.slider_caption = edtSlider.sliderCaption;
-                        s.slider_back_link = edtSlider.sliderLink;
-                        s.slider_status = edtSlider.sliderStatus;
-                        db.SaveChanges();
-                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        if (s != null)
+                        {
+                            s.slider_title = edtSlider.sliderTitle;
+                            s.slider_picture_url = edtSlider.sliderImage;
+                            s.slider_caption = edtSlider.sliderCaption;
+                            s.slider_back_link = edtSlider.sliderLink;
+                            s.slider_status = edtSlider.sliderStatus;
+                            db.SaveChanges();
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        }
                     }
                     else
                     {
-                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        var hinhanh = Convert.FromBase64String(ava);
+                        string relative_path = "/Assets/dist/img/" + "slider" + edtSlider.id + ".png";
+                        string path = Server.MapPath(relative_path);
+                        System.IO.File.WriteAllBytes(path, hinhanh);
+                        if (s != null)
+                        {
+                            s.slider_title = edtSlider.sliderTitle;
+                            s.slider_picture_url = relative_path;
+                            s.slider_caption = edtSlider.sliderCaption;
+                            s.slider_back_link = edtSlider.sliderLink;
+                            s.slider_status = edtSlider.sliderStatus;
+                            db.SaveChanges();
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        }
                     }
                 }
             }
@@ -176,6 +212,35 @@ namespace CourseOnline.Controllers
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
 
+        }
+
+        [HttpPost]
+        public ActionResult SearchByName(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var sliderList = (from s in db.Sliders
+                                where s.slider_title.Contains(type)
+                                select new
+                                {
+                                    s.slider_id,
+                                    s.slider_picture_url,
+                                    s.slider_title,
+                                    s.slider_back_link,
+                                    s.slider_caption,
+                                    s.slider_status
+                                }).ToList();
+                int totalrows = sliderList.Count;
+                int totalrowsafterfiltering = sliderList.Count;
+                sliderList = sliderList.Skip(start).Take(length).ToList();
+                sliderList = sliderList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = sliderList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpPost]
@@ -195,9 +260,6 @@ namespace CourseOnline.Controllers
                     return Json(new { success = false }, JsonRequestBehavior.AllowGet);
                 }
             }
-
         }
-
     }
-
 }

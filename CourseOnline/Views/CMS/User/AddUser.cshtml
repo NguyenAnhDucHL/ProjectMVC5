@@ -151,15 +151,12 @@
             var regex = /^\d+$/;
 
             if ($("#inputname").val() == "") {
-                $("#inputname").css('border-color', 'red');
                 errorAlert("Name is not empty!");
                 return;
             } else if (!ValidateEmail($("#inputEmail").val())) {
-                $("#inputEmail").css('border-color', 'red');
                 errorAlert("Email invalid!");
                 return;
             } else if ($("#inputMobile").val().length < 10 || !regex.test($("#inputMobile").val())) {
-                $("#inputMobile").css('border-color', 'red');
                 errorAlert("Please enter phone valid!");
                 return;
             }
@@ -174,7 +171,6 @@
                         turnOnEditMode();
                     } else if (response.postJson == "")
                     {
-                        $("#inputEmail").css('border-color', 'red');
                         errorAlert("Email is already existed");
                     }
                     else {

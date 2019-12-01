@@ -11,7 +11,7 @@
         Sliders List
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS","Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Sliders List</li>
     </ol>
 </section>
@@ -21,10 +21,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="row">
-                    <div class="col-lg-2">
-                        <button type="button" class="btn btn-block btn-primary" style="margin-top: 0px;" onclick='getAddSlider()'>Add new</button>
-                    </div>
-                    <div class="col-lg-2">
+                    <div class="col-sm-2" style="margin-left : 10px; margin-top : 10px">
                         <select id="sl_sliderStatus" class="form-control">
                             <option>All Status</option>
                             @{
@@ -35,20 +32,28 @@
                             }
                         </select>
                     </div>
+                    <div class="col-sm-3" style="margin-top : 10px">
+                        Search:
+                        <input type="text" placeholder="Search for name" id="inp_search" style="height:34px; margin-left:10px;" />
+                        <a onclick="doSearch()" style="cursor: pointer;" data-toggle='tooltip' title='Search'><i class='fa fa-fw fa-search'></i></a>
                     </div>
-                    <div class="box-body">
+                    <div class="col-sm-2 pull-right">
+                        <button type="button" class="btn btn-link" onclick="getAddSlider()" style="float:right;">Add new</button>
+                    </div>
+                </div>
+                    <div class="box-body table-responsive">
                         <div class="box">
                             <!-- /.box-header -->
-                            <table id="tb_slider" class="table table-bordered table-striped">
+                            <table id="tb_slider" class="table table-bordered table-striped table-responsive">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th style="width:10px;">ID</th>
                                         <th>Picture</th>
-                                        <th>Slider Title</th>
+                                        <th>Title</th>
                                         <th>Link Slider</th>
                                         <th>Caption</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        <th class="col-sm-1">Action</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -97,8 +102,11 @@
                 {
                     "data": "slider_id", "render": function (data) {
                         if (data) {
-                            return "<a class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditSlider('" + data + "') ><i class='fa fa-fw fa-edit'></i> Edit</a>" +
-                                "<a class='btn btn-block btn-danger' style='margin-left:5px' onclick=getDeleteIdSlider('" + data + "') ><i class='link-space-left-20 fa fa-trash'></i> Delete</a>";
+                            return "<div class='row'><div class='col-lg-6'><a onclick=getEditSlider('" + data + "') style='width=100%; cursor: pointer;' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>" +
+                                    "</div>" +
+                                    "<div class='col-lg-6 pull-left'><a id='myBtn' onclick=getDeleteIdSlider('" + data + "') style='width=100%; cursor: pointer;' data-toggle='tooltip' title='Delete'><i class='fa fa-trash'></i></a>" +
+								 "</div>" +
+								 "</div>";
                         }
                     },
                     "orderable": false,
@@ -113,12 +121,20 @@
         "searching": false
             });
             filterListener();
+            doSearch();
     });
         //bat su kien add
         function getAddSlider() {
             window.location.href = '@Url.Action("AddSlider","Slider")';
         }
+        //bat su kien search
+        function doSearch() {
 
+            $('#inp_search').on('change', function (e) {
+                var valueSelected = this.value;
+                dataTable.ajax.url('@Url.Action("SearchByName","Slider")' + '?type=' + valueSelected).load(function (response) { });
+            });
+        }
         //filer status
         function filterListener() {
             $('#sl_sliderStatus').on('change', function (e) {
@@ -138,7 +154,7 @@
         //delete slider theo id
         function getDeleteIdSlider(id) {
             if (id != null) {
-                confirmAlert('Xóa', 'Xác nhận xóa', function submit() {
+                confirmAlert('Delete', 'Do you want to delete', function submit() {
                     $.ajax({
                         url:'@Url.Action("delSlider","Slider")',
                         type: "POST",
@@ -146,12 +162,12 @@
                         datatype: "json",
                         success: (response) => {
                             if (response.success) {
-                                dataTable.ajax.reload(); successAlert("Thành công", "Xóa thành công")
+                                dataTable.ajax.reload(); successAlert("Success", "Delete Success")
                             } else {
-                                errorAlert("Thất bại", "Xóa thất bại")
+                                errorAlert("Failed", "Delete Failed")
                             }
                         },
-                        error: (response) => { errorAlert("Thất bại", "Xóa thất bại") }
+                        error: (response) => { errorAlert("Failed", "Delete failed") }
                     });
                 });
             }

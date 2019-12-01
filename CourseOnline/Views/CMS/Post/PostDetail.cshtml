@@ -14,7 +14,7 @@
         Post Details
     </h1>
     <ol class="breadcrumb">
-        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href='@Url.Action("Home_CMS", "Home")'><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index", "Post")'>Post Lists</a></li>
         <li class="active">Post Details</li>
     </ol>
@@ -45,11 +45,11 @@
                         </div>
                         <div dis disabled class="form-group">
                             <div class="tab-pane tab-image" id="photo">
-                                <img id="image_post" class="img-responsive pad" src="@(post.post_thumbnail == null ? "" : Url.Content(post.post_thumbnail))" alt="Photo">
+                                <img style="width:200px; height:300px;" id="image_post" class="img-responsive pad" src="@(post.post_thumbnail == null ? "" : Url.Content(post.post_thumbnail))" alt="Photo">
                                 <div class="row tab-button edit-field">
-                                    <div class="form-group col-sm-5 col-sm-push-7">
-                                        <label for="exampleChange">Add/Change image</label>
-                                        <input onchange="readURL(this);" class="custom-input" type="file" id="exampleChange">
+                                    <div style="margin-left:-768px;" class="form-group col-sm-5 col-sm-push-7">
+                                        <label  for="exampleChange">Add/Change image</label>
+                                        <input disabled onchange="readURL(this);" class="custom-input edit-field" type="file" id="exampleChange">
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +84,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <!-- /.tab-pane -->
                     <div disabled class="tab-pane edit-field" id="content">
@@ -142,9 +141,9 @@
     <script>
 
      var isEnableEditingMode = false;
-
+         
         $(document).ready(function () {
-
+            tinyMCE.get('inp_shortDes').setMode('readonly');
         setValueForComboBox();
         });
         //su kien load anh
@@ -172,12 +171,16 @@
                 // bat trang thai edit
                 $(".edit-field").each(
                     function () {
+                        tinyMCE.get('inp_shortDes').setMode('design');
                         $(this).prop('disabled', false); isEnableEditingMode = true;}
                 )
             } else {
                 // tat trang thai edit
-                 $(".edit-field").each(
-                    function () { $(this).prop('disabled', true); isEnableEditingMode = false;}
+                $(".edit-field").each(
+                    function () {
+                        $(this).prop('disabled', true); isEnableEditingMode = false;
+                        tinyMCE.get('inp_shortDes').setMode('readonly');
+                    }
                 )
             }
         };
@@ -249,6 +252,7 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit success");
+                        turnOnEditMode();
                     } else {
                         errorAlert("Submit failed");
                     }
@@ -286,6 +290,7 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit success");
+                        turnOnEditMode();
                     } else {
                         errorAlert("Submit failed");
                     }
@@ -323,6 +328,7 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit success");
+                        turnOnEditMode();
                     } else {
                         errorAlert("Submit failed");
                     }
@@ -360,6 +366,7 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit success");
+                        turnOnEditMode();
                     } else {
                         errorAlert("Submit failed");
                     }
