@@ -156,7 +156,7 @@
             } else if (!ValidateEmail($("#inputEmail").val())) {
                 errorAlert("Email invalid!");
                 return;
-            } else if ($("#inputMobile").val().length < 10 || !regex.test($("#inputMobile").val())) {
+            } else if ($("#inputMobile").val().length < 10 || $("#inputMobile").val().length > 12 || !regex.test($("#inputMobile").val())) {
                 errorAlert("Please enter phone valid!");
                 return;
             }

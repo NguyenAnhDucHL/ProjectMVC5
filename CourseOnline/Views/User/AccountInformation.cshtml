@@ -39,6 +39,17 @@
                 <label for="eaddress">Your Mobile</label>
                 <input type="text" id="inputMobile" class="form-control form-control-lg" value="@user.use_mobile">
             </div>
+            <div dis class="form-group">
+                <div class="tab-pane tab-image" id="photo">
+                    <img style="width:200px; height:300px;" id="image_post" class="img-responsive pad" src="@(user.user_image == null ? "" : Url.Content(user.user_image))" alt="Photo">
+                    <div class="row tab-button edit-field">
+                        <div class="form-group col-sm-5 col-sm-push-7 pull-left">
+                            <label for="exampleChange">Add/Change image</label>
+                            <input onchange="readURL(this);" class="custom-input edit-field" type="file" id="exampleChange">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-6 form-group">
                 <label for="tel">User Gender</label>
                 @{
@@ -90,28 +101,61 @@
                 <textarea name="" id="inp_shortDes" cols="30" rows="10" class="form-control"></textarea>
             </div>
         </div>
-
         <div class="row">
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary btn-lg px-5" onclick="SubmitUpdateUser()">Update</button>
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary btn-lg px-5" style="width:80%;" onclick="SubmitUpdateUser()">Update</button>
+            </div>
+            <div class="col-2 pull-left">
+                <button type="submit" class="btn btn-primary btn-lg px-5" style="width:80%;" onclick="getBack()">Back</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    //su kien load anh
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function (e) {
+                    $('#image_post')
+                        .attr('src', e.target.result)
+                        .width(200)
+                        .height(300);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+    }
+        function getBack() {
+               window.location.href ='@Url.Action("Home_User", "Home")';
+    }
+    function ValidateEmail(email) {
+            var expr = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            return expr.test(email);
+        };
+</script>
 <script>
     function SubmitUpdateUser() {
         var user = {
                 userID: @user.user_id,
                 userName: $("#inputname").val(),
+                userImage: $("#image_post").attr('src'),
                 userMail: $("#inputEmail").val(),
                 userMobile: $("#inputMobile").val(),
                 userDescription: $("#inp_shortDes").val(),
                 userGender: $("input[name='optionsRadios']:checked").val(),
+
             };
-
             var userJson = JSON.stringify(user);
-
+            var regex = /^\d+$/;
+            if ($("#inputname").val() == "") {
+                errorAlert("Name is not empty!");
+                return;
+            } 
+            else if ($("#inputMobile").val().length < 10 || $("#inputMobile").val().length > 12 || !regex.test($("#inputMobile").val())) {
+                errorAlert("Please enter phone valid!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("UpdateUser","Home")',
                 type: "POST",
@@ -119,12 +163,12 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("Update success");
+                        successAlert("Update success");
                     } else {
-                        alert("Update failed");
+                        errorAlert("Update failed");
                     }
                 },
-                error: (response) => { alert("Network error") }
+                error: (response) => { errorAlert("Network error") }
             });
     }
 </script>
