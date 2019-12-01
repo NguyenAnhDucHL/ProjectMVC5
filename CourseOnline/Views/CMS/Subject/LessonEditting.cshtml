@@ -73,13 +73,20 @@
                         <label>Video link</label>
                         <input type="text" disabled class="form-control edit-field status-change-1" placeholder="Youtube link" id="inp_link" value="@lesson.lesson_link">
                     </div>
-                    <div class="form-group">
+                    <div class="tab-pane" id="content">
+                        <!-- /.box-header -->
                         <label>HTML Content</label>
-                        <textarea disabled class="form-control edit-field status-change-2" rows="10" id="inp_content">@lesson.lesson_content</textarea>
+                        <div class="box box-info">
+                            <div class="box-body pad">
+                                <form>
+                                    <textarea id="inp_content" name="inp_content" rows="10" cols="80">@lesson.lesson_content</textarea>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <button class="btn btn-info" onclick="turnOnEditMode()">Edit</button>
-                    <button disabled type="submit" onclick="SubmitEditLesson()" class="btn btn-info edit-field">Submit</button>
-                    <button type="submit" class="btn btn-info" onclick='getBackLessonList()'>Back</button>
+                    <button class="btn btn-info" style="width:8%;" onclick="turnOnEditMode()">Edit</button>
+                    <button disabled type="submit" style="width:8%;" onclick="SubmitEditLesson(), abc()" class="btn btn-info edit-field">Submit</button>
+                    <button type="submit" style="width:8%;" class="btn btn-info" onclick='getBackLessonList()'>Back</button>
                 </div>
             </div>
         </div>
@@ -87,21 +94,31 @@
 </section>
 
 @section scripts{
-    
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script>
 
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/ggfbhz52km8705qzardmaj5wi5nimvcagr9owfw523rin98f/tinymce/5/tinymce.min.js"></script>
+    <script>tinymce.init({ selector: '#inp_content' });</script>
+    <script>
+        $(document).ready(function () {
+            tinyMCE.get('inp_content').setMode('readonly');
+        });
         var isEnableEditingMode = false;
         function turnOnEditMode() {
             if (!isEnableEditingMode) {
                 // bat trang thai edit
                 $(".edit-field").each(
-                    function () { $(this).prop('disabled', false); isEnableEditingMode = true; }
+                    function () {
+                        $(this).prop('disabled', false); isEnableEditingMode = true;
+                        tinyMCE.get('inp_content').setMode('design');
+                    }
                 )
             } else {
                 // tat trang thai edit
                 $(".edit-field").each(
-                    function () { $(this).prop('disabled', true); isEnableEditingMode = false; }
+                    function () {
+                        $(this).prop('disabled', true); isEnableEditingMode = false;
+                        tinyMCE.get('inp_content').setMode('readonly');
+                    }
                 )
             }
         };
@@ -128,8 +145,11 @@
                 )
             }
         });
-
+        function abc() {
+            tinyMCE.triggerSave();
+        }
         function SubmitEditLesson() {
+            
             var lesson = {
                     lessonid: @lesson_id,
                     subjectid: @subject_id,

@@ -90,11 +90,11 @@
                     </div>
                     <!-- /.tab-pane -->
                 </div>
-                <button type="submit" onclick="draftPost()" class="btn btn-info edit-field">Draft</button>
-                <button type="submit" onclick="submitPost()" class="btn btn-info edit-field">Submit</button>
-                <button type="submit" onclick="publishPost()" class="btn btn-info edit-field">Publish</button>
-                <button type="submit" onclick="hidePost()" class="btn btn-info edit-field">Hide</button>
-                <button type="submit" class="btn btn-info" onclick="getBackPostList()">Back</button>
+                <button type="submit" onclick="draftPost()" class="btn btn-info edit-field buttonStyle">Draft</button>
+                <button type="submit" onclick="submitPost()" class="btn btn-info edit-field buttonStyle">Submit</button>
+                <button type="submit" onclick="publishPost()" class="btn btn-info edit-field buttonStyle">Publish</button>
+                <button type="submit" onclick="hidePost()" class="btn btn-info edit-field buttonStyle">Hide</button>
+                <button type="submit" class="btn btn-info buttonStyle" onclick="getBackPostList()">Back</button>
             </div>
             <!-- /.nav-tabs-custom -->
         </div>
@@ -126,10 +126,12 @@
                 $(".edit-field").each(
                     function () {
                         $(this).prop('disabled', true); isEnableEditingMode = true;
-                        tinyMCE.get('editor1').setMode('readonly');
                     }
                 )
         };
+        function turnOffEdit() {
+            tinyMCE.get('editor1').setMode('readonly');
+        }
 
         function submitPost() {
             tinyMCE.triggerSave();
@@ -160,6 +162,7 @@
                     if (response.success) {
                         successAlert("Submit success");
                         turnOnEditMode();
+                        turnOffEdit();
                     } else {
                         errorAlert("Submit failed");
                     }
@@ -197,6 +200,7 @@
                     if (response.success) {
                         successAlert("Submit success");
                         turnOnEditMode();
+                        turnOffEdit();
                     } else {
                         errorAlert("Submit failed");
                     }
@@ -234,6 +238,7 @@
                     if (response.success) {
                         successAlert("Submit success");
                         turnOnEditMode();
+                        turnOffEdit();
                     } else {
                         errorAlert("Submit failed");
                     }
@@ -271,6 +276,7 @@
                     if (response.success) {
                         successAlert("Submit success");
                         turnOnEditMode();
+                        turnOffEdit();
                     } else {
                         errorAlert("Submit failed");
                     }

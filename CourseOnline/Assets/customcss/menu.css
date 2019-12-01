@@ -267,3 +267,6 @@ ul.kas-icon-aero li a:before {
     content: "\e258";
     padding-right: 8px;
 }
+.buttonStyle{
+    width:8%;
+}

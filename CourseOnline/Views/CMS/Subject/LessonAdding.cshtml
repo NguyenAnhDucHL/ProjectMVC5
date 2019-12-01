@@ -4,7 +4,7 @@
     ViewBag.Title = "LessonDetail";
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
     List<Setting> listLessonType = ViewBag.LessonType;
-    List<LessonModel> listParent = ViewBag.LessonParent; 
+    List<LessonModel> listParent = ViewBag.LessonParent;
     int subject_id = ViewBag.SubjectId;
 }
 
@@ -80,12 +80,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
                         <label>HTML Content</label>
-                        <textarea class="form-control edit-field status-change-2" rows="10" id="inp_content"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-danger edit-field" onclick="SubmitAddLesson()">Submit</button>
-                    <button type="submit" class="btn btn-danger" onclick='getBackSubjectLessonList()'>Back</button>
+                        <div class="box box-info">
+                            <div class="box-body pad">
+                                <form>
+                                    <textarea id="editor1" name="edit-field" rows="10" cols="80" placeholder="This is my textarea"></textarea>
+                                </form>
+                            </div>
+                        </div>
+                    <button type="submit" class="btn btn-info edit-field" style="width:8%;" onclick="SubmitAddLesson()">Submit</button>
+                    <button type="submit" class="btn btn-info" style="width:8%;" onclick='getBackSubjectLessonList()'>Back</button>
                 </div>
             </div>
         </div>
@@ -94,8 +98,10 @@
 
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/ggfbhz52km8705qzardmaj5wi5nimvcagr9owfw523rin98f/tinymce/5/tinymce.min.js"></script>
+    <script>tinymce.init({ selector: '#editor1' });</script>
     <script>
-        
+
         var isEnableEditingMode = false;
         $("#sl_lessonType").change(function () {
             if ($("#sl_lessonType").val() == "Video Lesson") {
@@ -123,22 +129,29 @@
         function turnOnEditMode() {
                 // bat trang thai edit
                 $(".edit-field").each(
-                    function () { $(this).prop('disabled', true); isEnableEditingMode2 = true; }
+                    function () {
+                        $(this).prop('disabled', true); isEnableEditingMode2 = true;
+                    }
                 )
         };
+        function turnOffEdit() {
+            tinyMCE.get('editor1').setMode('readonly');
+        }
 
-    function SubmitAddLesson() {
+        function SubmitAddLesson() {
+        
             var lesson = {
+                tinyMCE.triggerSave();
                 subjectId: @subject_id,
                 lessonName: $("#inp_name").val(),
                 lessonType: $("#sl_lessonType").val(),
                 lessonStatus: $("#sl_lessonStatus").val(),
                 lessonOrder: $("#inp_order").val(),
                 lessonLink: $("#inp_link").val(),
-                lessonContent: $("#inp_content").val(),
+                lessonContent: $("#editor1").val(),
                 parentId: $("#sl_lessonParent").val(),
             };
-
+            
             var postJson = JSON.stringify(lesson);
             var regex = /^\d+$/;
             if ($("#inp_name").val() == "") {
@@ -157,6 +170,7 @@
                     if (response.success) {
                         successAlert("Submit Success");
                         turnOnEditMode();
+                        turnOffEdit();
                     } else {
                         errorAlert("Submit Fail");
                     }
