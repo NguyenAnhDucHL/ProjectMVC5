@@ -5,10 +5,10 @@
 }
 <section class="content-header">
     <h1>
-        Subject Lessons
+        Lesson List
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Subject")'>Subject List</a></li>
         <li class="active">Subject Lessons</li>
     </ol>
@@ -17,7 +17,7 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <!-- /.box-header -->
                 <div class="row">
                     <div class="col-sm-2" style="margin-left : 10px; margin-top : 10px">
@@ -27,15 +27,20 @@
                             <option>Inactive</option>
                         </select>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" style="margin-top : 10px">
+                        Search:
+                        <input type="text" placeholder="Search" id="inp_search" style="height:34px; margin-left:10px;" />
+                        <a onclick="doSearch()" style="cursor: pointer;" data-toggle='tooltip' title='Search'><i class='fa fa-fw fa-search'></i></a>
+                    </div>
+                    <div class="col-sm-3" style="margin-top : 10px">
                         <label><h5>Subject: <b>@{@ViewBag.Subject.subject_name}</b></h5></label>
                     </div>
                     <div class="col-sm-2 pull-right">
                         <button type="button" class="btn btn-link" onclick="getAddLesson()" style="float:right;">Add Lesson</button>
                     </div>
                 </div>
-                <div class="box-body">
-                    <table id="tb_subject_lesson" class="table table-bordered table-striped">
+                <div class="box-body ">
+                    <table id="tb_subject_lesson" class="table table-bordered table-striped ">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -78,11 +83,7 @@
                 },
                 {   
                     "data": "lesson_id", "render": function (data) {
-                           return "<div class='row'><div class='col-sm-6'><a onclick=getEditIdLesson('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>" +
-                                    "</div>" + 
-                                    "<div class='col-sm-6'><a onclick=getDelIdLesson('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Delete'><i class='fa fa-trash'></i></a>" +
-								 "</div>" +
-								 "</div>";
+                           return "<a onclick=getEditIdLesson('" + data + "') style='width=100%; margin-left : 20px; cursor : pointer' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>";
                     },
                     "orderable": false,
                     "searchable": false
@@ -95,7 +96,19 @@
         "order": [[0, "asc"]],
         "searching": false
         });
+
+        //them su kien cho search
+            doSearch()
     });
+
+    //bat su kien search
+        function doSearch() {
+            
+            $('#inp_search').on('change', function (e) {
+                var valueSelected = this.value;
+                dataTable.ajax.url('@Url.Action("SearchByName","SubjectLesson")' + '?type=' + valueSelected + "&subject_id=" +@ViewBag.id).load(function (response) { });
+            });
+        }
 
     filterListener();
     function filterListener() {
@@ -116,28 +129,6 @@
                window.location.href ='@Url.Action("EditLesson", "SubjectLesson")?lessonId=' + id +"&subjectId=" + @ViewBag.id;
             }
         }
-
-    function getDelIdLesson(id) {
-            if (id != null) {
-                confirmAlert('Xóa', 'Xác nhận xóa', function submit() {
-                    $.ajax({
-                        url:'@Url.Action("deleteLesson","SubjectLesson")',
-                        type: "POST",
-                        data: { id: id },
-                        datatype: "json",
-                        success: (response) => {
-                            if (response.success) {
-                                dataTable.ajax.reload(); successAlert("Thành công", "Xóa thành công")
-                            } else {
-                                errorAlert("Thất bại", "Xóa thất bại")
-                            }
-                        },
-                        error: (response) => { errorAlert("Thất bại", "Xóa thất bại") }
-                    });
-                });
-            }
-        }
-
 
     </script>
 }

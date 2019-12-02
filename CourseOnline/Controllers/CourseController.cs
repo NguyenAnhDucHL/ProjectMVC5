@@ -25,6 +25,41 @@ namespace CourseOnline.Controllers
             }
             return View("/Views/CMS/Course/CourseList.cshtml");
         }
+
+        //search
+        [HttpPost]
+        public ActionResult SearchByName(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var courseList = (from c in db.Courses
+                                  join s in db.Subjects on c.subject_id equals s.subject_id
+                                  join u in db.Users on c.teacher_id equals u.user_id
+                                  join ur in db.UserRoles on u.user_id equals ur.user_id
+                                  join r in db.Roles on ur.role_id equals r.role_id
+                                  where c.course_name.Contains(type) && r.role_id == 2
+                                   select new CourseListModel
+                                   {
+                                       course_id = c.course_id,
+                                       course_name = c.course_name,
+                                       user_fullname = u.user_fullname,
+                                       course_start_date = c.course_start_date,
+                                       course_end_date = c.course_end_date,
+                                       course_status = c.course_status
+                                   }).ToList();
+                int totalrows = courseList.Count;
+                int totalrowsafterfiltering = courseList.Count;
+                courseList = courseList.Skip(start).Take(length).ToList();
+                courseList = courseList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = courseList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         //filter by subject
         [HttpPost]
         public ActionResult FilterBySubjectName(int type)
@@ -217,14 +252,18 @@ namespace CourseOnline.Controllers
             {
                 List<Subject> listSubject = db.Subjects.Where(s => s.subject_name != null).Distinct().ToList();
                 ViewBag.Subjects = listSubject;
-                String sql = "select * from [User] as u " +
-                                "join UserRole ur on ur.user_id = u.user_id " +
-                                "join Roles r on r.role_id = ur.role_id " +
-                                "where r.role_id = 2";
-                List<User> listUser = db.Database.SqlQuery<User>(sql).ToList();
-                ViewBag.Users = listUser;
-                Course course = db.Courses.Where(c => c.course_id == id).FirstOrDefault();
-                ViewBag.Course = course;
+
+                string sql = "select c.course_id, c.course_name, u.user_fullname, s.subject_name, c.course_start_date, c.course_end_date, c.course_status, c.subject_id, c.teacher_id " +
+                            "from Course c join [User] u " +
+                            "on c.teacher_id = u.[user_id] " +
+                            "join [Subject] s " +
+                            "on c.subject_id = s.subject_id " +
+                            "where c.course_id = @id";
+                CourseListModel Courses = db.Database.SqlQuery<CourseListModel>(sql, new SqlParameter("id", id)).FirstOrDefault();
+                ViewBag.Course = Courses;
+                ViewBag.SubjectName = Courses.subject_name;
+                ViewBag.UserName = Courses.user_fullname;
+
                 return View("/Views/CMS/Course/CourseEdit.cshtml");
             }
         }
@@ -234,6 +273,7 @@ namespace CourseOnline.Controllers
 
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
+                ViewBag.id = id;
                 Course course = db.Courses.Where(c => c.course_id == id).FirstOrDefault();
                 ViewBag.Course = course;
                 return View("/Views/CMS/Course/CourseWorkList.cshtml");

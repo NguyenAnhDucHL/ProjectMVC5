@@ -250,6 +250,38 @@ namespace CourseOnline.Controllers
             return View("/Views/User/MySubject.cshtml");
         }
 
+        //search
+        [HttpPost]
+        public ActionResult SearchByName(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var subjectList = (from s in db.Subjects
+                                   where s.subject_name.Contains(type)
+                                   select new SubjectListModel
+                                   {
+                                       subject_id = s.subject_id,
+                                       subject_category = s.subject_category,
+                                       subject_name = s.subject_name,
+                                       subject_brief_info = s.subject_brief_info,
+                                       subject_type = s.subject_type,
+                                       subject_status = s.subject_status,
+                                       subject_tag_line = s.subject_tag_line
+                                   }).ToList();
+                int totalrows = subjectList.Count;
+                int totalrowsafterfiltering = subjectList.Count;
+                subjectList = subjectList.Skip(start).Take(length).ToList();
+                subjectList = subjectList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = subjectList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
         //filter 
         [HttpPost]
         public ActionResult DoFilter(string filterBy = "")
@@ -368,12 +400,20 @@ namespace CourseOnline.Controllers
                 using (STUDYONLINEEntities db = new STUDYONLINEEntities())
                 {
                     dynamic addsubject = JValue.Parse(postJson);
-
+                    int temp = db.Subjects.DefaultIfEmpty().Max(sub => sub == null ? 0 : sub.subject_id);
+                    int id_new = temp + 1;
+                    string imageValue = addsubject.subjectImage;
+                    var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
+                    var hinhanh = Convert.FromBase64String(ava);
+                    string relative_path = "/Assets/dist/img/" + "subject" + id_new + ".png";
+                    string path = Server.MapPath(relative_path);
+                    System.IO.File.WriteAllBytes(path, hinhanh);
                     Subject s = new Subject();
                     s.subject_name = addsubject.subjectName;
                     s.subject_category = addsubject.subjectCategory;
                     s.subject_type = addsubject.subjectType;
                     s.subject_brief_info = addsubject.shortDes;
+                    s.picture = relative_path;
                     s.subject_status = addsubject.subjectStatus;
                     db.Subjects.Add(s);
                     db.SaveChanges();
@@ -415,21 +455,48 @@ namespace CourseOnline.Controllers
                 {
                     dynamic editsubject = JValue.Parse(postJson);
                     int id = editsubject.subjectId;
-
                     Subject s = db.Subjects.Where(subject => subject.subject_id == id).FirstOrDefault();
-                    if (s != null)
+                    string imageValue = editsubject.subjectImage;
+                    var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
+                    if (ava == "/Assets/dist/img/" + "subject" + editsubject.id + ".png")
                     {
-                        s.subject_name = editsubject.subjectName;
-                        s.subject_category = editsubject.subjectCategory;
-                        s.subject_type = editsubject.subjectType;
-                        s.subject_brief_info = editsubject.shortDes;
-                        s.subject_status = editsubject.subjectStatus;
-                        db.SaveChanges();
-                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        if (s != null)
+                        {
+                            s.subject_name = editsubject.subjectName;
+                            s.subject_category = editsubject.subjectCategory;
+                            s.subject_type = editsubject.subjectType;
+                            s.subject_brief_info = editsubject.shortDes;
+                            s.picture = editsubject.subjectImage;
+                            s.subject_status = editsubject.subjectStatus;
+                            db.SaveChanges();
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        }
                     }
                     else
                     {
-                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        var hinhanh = Convert.FromBase64String(ava);
+                        string relative_path = "/Assets/dist/img/" + "subject" + editsubject.id + ".png";
+                        string path = Server.MapPath(relative_path);
+                        System.IO.File.WriteAllBytes(path, hinhanh);
+                        if (s != null)
+                        {
+                            s.subject_name = editsubject.subjectName;
+                            s.subject_category = editsubject.subjectCategory;
+                            s.subject_type = editsubject.subjectType;
+                            s.subject_brief_info = editsubject.shortDes;
+                            s.picture = relative_path;
+                            s.subject_status = editsubject.subjectStatus;
+                            db.SaveChanges();
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        }
                     }
                 }
             }
@@ -450,6 +517,19 @@ namespace CourseOnline.Controllers
                 Subject subject = db.Subjects.Where(s => s.subject_id == id).FirstOrDefault();
                 ViewBag.Subject = subject;
                 return View("/Views/CMS/Subject/SubjectLessonList.cshtml");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult DomainList(int id)
+        {
+
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                ViewBag.id = id;
+                Subject subject = db.Subjects.Where(s => s.subject_id == id).FirstOrDefault();
+                ViewBag.Subject = subject;
+                return View("/Views/CMS/Subject/DomainList.cshtml");
             }
         }
 

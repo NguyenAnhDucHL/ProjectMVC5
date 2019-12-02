@@ -19,15 +19,12 @@
 
 <!-- Main content -->
 <section class="content">
-
     <div class="row">
-
         <div class="col-lg-12">
             <div class="nav-tabs-custom ">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#overview" data-toggle="tab">Overview</a></li>
                     <li><a href="#content" data-toggle="tab">Content</a></li>
-
                     <!-- /.tab-content -->
                 </ul>
                 <div class="tab-content">
@@ -79,59 +76,36 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="content">
+                        <!-- /.box-header -->
                         <div class="box box-info">
-                            <div class="box-header">
-                                <h3 class="box-title">
-                                    CK Editor
-                                    <small>Advanced and full of features</small>
-                                </h3>
-                                <!-- tools box -->
-                                <div class="pull-right box-tools">
-                                    <button type="button" class="btn btn-info btn-sm" data-widget="collapse"
-                                            data-toggle="tooltip" title="Collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-info btn-sm" data-widget="remove"
-                                            data-toggle="tooltip" title="Remove">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                                <!-- /. tools -->
-                            </div>
-                            <!-- /.box-header -->
                             <div class="box-body pad">
                                 <form>
-                                    <textarea id="editor1" name="editor1" rows="10" cols="80" placeholder="This is my textarea"></textarea>
+                                    <textarea id="editor1" name="edit-field" rows="10" cols="80" placeholder="This is my textarea"></textarea>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <!-- /.tab-pane -->
                 </div>
+                <button type="submit" onclick="draftPost()" class="btn btn-info edit-field buttonStyle">Draft</button>
+                <button type="submit" onclick="submitPost()" class="btn btn-info edit-field buttonStyle">Submit</button>
+                <button type="submit" onclick="publishPost()" class="btn btn-info edit-field buttonStyle">Publish</button>
+                <button type="submit" onclick="hidePost()" class="btn btn-info edit-field buttonStyle">Hide</button>
+                <button type="submit" class="btn btn-info buttonStyle" onclick="getBackPostList()">Back</button>
             </div>
-
             <!-- /.nav-tabs-custom -->
-            <button type="submit" onclick="draftPost()" class="btn btn-info edit-field">Draft</button>
-            <button type="submit" onclick="submitPost()" class="btn btn-info edit-field">Submit</button>
-            <button type="submit" onclick="publishPost()" class="btn btn-info edit-field">Publish</button>
-            <button type="submit" onclick="hidePost()" class="btn btn-info edit-field">Hide</button>
-            <button type="submit" class="btn btn-info" onclick="getBackPostList()">Back</button>
         </div>
-        <!-- /.col -->
     </div>
-    <!-- /.row -->
-
 </section>
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/ggfbhz52km8705qzardmaj5wi5nimvcagr9owfw523rin98f/tinymce/5/tinymce.min.js"></script>
-    <script>tinymce.init({ selector: 'textarea' });</script>
+    <script>tinymce.init({ selector: '#editor1' });</script>
     <script>
-       
+       //read url image
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -147,15 +121,17 @@
         }
         var isEnableEditingMode = true;
         function turnOnEditMode() {
-            
+
                 // bat trang thai edit
                 $(".edit-field").each(
                     function () {
                         $(this).prop('disabled', true); isEnableEditingMode = true;
-                        tinyMCE.get('inp_shortDes').setMode('readonly');
                     }
                 )
         };
+        function turnOffEdit() {
+            tinyMCE.get('editor1').setMode('readonly');
+        }
 
         function submitPost() {
             tinyMCE.triggerSave();
@@ -186,6 +162,7 @@
                     if (response.success) {
                         successAlert("Submit success");
                         turnOnEditMode();
+                        turnOffEdit();
                     } else {
                         errorAlert("Submit failed");
                     }
@@ -223,6 +200,7 @@
                     if (response.success) {
                         successAlert("Submit success");
                         turnOnEditMode();
+                        turnOffEdit();
                     } else {
                         errorAlert("Submit failed");
                     }
@@ -260,6 +238,7 @@
                     if (response.success) {
                         successAlert("Submit success");
                         turnOnEditMode();
+                        turnOffEdit();
                     } else {
                         errorAlert("Submit failed");
                     }
@@ -297,6 +276,7 @@
                     if (response.success) {
                         successAlert("Submit success");
                         turnOnEditMode();
+                        turnOffEdit();
                     } else {
                         errorAlert("Submit failed");
                     }

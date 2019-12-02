@@ -10,19 +10,16 @@
         Courses List
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="/course-list">Courses List</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Courses List</li>
     </ol>
 </section>
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <div class="row">
-                    <div class="col-lg-2">
-                        <button type="button" class="btn btn-block btn-primary" style="margin-top: 0px;" onclick='getAddCourse()'>Add new</button>
-                    </div>
-                    <div class="col-lg-2">
+                    <div class="col-sm-2" style="margin-left : 10px; margin-top : 10px">
                         <select id="sl_subjectName" class="form-control">
                             <option value="187697411">All Subject</option>
                             @{
@@ -32,6 +29,14 @@
                                 }
                             }
                         </select>
+                    </div>
+                    <div class="col-sm-3" style="margin-top : 10px">
+                        Search:
+                        <input type="text" placeholder="Search" id="inp_search" style="height:34px; margin-left:10px;" />
+                        <a onclick="doSearch()" style="cursor: pointer;" data-toggle='tooltip' title='Search'><i class='fa fa-fw fa-search'></i></a>
+                    </div>
+                    <div class="col-sm-2 pull-right">
+                        <button type="button" class="btn btn-link" onclick="getAddCourse()" style="float:right;">Add new</button>
                     </div>
                 </div>
                 <div class="box-body">
@@ -44,7 +49,7 @@
                                 <th>Start</th>
                                 <th>End</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th class="col-sm-2">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -84,9 +89,13 @@
                 },
                 {
                     "data": "course_id", "render": function (data) {
-                        return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdCourse('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
-                               "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getCourseWork('" + data + "') ><i class='fa fa-fw fa-edit'></i>Coursework</button>" +
-                               "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getGrade('" + data + "') ><i class='fa fa-fw fa-edit'></i>Grades</button>";
+                        return "<div class='row'><div class='col-sm-4'><a onclick=getEditIdCourse('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>" +
+                                    "</div>" + 
+                                    "<div class='col-sm-4'><a onclick=getCourseWork('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Coursework'><i class='fa fa-pencil'></i></a>" +
+                                    "</div>" +
+                                    "<div class='col-sm-4'><a onclick=getGrade('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Grades'><i class='fa fa-table'></i></a>" +
+								    "</div>"
+								 "</div>";
 
                     },
                     "orderable": false,
@@ -99,9 +108,21 @@
         "serverSide": "true",
         "order": [[0, "asc"]],
         "searching": false
-        });
-        filterListener();
+            });
+        //them su kien cho filter
+            filterListener();
+        //them su kien cho search
+            doSearch()
     });
+
+        //bat su kien search
+        function doSearch() {
+            
+            $('#inp_search').on('change', function (e) {
+                var valueSelected = this.value;
+                dataTable.ajax.url('@Url.Action("SearchByName","Course")' + '?type=' + valueSelected).load(function (response) { });
+            });
+        }
 
         function filterListener() {
              $('#sl_subjectName').on('change', function (e) {

@@ -6,10 +6,10 @@
 
 <section class="content-header">
     <h1>
-        Course Works
+        Course Work List
     </h1>
     <ol class="breadcrumb">
-        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Course")'>Course List</a></li>
         <li class="active">Course works</li>
     </ol>
@@ -18,11 +18,18 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <!-- /.box-header -->
-                <div class="col-lg-2">
-                    <button type="button" class="btn btn-block btn-primary" style="margin-top: 0px;" onclick='getAddCourseWork()'>Add new</button>
-                </div>                
+                <div class="row">
+                    <div class="col-sm-4" style="margin-left : 10px; margin-top : 10px">
+                        Search:
+                        <input type="text" placeholder="Search Coursework..." id="inp_search" style="height:34px; margin-left:10px;" />
+                        <a onclick="doSearch()" style="cursor: pointer;" data-toggle='tooltip' title='Search'><i class='fa fa-fw fa-search'></i></a>
+                    </div>
+                    <div class="col-sm-2 pull-right">
+                        <button type="button" class="btn btn-link" onclick="getAddCourseWork()" style="float:right;">Add new</button>
+                    </div>
+                </div>
                 <div class="box-body">
                     <table id="tb_course_work" class="table table-bordered table-striped">
                         <thead>
@@ -34,7 +41,7 @@
                                 <th>Create by</th>
                                 <th>Deadline</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th class="col-sm-1">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -48,8 +55,9 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
+        var dataTable;
     $(document).ready(function() {
-        $('#tb_course_work').DataTable({
+        dataTable =  $('#tb_course_work').DataTable({
             "ajax": {
                 "url": '@Url.Action("GetAllCourseWork", "CourseWork")',
                 "type": "POST",
@@ -70,7 +78,7 @@
                 },
                 {
                     "data": "coursework_id", "render": function (data) {
-                        return "<button class='btn btn-block btn-primary' data-target='edit_employee'  style='margin-left:5px' onclick=getEditIdCourseWork('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>"
+                        return "<a onclick=getEditIdCourseWork('" + data + "') style='width=100%; margin-left : 20px; cursor : pointer' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>"
                     },
                     "orderable": false,
                     "searchable": false
@@ -83,7 +91,19 @@
         "order": [[0, "asc"]],
         "searching": false
         });
+        //them su kien cho search
+            doSearch()
     });
+
+        //bat su kien search
+        function doSearch() {
+            
+            $('#inp_search').on('change', function (e) {
+                var valueSelected = this.value;
+                dataTable.ajax.url('@Url.Action("SearchByName","CourseWork")' + '?type=' + valueSelected + "&course_id=" +@ViewBag.id).load(function (response) { });
+            });
+        }
+
         function getAddCourseWork(id) {
             window.location.href = '@Url.Action("AddCourseWork","CourseWork")?courseid='+ @course.course_id;
         }

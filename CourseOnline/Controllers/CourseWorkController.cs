@@ -46,7 +46,41 @@ namespace CourseOnline.Controllers
                 return Json(new { success = true, data = Courseworks, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
             }
         }
-      
+
+        //search
+        [HttpPost]
+        public ActionResult SearchByName(string type, int course_id)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var cousreWorkList = (from cw in db.Courseworks
+                                      join c in db.Courses on cw.course_id equals c.course_id
+                                      join et in db.ExamTests on cw.test_id equals et.test_id
+                                      join u in db.Users on cw.usercreate_id equals u.user_id
+                                      where cw.coursework_name.Contains(type) & cw.course_id == course_id
+                                   select new CourseWorkListModel
+                                   {
+                                       coursework_id = cw.coursework_id,
+                                       course_name = c.course_name,
+                                       coursework_name = cw.coursework_name,
+                                       user_email = u.user_email,
+                                       due_date = cw.due_date,
+                                       coursework_status = cw.coursework_status,
+                                       test_code = et.test_code,
+                                   }).ToList();
+                int totalrows = cousreWorkList.Count;
+                int totalrowsafterfiltering = cousreWorkList.Count;
+                cousreWorkList = cousreWorkList.Skip(start).Take(length).ToList();
+                cousreWorkList = cousreWorkList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = cousreWorkList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpGet]
         public ActionResult AddCourseWork(int courseid)
         {

@@ -11,7 +11,7 @@
         Subject Adding
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Subject")'>Subjects List</a></li>
         <li class="active">Subject Adding</li>
     </ol>
@@ -20,18 +20,18 @@
 <section class="content">
     <div class="row">
         <div class="col-lg-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <div class="box-body">
                     <div class="row">
                         <div class="col-sm-7">
                             <div class="form-group">
                                 <label>Subject Name</label>
-                                <input type="text" class="form-control" id="inp_name">
+                                <input type="text" class="form-control edit-field" id="inp_name">
                             </div>
                             <div class="form-group">
                                 <label>Category</label>
                                 <div>
-                                    <select id="sl_subjectCategory" class="form-control">
+                                    <select id="sl_subjectCategory" class="form-control edit-field">
                                         @{
                                             foreach (Setting setting in listSettingCategory)
                                             {
@@ -46,7 +46,7 @@
                             <div class="form-group">
                                 <label>Type</label>
                                 <div>
-                                    <select id="sl_subjectType" class="form-control">
+                                    <select id="sl_subjectType" class="form-control edit-field">
                                         @{
                                             foreach (Setting setting in listSettingType)
                                             {
@@ -56,21 +56,26 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleChange">Add/Change image</label>
-                                <input class="custom-input" type="file" id="exampleChange">
+                            <div class="tab-pane tab-image" id="photo">
+                                <img id="image_post" class="img-responsive pad" src="" alt="Photo">
+                                <div class="row tab-button">
+                                    <div class="form-group col-sm-5 col-sm-push-7">
+                                        <label for="exampleChange">Add/change image</label>
+                                        <input onchange="readURL(this);" class="custom-input edit-field" type="file" id="exampleChange">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Description</label>
-                        <textarea class="form-control" rows="3" id="inp_shortDes"></textarea>
+                        <textarea class="form-control edit-field" rows="3" id="inp_shortDes"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-info" onclick="DraftAddSubject()">Save Draft</button>
-                    <button type="submit" class="btn btn-info" onclick="SubmitAddSubject()">Submit</button>
-                    <button type="submit" class="btn btn-info" onclick="ApproveAddSubject()">Approve</button>
-                    <button type="submit" class="btn btn-info" onclick="PublishAddSubject()">Publish Online</button>
-                    <button type="submit" class="btn btn-info" onclick="HideAddSubject()">Hide</button>
+                    <button type="submit" class="btn btn-info edit-field" onclick="DraftAddSubject()">Save Draft</button>
+                    <button type="submit" class="btn btn-info edit-field" onclick="SubmitAddSubject()">Submit</button>
+                    <button type="submit" class="btn btn-info edit-field" onclick="ApproveAddSubject()">Approve</button>
+                    <button type="submit" class="btn btn-info edit-field" onclick="PublishAddSubject()">Publish Online</button>
+                    <button type="submit" class="btn btn-info edit-field" onclick="HideAddSubject()">Hide</button>
                     <button type="submit" class="btn btn-info" onclick="getBackSubjectList()">Back</button>
                 </div>
             </div>
@@ -81,6 +86,28 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
     <script>
+        //read url image
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image_post')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        var isEnableEditingMode = true;
+        function turnOnEditMode() {
+                // bat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', true); isEnableEditingMode = true; }
+                )
+        };
         // bat su kien submit
         function SubmitAddSubject() {
             var subject = {
@@ -88,10 +115,15 @@
                 subjectCategory: $("#sl_subjectCategory").val(),
                 subjectType: $("#sl_subjectType").val(),
                 shortDes: $("#inp_shortDes").val(),
+                subjectImage: $("#image_post").attr('src'),
                 subjectStatus : "Submitted"
             };
 
             var postJson = JSON.stringify(subject);
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            }
 
             $.ajax({
                 url: '@Url.Action("SubmitAddSubject","Subject")',
@@ -100,12 +132,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 
@@ -116,11 +149,15 @@
                 subjectCategory: $("#sl_subjectCategory").val(),
                 subjectType: $("#sl_subjectType").val(),
                 shortDes: $("#inp_shortDes").val(),
+                subjectImage: $("#image_post").attr('src'),
                 subjectStatus : "Draft"
             };
 
             var postJson = JSON.stringify(subject);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitAddSubject","Subject")',
                 type: "POST",
@@ -128,12 +165,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 
@@ -144,11 +182,15 @@
                 subjectCategory: $("#sl_subjectCategory").val(),
                 subjectType: $("#sl_subjectType").val(),
                 shortDes: $("#inp_shortDes").val(),
+                subjectImage: $("#image_post").attr('src'),
                 subjectStatus : "Approved"
             };
 
             var postJson = JSON.stringify(subject);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitAddSubject","Subject")',
                 type: "POST",
@@ -156,12 +198,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 
@@ -172,11 +215,15 @@
                 subjectCategory: $("#sl_subjectCategory").val(),
                 subjectType: $("#sl_subjectType").val(),
                 shortDes: $("#inp_shortDes").val(),
+                subjectImage: $("#image_post").attr('src'),
                 subjectStatus : "Online"
             };
 
             var postJson = JSON.stringify(subject);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitAddSubject","Subject")',
                 type: "POST",
@@ -184,12 +231,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 
@@ -200,11 +248,15 @@
                 subjectCategory: $("#sl_subjectCategory").val(),
                 subjectType: $("#sl_subjectType").val(),
                 shortDes: $("#inp_shortDes").val(),
+                subjectImage: $("#image_post").attr('src'),
                 subjectStatus : "Hiden"
             };
 
             var postJson = JSON.stringify(subject);
-
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitAddSubject","Subject")',
                 type: "POST",
@@ -212,12 +264,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 

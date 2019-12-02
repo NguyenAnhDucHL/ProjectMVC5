@@ -4,7 +4,7 @@
     ViewBag.Title = "LessonDetail";
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
     List<Setting> listLessonType = ViewBag.LessonType;
-    List<LessonModel> listParent = ViewBag.LessonParent; 
+    List<LessonModel> listParent = ViewBag.LessonParent;
     int subject_id = ViewBag.SubjectId;
 }
 
@@ -13,7 +13,7 @@
         Lesson Details
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Subject")'>Subjects List</a></li>
         <li><a href='@Url.Action("BackSubjectLessonList","SubjectLesson")/@ViewBag.SubjectId'>Subject Lesson</a></li>
         <li class="active">Lesson Details</li>
@@ -24,17 +24,17 @@
 <section class="content">
     <div class="row">
         <div class="col-lg-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <div class="box-body">
                     <div class="row">
                         <div class="col-sm-9">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" id="inp_name">
+                                <input type="text" class="form-control edit-field" id="inp_name">
                             </div>
                             <div class="form-group">
                                 <label>Type</label>
-                                <select id="sl_lessonType" class="form-control">
+                                <select id="sl_lessonType" class="form-control edit-field">
                                     @{
                                         foreach (Setting setting in listLessonType)
                                         {
@@ -47,14 +47,14 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Status</label>
-                                <select id="sl_lessonStatus" class="form-control">
+                                <select id="sl_lessonStatus" class="form-control edit-field">
                                     <option>Active</option>
                                     <option>Inactive</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Order</label>
-                                <input type="text" class="form-control" id="inp_order">
+                                <input type="text" class="form-control edit-field" id="inp_order">
                             </div>
                         </div>
                     </div>
@@ -62,13 +62,13 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Video link</label>
-                                <input type="text" class="form-control status-change-1" placeholder="Youtube link" id="inp_link">
+                                <input type="text" class="form-control status-change-1 edit-field" placeholder="Youtube link" id="inp_link">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Parent</label>
-                                <select id="sl_lessonParent" class="form-control">
+                                <select id="sl_lessonParent" class="form-control edit-field">
                                     <option value="0">New parent lesson</option>
                                     @{
                                         foreach (LessonModel lesson in listParent)
@@ -80,12 +80,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
                         <label>HTML Content</label>
-                        <textarea class="form-control status-change-2" rows="10" id="inp_content"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-danger" onclick="SubmitAddLesson()">Submit</button>
-                    <button type="submit" class="btn btn-danger" onclick='getBackSubjectLessonList()'>Back</button>
+                        <div class="box box-info">
+                            <div class="box-body pad">
+                                <form>
+                                    <textarea id="editor1" name="edit-field" rows="10" cols="80" placeholder="This is my textarea"></textarea>
+                                </form>
+                            </div>
+                        </div>
+                    <button type="submit" class="btn btn-info edit-field" style="width:8%;" onclick="SubmitAddLesson()">Submit</button>
+                    <button type="submit" class="btn btn-info" style="width:8%;" onclick='getBackSubjectLessonList()'>Back</button>
                 </div>
             </div>
         </div>
@@ -94,8 +98,10 @@
 
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/ggfbhz52km8705qzardmaj5wi5nimvcagr9owfw523rin98f/tinymce/5/tinymce.min.js"></script>
+    <script>tinymce.init({ selector: '#editor1' });</script>
     <script>
-        
+
         var isEnableEditingMode = false;
         $("#sl_lessonType").change(function () {
             if ($("#sl_lessonType").val() == "Video Lesson") {
@@ -119,21 +125,42 @@
             }
         });
 
+    var isEnableEditingMode2 = true;
+        function turnOnEditMode() {
+                // bat trang thai edit
+                $(".edit-field").each(
+                    function () {
+                        $(this).prop('disabled', true); isEnableEditingMode2 = true;
+                    }
+                )
+        };
+        function turnOffEdit() {
+            tinyMCE.get('editor1').setMode('readonly');
+        }
 
-    function SubmitAddLesson() {
+        function SubmitAddLesson() {
+        
             var lesson = {
+                tinyMCE.triggerSave();
                 subjectId: @subject_id,
                 lessonName: $("#inp_name").val(),
                 lessonType: $("#sl_lessonType").val(),
                 lessonStatus: $("#sl_lessonStatus").val(),
                 lessonOrder: $("#inp_order").val(),
                 lessonLink: $("#inp_link").val(),
-                lessonContent: $("#inp_content").val(),
+                lessonContent: $("#editor1").val(),
                 parentId: $("#sl_lessonParent").val(),
             };
-
+            
             var postJson = JSON.stringify(lesson);
-
+            var regex = /^\d+$/;
+            if ($("#inp_name").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            } else if (!regex.test($("#inp_order").val())) {
+                errorAlert("Order is must number!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitAddLesson","SubjectLesson")',
                 type: "POST",
@@ -141,13 +168,14 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
                         turnOnEditMode();
+                        turnOffEdit();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
 

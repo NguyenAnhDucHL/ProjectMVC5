@@ -169,19 +169,52 @@ namespace CourseOnline.Controllers
                     dynamic editUser = JValue.Parse(userJson);
                     int id = editUser.userID;
                     User user = db.Users.Where(u => u.user_id == id).FirstOrDefault();
-                    if (user != null)
+                    string imageValue = editUser.userImage;
+                    var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
+                    
+                    if (ava == "/Assets/dist/img/" + "user" + editUser.id + ".png")
                     {
-                        user.user_fullname = editUser.userName;
-                        user.use_mobile = editUser.userMobile;
-                        user.user_description = editUser.userDescription;
-                        user.user_gender = editUser.userGender;
-                        db.SaveChanges();
-                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        if (user != null)
+                        {
+                            user.user_fullname = editUser.userName;
+                            user.use_mobile = editUser.userMobile;
+                            user.user_image = editUser.userImage;
+                            user.user_description = editUser.userDescription;
+                            user.user_gender = editUser.userGender;
+                            db.SaveChanges();
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        }
                     }
                     else
                     {
-                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        var hinhanh = Convert.FromBase64String(ava);
+                        string relative_path = "/Assets/dist/img/" + "user" + editUser.id + ".png";
+                        string path = Server.MapPath(relative_path);
+                        System.IO.File.WriteAllBytes(path, hinhanh);
+                        if (Session["Email"].Equals(user.user_email))
+                        {
+                            Session["Picture"] = relative_path;
+                        }
+                        if (user != null)
+                        {
+                            user.user_fullname = editUser.userName;
+                            user.use_mobile = editUser.userMobile;
+                            user.user_image = relative_path;
+                            user.user_description = editUser.userDescription;
+                            user.user_gender = editUser.userGender;
+                            db.SaveChanges();
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                        }
                     }
+                        
                 }
             }
             catch (Exception)

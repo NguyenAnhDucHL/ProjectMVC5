@@ -43,6 +43,38 @@ namespace CourseOnline.Controllers
             }
         }
 
+        //search
+        [HttpPost]
+        public ActionResult SearchByName(string type, int subject_id)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var lessonList = (from l in db.Lessons
+                                   where l.lesson_name.Contains(type) & l.subject_id == subject_id
+                                  select new 
+                                   {
+                                         l.lesson_id,
+                                         l.subject_id,
+                                         l.lesson_name,
+                                         l.lesson_order,
+                                         l.lesson_type,
+                                         l.lesson_status,
+                                         l.lesson_link,
+                                         l.lesson_content,
+                                   }).ToList();
+                int totalrows = lessonList.Count;
+                int totalrowsafterfiltering = lessonList.Count;
+                lessonList = lessonList.Skip(start).Take(length).ToList();
+                lessonList = lessonList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = lessonList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         //filter by status
         [HttpPost]
         public ActionResult FilterByLessonStatus(string type, int subject_id)
@@ -268,23 +300,6 @@ namespace CourseOnline.Controllers
 
         }
 
-        [HttpPost]
-        public ActionResult deleteLesson(int id)
-        {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
-            {
-                var lesson = db.Lessons.Where(l => l.lesson_id == id).FirstOrDefault();
-                if (lesson != null)
-                {
-                    db.Lessons.Remove(lesson);
-                    db.SaveChanges();
-                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json(new { success = false }, JsonRequestBehavior.AllowGet);
-                }
-            }
-        }
+        
     }
 }
