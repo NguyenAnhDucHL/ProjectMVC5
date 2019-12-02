@@ -7,8 +7,9 @@
     List<Lesson> listLesson = ViewBag.lessonName;
     var listStatus = ViewBag.statusName;
     var listLevel = ViewBag.levelName;
+    int count = 0;
 }
-
+<input id="giang" hidden value="@count" />
 <section class="content-header">
     <h1>
         Question Details
@@ -91,6 +92,30 @@
                         <label>Question Name</label>
                         <textarea class="form-control" id="inp_quesName" rows="3" placeholder="Enter ..."></textarea>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label>Answer Options</label>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary" onclick='getAddOptionQuestion()'>Add Option</button>
+                        </div>
+                        <div class="col-sm-2" style="margin-left : 380px">
+                            <label>Is Key?</label>
+                        </div>
+                        <div class="col-sm-1" style="margin-left : -80px">
+                            <label>Action</label>
+                        </div>
+                    </div>
+                    <table class="table table-bordered" id="optionTable">
+                        <tbody>
+                            <tr>
+                                <td>Option</td>
+                                <td><input id="@string.Format("{0}{1}", "optionText",count)" type="text" class="col-lg-10" value=""></td>
+                                <td><input type="radio" id="@string.Format("{0}{1}", "optionsCheck",count)" name="@string.Format("{0}{1}", "optionsCheckName",count)" class="form-group"></td>
+                                <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <button type="submit" class="btn btn-danger" style="margin-top : 20px" onclick="SubmitAddQuestion()">Submit</button>
                     <button type="submit" class="btn btn-info" style="margin-top : 20px" onclick="getBackQuestionList()">Back</button>
                 </div>
@@ -102,8 +127,35 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
+     $('#giang').val(@count);
+        $(document).ready(function () {
+            removeOption();
+            setValueForComboBox();
+        $('input[type=radio]').change(function() {
+        $('input[type=radio]:checked').not(this).prop('checked', false);
+        });
+        });
+
+       function removeOption() {
+          $("#optionTable").on('click','.btnDelete',function(){
+                 $(this).closest('tr').remove();
+            var giiang =  +$('#giang').val() - 1;
+            $('#giang').val(giiang);
+     });
+        };
+
         // bat su kien submit
         function SubmitAddQuestion() {
+            var testAnswer= [];
+            var answerOption = {};
+            for (var i = 0; i <= $('#giang').val(); i++) {
+                answerOption = {
+                    answer_text: $('#optionText' + i).val(),
+                    answer_corect: $('input[name=optionsCheckName'+ i +']:checked').val(),
+                }
+                testAnswer.push(answerOption);
+            }
+
             var question = {
                 subjectId: $("#sl_subjectName").val(),
                 domainId: $("#sl_domainName").val(),
@@ -114,11 +166,11 @@
             };
 
             var postJson = JSON.stringify(question);
-
+            var postJson2 = JSON.stringify(testAnswer);
             $.ajax({
                 url: '@Url.Action("SubmitAddQuestion","Question")',
                 type: "POST",
-                data: { postJson : postJson },
+                data: { postJson: postJson, postJson2 : postJson2 },
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
@@ -130,7 +182,20 @@
                 error: (response) => { alert("co van de ve mang") }
             });
         };
-
+        function getAddOptionQuestion() {
+            var giiang =  +$('#giang').val() + 1;
+            $('#giang').val(giiang);
+             row ="<tr>" +
+                              "  <td>Option </td>" +
+                             "   <td><input type=\"text\" class=\"col-lg-10\" placeholder=\"Option\" id=\"optionText" + giiang +"\"></td> " +
+                              "  <td><input type=\"radio\" class=\"form-group\" name=\"optionsCheckName" + giiang +"\"></td> " +
+                              "  <td><button type=\"submit\" class=\"btn btn-danger btnDelete\" >Delete</button></td>" +
+                  " </tr>"
+           $('#optionTable > tbody:last-child').append(row);
+           $('input[type=radio]').change(function() {
+           $('input[type=radio]:checked').not(this).prop('checked', false);
+        });
+        };
         // bat su kien back
     function getBackQuestionList() {
                window.location.href ='@Url.Action("Index", "Question")';

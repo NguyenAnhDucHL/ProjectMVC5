@@ -151,14 +151,14 @@ namespace CourseOnline.Controllers
             }
         }
         [HttpPost]
-        public ActionResult SubmitAddQuestion(string postJson)
+        public ActionResult SubmitAddQuestion(string postJson, string postJson2)
         {
             try
             {
                 using (STUDYONLINEEntities db = new STUDYONLINEEntities())
                 {
                     dynamic addquestion = JValue.Parse(postJson);
-
+                    dynamic addanswer = JValue.Parse(postJson2);
                     Question q = new Question();
                     q.subject_id = addquestion.subjectId;
                     q.domain_id = addquestion.domainId;
@@ -168,6 +168,24 @@ namespace CourseOnline.Controllers
                     q.question_status = addquestion.questionStatus;
                     db.Questions.Add(q);
                     db.SaveChanges();
+                    int id = db.Questions.Select(qu => qu.question_id).Max();
+                 
+                    foreach (var e in addanswer)
+                    {
+                        AnswerOption ao = new AnswerOption();
+                        ao.answer_text = e.answer_text;
+                        if (e.answer_corect == "on")
+                        {
+                            ao.answer_corect = true;
+                        }
+                        else
+                        {
+                            ao.answer_corect = false;
+                        }
+                        ao.question_id = id;
+                        db.AnswerOptions.Add(ao);
+                        db.SaveChanges();
+                    }
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
             }
