@@ -125,28 +125,31 @@
                     <li class="treeview" style="margin-left:20px">
                         <span style="color:white; font-size: 20px;"> Subject content</span>
                     </li>
-                    @foreach (Lesson item in lstlesson)
+                    @if (lstlesson != null)
                     {
-                        <li class="treeview  @(ViewBag.Current2 == item.lesson_name ? "active" : "")">
-                            @if (item.parent_id == item.lesson_id)
-                            {
-                                <a href="@Url.Action("LessonDetail","Subject",new { @id = item.lesson_id})">
-                                    <i class="fa fa-fw fa-file-text"></i> <span>@item.lesson_name</span>
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    @foreach (Lesson item1 in lstlesson)
-                                    {
-                                        if (item1.parent_id != item1.lesson_id && item1.parent_id == item.parent_id)
+                        foreach (Lesson item in lstlesson)
+                        {
+                            <li class="treeview  @(ViewBag.Current2 == item.lesson_name ? "active" : "")">
+                                @if (item.parent_id == item.lesson_id)
+                                {
+                                    <a href="@Url.Action("LessonDetail","Subject",new { @id = item.lesson_id})">
+                                        <i class="fa fa-fw fa-file-text"></i> <span>@item.lesson_name</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        @foreach (Lesson item1 in lstlesson)
                                         {
-                                            <li class="@(ViewBag.Current1 == @item1.lesson_name ? "active" : "")"><a href="@Url.Action("LessonDetail","Subject",new { @id = item1.lesson_id})"><i class="fa fa-circle-o"></i> @item1.lesson_name</a></li>
+                                            if (item1.parent_id != item1.lesson_id && item1.parent_id == item.parent_id)
+                                            {
+                                                <li class="@(ViewBag.Current1 == @item1.lesson_name ? "active" : "")"><a href="@Url.Action("LessonDetail","Subject",new { @id = item1.lesson_id})"><i class="fa fa-circle-o"></i> @item1.lesson_name</a></li>
+                                            }
                                         }
-                                    }
-                                </ul>
-                            }
-                        </li>
+                                    </ul>
+                                }
+                            </li>
+                        }
                     }
                 </ul>
 

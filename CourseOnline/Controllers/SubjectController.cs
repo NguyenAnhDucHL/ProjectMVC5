@@ -153,11 +153,12 @@ namespace CourseOnline.Controllers
                                                     join c in db.Courseworks on l.coursework_id equals c.coursework_id
                                                     join et in db.ExamTests on c.test_id equals et.test_id
                                                     join tq in db.TestQuestions on et.test_id equals tq.test_id
+                                                    join ex in db.Exams on et.exam_id equals ex.exam_id
                                                     select new LessonQuizModel
                                                     {
                                                         test_id = tq.test_id,
                                                         test_name = et.test_name,
-                                                        testcode = et.test_code
+                                                        exam_duration = ex.exam_duration,
                                                     }).FirstOrDefault();
                 ViewBag.lessonQuiz = lessonQuizModels;
             }
@@ -174,13 +175,22 @@ namespace CourseOnline.Controllers
             return View("/Views/User/StudyOnline.cshtml");
         }
 
-        public ActionResult checkExamTest(string test_id, string test_password, string lessonid)
+        public ActionResult checkExamTest(string test_id, string test_password)
         {
-            ExamTest examTest = db.ExamTests.Where(et => et.test_id == Convert.ToInt32(test_id) && et.test_code == test_password).FirstOrDefault();
+            ExamTest examTest = null;
+            int idtest = Convert.ToInt32(test_id);
+            try
+            {
+                examTest = db.ExamTests.Where(et => et.test_id == idtest && et.test_code == test_password).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
 
+                throw;
+            }
             if (examTest != null)
             {
-                List<int> questionID = db.TestQuestions.Where(tq => tq.test_id == Convert.ToInt32(test_id)).Select(tq => tq.question_id).ToList();
+                List<int> questionID = db.TestQuestions.Where(tq => tq.test_id == idtest).Select(tq => tq.question_id).ToList();
                 List<QuestionModel> questionModels = new List<QuestionModel>();
                 foreach (int idques in questionID)
                 {
@@ -200,7 +210,7 @@ namespace CourseOnline.Controllers
                     questionModels.AddRange(questions);
                 }
                 Session["ExamTest"] = questionModels;
-                return RedirectToAction("LessonDetail", "Subject", new { @id  = Convert.ToInt32(lessonid) });
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
             else
             {
