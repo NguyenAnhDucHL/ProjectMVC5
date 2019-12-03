@@ -38,6 +38,9 @@ namespace CourseOnline.Controllers
             var lstPost = db.Posts.Take(7).Where(n => n.post_status == "Published").ToList();
             ViewBag.lstPost = lstPost;
 
+            var lstSlider = db.Sliders.ToList();
+            ViewBag.lstSlider = lstSlider;
+
             var lstTeacher = (from u in db.Users
                               join ur in db.UserRoles.Where(ur => ur.role_id == 2) on u.user_id equals ur.user_id
                               select new UserListModel
