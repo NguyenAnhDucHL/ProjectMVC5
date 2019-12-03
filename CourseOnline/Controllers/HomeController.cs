@@ -88,6 +88,7 @@ namespace CourseOnline.Controllers
                         }
                         else
                         {
+
                             string userPicture = db.Users.Where(u => u.user_email == email).Select(u => u.user_image).FirstOrDefault();
                             Session["Picture"] = userPicture;
                             string userMobile = db.Users.Where(u => u.user_email == email).Select(u => u.use_mobile).FirstOrDefault();
@@ -193,7 +194,23 @@ namespace CourseOnline.Controllers
                     }
                     else
                     {
-                        var hinhanh = Convert.FromBase64String(ava);
+                        Byte[] hinhanh = null;
+                        try
+                        {
+                            hinhanh  = Convert.FromBase64String(ava);
+                        }
+                        catch (Exception)
+                        {
+                            if (user != null)
+                            {
+                                user.user_fullname = editUser.userName;
+                                user.use_mobile = editUser.userMobile;
+                                user.user_description = editUser.userDescription;
+                                user.user_gender = editUser.userGender;
+                                db.SaveChanges();
+                                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                            }
+                        }
                         string relative_path = "/Assets/dist/img/" + "user" + editUser.id + ".png";
                         string path = Server.MapPath(relative_path);
                         System.IO.File.WriteAllBytes(path, hinhanh);
