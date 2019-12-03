@@ -32,6 +32,6 @@ namespace CourseOnline.Models
     {
         public int test_id { get; set; }
         public string test_name { get; set; }
-        public string testcode { get; set; }
+        public int exam_duration { get; set; }
     }
 }
