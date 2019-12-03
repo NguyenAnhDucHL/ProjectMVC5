@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <button class="btn btn-info" style="width:8%;" onclick="turnOnEditMode()">Edit</button>
-                    <button disabled type="submit" style="width:8%;" onclick="SubmitEditLesson(), abc()" class="btn btn-info edit-field">Submit</button>
+                    <button disabled type="submit" style="width:8%;" onclick="SubmitEditLesson()" class="btn btn-info edit-field">Submit</button>
                     <button type="submit" style="width:8%;" class="btn btn-info" onclick='getBackLessonList()'>Back</button>
                 </div>
             </div>
@@ -145,11 +145,8 @@
                 )
             }
         });
-        function abc() {
-            tinyMCE.triggerSave();
-        }
         function SubmitEditLesson() {
-            
+            tinyMCE.triggerSave();
             var lesson = {
                     lessonid: @lesson_id,
                     subjectid: @subject_id,
