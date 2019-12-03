@@ -90,6 +90,8 @@ namespace CourseOnline.Controllers
                         {
                             string userPicture = db.Users.Where(u => u.user_email == email).Select(u => u.user_image).FirstOrDefault();
                             Session["Picture"] = userPicture;
+                            string userMobile = db.Users.Where(u => u.user_email == email).Select(u => u.use_mobile).FirstOrDefault();
+                            Session["userMobile"] = userMobile;
                         }
                     }
                     catch (Exception e)
@@ -305,6 +307,33 @@ namespace CourseOnline.Controllers
             }
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult SubjectRegistration( string teacherID, string subjectID)
+        {
+            string user_email = Session["Email"].ToString();
+            int courseID = db.Courses.Select(c => c.course_id).Max();
+            int user_id = db.Users.Where(u => u.user_email == user_email).Select(u => u.user_id).FirstOrDefault();
+            Registration registration = new Registration();
+            registration.user_id = user_id;
+            registration.registration_time = DateTime.Now.ToString();
+            registration.registration_status = "Submitted";
+            registration.course_id = courseID;
+            db.Registrations.Add(registration);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+  
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpGet]
         public ActionResult TestOnline(int? count)
         {

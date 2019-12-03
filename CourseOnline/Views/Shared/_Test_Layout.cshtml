@@ -1,6 +1,5 @@
 ﻿@{
     ViewBag.Title = "Index";
-    string message = ViewBag.ErrorMessage;
 }
 ﻿@using CourseOnline.Models
 
@@ -141,13 +140,3 @@
 
 </html>
 @RenderSection("scripts", required: false)
-<script>
-    window.onload = function () {
-        if ("@message" == "") {
-            return;
-        } else {
-            alert("@message");
-        }
-    }
-</script>
-

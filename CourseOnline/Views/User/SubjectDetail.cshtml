@@ -61,17 +61,21 @@
                 }
                 <p><strong class="text-black d-block">Summary:</strong> @subject.subject_brief_info</p>
                 <p>
-                    <a href="@Url.Action("SubjectDetail2","Subject", new { @id = subject.subject_id})" class="btn btn-primary rounded-0 btn-lg px-5">Enroll</a>
+                    @if (Session["Name"] == null)
+                    {
+                        <a href="#" onclick="DisplayError()" class="btn btn-primary rounded-0 btn-lg px-5">Registration</a>
+                    }
+                    else
+                    {
+                        <a href="#" onclick="Registration()" class="btn btn-primary rounded-0 btn-lg px-5">Registration</a>
+                    }
                 </p>
             </div>
         </div>
         <h2 class="section-title-underline mb-5">
             <span>Objective Course</span>
         </h2>
-        <p>- Set up a working environment with the Java programming language.</p>
-        <p>- Understand and apply properties in object-oriented programming.</p>
-        <p>- Building a number of simple business programs.</p>
-        <p>- Good programming orientation and towards high technology apply object-oriented programming.</p>
+        @subject.ObjectiveCourse
         <h2 class="section-title-underline">
             <span>Course Content</span>
         </h2>
@@ -117,6 +121,36 @@
     </div>
 </div>
 
+<div class="modal fade" id="MyModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Resgistration Course</h4>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+            </div>
+            <div class="modal-body">
+                <h5>@subject.subject_name</h5>
+                <h5>Your Information</h5>
+                <form id="form">
+                    <fieldset id="SubmitForm">
+                        <div class="form-group">
+                            <input disabled id="slName" value="@Session["Name"]" />
+                        </div>
+                        <div class="form-group">
+                            <input disabled id="slEmail" value="@Session["Email"]" />
+                        </div>
+                        <div class="form-group">
+                            <input disabled id="slMobile" value="@Session["userMobile"]" />
+                        </div>
+                        <div class="form-group">
+                            <a href="#" class="btn btn-block btn-danger" id="RegistrationCourse">Registration</a>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -130,4 +164,31 @@
     $(function () {
         $('.tree-toggle').parent().children('ul.tree').toggle(200);
     })
+
+    function DisplayError() {
+        errorAlert("You need to login first");
+    }
+
+    function Registration() {
+        $("#MyModal").modal();
+    }
+
+    $("#RegistrationCourse").click(function () {
+        $.ajax({
+            url: '@Url.Action("SubjectRegistration","Home")',
+            type: "POST",
+            data: { teacherID: @teacher.user_id, subjectID: @subject.subject_id },
+            dataType: "json",
+            success: (response) => {
+                if (response.success) {
+                    successAlert("Registration Success");
+                    $("#MyModal").modal('toggle');
+                }
+                else {
+                    errorAlert("Registration Fail");
+                }
+            },
+            error: (response) => { errorAlert("Opps!! Something wrong!") }
+        });
+    });
 </script>

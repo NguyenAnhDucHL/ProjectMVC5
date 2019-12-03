@@ -55,6 +55,7 @@ namespace CourseOnline.Controllers
                             join c in db.Courses.Where(c => c.subject_id == id) on u.user_id equals c.teacher_id
                             select new UserListModel
                             {
+                                user_id = u.user_id,
                                 user_fullname = u.user_fullname,
                                 use_mobile = u.use_mobile,
                                 user_email = u.user_email
@@ -76,27 +77,13 @@ namespace CourseOnline.Controllers
             {
                 return HttpNotFound();
             }
-            if (All.Error_Message.Equals("You have not registrated this course yet !"))
-            {
-                ViewBag.ErrorMessage = All.Error_Message;
-                All.Error_Message = "";
-            }
-            else if (All.Error_Message.Equals("You need to login your account !"))
-            {
-                ViewBag.ErrorMessage = All.Error_Message;
-                All.Error_Message = "";
-            }
-            else
-            {
-                ViewBag.ErrorMessage = null;
-            }
             ViewBag.lesson = lesson;
             ViewBag.teacher = teacher;
             ViewBag.subject = subject;
             return View("/Views/User/SubjectDetail.cshtml");
         }
 
-        public ActionResult SubjectDetail2(int? id)
+        public ActionResult CheckYourSubject(int? id)
         {
             if (Session["Email"] != null)
             {
@@ -114,25 +101,15 @@ namespace CourseOnline.Controllers
                                             picture = s.picture,
                                             subject_category = s.subject_category,
                                         }).FirstOrDefault();
+
                 if (checkYourSubject != null)
                 {
                     if (id == null)
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
-
-                    Subject subject = db.Subjects.SingleOrDefault(n => n.subject_id == id);
-
-                    User teacher = (from u in db.Users
-                                    join c in db.Courses.Where(c => c.subject_id == id) on u.user_id equals c.teacher_id
-                                    select new UserListModel
-                                    {
-                                        user_fullname = u.user_fullname,
-                                        use_mobile = u.use_mobile,
-                                        user_email = u.user_email
-                                    }
-                                   ).FirstOrDefault();
-
+                    int idLesson = db.Lessons.Select(s => s.lesson_id).Min();
+                    Session["subject"] = checkYourSubject;
                     List<LessonModel> lstlesson = (from l in db.Lessons.OrderBy(l => l.parent_id)
                                                    join s in db.Subjects.Where(s => s.subject_id == id) on l.subject_id equals s.subject_id
                                                    select new LessonModel
@@ -143,34 +120,22 @@ namespace CourseOnline.Controllers
                                                        lesson_content = l.lesson_content,
                                                        parent_id = l.parent_id
                                                    }).ToList();
-
-                    if (subject == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    List<ExamTest> lstExamTests = db.ExamTests.Where(et => et.subject_id == id).ToList();
-                    Session["lstExamTests"] = lstExamTests;
-                    ViewBag.Subject = lstlesson.FirstOrDefault().lesson_id;
                     Session["lstlesson"] = lstlesson;
-                    Session["teacher"] = teacher;
-                    Session["subject"] = subject;
-                    return View("/Views/User/LessonView.cshtml");
+                    return RedirectToAction("LessonDetail", "Subject", new { @id = idLesson });
                 }
                 else
                 {
-                    All.Error_Message = "You have not registrated this course yet !";
                     return RedirectToAction("SubjectDetail", "Subject", new { @id = id });
                 }
             }
             else
             {
-                All.Error_Message = "You need to login your account !";
                 return RedirectToAction("SubjectDetail", "Subject", new { @id = id });
             }
 
         }
 
-        public ActionResult LessonDetail(int? id, int? testexamid)
+        public ActionResult LessonDetail(int? id)
         {
             if (id == null)
             {
@@ -179,49 +144,67 @@ namespace CourseOnline.Controllers
             ViewBag.Current2 = null;
             ViewBag.Current1 = null;
             ViewBag.lesson = null;
-            if (id != -1)
-            {
-                Lesson lesson = db.Lessons.Where(n => n.lesson_id == id).FirstOrDefault();
-                Lesson lesson2 = db.Lessons.Where(n => n.lesson_id == lesson.parent_id).FirstOrDefault();
+            Lesson lesson = db.Lessons.Where(n => n.lesson_id == id).FirstOrDefault();
+            Lesson lesson2 = db.Lessons.Where(n => n.lesson_id == lesson.parent_id).FirstOrDefault();
 
-                ViewBag.Current2 = lesson2.lesson_name;
-                ViewBag.Current1 = lesson.lesson_name;
-                ViewBag.lesson = lesson;
-            }
-            List<ExamTest> testExamModels = null;
-     
-            if (testexamid !=-1)
+            if (lesson.lesson_type == "Quiz")
             {
-                testExamModels = db.ExamTests.Where(et => et.test_id == testexamid).ToList();
-                List<int> questionID = db.TestQuestions.Where(tq => tq.test_id == testexamid).Select(tq => tq.question_id).ToList();
+                LessonQuizModel lessonQuizModels = (from l in db.Lessons.Where(l => l.lesson_id == id)
+                                                    join c in db.Courseworks on l.coursework_id equals c.coursework_id
+                                                    join et in db.ExamTests on c.test_id equals et.test_id
+                                                    join tq in db.TestQuestions on et.test_id equals tq.test_id
+                                                    select new LessonQuizModel
+                                                    {
+                                                        test_id = tq.test_id,
+                                                        test_name = et.test_name,
+                                                        testcode = et.test_code
+                                                    }).FirstOrDefault();
+                ViewBag.lessonQuiz = lessonQuizModels;
+            }
+            else
+            {
+                ViewBag.lessonQuiz = null;
+            }
+
+            ViewBag.Current2 = lesson2.lesson_name;
+            ViewBag.Current1 = lesson.lesson_name;
+            ViewBag.lesson = lesson;
+            ViewBag.lessonType = lesson.lesson_type;
+
+            return View("/Views/User/StudyOnline.cshtml");
+        }
+
+        public ActionResult checkExamTest(string test_id, string test_password, string lessonid)
+        {
+            ExamTest examTest = db.ExamTests.Where(et => et.test_id == Convert.ToInt32(test_id) && et.test_code == test_password).FirstOrDefault();
+
+            if (examTest != null)
+            {
+                List<int> questionID = db.TestQuestions.Where(tq => tq.test_id == Convert.ToInt32(test_id)).Select(tq => tq.question_id).ToList();
                 List<QuestionModel> questionModels = new List<QuestionModel>();
                 foreach (int idques in questionID)
                 {
                     List<QuestionModel> questions = (from q in db.Questions
-                                               where q.question_id == idques && q.question_status == "Published"
-                                               select new QuestionModel
-                                               {
-                                                   questionID = q.question_id,
-                                                   questiontext = q.question_name,
-                                                   answers = q.AnswerOptions.Select(tq => new AnswerModel
-                                                   {
-                                                       answerID = tq.answer_option_id,
-                                                       answertext = tq.answer_text,
-                                                       isCorrect = tq.answer_corect,
-                                                   }).ToList()
-                                               }).ToList();
+                                                     where q.question_status == "Published" && q.question_id == idques
+                                                     select new QuestionModel
+                                                     {
+                                                         questionID = q.question_id,
+                                                         questiontext = q.question_name,
+                                                         answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                         {
+                                                             answerID = tq.answer_option_id,
+                                                             answertext = tq.answer_text,
+                                                             isCorrect = tq.answer_corect,
+                                                         }).ToList()
+                                                     }).ToList();
                     questionModels.AddRange(questions);
                 }
-
-                ViewBag.testExamModels = testExamModels;
-                ViewBag.examtest = questionModels;
-                return View("/Views/User/StudyOnline.cshtml");
+                Session["ExamTest"] = questionModels;
+                return RedirectToAction("LessonDetail", "Subject", new { @id  = Convert.ToInt32(lessonid) });
             }
             else
             {
-                ViewBag.testExamModels = null;
-                ViewBag.examtest = null;
-                return View("/Views/User/StudyOnline.cshtml");
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
 

@@ -1117,7 +1117,6 @@
     <Content Include="Views\CMS\Exam\ExamList.cshtml" />
     <Content Include="Views\User\StudyOnline.cshtml" />
     <Content Include="Views\Shared\_Study_Layout.cshtml" />
-    <Content Include="Views\User\LessonView.cshtml" />
     <Content Include="Views\User\SubjectFound.cshtml" />
     <Content Include="Views\User\SubjectFoundPartialView.cshtml" />
     <Content Include="Views\CMS\Course\CourseAdd.cshtml" />

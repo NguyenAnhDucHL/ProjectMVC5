@@ -27,4 +27,11 @@ namespace CourseOnline.Models
         public bool isCorrect { get; set; }
         public string answercorrect { get; set; }
     }
+
+    public class LessonQuizModel :Lesson
+    {
+        public int test_id { get; set; }
+        public string test_name { get; set; }
+        public string testcode { get; set; }
+    }
 }
