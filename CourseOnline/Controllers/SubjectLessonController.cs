@@ -176,6 +176,7 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Subject/LessonAdding.cshtml");
             }
         }
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitAddLesson(string postJson)
         {
@@ -205,7 +206,7 @@ namespace CourseOnline.Controllers
                     l.lesson_content = addlesson.lessonContent;
                     l.parent_id = addlesson.parentId;
                     
-                    if(l.parent_id != 0)
+                     if(l.parent_id != 0)
                     {
                         db.Lessons.Add(l);
                         db.SaveChanges();
@@ -239,7 +240,7 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Subject/SubjectLessonList.cshtml");
             }
         }
-
+        
         [HttpGet]
         public ActionResult EditLesson(int lessonId, int subjectId)
         {
@@ -255,6 +256,7 @@ namespace CourseOnline.Controllers
                 return View("/Views/CMS/Subject/LessonEditting.cshtml");
             }
         }
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SubmitEditLesson(string postJson)
         {
