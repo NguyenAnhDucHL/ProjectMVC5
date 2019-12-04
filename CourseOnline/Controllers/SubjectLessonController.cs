@@ -169,6 +169,9 @@ namespace CourseOnline.Controllers
                 List<Setting> listLessonType = db.Settings.Where(s => s.setting_group_value.Equals(SettingGroup.LESSON_TYPE) && s.setting_status == SettingStatus.ACTIVE).ToList();
                 ViewBag.LessonType = listLessonType;
 
+                List<Coursework> cwName = db.Courseworks.Where(cw => cw.coursework_name != null).ToList();
+                ViewBag.CourseWorkName = cwName;
+
                 string sql = "select parent_id, lesson_name from Lesson where parent_id = lesson_id";
                 List<LessonModel> listParent = db.Database.SqlQuery<LessonModel>(sql).ToList();
                 ViewBag.LessonParent = listParent;
@@ -204,20 +207,17 @@ namespace CourseOnline.Controllers
                     l.lesson_order = addlesson.lessonOrder;
                     l.lesson_link = addlesson.lessonLink;
                     l.lesson_content = addlesson.lessonContent;
-                    l.parent_id = addlesson.parentId;
-                    
-                     if(l.parent_id != 0)
-                    {
-                        db.Lessons.Add(l);
-                        db.SaveChanges();
-                    }
-                    else
+                    l.coursework_id = addlesson.cwName;
+                    if (l.lesson_type.Equals("Subject Topic"))
                     {
                         int id_new = db.Lessons.DefaultIfEmpty().Max(les => les == null ? 0 : les.lesson_id);
                         l.parent_id = id_new + 1;
-                        db.Lessons.Add(l);
-                        db.SaveChanges();
+                    } else
+                    {
+                        l.parent_id = addlesson.parentId;
                     }
+                    db.Lessons.Add(l);
+                    db.SaveChanges();
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -249,7 +249,16 @@ namespace CourseOnline.Controllers
             {
                 Lesson lesson = db.Lessons.Where(l => l.lesson_id == lessonId).FirstOrDefault();
                 ViewBag.Lesson = lesson;
-                List<Setting> listLessonType = db.Settings.Where(s => s.setting_group_value.Equals(SettingGroup.LESSON_TYPE) && s.setting_status == SettingStatus.ACTIVE).ToList();
+                ViewBag.LessonSetType = lesson.lesson_type;
+
+                List<Coursework> cwName = db.Courseworks.Where(cw => cw.coursework_name != null).ToList();
+                ViewBag.CourseWorkName = cwName;
+
+                string sql = "select parent_id, lesson_name from Lesson where parent_id = lesson_id";
+                List<LessonModel> listParent = db.Database.SqlQuery<LessonModel>(sql).ToList();
+                ViewBag.LessonParent = listParent;
+
+                List <Setting> listLessonType = db.Settings.Where(s => s.setting_group_value.Equals(SettingGroup.LESSON_TYPE) && s.setting_status == SettingStatus.ACTIVE).ToList();
                 ViewBag.LessonType = listLessonType;
                 ViewBag.Lesson_id = lessonId;
                 ViewBag.Subject_id = subjectId;
@@ -286,6 +295,16 @@ namespace CourseOnline.Controllers
                         l.lesson_order = editlesson.lessonOrder;
                         l.lesson_link = editlesson.lessonLink;
                         l.lesson_content = editlesson.lessonContent;
+                        l.coursework_id = editlesson.cwName;
+                        if (l.lesson_type.Equals("Subject Topic"))
+                        {
+                            int id_new = db.Lessons.DefaultIfEmpty().Max(les => les == null ? 0 : les.lesson_id);
+                            l.parent_id = id_new;
+                        }
+                        else
+                        {
+                            l.parent_id = editlesson.parentId;
+                        }
                         db.SaveChanges();
                         return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                     }

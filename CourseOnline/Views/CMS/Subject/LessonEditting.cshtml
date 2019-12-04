@@ -3,6 +3,8 @@
     ViewBag.Title = "LessonDetail";
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
     List<Setting> listLessonType = ViewBag.LessonType;
+    List<Coursework> listCourseWorkName = ViewBag.CourseWorkName;
+    List<LessonModel> listParent = ViewBag.LessonParent;
     Lesson lesson = ViewBag.Lesson;
     int lesson_id = ViewBag.Lesson_id;
     int subject_id = ViewBag.Subject_id;
@@ -31,11 +33,11 @@
                         <div class="col-sm-9">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" disabled class="form-control edit-field" id="inp_name" value="@lesson.lesson_name">
+                                <input type="text" class="form-control edit-field" id="inp_name" value="@lesson.lesson_name">
                             </div>
                             <div class="form-group">
                                 <label>Type</label>
-                                <select id="sl_lessonType" disabled class="form-control edit-field">
+                                <select id="sl_lessonType" disabled class="form-control">
                                     @{
                                         foreach (Setting setting in listLessonType)
                                         {
@@ -48,7 +50,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Status</label>
-                                <select id="sl_lessonStatus" disabled class="form-control edit-field">
+                                <select id="sl_lessonStatus" class="form-control edit-field">
                                     @{
                                         if (lesson.lesson_status == true)
                                         {
@@ -65,27 +67,53 @@
                             </div>
                             <div class="form-group">
                                 <label>Order</label>
-                                <input type="text" disabled class="form-control edit-field" id="inp_order" value="@lesson.lesson_order">
+                                <input type="text" class="form-control edit-field" id="inp_order" value="@lesson.lesson_order">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Video link</label>
-                        <input type="text" disabled class="form-control edit-field status-change-1" placeholder="Youtube link" id="inp_link" value="@lesson.lesson_link">
-                    </div>
-                    <div class="tab-pane" id="content">
-                        <!-- /.box-header -->
-                        <label>HTML Content</label>
-                        <div class="box box-info">
-                            <div class="box-body pad">
-                                <form>
-                                    <textarea id="inp_content" name="inp_content" rows="10" cols="80">@lesson.lesson_content</textarea>
-                                </form>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Video link</label>
+                                <input type="text" class="form-control edit-field" id="inp_link" value="@lesson.lesson_link">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Subject Topic</label>
+                                <select id="sl_lessonParent" class="form-control edit-field">
+                                    @{
+                                        foreach (LessonModel les in listParent)
+                                        {
+                                            <option value="@les.parent_id">@les.lesson_name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Coursework Name</label>
+                                <select id="sl_cwName" class="form-control edit-field">
+                                    @{
+                                        foreach (Coursework cw in listCourseWorkName)
+                                        {
+                                            <option value="@cw.coursework_id">@cw.coursework_name</option>
+                                        }
+                                    }
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-info" style="width:8%;" onclick="turnOnEditMode()">Edit</button>
-                    <button disabled type="submit" style="width:8%;" onclick="SubmitEditLesson()" class="btn btn-info edit-field">Submit</button>
+                    <label>HTML Content</label>
+                    <div class="box box-info">
+                        <div class="box-body pad">
+                            <form>
+                                <textarea id="inp_content" name="inp_content" rows="10" cols="80">@lesson.lesson_content</textarea>
+                            </form>
+                        </div>
+                    </div>
+                    <button type="submit" style="width:8%;" onclick="SubmitEditLesson()" class="btn btn-info edit-field">Submit</button>
                     <button type="submit" style="width:8%;" class="btn btn-info" onclick='getBackLessonList()'>Back</button>
                 </div>
             </div>
@@ -100,51 +128,78 @@
     <script>tinymce.init({ selector: '#inp_content' });</script>
     <script>
         $(document).ready(function () {
-            tinyMCE.get('inp_content').setMode('readonly');
-        });
-        var isEnableEditingMode = false;
-        function turnOnEditMode() {
-            if (!isEnableEditingMode) {
-                // bat trang thai edit
-                $(".edit-field").each(
+            //tinyMCE.get('inp_content').setMode('readonly');
+            setValueForComboBox();
+            if ($("#sl_lessonType").val() == "Video Lesson") {
+                $("#sl_cwName").each(
                     function () {
-                        $(this).prop('disabled', false); isEnableEditingMode = true;
-                        tinyMCE.get('inp_content').setMode('design');
+                        $(this).prop('disabled', true);
+                        $("#sl_cwName").val("");
                     }
                 )
-            } else {
+                tinyMCE.get('inp_content').setMode('readonly');
+            } else if ($("#sl_lessonType").val() == "HTML Lesson") {
+                $("#inp_link").each(
+                    function () {
+                        $(this).prop('disabled', true); isEnableSelected = true;
+                        $("#inp_link").val("");
+                    }
+                )
+                $("#sl_cwName").each(
+                    function () {
+                        $(this).prop('disabled', true); isEnableSelected = true;
+                        $("#sl_cwName").val("");
+                    }
+                )
+                tinyMCE.get('inp_content').setMode('design');
+            } else if ($("#sl_lessonType").val() == "Quiz") {
+                $("#inp_link").each(
+                    function () {
+                        $(this).prop('disabled', true); isEnableSelected = true;
+                        $("#inp_link").val("");
+                    }
+                )
+                tinyMCE.get('inp_content').setMode('readonly');
+            } else if ($("#sl_lessonType").val() == "Subject Topic") {
+                $("#inp_link").each(
+                    function () {
+                        $(this).prop('disabled', true); isEnableSelected = true;
+                        $("#inp_link").val("");
+                    }
+                )
+                $("#sl_lessonParent").each(
+                    function () {
+                        $(this).prop('disabled', true); isEnableSelected = true;
+                        $("#sl_lessonParent").val("");
+                    }
+                )
+                $("#sl_cwName").each(
+                    function () {
+                        $(this).prop('disabled', true); isEnableSelected = true;
+                        $("#sl_cwName").val("");
+                    }
+                )
+                tinyMCE.get('inp_content').setMode('readonly');
+            }
+        });
+
+        // dat gia tri cho comb box bang jquerry
+        function setValueForComboBox() {
+            $("#sl_lessonType").val("@ViewBag.LessonSetType").trigger('change');
+        };
+
+        function turnOffEditMode() {
                 // tat trang thai edit
                 $(".edit-field").each(
                     function () {
-                        $(this).prop('disabled', true); isEnableEditingMode = false;
-                        tinyMCE.get('inp_content').setMode('readonly');
+                        $(this).prop('disabled', true);
                     }
                 )
-            }
         };
+        function turnOffEdit() {
+            tinyMCE.get('editor1').setMode('readonly');
+        }
 
-        var isEnableEditingMode2 = false;
-        $("#sl_lessonType").change(function () {
-            if ($("#sl_lessonType").val() == "Video Lesson") {
-                $(".status-change-2").each(
-                    function () { $(this).prop('disabled', true); isEnableEditingMode2 = false; }
-                )
-            } else {
-                $(".status-change-2").each(
-                    function () { $(this).prop('disabled', false); isEnableEditingMode2 = true; }
-                )
-            }
-
-            if ($("#sl_lessonType").val() == "HTML Lesson") {
-                $(".status-change-1").each(
-                    function () { $(this).prop('disabled', true); isEnableEditingMode2 = false; }
-                )
-            } else {
-                $(".status-change-1").each(
-                    function () { $(this).prop('disabled', false); isEnableEditingMode2 = true; }
-                )
-            }
-        });
         function SubmitEditLesson() {
             tinyMCE.triggerSave();
             var lesson = {
@@ -156,6 +211,8 @@
                     lessonOrder: $("#inp_order").val(),
                     lessonLink: $("#inp_link").val(),
                     lessonContent: $("#inp_content").val(),
+                    cwName: $("#sl_cwName").val(),
+                    parentId: $("#sl_lessonParent").val(),
             };
 
             var postJson = JSON.stringify(lesson);
@@ -175,7 +232,8 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit Success");
-                        turnOnEditMode();
+                        turnOffEditMode();
+                        turnOffEdit();
                     } else {
                         errorAlert("Submit Fail");
                     }
