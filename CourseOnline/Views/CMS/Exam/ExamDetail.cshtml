@@ -10,16 +10,14 @@
         Exam Details
     </h1>
     <ol class="breadcrumb">
-        <li><a href='@Url.Action("Index","Home")'><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Exam")'>Exam Lists</a></li>
         <li class="active">Exam Details</li>
     </ol>
 </section>
 <!-- Main content -->
 <section class="content">
-
     <div class="row">
-
         <div class="col-lg-12">
             <div class="nav-tabs-custom ">
                 <ul class="nav nav-tabs">
@@ -34,37 +32,31 @@
                             <label>Name</label>
                             <input id="inp_examName" type="text" class="form-control edit-field">
                         </div>
-                        <div class="form-group">
-                            <label>Subject</label>
-                            <div class="row">
-                                <div class="col col-lg-3 col-md-3 col-sm-3">
-                                    <select id="sl_subject" class="form-control edit-field">
-                                        @{ 
-                                            foreach (Subject subject in subjectName)
-                                            {
-                                                <option value="@subject.subject_id">@subject.subject_name</option>
-                                            }
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label>Subject</label>
+                                <select id="sl_subject" class="form-control edit-field">
+                                    @{
+                                        foreach (Subject subject in subjectName)
+                                        {
+                                            <option value="@subject.subject_id">@subject.subject_name</option>
                                         }
-                                    </select>
-                                </div>
+                                    }
+                                </select>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Exam level</label>
-                                    <div class="row">
-                                        <div class="col col-lg-6 col-md-6 col-sm-6">
-                                            <select id="sl_level" class="form-control edit-field">
-                                                <option>Hard</option>
-                                                <option>Medium</option>
-                                                <option>Easy</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <select id="sl_level" class="form-control edit-field">
+                                        <option>Hard</option>
+                                        <option>Medium</option>
+                                        <option>Easy</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Duration(minutes)</label>
                                     <input id="inp_duration" type="text" class="form-control edit-field">
@@ -72,27 +64,23 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Pass rate(%)</label>
                                     <input id="inp_passRate" type="text" class="form-control edit-field">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Test Type</label>
-                                    <div class="row">
-                                        <div class="col col-lg-6 col-md-6 col-sm-6">
-                                            <select id="sl_type" class="form-control edit-field">
-                                                @{ 
-                                                    foreach (Setting setting in listType)
-                                                    {
-                                                        <option value="@setting.setting_name">@setting.setting_name</option>
-                                                    }
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <select id="sl_type" class="form-control edit-field">
+                                        @{
+                                            foreach (Setting setting in listType)
+                                            {
+                                                <option value="@setting.setting_name">@setting.setting_name</option>
+                                            }
+                                        }
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -123,21 +111,22 @@
                     <!-- /.tab-pane -->
                 </div>
             </div>
-
             <!-- /.nav-tabs-custom -->
-            <button type="submit" onclick="submitExam()" class="btn btn-info edit-field">Submit</button>
-            <button type="submit" onclick="goBack()" class="btn btn-info">Back</button>
+            <button type="submit" style="width : 8%;" onclick="submitExam()" class="btn btn-info edit-field">Submit</button>
+            <button type="submit" style="width : 8%;" onclick="goBack()" class="btn btn-info">Back</button>
         </div>
-
-
-        <!-- /.col -->
     </div>
-    <!-- /.row -->
-
 </section>
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
+
+        function turnOnEditMode() {
+                // bat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', true); }
+                )
+        };
 
         function submitExam() {
             var exam = {
@@ -151,7 +140,17 @@
             };
 
             var postJson = JSON.stringify(exam);
-            
+            var regex = /^\d+$/;
+            if ($("#inp_examName").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            } else if (!regex.test($("#inp_duration").val())) {
+                errorAlert("Duration is must number!");
+                return;
+            } else if (!regex.test($("#inp_passRate").val())) {
+                errorAlert("Pass rate is must number!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitExam","Exam")',
                 type: "POST",
@@ -159,12 +158,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
         function goBack() {

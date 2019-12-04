@@ -6,30 +6,26 @@
     List<Setting> listType = ViewBag.examType;
     int id = ViewBag.id;
     Exam ex = ViewBag.Exam;
-    Subject sj = ViewBag.Subject;
-    Setting st = ViewBag.Setting;
+    var listExamLevel = ViewBag.ExamLevel;
 }
 <section class="content-header">
     <h1>
         Exam Details
     </h1>
     <ol class="breadcrumb">
-        <li><a href='@Url.Action("Index","Home")'><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Exam")'>Exam Lists</a></li>
         <li class="active">Exam Edit</li>
     </ol>
 </section>
 <!-- Main content -->
 <section class="content">
-
     <div class="row">
-
         <div class="col-lg-12">
             <div class="nav-tabs-custom ">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#overview" data-toggle="tab">Overview</a></li>
                     <li><a href="#content" data-toggle="tab">Content</a></li>
-
                     <!-- /.tab-content -->
                 </ul>
                 <div class="tab-content">
@@ -38,37 +34,27 @@
                             <label>Name</label>
                             <input id="inp_examName" type="text" disabled class="form-control edit-field" value="@ex.exam_name">
                         </div>
-                        <div class="form-group">
-                            <label>Subject</label>
-                            <div class="row">
-                                <div class="col col-lg-3 col-md-3 col-sm-3">
-                                    <select id="sl_subject" disabled class="form-control">
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label>Subject</label>
+                                <input id="sl_subject" type="text" disabled class="form-control" value="@ViewBag.SubjectSetName">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Exam level</label>
+                                    <select id="sl_level" disabled class="form-control edit-field">
                                         @{
-                                            foreach (Subject subject in subjectName)
+                                            foreach (string level in listExamLevel)
                                             {
-                                                <option value="@subject.subject_id">@sj.subject_name</option>
+                                                <option value="@level">@level</option>
                                             }
                                         }
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Exam level</label>
-                                    <div class="row">
-                                        <div class="col col-lg-6 col-md-6 col-sm-6">
-                                            <select id="sl_level" disabled class="form-control edit-field">
-                                                <option>Hard</option>
-                                                <option>Medium</option>
-                                                <option>Easy</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Duration(minutes)</label>
                                     <input id="inp_duration" type="text" disabled class="form-control edit-field" value="@ex.exam_duration">
@@ -76,27 +62,23 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Pass rate(%)</label>
                                     <input id="inp_passRate" type="text" disabled class="form-control edit-field" value="@ex.pass_rate">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Test Type</label>
-                                    <div class="row">
-                                        <div class="col col-lg-6 col-md-6 col-sm-6">
-                                            <select id="sl_type" disabled class="form-control edit-field">
-                                                @{
-                                                    foreach (Setting setting in listType)
-                                                    {
-                                                        <option value="@setting.setting_name">@setting.setting_name</option>
-                                                    }
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <select id="sl_type" disabled class="form-control edit-field">
+                                        @{
+                                            foreach (Setting setting in listType)
+                                            {
+                                                <option value="@setting.setting_name">@setting.setting_name</option>
+                                            }
+                                        }
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -127,15 +109,12 @@
                     <!-- /.tab-pane -->
                 </div>
             </div>
-
             <!-- /.nav-tabs-custom -->
-            <button class="btn btn-info" onclick="turnOnEditMode()">Edit</button>
-            <button type="submit" disabled onclick="submitExam()" class="btn btn-info edit-field">Submit</button>
-            <button type="submit" onclick="goBack()" class="btn btn-info">Back</button>
+            <button class="btn btn-info" style="width : 8%;" onclick="turnOnEditMode()">Edit</button>
+            <button type="submit" style="width : 8%;" disabled onclick="submitExam()" class="btn btn-info edit-field">Submit</button>
+            <button type="submit" style="width : 8%;" onclick="goBack()" class="btn btn-info">Back</button>
         </div>
     </div>
-    <!-- /.row -->
-
 </section>
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -148,8 +127,8 @@
 
         });
         function setValueForComboBox() {
-            @*$("#sl_subject").val("@sj.subject_name").trigger('change');*@
-            $("#sl_type").val("@ex.test_type").trigger('change');
+            $("#sl_type").val("@ViewBag.ExamSetType").trigger('change');
+            $("#sl_level").val("@ex.exam_level").trigger('change');
         };
 
         function turnOnEditMode() {
@@ -166,15 +145,11 @@
             }
         };
 
-
-
-
-
         function submitExam() {
             var exam = {
                 id : @id,
                 examName: $("#inp_examName").val(),
-                subjectId: $("#sl_subject").val(),
+                subjectId: @ViewBag.SubjectId,
                 examLevel: $("#sl_level").val(),
                 examDuration: $("#inp_duration").val(),
                 examPassRate: $("#inp_passRate").val(),
@@ -183,7 +158,17 @@
             };
 
             var postJson = JSON.stringify(exam);
-
+            var regex = /^\d+$/;
+            if ($("#inp_examName").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            } else if (!regex.test($("#inp_duration").val())) {
+                errorAlert("Duration is must number!");
+                return;
+            } else if (!regex.test($("#inp_passRate").val())) {
+                errorAlert("Pass rate is must number!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitExamEdit","Exam")',
                 type: "POST",
@@ -191,12 +176,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit success");
+                        successAlert("Submit Success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit fail");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("Error") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
         function goBack() {

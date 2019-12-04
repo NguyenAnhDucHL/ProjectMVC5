@@ -76,6 +76,38 @@ namespace CourseOnline.Controllers
             }
         }
 
+        //search
+        [HttpPost]
+        public ActionResult SearchByName(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var examList = (from e in db.Exams
+                                join s in db.Subjects on e.subject_id equals s.subject_id
+                                where e.exam_name.Contains(type)
+                                   select new ExamListModel
+                                   {
+                                       exam_id = e.exam_id,
+                                       exam_name = e.exam_name,
+                                       subject_name = s.subject_name,
+                                       exam_level = e.exam_level,
+                                       exam_duration = e.exam_duration,
+                                       pass_rate = e.pass_rate,
+                                       test_type = e.test_type,
+                                       exam_description = e.exam_description,
+                                   }).ToList();
+                int totalrows = examList.Count;
+                int totalrowsafterfiltering = examList.Count;
+                examList = examList.Skip(start).Take(length).ToList();
+                examList = examList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = examList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         [HttpPost]
         public ActionResult GetAllExam()
@@ -166,14 +198,21 @@ namespace CourseOnline.Controllers
         {
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
+                string sql = "select e.exam_id, e.exam_name, s.subject_name, s.subject_id " +
+                            "from Exam e join [Subject] s " +
+                            "on e.subject_id = s.subject_id where e.exam_id = @id";
+                ExamListModel Exam1 = db.Database.SqlQuery<ExamListModel>(sql, new SqlParameter("id", id)).FirstOrDefault();
+                ViewBag.Exam1 = Exam1;
+                ViewBag.SubjectSetName = Exam1.subject_name;
+                ViewBag.SubjectId = Exam1.subject_id;
+
                 List<Setting> listType = db.Settings.Where(s => s.setting_group_value.Equals(SettingGroup.EXAM_TYPES)).ToList();
                 ViewBag.examType = listType;
                 Exam exam = db.Exams.Where(s => s.exam_id == id).FirstOrDefault();
                 ViewBag.Exam = exam;
-                Subject subject = db.Subjects.Where(s => s.subject_id == id).FirstOrDefault();
-                ViewBag.Subject = subject;
-                Setting setting = db.Settings.Where(s => s.setting_id == id).FirstOrDefault();
-                ViewBag.Setting = setting;
+                ViewBag.ExamSetType = exam.test_type;
+                var listExamLevel = db.Exams.Select(e => e.exam_level).Distinct().ToList();
+                ViewBag.ExamLevel = listExamLevel;
                 List<Subject> listSubject = db.Subjects.Where(s => s.subject_name != null).ToList();
                 ViewBag.subjectName = listSubject;
                 ViewBag.id = id;

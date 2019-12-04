@@ -10,7 +10,7 @@
         Exam List
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Exam List</li>
     </ol>
 </section>
@@ -20,12 +20,9 @@
         <div class="col col-xs-12">
             <div class="box">
                 <div class="row">
-                    <div class="col-lg-2">
-                        <button type="button" class="btn btn-block btn-primary" onclick='getAddExam()'>Add new</button>
-                    </div>
-                    <div class="col-lg-3">
+                    <div class="col-sm-2" style="margin-left : 10px; margin-top : 10px">
                         <select id="sl_listSubject" class="form-control">
-                            <option>All Subject</option>
+                            <option>All subject</option>
                             @{
                                 foreach (string exam in listSubject)
                                 {
@@ -34,7 +31,7 @@
                             }
                         </select>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-sm-2" style="margin-top : 10px">
                         <select id="sl_listType" class="form-control">
                             <option>All type</option>
                             @{
@@ -45,19 +42,27 @@
                             }
                         </select>
                     </div>
+                    <div class="col-sm-4" style="margin-top : 10px">
+                        Search:
+                        <input type="text" placeholder="Search" id="inp_search" style="height:34px; margin-left:10px;" />
+                        <a onclick="doSearch()" style="cursor: pointer;" data-toggle='tooltip' title='Search'><i class='fa fa-fw fa-search'></i></a>
+                    </div>
+                    <div class="col-sm-2 pull-right">
+                        <button type="button" class="btn btn-link" onclick="getAddExam()" style="float:right;">Add new</button>
+                    </div>
                 </div>
                 <div class="box-body">
                     <table id="tb_exam" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th class="table-width5">ID</th>
-                                <th class="table-width30">Exam</th>
-                                <th class="table-width20">Subject</th>
-                                <th class="table-width5">Level</th>
-                                <th class="table-width10">Dur</th>
-                                <th class="table-width10">Pass Rate</th>
-                                <th class="table-width10">Test Type</th>
-                                <th class="table-width10">Action</th>
+                                <th width="10px">ID</th>
+                                <th>Exam</th>
+                                <th>Subject</th>
+                                <th>Level</th>
+                                <th>Duration</th>
+                                <th>Pass Rate</th>
+                                <th>Test Type</th>
+                                <th class="col-sm-1">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -86,10 +91,13 @@
                 { "data": "exam_duration", "name": "exam_duration", "orderable": true },
                 { "data": "pass_rate", "name": "pass_rate", "orderable": true },
                 { "data": "test_type", "name": "test_type", "orderable": true },
-                {
+                { 
                     "data": "exam_id", "render": function (data) {
-                        return "<button class='btn btn-block btn-primary' style='margin-left:5px' onclick=getEditExam('" + data + "') ><i class='fa fa-fw fa-edit'></i> Edit</a></button>" +
-                                "<button class='btn btn-block btn-danger' style='margin-left:5px' onclick=getDeleteIdExam('" + data + "') ><i class='fa fa-trash'></i> Delete</a></button>";
+                        return "<div class='row'><div class='col-sm-6'><a onclick=getEditExam('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>" +
+                                    "</div>" + 
+                                    "<div class='col-sm-6'><a onclick=getDeleteIdExam('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Delete'><i class='fa fa-trash'></i></a>" +
+								 "</div>" +
+								 "</div>";
                     },
                     "orderable": false,
                     "searchable": false
@@ -102,8 +110,20 @@
         "order": [[0, "asc"]],
         "searching": false
             });
+            //them su kien cho filter
             filterListener();
+            //them su kien cho search
+            doSearch()
         });
+
+        //bat su kien search
+        function doSearch() {
+            
+            $('#inp_search').on('change', function (e) {
+                var valueSelected = this.value;
+                dataTable.ajax.url('@Url.Action("SearchByName","Exam")' + '?type=' + valueSelected).load(function (response) { });
+            });
+        }
 
         function doFilter() {
                 var valueSelected = {
@@ -136,7 +156,7 @@
         //delete slider theo id
         function getDeleteIdExam(id) {
             if (id != null) {
-                confirmAlert('Delete', 'Delete confirm', function submit() {
+                confirmAlert('Delete', 'Do you want to delete?', function submit() {
                     $.ajax({
                         url:'@Url.Action("delExam","Exam")',
                         type: "POST",
@@ -144,12 +164,12 @@
                         datatype: "json",
                         success: (response) => {
                             if (response.success) {
-                                dataTable.ajax.reload(); successAlert("Success", "Delete Successful")
+                                dataTable.ajax.reload(); successAlert("Success", "Delete Success")
                             } else {
-                                errorAlert("Failed", "Delete failed")
+                                errorAlert("Fail", "Delete fail")
                             }
                         },
-                        error: (response) => { errorAlert("Failed", "Delete failed") }
+                        error: (response) => { errorAlert("Fail", "Delete fail") }
                     });
                 });
             }
