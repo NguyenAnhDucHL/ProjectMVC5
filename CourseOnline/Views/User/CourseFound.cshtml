@@ -1,0 +1,79 @@
+﻿@using PagedList.Mvc
+@using CourseOnline.Models
+
+@{
+    ViewBag.Title = "Course";
+    PagedList.IPagedList<CourseListModel> listCourse = ViewBag.FoundCourse;
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<div class="site-section ftco-subscribe-1 site-blocks-cover pb-4" style="background-image: url('../../Assets/IMGUSER/fpt_logo.jpg')">
+    <div class="container">
+        <div class="row align-items-end">
+            <div class="col-lg-7">
+                <h2 class="mb-0">Course</h2>
+                <p>"Have the courage to follow your heart and intuition. They somehow know what you truly want to become." - Steve Jobs</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="custom-breadcrumns border-bottom">
+    <div class="container">
+        <a href="@Url.Action("Home_User", "Home")">Home</a>
+        <span class="mx-3 icon-keyboard_arrow_right"></span>
+        <span class="current">Course Found</span>
+    </div>
+</div>
+@using (Ajax.BeginForm("CourseFoundPartialView", "Home", new AjaxOptions { @UpdateTargetId = "CourseFound", InsertionMode = InsertionMode.Replace }))
+{
+    <div class="d-flex" style="margin-left: 60px; margin-top: 20px">
+        <input type="text" class="rounded form-control" placeholder="Quick Search Course ... " style="width: 200px" name="keyword">
+        <button class="btn btn-primary rounded" style="margin-left:5px" type="submit">Quick Search</button>
+    </div>
+}
+<div style="clear:both"></div>
+
+<div id="CourseFound">
+    <div class="site-section">
+        <div class="container">
+            @if (listCourse.Count() != 0)
+            {
+                <div class="row">
+                    @foreach (var item in listCourse)
+                    {
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="course-1-item">
+                                <figure class="thumnail">
+                                    <a href="@Url.Action("CourseDetail","Home", new { @id = item.subject_id})"><img src="@(item.picture == null ? "" : Url.Content(@item.picture))" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
+                                    <div class="price" style="padding-top:1em">Start Date: @item.course_start_date</div>
+                                    <div class="category"><h3>@item.subject_name</h3></div>
+                                </figure>
+                                <div class="course-1-content pb-4">
+                                    <h2>@item.course_name</h2>
+                                    <div class="desc mb-4" style="height:150px; overflow:hidden">@item.subject_brief_info</div>
+                                    <p><a href="@Url.Action("CheckYourCourse","Home", new { @id = item.subject_id})" class="btn btn-primary rounded-0 px-4">Join Course</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="dlink">
+                    Page @(listCourse.PageCount < listCourse.PageNumber ? 0 : listCourse.PageNumber)/@listCourse.PageCount
+                    @Html.PagedListPager(listCourse, page => Url.Action("CourseFound", "Home", new { page = page, @keyword = ViewBag.KeyWord }))
+                </div>
+            }
+            else
+            {
+                <h2>Not Found</h2>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+

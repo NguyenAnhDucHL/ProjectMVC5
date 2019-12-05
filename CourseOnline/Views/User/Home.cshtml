@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "HomePage";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    List<Subject> listSubjects = ViewBag.lstSubject;
+    List<CourseListModel> lstCourse = ViewBag.lstCourse;
     List<Post> listPost = ViewBag.lstPost;
     List<UserListModel> listTeacher = ViewBag.lstTeacher;
     List<Slider> lstSlider = ViewBag.lstSlider;
@@ -37,7 +37,7 @@
                 <h2 class="section-title-underline mb-3">
                     <span>Popular Subjects</span>
                 </h2>
-                <a href="@Url.Action("ListSubjects","Subject")">Read All Subjects</a>
+                <a href="@Url.Action("ListCourses","Home")">Read All Courses</a>
             </div>
         </div>
 
@@ -45,24 +45,18 @@
             <div class="col-12">
                 <div class="owl-slide-3 owl-carousel">
 
-                    @foreach (var item in listSubjects)
+                    @foreach (var item in lstCourse)
                     {
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="@Url.Action("SubjectDetail","Subject", new { @id = item.subject_id})"><img src="@(item.picture == null ? "" : Url.Content(@item.picture))" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
-                                <div class="category"><h3>@item.subject_category</h3></div>
+                                <a href="@Url.Action("CheckYourCourse","Home", new { @id = item.course_id})"><img src="@(item.picture == null ? "" : Url.Content(@item.picture))" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
+                                <div class="price" style="padding-top:1em">Start Date: @item.course_start_date</div>
+                                <div class="category"><h3>@item.subject_name</h3></div>
                             </figure>
                             <div class="course-1-content pb-4">
-                                <h2>@item.subject_name</h2>
-                                <div class="rating text-center mb-3">
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                </div>
+                                <h2>@item.course_name</h2>
                                 <div class="desc mb-4" style="height:100px; overflow:hidden">@item.subject_brief_info</div>
-                                <p><a href="@Url.Action("CheckYourSubject","Subject", new { @id = item.subject_id})" class="btn btn-primary rounded-0 px-4">Join Subject</a></p>
+                                <p><a href="@Url.Action("CheckYourCourse","Home", new { @id = item.course_id})" class="btn btn-primary rounded-0 px-4">Join Course</a></p>
                             </div>
                         </div>
                     }

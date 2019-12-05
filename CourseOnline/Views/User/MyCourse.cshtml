@@ -2,7 +2,7 @@
 @using CourseOnline.Models
 @{
     ViewBag.Title = "My Subjects";
-    PagedList.IPagedList<MySubjectModel> lstMySubject = ViewBag.lstMySubject;
+    PagedList.IPagedList<CourseListModel> lstMyCourse = ViewBag.lstMyCourse;
 }
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -28,7 +28,7 @@
 
 <div class="site-section">
     <div class="container">
-        @if (lstMySubject.Count() == 0)
+        @if (lstMyCourse.Count() == 0)
         {
             <h2>You don't have any Course. Please register one course</h2>
         }
@@ -36,25 +36,19 @@
         {
             <div class="row">
 
-                @foreach (var item in lstMySubject)
+                @foreach (var item in lstMyCourse)
                 {
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="course-single.html"><img src="@(item.picture == null ? "" : Url.Content(@item.picture))" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
-                                <div class="category"><h3>@item.subject_category</h3></div>
+                                <a href="@Url.Action("CheckYourCourse","Home", new { @id = item.course_id})"><img src="@(item.picture == null ? "" : Url.Content(@item.picture))" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
+                                <div class="price" style="padding-top:1em">Start Date: @item.course_start_date</div>
+                                <div class="category"><h3>@item.subject_name</h3></div>
                             </figure>
                             <div class="course-1-content pb-4">
-                                <h2>@item.subject_name</h2>
-                                <div class="rating text-center mb-3">
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                </div>
+                                <h2>@item.course_name</h2>
                                 <div class="desc mb-4" style="height:150px; overflow:hidden">@item.subject_brief_info</div>
-                                <p><a href="@Url.Action("CheckYourSubject","Subject", new { @id = item.subject_id})" class="btn btn-primary rounded-0 px-4">Join Course</a></p>
+                                <p><a href="@Url.Action("CheckYourCourse","Home", new { @id = item.subject_id})" class="btn btn-primary rounded-0 px-4">@TempData["ButtonStatus"]</a></p>
                             </div>
                         </div>
                     </div>
@@ -63,10 +57,11 @@
             </div>
 
             <div class="dlink">
-                Page @(lstMySubject.PageCount < lstMySubject.PageNumber ? 0 : lstMySubject.PageNumber)/@lstMySubject.PageCount
-                @Html.PagedListPager(lstMySubject, page => Url.Action("YourSubject", "Subject", new { page = page }))
+                Page @(lstMyCourse.PageCount < lstMyCourse.PageNumber ? 0 : lstMyCourse.PageNumber)/@lstMyCourse.PageCount
+                @Html.PagedListPager(lstMyCourse, page => Url.Action("YourCourse", "Home", new { page = page }))
             </div>
         }
     </div>
 </div>
+
 

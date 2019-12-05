@@ -201,7 +201,6 @@
     <Compile Include="Models\Menu.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MySubjectModel.cs" />
     <Compile Include="Models\Permission.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
@@ -1098,10 +1097,10 @@
     <Content Include="Views\CMS\User\UserDetail.cshtml" />
     <Content Include="Views\CMS\User\UserList.cshtml" />
     <Content Include="Views\Shared\_CMS_Layout.cshtml" />
-    <Content Include="Views\User\MySubject.cshtml" />
+    <Content Include="Views\User\MyCourse.cshtml" />
     <Content Include="Views\User\Post.cshtml" />
-    <Content Include="Views\User\SubjectDetail.cshtml" />
-    <Content Include="Views\User\SubjectList.cshtml" />
+    <Content Include="Views\User\CourseDetail.cshtml" />
+    <Content Include="Views\User\CourseList.cshtml" />
     <Content Include="Views\User\TeacherList.cshtml" />
     <Content Include="Views\User\Home.cshtml" />
     <Content Include="Views\User\AccountInformation.cshtml" />
@@ -1117,8 +1116,8 @@
     <Content Include="Views\CMS\Exam\ExamList.cshtml" />
     <Content Include="Views\User\StudyOnline.cshtml" />
     <Content Include="Views\Shared\_Study_Layout.cshtml" />
-    <Content Include="Views\User\SubjectFound.cshtml" />
-    <Content Include="Views\User\SubjectFoundPartialView.cshtml" />
+    <Content Include="Views\User\CourseFound.cshtml" />
+    <Content Include="Views\User\CourseFoundPartialView.cshtml" />
     <Content Include="Views\CMS\Course\CourseAdd.cshtml" />
     <Content Include="Views\CMS\Course\CourseEdit.cshtml" />
     <Content Include="Views\CMS\Course\CourseList.cshtml" />
@@ -1126,7 +1125,7 @@
     <Content Include="Views\CMS\Course\CourseWorkEdit.cshtml" />
     <Content Include="Views\CMS\Course\CourseWorkList.cshtml" />
     <Content Include="Views\CMS\Course\Grade.cshtml" />
-    <Content Include="Views\User\SelectSubjectToQuiz.cshtml" />
+    <Content Include="Views\User\SelectCourseToQuiz.cshtml" />
     <Content Include="Views\User\PraticeOnlineTest.cshtml" />
     <Content Include="Views\Shared\_TestInfor.cshtml" />
     <Content Include="Views\Shared\_Test_Layout.cshtml" />

@@ -1,6 +1,5 @@
 ﻿@{
     ViewBag.Title = "Index";
-    string message = ViewBag.ErrorMessage;
 }
 ﻿@using CourseOnline.Models
 
@@ -178,7 +177,7 @@
                                                 <li class="user-body">
                                                     <div class="row">
                                                         <div class="col-xs-4 text-center">
-                                                            <a href="@Url.Action("YourSubject", "Subject")">My Subjects</a>
+                                                            <a href="@Url.Action("CheckYourCourse", "Home")">My Course</a>
                                                         </div>
                                                     </div>
                                                     <!-- /.row -->
@@ -229,7 +228,7 @@
                                     <a href="@Url.Action("ResourcesList", "News")" class="nav-link text-left">Resources</a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("ListSubjects", "Subject")" class="nav-link text-left">Subjects</a>
+                                    <a href="@Url.Action("ListCourses", "Home")" class="nav-link text-left">Courses</a>
                                 </li>
                                 <li>
                                     <a href="@Url.Action("SelectSubjectToQuiz", "Home")" class="nav-link text-left">Practice Test</a>
@@ -250,7 +249,7 @@
                         @using (Html.BeginForm("GetKeyWord", "Home"))
                         {
                             <div class="d-flex" style="margin-top:10px">
-                                <input type="text" class="rounded form-control" placeholder="Search Subject ... " style="min-width: 200px" name="keyword">
+                                <input type="text" class="rounded form-control" placeholder="Search Course ... " style="min-width: 200px" name="keyword">
                                 <button class="btn btn-primary rounded" style="margin-left:5px" type="submit">Search</button>
                             </div>
                         }
@@ -344,10 +343,10 @@
 @RenderSection("scripts", required: false)
 <script>
     window.onload = function () {
-        if ("@message" == "") {
+        if ("@TempData["ErrorMessage"]" == "") {
             return;
         } else {
-            alert("@message");
+            alert("@TempData["ErrorMessage"]");
         }
     }
 </script>
