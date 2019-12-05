@@ -92,7 +92,7 @@
                                 <li class="user-body">
                                     <div class="row">
                                         <div class="col-xs-4 text-center">
-                                            <a href="@Url.Action("YourCourse","Subject")">My Course</a>
+                                            <a href="@Url.Action("YourCourse","Home")">My Course</a>
                                         </div>
                                     </div>
                                     <!-- /.row -->
@@ -132,7 +132,7 @@
                             <li class="treeview  @(ViewBag.Current2 == item.lesson_name ? "active" : "")">
                                 @if (item.parent_id == item.lesson_id)
                                 {
-                                    <a href="@Url.Action("LessonDetail","Subject",new { @id = item.lesson_id})">
+                                    <a href="@Url.Action("LessonDetail","Home",new { @id = item.lesson_id})">
                                         <i class="fa fa-fw fa-file-text"></i> <span>@item.lesson_name</span>
                                         <span class="pull-right-container">
                                             <i class="fa fa-angle-left pull-right"></i>
@@ -143,7 +143,7 @@
                                         {
                                             if (item1.parent_id != item1.lesson_id && item1.parent_id == item.parent_id)
                                             {
-                                                <li class="@(ViewBag.Current1 == @item1.lesson_name ? "active" : "")"><a href="@Url.Action("LessonDetail","Subject",new { @id = item1.lesson_id})"><i class="fa fa-circle-o"></i> @item1.lesson_name</a></li>
+                                                <li class="@(ViewBag.Current1 == @item1.lesson_name ? "active" : "")"><a href="@Url.Action("LessonDetail","Home",new { @id = item1.lesson_id})"><i class="fa fa-circle-o"></i> @item1.lesson_name</a></li>
                                             }
                                         }
                                     </ul>

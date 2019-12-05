@@ -541,6 +541,7 @@ namespace CourseOnline.Controllers
                                                    join u in db.Users.Where(u => u.user_email == email) on re.user_id equals u.user_id
                                                    select new CourseListModel
                                                    {
+                                                       subject_id = s.subject_id,
                                                        course_id = c.course_id,
                                                        course_name = c.course_name,
                                                        user_email = u.user_email,
@@ -568,7 +569,7 @@ namespace CourseOnline.Controllers
                         int idLesson = db.Lessons.Select(s => s.lesson_id).Min();
                         Session["course"] = checkYourCourse;
                         List<LessonModel> lstlesson = (from l in db.Lessons.OrderBy(l => l.parent_id)
-                                                       join s in db.Subjects.Where(s => s.subject_id == id) on l.subject_id equals s.subject_id
+                                                       join s in db.Subjects.Where(s => s.subject_id == checkYourCourse.subject_id) on l.subject_id equals s.subject_id
                                                        select new LessonModel
                                                        {
                                                            lesson_id = l.lesson_id,
