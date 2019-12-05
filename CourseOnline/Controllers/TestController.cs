@@ -54,6 +54,35 @@ namespace CourseOnline.Controllers
                 return Json(new { success = true, data = testListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
             }
         }
+        //search
+        [HttpPost]
+        public ActionResult SearchByName(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var testList = (from e in db.Exams
+                                join et in db.ExamTests on e.exam_id equals et.exam_id
+                                join tr in db.TestResults on e.exam_id equals tr.exam_id
+                                where et.test_name.Contains(type)
+                                   select new TestListModel
+                                   {
+                                       test_id = et.test_id,
+                                       exam_name = e.exam_name,
+                                       test_name = et.test_name,
+                                       test_code = et.test_code
+                                   }).ToList();
+                int totalrows = testList.Count;
+                int totalrowsafterfiltering = testList.Count;
+                testList = testList.Skip(start).Take(length).ToList();
+                testList = testList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = testList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         [HttpPost]
         public ActionResult FilterByExam(string type)
@@ -68,7 +97,7 @@ namespace CourseOnline.Controllers
             {
                 if (type.Equals(All.ALL_EXAM))
                 {
-                    string sql = "select et.test_id, e.exam_name, et.test_name, test_code  " +
+                    string sql = "select et.test_id, e.exam_name, et.test_name, et.test_code  " +
                             "from ExamTest et left join Exam e " +
                             "on et.exam_id = e.exam_id " +
                             "left join TestResult tr " +
@@ -178,8 +207,15 @@ namespace CourseOnline.Controllers
         {
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                List<Exam> listExam = db.Exams.Where(s => s.exam_name != null).Distinct().ToList();
-                ViewBag.listExam = listExam;
+                string sql = "select et.test_id, e.exam_name, et.test_name, et.test_code " + 
+                                "from Exam e join ExamTest et " +
+                                "on e.exam_id = et.exam_id " +
+                                "join TestResult tr " +
+                                "on e.exam_id = tr.exam_id where et.test_id = @id";
+                TestListModel test = db.Database.SqlQuery<TestListModel>(sql, new SqlParameter("id", id)).FirstOrDefault();
+                ViewBag.Test = test;
+                ViewBag.ExamName = test.exam_name;
+
                 ExamTest ex = db.ExamTests.Where(s => s.exam_id == id).FirstOrDefault();
                 ViewBag.ExamTest = ex;
 

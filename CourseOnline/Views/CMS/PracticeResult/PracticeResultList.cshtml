@@ -3,7 +3,6 @@
     var lstSubjecs = ViewBag.listSubject;
 
 }
-
 <section class="content-header">
     <h1>
         Practice Result List
@@ -13,17 +12,15 @@
         <li class="active">Practice Results</li>
     </ol>
 </section>
-
 <!-- Main content -->
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
-                <!-- /.box-header -->
+            <div class="box table-responsive">
                 <div class="row">
-                    <div class="col-sm-2">
+                    <div class="col-sm-2" style="margin-left : 10px; margin-top : 10px">
                         <select id="sl_subjects" class="form-control">
-                            <option>All Subject</option>
+                            <option>All subject</option>
                             @{
                                 foreach (string item in lstSubjecs)
                                 {
@@ -37,12 +34,12 @@
                     <table id="pratice_result" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th class="table-width5">Subject Name</th>
-                                <th class="table-width20">Exam Name</th>
-                                <th class="table-width50">User's full name</th>
-                                <th class="table-width5">User's email</th>
-                                <th class="table-width5">Tested</th>
-                                <th class="table-width5">Result</th>
+                                <th>Subject Name</th>
+                                <th>Exam Name</th>
+                                <th>User's full name</th>
+                                <th>User's email</th>
+                                <th>Tested</th>
+                                <th>Result</th>
                             </tr>
                         </thead>
                     </table>
@@ -56,45 +53,31 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
         var dataTable;
-      $(document).ready(function() {
-       dataTable = $('#pratice_result').DataTable({
-            "ajax": {
+        $(document).ready(function() {
+            dataTable = $('#pratice_result').DataTable({
+                "ajax": {
                 "url": '@Url.Action("GetAllPracticeResults", "PraticeResult")',
                 "type": "POST",
                 "datatype": "json",
             },
             "columns": [
-
-
                 {
-                    "data": "subject_name",
-                    "name": "subject_name",
-                    "orderable": true
+                    "data": "subject_name", "name": "subject_name", "orderable": true
                 },
                 {
-                    "data": "exam_name",
-                    "name": "exam_name",
-                    "orderable": true
+                    "data": "exam_name", "name": "exam_name", "orderable": true
                 },
                 {
-                    "data": "user_fullname",
-                    "name": "user_fullname",
-                    "orderable": true
+                    "data": "user_fullname", "name": "user_fullname", "orderable": true
                 },
                   {
-                    "data": "user_email",
-                     "name": "user_email",
-                    "orderable": true
+                    "data": "user_email", "name": "user_email", "orderable": true
                 },
                 {
-                    "data": "tested_at",
-                    "name": "tested_at",
-                    "orderable": true
+                    "data": "tested_at", "name": "tested_at", "orderable": true
                 },
                 {
-                    "data": "grade",
-                    "name": "grade",
-                    "orderable": true
+                    "data": "grade", "name": "grade", "orderable": true
                 },
             ],
         "paging": true,
@@ -106,7 +89,7 @@
         });
             filterListener();
         });
-
+        //filter
         function filterListener() {
             $('#sl_subjects').on('change', function (e) {
                 var optionSelected = $("option:selected", this);

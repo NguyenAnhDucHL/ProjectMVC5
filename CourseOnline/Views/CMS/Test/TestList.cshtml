@@ -9,7 +9,7 @@
         Exam Tests List
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a class="active">Tests List</a></li>
     </ol>
 </section>
@@ -18,12 +18,9 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <div class="row">
-                    <div class="col-lg-2">
-                        <button type="button" class="btn btn-block btn-primary" onclick='getAddTest()'>Add new</button>
-                    </div>
-                    <div class="col-lg-2">
+                    <div class="col-sm-2" style="margin-left : 10px; margin-top : 10px">
                         <select class="form-control" id="sl_exam">
                             <option>All exam</option>
                             @{
@@ -34,17 +31,24 @@
                             }
                         </select>
                     </div>
+                    <div class="col-sm-4" style="margin-top : 10px">
+                        Search:
+                        <input type="text" placeholder="Search" id="inp_search" style="height:34px; margin-left:10px;" />
+                        <a onclick="doSearch()" style="cursor: pointer;" data-toggle='tooltip' title='Search'><i class='fa fa-fw fa-search'></i></a>
+                    </div>
+                    <div class="col-sm-2 pull-right">
+                        <button type="button" class="btn btn-link" onclick="getAddTest()" style="float:right;">Add new</button>
+                    </div>
                 </div>
                 <div class="box-body">
                     <table id="tb_test" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th width="10px">ID</th>
                                 <th>Exam</th>
                                 <th>Test</th>
                                 <th>Code</th>
-
-                                <th>Action</th>
+                                <th class="col-sm-1">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -71,10 +75,13 @@
                 { "data": "test_name", "name": "test_name", "orderable": true },
                 { "data": "test_code", "name": "test_code", "orderable": true },
 
-                {
+                { 
                     "data": "test_id", "render": function (data) {
-                        return "<button class='btn btn-block btn-primary' style='margin-left:5px' onclick=getEditTest('" + data + "') ><i class='fa fa-fw fa-edit'></i>Edit</button>" +
-                            "<button class='btn btn-block btn-primary'  style='margin-left:5px' onclick=getResult('" + data + "') ><i class='fa fa-fw fa-file-text'></i>Result</button>";
+                        return "<div class='row'><div class='col-sm-6'><a onclick=getEditTest('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>" +
+                                    "</div>" + 
+                                    "<div class='col-sm-6'><a onclick=getResult('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Results'><i class='fa fa-align-left'></i></a>" +
+								 "</div>" +
+								 "</div>";
                     },
                     "orderable": false,
                     "searchable": false
@@ -87,8 +94,20 @@
         "order": [[0, "asc"]],
         "searching": false
             });
+            //them su kien cho filter
             filterListener();
+            //them su kien cho search
+            doSearch()
     });
+
+        //bat su kien search
+        function doSearch() {
+            
+            $('#inp_search').on('change', function (e) {
+                var valueSelected = this.value;
+                dataTable.ajax.url('@Url.Action("SearchByName","Test")' + '?type=' + valueSelected).load(function (response) { });
+            });
+        }
 
         //filter
         function filterListener() {

@@ -35,14 +35,12 @@ namespace CourseOnline.Controllers
 
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                string sql = "select tr.test_user_id, tb.batch_name, u.user_fullname, u.user_email,tr.[tested_at] , g.grade_user " +
-                            "from TestResult tr " +
-                            "join TestBatch tb " +
-                            "on tr.batch_id = tb.batch_id " +
-                            "join [User] u " +
-                            "on tr.[user_id] = u.[user_id] " +
-                            "join [Grade] g " +
-                            "on g.[user_id] = u.[user_id]";
+                string sql = "select tr.test_user_id, u.user_fullname, u.user_email,tr.[tested_at] , g.grade_user " +
+                                "from[User] u " +
+                                "join TestResult tr " +
+                                "on u.[user_id] = tr.[user_id] " +
+                                "join Grade g " +
+                                "on u.[user_id] = g.[user_id]";
 
                 List<ResultModel> gradeListModels = db.Database.SqlQuery<ResultModel>(sql).ToList();
 
@@ -53,58 +51,57 @@ namespace CourseOnline.Controllers
                 return Json(new { success = true, data = gradeListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        //search
         [HttpPost]
-        public ActionResult FilterByBatch(string type)
+        public ActionResult SearchByName(string type)
         {
             int start = Convert.ToInt32(Request["start"]);
             int length = Convert.ToInt32(Request["length"]);
             string searchValue = Request["search[value]"];
             string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
             string sortDirection = Request["order[0][dir]"];
-
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                if (type.Equals(All.ALL_BATCH))
+                var resultTestList = (from u in db.Users
+                                join tr in db.TestResults on u.user_id equals tr.user_id
+                                join g in db.Grades on u.user_id equals g.user_id
+                                where u.user_fullname.Contains(type) ||
+                                u.user_email.Contains(type)
+                                select new ResultModel
+                                {
+                                    test_user_id = tr.test_user_id,
+                                    user_fullname = u.user_fullname,
+                                    user_email = u.user_email,
+                                    tested_at = tr.tested_at,
+                                    grade_user = g.grade_user,
+                                }).ToList();
+                int totalrows = resultTestList.Count;
+                int totalrowsafterfiltering = resultTestList.Count;
+                resultTestList = resultTestList.Skip(start).Take(length).ToList();
+                resultTestList = resultTestList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = resultTestList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        //delete
+        [HttpPost]
+        public ActionResult delResultTest(int id)
+        {
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var resultTest = db.TestResults.Where(tr => tr.test_user_id == id).FirstOrDefault();
+                if (resultTest != null)
                 {
-                    string sql = "select tr.test_user_id, tb.batch_name, u.user_fullname, u.user_email,tr.[tested_at] , g.grade_user " +
-                            "from TestResult tr " +
-                            "join TestBatch tb " +
-                            "on tr.batch_id = tb.batch_id " +
-                            "join [User] u " +
-                            "on tr.[user_id] = u.[user_id] " +
-                            "join [Grade] g " +
-                            "on g.[user_id] = u.[user_id]";
-
-
-                    List<ResultModel> testListModels = db.Database.SqlQuery<ResultModel>(sql).ToList();
-                    int totalrows = testListModels.Count;
-                    int totalrowsafterfiltering = testListModels.Count;
-                    testListModels = testListModels.Skip(start).Take(length).ToList();
-                    testListModels = testListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = testListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-
+                    db.TestResults.Remove(resultTest);
+                    db.SaveChanges();
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    string sql = "select tr.test_user_id, tb.batch_name, u.user_fullname, u.user_email,tr.[tested_at] , g.grade_user " +
-                            "from TestResult tr " +
-                            "join TestBatch tb " +
-                            "on tr.batch_id = tb.batch_id " +
-                            "join [User] u " +
-                            "on tr.[user_id] = u.[user_id] " +
-                            "join [Grade] g " +
-                            "on g.[user_id] = u.[user_id] " +
-                            "where tb.batch_name = @bname";
-
-                    List<ResultModel> testListModels = db.Database.SqlQuery<ResultModel>(sql, new SqlParameter("bname", type)).ToList();
-
-                    int totalrows = testListModels.Count;
-                    int totalrowsafterfiltering = testListModels.Count;
-                    testListModels = testListModels.Skip(start).Take(length).ToList();
-                    testListModels = testListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                    return Json(new { success = true, data = testListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = false }, JsonRequestBehavior.AllowGet);
                 }
             }
+
         }
     }
 }
