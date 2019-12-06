@@ -25,31 +25,8 @@ namespace CourseOnline.Controllers
         public ActionResult Home_User()
         {
 
-            if (All.Error_Message.Equals("You need to login to join the Pratice Test"))
-            {
-                TempData["ErrorMessage"] = All.Error_Message;
-                All.Error_Message = "";
-            }
-            else
-            {
-                TempData["ErrorMessage"] = null;
-            }
-
-            //var lstCourse = (from c in db.Courses.Where(m => "convert(datetime,{0}) >= {1}".(m.course_start_date, DateTime.Now))
-            //                                   join s in db.Subjects.Where(s => s.subject_status == "Online") on c.subject_id equals s.subject_id
-            //                 select new CourseListModel
-            //                 {
-            //                     subject_name = s.subject_name,
-            //                     course_start_date = c.course_start_date,
-            //                     course_end_date = c.course_end_date,
-            //                     course_id = c.course_id,
-            //                     subject_brief_info = s.subject_brief_info,
-            //                     picture = s.picture,
-            //                     subject_category = s.subject_category
-            //                 }).Take(6).ToList();
-
             string sql = "select s.subject_name, c.course_start_date , c.course_end_date , c.course_id, c.course_name, s.picture, s.subject_brief_info from Course c  " +
-                "join Subject s on c.subject_id = s.subject_id where convert(datetime,c.course_start_date) > @datetimenow and c.course_status = 'True' and s.subject_status = 'Online'";
+                "join Subject s on c.subject_id = s.subject_id where convert(datetime,c.course_start_date) >= @datetimenow and c.course_status = 'True' and s.subject_status = 'Online'";
             List<CourseListModel> lstCourse = db.Database.SqlQuery<CourseListModel>(sql, new SqlParameter("datetimenow", DateTime.Now)).Take(6).ToList();
             ViewBag.lstCourse = lstCourse;
 
@@ -271,7 +248,7 @@ namespace CourseOnline.Controllers
             int pageNumber = (page ?? 1);
             string sql = "select s.subject_name, c.course_start_date , c.course_end_date , c.course_id, c.course_name, " +
                 "s.picture, s.subject_brief_info from Course c  join Subject s on c.subject_id = s.subject_id " +
-                "where convert(datetime,c.course_start_date) > @datetimenow and c.course_status = 'True' and s.subject_status = 'Online'";
+                "where convert(datetime,c.course_start_date) >= @datetimenow and c.course_status = 'True' and s.subject_status = 'Online'";
             List<CourseListModel> lstCourse = db.Database.SqlQuery<CourseListModel>(sql, new SqlParameter("datetimenow", DateTime.Now)).Where(c => c.course_name.Contains(keyword)).ToList();
 
             ViewBag.KeyWord = keyword;
@@ -289,7 +266,7 @@ namespace CourseOnline.Controllers
         {
             string sql = "select s.subject_name, c.course_start_date , c.course_end_date , c.course_id, c.course_name, " +
                "s.picture,  s.subject_brief_info from Course c  join Subject s on c.subject_id = s.subject_id " +
-               "where convert(datetime,c.course_start_date) > @datetimenow and c.course_status = 'True' and s.subject_status = 'Online'";
+               "where convert(datetime,c.course_start_date) >= @datetimenow and c.course_status = 'True' and s.subject_status = 'Online'";
             List<CourseListModel> lstCourse = db.Database.SqlQuery<CourseListModel>(sql, new SqlParameter("datetimenow", DateTime.Now)).Where(c => c.course_name.Contains(keyword)).ToList();
             ViewBag.keyword = keyword;
             ViewBag.lstCourse = lstCourse;
@@ -301,7 +278,7 @@ namespace CourseOnline.Controllers
         {
             if (Session["Email"] == null)
             {
-                All.Error_Message = "You need to login to join the Pratice Test";
+                TempData["ErrorMessage"] = "You need to login to join the Pratice Test";
                 return RedirectToAction("Home_User");
             }
             string myemail = Session["Email"].ToString();
@@ -319,7 +296,7 @@ namespace CourseOnline.Controllers
                                     subject_category = s.subject_category,
                                 }).OrderBy(n => n.subject_name).Where(n => n.user_email == myemail).ToList();
             ViewBag.lstMySubject = lstMySubject;
-            return View("/Views/User/SelectSubjectToQuiz.cshtml");
+            return View("/Views/User/SelectCourseToQuiz.cshtml");
         }
 
         [HttpPost]
@@ -397,7 +374,7 @@ namespace CourseOnline.Controllers
             int pageSize = 6;
             int pageNumber = (page ?? 1);
             string sql = "select s.subject_name, c.course_start_date , c.course_end_date , c.course_id, c.course_name, s.picture, s.subject_brief_info from Course c  " +
-                "join Subject s on c.subject_id = s.subject_id where convert(datetime,c.course_start_date) > @datetimenow and c.course_status = 'True' and s.subject_status = 'Online'";
+                "join Subject s on c.subject_id = s.subject_id where convert(datetime,c.course_start_date) >= @datetimenow and c.course_status = 'True' and s.subject_status = 'Online'";
             List<CourseListModel> lstCourses = db.Database.SqlQuery<CourseListModel>(sql, new SqlParameter("datetimenow", DateTime.Now)).ToList();
 
             ViewBag.lstCourses = lstCourses.OrderBy(n => n.course_name).ToPagedList(pageNumber, pageSize);
@@ -561,7 +538,7 @@ namespace CourseOnline.Controllers
                     }
                     if (Convert.ToDateTime(checkYourCourse.course_start_date) >= DateTime.Now)
                     {
-                        All.Error_Message = "Your course is not opened yet!";
+                        TempData["ErrorMessage"] = "Your course is not opened yet";
                         return RedirectToAction("YourCourse", "Home");
                     }
                     else
@@ -603,34 +580,13 @@ namespace CourseOnline.Controllers
             string myemail = Session["Email"].ToString();
             int pageSize = 6;
             int pageNumber = (page ?? 1);
-            var lstMyCourse = (from s in db.Subjects
-                               join c in db.Courses.Where(c => c.course_status == true) on s.subject_id equals c.subject_id
-                               join re in db.Registrations.Where(re => re.registration_status == "Approved") on c.course_id equals re.course_id
-                               join u in db.Users on re.user_id equals u.user_id
-                               select new CourseListModel
-                               {
-                                   course_id = c.course_id,
-                                   course_name = c.course_name,
-                                   user_email = u.user_email,
-                                   subject_name = s.subject_name,
-                                   subject_brief_info = s.subject_brief_info,
-                                   course_start_date = c.course_start_date,
-                                   picture = s.picture,
-                                   subject_category = s.subject_category,
-                               }).OrderBy(n => n.subject_name).Where(n => n.user_email == myemail).ToPagedList(pageNumber, pageSize);
-            if(All.Error_Message.Equals("Your course is not opened yet!") == true)
-            {
-                TempData["ErrorMessage"] = All.Error_Message;
-                TempData["ButtonStatus"] = "Watting For acceptance";
-                All.Error_Message = "";
-            }
-            else
-            {
-                TempData["ErrorMessage"] = null;
-                TempData["ButtonStatus"] = "Join Course";
-            }
 
-            ViewBag.lstMyCourse = lstMyCourse;
+            string sql = "select s.subject_name, c.course_start_date , c.course_end_date , c.course_id, c.course_name, u.user_email, s.subject_category," +
+                "s.picture, s.subject_brief_info, CASE WHEN convert(datetime,c.course_start_date) >= @datetimenow Then 'Waiting of Course Open' Else 'Join Course' END as status_course " +
+                "from Course c join Subject s on c.subject_id = s.subject_id " +
+                 "join  Registration re on c.course_id = re.course_id join [User] u on  re.user_id = u.user_id where c.course_status = 'True' and  re.registration_status = 'Approved'";
+            List<CourseListModel> lstMyCourse = db.Database.SqlQuery<CourseListModel>(sql, new SqlParameter("datetimenow", DateTime.Now)).Where(c => c.user_email == myemail).ToList();
+            ViewBag.lstMyCourse = lstMyCourse.ToPagedList(pageNumber, pageSize);
             return View("/Views/User/MyCourse.cshtml");
         }
 

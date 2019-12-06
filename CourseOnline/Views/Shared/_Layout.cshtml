@@ -126,9 +126,8 @@
     </script>
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-
     <div class="site-wrap">
-
+        <input hidden id="errorMessage" value="@TempData["ErrorMessage"]" />
         <div class="site-mobile-menu site-navbar-target">
             <div class="site-mobile-menu-header">
                 <div class="site-mobile-menu-close mt-3">
@@ -177,7 +176,7 @@
                                                 <li class="user-body">
                                                     <div class="row">
                                                         <div class="col-xs-4 text-center">
-                                                            <a href="@Url.Action("CheckYourCourse", "Home")">My Course</a>
+                                                            <a href="@Url.Action("YourCourse", "Home")">My Course</a>
                                                         </div>
                                                     </div>
                                                     <!-- /.row -->
@@ -231,7 +230,7 @@
                                     <a href="@Url.Action("ListCourses", "Home")" class="nav-link text-left">Courses</a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("SelectSubjectToQuiz", "Home")" class="nav-link text-left">Practice Test</a>
+                                    <a href="@Url.Action("SelectCourseToQuiz", "Home")" class="nav-link text-left">Practice Test</a>
                                 </li>
                                 @if (Session["permission"] != null)
                                 {
@@ -314,8 +313,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
     <!-- .site-wrap -->
     <!-- loader -->
@@ -341,12 +338,12 @@
 
 </html>
 @RenderSection("scripts", required: false)
-<script>
-    window.onload = function () {
-        if ("@TempData["ErrorMessage"]" == "") {
-            return;
-        } else {
-            alert("@TempData["ErrorMessage"]");
-        }
-    }
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script>
+            if ($('#errorMessage').val() != "") {
+                 errorAlert("" + $('#errorMessage').val());
+            }
+    </script>
+
+

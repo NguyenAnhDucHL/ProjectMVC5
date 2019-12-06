@@ -27,7 +27,7 @@ else
         @if (subject != null)
         {
             <ul class="nav nav-tabs nav-justified">
-                <li class="active"><a href="#overview" data-toggle="tab" style="font-weight:bold; font-size: 40px">@subject.subject_name</a></li>
+                <li id="subjectname_study" class="active"><a href="#overview" data-toggle="tab" style="font-weight:bold; font-size: 40px">@subject.subject_name</a></li>
             </ul>
         }
         @if (ViewBag.lessonType == "HTML Lesson")
@@ -191,14 +191,14 @@ else
         }
         $("#VerifyPassword").click(function () {
         $.ajax({
-            url: '@Url.Action("checkExamTest","Subject")',
+            url: '@Url.Action("checkExamTest","Home")',
             type: "POST",
             data: { test_id : @lessonQuiz.test_id, test_password: $("#slPassword").val()},
             dataType: "json",
             success: (response) => {
                 if (response.success) {
                     $("#MyModal").modal('toggle');
-                    window.location.href = '@Url.Action("LessonDetail", "Subject")?id=' + @lesson.lesson_id;
+                    window.location.href = '@Url.Action("LessonDetail", "Home")?id=' + @lesson.lesson_id;
                 }
                 else {
                     errorAlert("Your password is incorrect");
@@ -243,7 +243,7 @@ else
                 $.ajax({
 
                     type: 'POST',
-                    url: '@Url.Action("SubmitQuiz", "Subject")',
+                    url: '@Url.Action("SubmitQuiz", "Home")',
                     data: { resultQuiz },
 
                     success: function (response) {

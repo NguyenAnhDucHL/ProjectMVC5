@@ -15,6 +15,7 @@ namespace CourseOnline.Models
         public string subject_category { get; set; }
         public string user_email { get; set; }
         public string registration_status { get; set; }
+        public string status_course { get; set; }
 
     }
 }

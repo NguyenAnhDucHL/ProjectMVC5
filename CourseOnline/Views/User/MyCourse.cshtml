@@ -48,7 +48,7 @@
                             <div class="course-1-content pb-4">
                                 <h2>@item.course_name</h2>
                                 <div class="desc mb-4" style="height:150px; overflow:hidden">@item.subject_brief_info</div>
-                                <p><a href="@Url.Action("CheckYourCourse","Home", new { @id = item.course_id})" class="btn btn-primary rounded-0 px-4">@TempData["ButtonStatus"]</a></p>
+                                <p><a href="@Url.Action("CheckYourCourse","Home", new { @id = item.course_id})" class="btn btn-primary rounded-0 px-4">@item.status_course</a></p>
                             </div>
                         </div>
                     </div>
