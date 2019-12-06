@@ -185,6 +185,7 @@
     <Compile Include="Models\Domain.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DomainListModel.cs" />
     <Compile Include="Models\Exam.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>

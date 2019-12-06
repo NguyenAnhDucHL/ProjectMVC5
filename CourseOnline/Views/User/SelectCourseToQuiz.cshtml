@@ -2,43 +2,199 @@
 @{
     ViewBag.Title = "SelectSubjectToQuiz";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    List<MySubjectModel> lstMyCourse = ViewBag.lstMyCourse;
+    List<CourseListModel> lstMyCourse = ViewBag.lstMyCourse;
 }
 <div class="container">
     <div class="SelQuiz">
         <div class="panel panel-default" style="width: 37%; margin: 20% 32%;">
-            <div class="panel-heading">Select Your Quiz  ^_^</div>
+            <div class="panel-heading">Create Your Pratice Test  ^_^</div>
             <div class="panel-body">
-                <select id="sl_listSubject" class="form-control">
-                    <option>All Subject</option>
-                    @foreach (MySubjectModel mySubject in lstMyCourse)
-                    {
-                        <option value="@mySubject.subject_id">@mySubject.subject_name</option>
-                    }
-                </select>
-                <br />
+                <div class="form-group">
+                    <label>Choose your course</label>
+                    <select id="sl_listSubject" class="form-control">
+                        <option>All Course</option>
+                        @foreach (CourseListModel mySubject in lstMyCourse)
+                        {
+                            <option value="@mySubject.subject_id">@mySubject.subject_name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group" id="lstNumberQuestion">
+                    <label>Input number of questions</label>
+                    <input type="number" placeholder="Max Value 20" class="form-control edit-field" id="inp_number_question" min="1" max="20" oninput="validity.valid||(value='');">
+                </div>
+                <div class="form-group" id="lstTypeTest">
+                    <label>Choose type of test</label>
+                    <select id="sl_testType" class="form-control edit-field">
+                        <option value="test_domain">Domain</option>
+                        <option value="test_lesson">Lesson</option>
+                    </select>
+                </div>
+                <div class="form-group" id="lstDomainNeed">
+                    <label>Choose Domain</label>
+                    <select id="sl_listDomain" class="form-control">
+                    </select>
+                </div>
+                <div class="form-group" id="lstLessonNeed">
+                    <label id="lesson_name">Choose Lesson</label>
+                    <select id="sl_listLesson" class="form-control">
+                    </select>
+                </div>
                 <button onclick="getData()" id="Enter" class="btn btn-success btn-lg" style="width:100%;"><span class="glyphicon glyphicon-ok"></span>   Let's GO </button>
             </div>
+
         </div>
 
     </div>
-
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
+
+    if ($('#sl_listSubject').val() == 'All Course') {
+            $('#lstNumberQuestion').fadeOut();
+            $('#lstTypeTest').fadeOut();
+            $('#lstDomainNeed').fadeOut();
+            $('#lstLessonNeed').fadeOut();
+    }
+    $('#sl_testType').change(function () {
+     if ($('#sl_testType').val() == 'test_domain') {
+             $.ajax({
+             url:'@Url.Action("LoadDomain", "Home")',
+             type: "POST",
+             data: { subjectID : $("#sl_listSubject").val() },
+             success: (response) => {
+                 if (response.success) {
+                     $('#lstLessonNeed').fadeOut();
+                     $('#lstDomainNeed').fadeIn();
+                     $('#sl_listDomain').find('option').remove();
+                  for (var i = 0, len = response.data.length; i < len; ++i) {
+                      $('#sl_listDomain').append(`<option value="${response.data[i].domain_id}">
+                                       ${response.data[i].domain_name}
+                                  </option>`);
+                   }
+                 } else {
+
+                 }
+             },
+             error: (response) => {
+
+             },
+           })
+          }
+         else if ($('#sl_testType').val() == 'test_lesson') {
+           $.ajax({
+             url:'@Url.Action("LoadLesson", "Home")',
+             type: "POST",
+             data: { subjectID : $("#sl_listSubject").val() },
+             success: (response) => {
+                 if (response.success) {
+                     $('#lstDomainNeed').fadeOut();
+                     $('#lstLessonNeed').fadeIn();
+                     $('#sl_listLesson').find('option').remove();
+                  for (var i = 0, len = response.data.length; i < len; ++i) {
+                      $('#sl_listLesson').append(`<option value="${response.data[i].lesson_id}">
+                                       ${response.data[i].lesson_name}
+                                  </option>`);
+                   }
+                 } else {
+
+                 }
+               },
+              error: (response) => {
+             },
+           })
+        }
+    });
+
+    $('#sl_listSubject').change(function () {
+        if (this.value == 'All Course') {
+            $('#lstNumberQuestion').fadeOut();
+            $('#lstTypeTest').fadeOut();
+            $('#lstDomainNeed').fadeOut();
+            $('#lstLessonNeed').fadeOut();
+        } else {
+            if ($('#sl_testType').val() == 'test_domain') {
+             $.ajax({
+             url:'@Url.Action("LoadDomain", "Home")',
+             type: "POST",
+             data: { subjectID : $("#sl_listSubject").val() },
+             success: (response) => {
+                 if (response.success) {
+                  $('#lstNumberQuestion').fadeIn();
+                     $('#lstTypeTest').fadeIn();
+                     $('#lstDomainNeed').fadeIn();
+                     $('#sl_listDomain').find('option').remove();
+                     for (var i = 0, len = response.data.length; i < len; ++i) {
+                     $('#sl_listDomain').append(`<option value="${response.data[i].domain_id}">
+                                       ${response.data[i].domain_name}
+                                  </option>`);
+                   }
+                 } else {
+
+                 }
+             },
+             error: (response) => {
+
+             },
+           })
+          }
+         else if ($('#sl_testType').val() == 'test_lesson') {
+           $.ajax({
+             url:'@Url.Action("LoadLesson", "Home")',
+             type: "POST",
+             data: { subjectID : $("#sl_listSubject").val() },
+             success: (response) => {
+                 if (response.success) {
+                    $('#lstNumberQuestion').fadeIn();
+                     $('#lstTypeTest').fadeIn();
+                     $('#lstLessonNeed').fadeIn();
+                     $('#sl_listLesson').find('option').remove();
+                  for (var i = 0, len = response.data.length; i < len; ++i) {
+                      $('#sl_listLesson').append(`<option value="${response.data[i].lesson_id}">
+                                       ${response.data[i].lesson_name}
+                                  </option>`);
+                   }
+                 } else {
+
+                 }
+               },
+              error: (response) => {
+             },
+           })
+        }
+    }});
+
     function getData() {
+
+       if ($("#inp_number_question").val() == "") {
+            errorAlert("Question not empty!");
+            return;
+        }
+         if ($("#sl_listSubject").val() == "All Course") {
+            errorAlert("Please Select one course!");
+            return;
+        }
+         var testData = {
+             subjectID: $("#sl_listSubject").val(),
+             numberQuestion: $("#inp_number_question").val(),
+             testType: $("#sl_testType").val(),
+             domainValue: $("#sl_listDomain").val(),
+        };
+       var postJson = JSON.stringify(testData);
        $.ajax({
                 url: '@Url.Action("SelectQuizz","Home")',
                 type: "POST",
-                data: { subjectid : $("#sl_listSubject").val() },
+                data: {postJson : postJson},
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
                         window.location.href = '@Url.Action("TestOnline", "Home")';
                     } else {
-                        alert("Get test failed");
+                        errorAlert("Get test failed");
                     }
                 },
-                error: (response) => { alert("Network error") }
+                error: (response) => { errorAlert("Network error !") }
             });
-     }  
+    }
+
 </script>
