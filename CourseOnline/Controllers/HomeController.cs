@@ -282,30 +282,79 @@ namespace CourseOnline.Controllers
                 return RedirectToAction("Home_User");
             }
             string myemail = Session["Email"].ToString();
-            var lstMySubject = (from s in db.Subjects
-                                join c in db.Courses on s.subject_id equals c.subject_id
-                                join re in db.Registrations.Where(re => re.registration_status == "Approved") on c.course_id equals re.course_id
-                                join u in db.Users on re.user_id equals u.user_id
-                                select new CourseListModel
-                                {
-                                    course_id = c.course_id,
-                                    user_email = u.user_email,
-                                    subject_name = s.subject_name,
-                                    subject_brief_info = s.subject_brief_info,
-                                    picture = s.picture,
-                                    subject_category = s.subject_category,
-                                }).OrderBy(n => n.subject_name).Where(n => n.user_email == myemail).ToList();
-            ViewBag.lstMySubject = lstMySubject;
+            List<CourseListModel> lstMyCourse = (from s in db.Subjects.Where(s => s.subject_status == "Online")
+                                                 join c in db.Courses.Where(c => c.course_status == true) on s.subject_id equals c.subject_id
+                                                 join re in db.Registrations.Where(re => re.registration_status == "Approved") on c.course_id equals re.course_id
+                                                 join u in db.Users on re.user_id equals u.user_id
+                                                 select new CourseListModel
+                                                 {
+                                                     course_id = c.course_id,
+                                                     user_email = u.user_email,
+                                                     subject_name = s.subject_name,
+                                                     subject_brief_info = s.subject_brief_info,
+                                                     picture = s.picture,
+                                                     subject_category = s.subject_category,
+                                                     course_start_date = c.course_start_date,
+                                                     subject_id = s.subject_id,
+                                                 }).OrderBy(n => n.subject_name).Where(n => n.user_email == myemail).ToList();
+
+            foreach (CourseListModel courseListModel in lstMyCourse.ToList())
+            {
+                if (Convert.ToDateTime(courseListModel.course_start_date) < DateTime.Now)
+                {
+                    lstMyCourse.Remove(courseListModel);
+                }
+            }
+            
+            ViewBag.lstMyCourse = lstMyCourse;
             return View("/Views/User/SelectCourseToQuiz.cshtml");
         }
 
         [HttpPost]
-        public ActionResult SelectQuizz(string subjectid)
+        public ActionResult LoadDomain(string subjectID)
         {
-            int subject_id = Convert.ToInt32(subjectid);
+            int id = Convert.ToInt32(subjectID);
+            List<DomainListModel> lstDomain = (from d in db.Domains.Where(d => d.domain_status == true)
+                                               join s in db.Subjects.Where(s => s.subject_status == "Online" && s.subject_id == id)
+                                               on d.subject_id equals s.subject_id
+                                               join q in db.Questions.Where(q => q.question_status == "Published")
+                                               on d.domain_id equals q.domain_id
+                                               select new DomainListModel
+                                               {
+                                                   domain_id = d.domain_id,
+                                                   domain_name = d.domain_name,
+                                                   subject_id = s.subject_id,
+                                               }).Distinct().ToList();
+            return Json(new { success = true, data = lstDomain }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult LoadLesson(string subjectID)
+        {
+            int id = Convert.ToInt32(subjectID);
+
+            List<LessonModel> lstLesson = (from l in db.Lessons.Where(l => l.lesson_status == true)
+                                                 join s in db.Subjects.Where(s => s.subject_id == id)
+                                                 on l.subject_id equals s.subject_id
+                                                 join q in db.Questions.Where(q => q.question_status == "Published")
+                                                 on l.lesson_id equals q.lesson_id
+                                                 select new LessonModel
+                                                 {
+                                                     lesson_id = l.lesson_id,
+                                                     lesson_name = l.lesson_name,
+                                                 }).Distinct().ToList();
+            return Json(new { success = true, data = lstLesson}, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SelectQuizz(string postJson)
+        {
+
+            dynamic testInfo = JValue.Parse(postJson);
+
+
             List<QuestionModel> questions = (from q in db.Questions
-                                             where q.lesson_id == 8 && q.question_status == "Published" && q.subject_id == subject_id
-                                             join s in db.Subjects
+                                             where q.lesson_id == 8 && q.question_status == "Published" && q.subject_id == 1
+                                             join s in db.Subjects.Where(s => s.subject_status == "Online")
                                              on q.subject_id equals s.subject_id
                                              select new QuestionModel
                                              {
@@ -383,7 +432,7 @@ namespace CourseOnline.Controllers
 
         public ActionResult CourseDetail(int? id)
         {
-            if(Session["Email"]!= null)
+            if (Session["Email"] != null)
             {
                 if (id == null)
                 {
@@ -427,7 +476,7 @@ namespace CourseOnline.Controllers
                                 }
                                ).FirstOrDefault();
 
-                List<LessonModel> lesson = (from l in db.Lessons.OrderBy(l => l.parent_id)
+                List<LessonModel> lesson = (from l in db.Lessons.Where(l => l.lesson_status == true).OrderBy(l => l.parent_id)
                                             join s in db.Subjects.Where(s => s.subject_id == courseDetail.subject_id) on l.subject_id equals s.subject_id
                                             select new LessonModel
                                             {
@@ -481,7 +530,7 @@ namespace CourseOnline.Controllers
                                 }
                                ).FirstOrDefault();
 
-                List<LessonModel> lesson = (from l in db.Lessons.OrderBy(l => l.parent_id)
+                List<LessonModel> lesson = (from l in db.Lessons.Where(l => l.lesson_status == true).OrderBy(l => l.parent_id)
                                             join s in db.Subjects.Where(s => s.subject_id == courseDetail.subject_id) on l.subject_id equals s.subject_id
                                             select new LessonModel
                                             {
@@ -503,7 +552,7 @@ namespace CourseOnline.Controllers
                 ViewBag.courseDetail = courseDetail;
                 return View("/Views/User/CourseDetail.cshtml");
             }
-            
+
         }
 
         public ActionResult CheckYourCourse(int? id)
@@ -511,7 +560,7 @@ namespace CourseOnline.Controllers
             if (Session["Email"] != null)
             {
                 string email = Session["Email"].ToString();
-                CourseListModel checkYourCourse = (from s in db.Subjects
+                CourseListModel checkYourCourse = (from s in db.Subjects.Where(s => s.subject_status == "Online")
                                                    join c in db.Courses.Where(s => s.course_id == id && s.course_status == true)
                                                    on s.subject_id equals c.subject_id
                                                    join re in db.Registrations.Where(re => re.registration_status == "Approved") on c.course_id equals re.course_id
@@ -543,10 +592,10 @@ namespace CourseOnline.Controllers
                     }
                     else
                     {
-                        int idLesson = db.Lessons.Select(s => s.lesson_id).Min();
+                        int idLesson = db.Lessons.Where(l => l.lesson_status == true).Select(s => s.lesson_id).Min();
                         Session["course"] = checkYourCourse;
-                        List<LessonModel> lstlesson = (from l in db.Lessons.OrderBy(l => l.parent_id)
-                                                       join s in db.Subjects.Where(s => s.subject_id == checkYourCourse.subject_id) on l.subject_id equals s.subject_id
+                        List<LessonModel> lstlesson = (from l in db.Lessons.OrderBy(l => l.parent_id).Where(l => l.lesson_status == true)
+                                                       join s in db.Subjects.Where(s => s.subject_id == checkYourCourse.subject_id && s.subject_status == "Online") on l.subject_id equals s.subject_id
                                                        select new LessonModel
                                                        {
                                                            lesson_id = l.lesson_id,
@@ -584,7 +633,7 @@ namespace CourseOnline.Controllers
             string sql = "select s.subject_name, c.course_start_date , c.course_end_date , c.course_id, c.course_name, u.user_email, s.subject_category," +
                 "s.picture, s.subject_brief_info, CASE WHEN convert(datetime,c.course_start_date) >= @datetimenow Then 'Waiting of Course Open' Else 'Join Course' END as status_course " +
                 "from Course c join Subject s on c.subject_id = s.subject_id " +
-                 "join  Registration re on c.course_id = re.course_id join [User] u on  re.user_id = u.user_id where c.course_status = 'True' and  re.registration_status = 'Approved'";
+                 "join  Registration re on c.course_id = re.course_id join [User] u on  re.user_id = u.user_id where c.course_status = 'True' and  re.registration_status = 'Approved' and s.subject_status = Online";
             List<CourseListModel> lstMyCourse = db.Database.SqlQuery<CourseListModel>(sql, new SqlParameter("datetimenow", DateTime.Now)).Where(c => c.user_email == myemail).ToList();
             ViewBag.lstMyCourse = lstMyCourse.ToPagedList(pageNumber, pageSize);
             return View("/Views/User/MyCourse.cshtml");
@@ -627,8 +676,8 @@ namespace CourseOnline.Controllers
 
             if (lesson.lesson_type == "Quiz")
             {
-                LessonQuizModel lessonQuizModels = (from l in db.Lessons.Where(l => l.lesson_id == id)
-                                                    join c in db.Courseworks on l.coursework_id equals c.coursework_id
+                LessonQuizModel lessonQuizModels = (from l in db.Lessons.Where(l => l.lesson_id == id && l.lesson_status == true)
+                                                    join c in db.Courseworks.Where(c => c.coursework_status == true) on l.coursework_id equals c.coursework_id
                                                     join et in db.ExamTests on c.test_id equals et.test_id
                                                     join tq in db.TestQuestions on et.test_id equals tq.test_id
                                                     join ex in db.Exams on et.exam_id equals ex.exam_id
@@ -637,7 +686,12 @@ namespace CourseOnline.Controllers
                                                         test_id = tq.test_id,
                                                         test_name = et.test_name,
                                                         exam_duration = ex.exam_duration,
+                                                        due_date = c.due_date,
                                                     }).FirstOrDefault();
+                if (Convert.ToDateTime(lessonQuizModels.due_date) > DateTime.Now)
+                {
+                    ViewBag.lessonQuiz = null;
+                }
                 ViewBag.lessonQuiz = lessonQuizModels;
             }
             else
