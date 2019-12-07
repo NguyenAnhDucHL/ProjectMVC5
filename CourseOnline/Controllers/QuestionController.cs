@@ -9,7 +9,7 @@ using CourseOnline.Global.Setting;
 using Newtonsoft.Json.Linq;
 using System.Data.SqlClient;
 using System.Data;
-using System.IO;
+//using System.IO;
 using Excel = Microsoft.Office.Interop.Excel;
 using OfficeOpenXml.Core.ExcelPackage;
 
@@ -37,24 +37,24 @@ namespace CourseOnline.Controllers
             }
             return View("/Views/CMS/Question/QuestionList.cshtml");
         }
-        [HttpPost]
-        public ActionResult Download() // download template area/location
-        {
-            string path = Server.MapPath("~/excelfolder/template/demoExcel.xlsx");
+        //[HttpPost]
+        //public ActionResult Download() // download template area/location
+        //{
+        //    string path = Server.MapPath("~/excelfolder/template/demoExcel.xlsx");
 
-            FileInfo file = new FileInfo(path);
-            ExcelPackage excelPackage = new ExcelPackage(file);
-            using (var memoryStream = new MemoryStream())
-            {
-                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.AddHeader("content-disposition", "attachment; filename= ~/excelfolder/template/demoExcel.xlsx");
-                memoryStream.WriteTo(Response.OutputStream);
-                //excelPackage.SaveAs(memoryStream);
-                Response.Flush();
-                Response.End();
-            }
-            return View();
-        }
+        //    FileInfo file = new FileInfo(path);
+        //    ExcelPackage excelPackage = new ExcelPackage(file);
+        //    using (var memoryStream = new MemoryStream())
+        //    {
+        //        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        //        Response.AddHeader("content-disposition", "attachment; filename= ~/excelfolder/template/demoExcel.xlsx");
+        //        memoryStream.WriteTo(Response.OutputStream);
+        //        //excelPackage.SaveAs(memoryStream);
+        //        Response.Flush();
+        //        Response.End();
+        //    }
+        //    return View();
+        //}
         [HttpPost]
         public ActionResult Import(HttpPostedFileBase excelfile, string subjectname, string lessonName, string domainName)
         {
