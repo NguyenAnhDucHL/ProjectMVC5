@@ -8,12 +8,17 @@ using System.Linq.Dynamic;
 using CourseOnline.Global.Setting;
 using Newtonsoft.Json.Linq;
 using System.Data.SqlClient;
+using System.Data;
+using System.IO;
+using Excel = Microsoft.Office.Interop.Excel;
+using OfficeOpenXml.Core.ExcelPackage;
 
 namespace CourseOnline.Controllers
 {
     public class QuestionController : Controller
     {
         // GET: Question
+        
         [Route("QuestionList")]
         public ActionResult Index()
         {
@@ -32,7 +37,132 @@ namespace CourseOnline.Controllers
             }
             return View("/Views/CMS/Question/QuestionList.cshtml");
         }
+        [HttpPost]
+        public ActionResult Download() // download template area/location
+        {
+            string path = Server.MapPath("~/excelfolder/template/demoExcel.xlsx");
 
+            FileInfo file = new FileInfo(path);
+            ExcelPackage excelPackage = new ExcelPackage(file);
+            using (var memoryStream = new MemoryStream())
+            {
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("content-disposition", "attachment; filename= ~/excelfolder/template/demoExcel.xlsx");
+                memoryStream.WriteTo(Response.OutputStream);
+                //excelPackage.SaveAs(memoryStream);
+                Response.Flush();
+                Response.End();
+            }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Import(HttpPostedFileBase excelfile, string subjectname, string lessonName, string domainName)
+        {
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var listSubject = db.Subjects.Select(s => s.subject_name).Distinct().ToList();
+                ViewBag.subjectName = listSubject;
+                var listDomain = db.Domains.Select(d => d.domain_name).Distinct().ToList();
+                ViewBag.domainName = listDomain;
+                var listLesson = db.Lessons.Select(l => l.lesson_name).Distinct().ToList();
+                ViewBag.lessonName = listLesson;
+                var listLevel = db.Questions.Select(q => q.question_level).Distinct().ToList();
+                ViewBag.questionLevel = listLevel;
+                var listStatus = db.Questions.Select(q => q.question_status).Distinct().ToList();
+                ViewBag.questionStatus = listStatus;
+
+                if (excelfile == null || excelfile.ContentLength == 0)
+                {
+                    ViewBag.Error = "Please select a file excel file";
+                    return View("/Views/CMS/Question/QuestionList.cshtml");
+                }
+                else
+                {
+                    if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
+                    {
+                        string path = Server.MapPath("~/excelfolder/" + excelfile.FileName);
+                        excelfile.SaveAs(path);
+                        //Read data from excel file
+                        Excel.Application application = new Excel.Application();
+                        Excel.Workbook workbook = application.Workbooks.Open(path);
+                        Excel.Worksheet worksheet = workbook.ActiveSheet;
+                        Excel.Range range = worksheet.UsedRange;
+                        for (int row = 2; row <= range.Rows.Count; row++)
+                        {
+                            Question q = new Question();
+                            q.subject_id = Convert.ToInt32(subjectname);
+                            q.domain_id = Convert.ToInt32(domainName);
+                            q.lesson_id = Convert.ToInt32(lessonName);
+                            q.question_name = ((Excel.Range)range.Cells[row, 1]).Text;
+                            q.question_level = ((Excel.Range)range.Cells[row, 6]).Text;
+                            q.question_status = ((Excel.Range)range.Cells[row, 7]).Text;
+                            db.Questions.Add(q);
+                            db.SaveChanges();
+                            AnswerOption a = new AnswerOption();
+                            string answer = ((Excel.Range)range.Cells[row, 8]).Text;
+                            int temp = db.Questions.DefaultIfEmpty().Max(pos => pos == null ? 0 : pos.question_id);
+                            a.answer_text = ((Excel.Range)range.Cells[row, 2]).Text;
+                            a.question_id = temp;
+                            if (answer.Equals("A"))
+                            {
+                                a.answer_corect = true;
+                            }
+                            else
+                            {
+                                a.answer_corect = false;
+                            }
+                            db.AnswerOptions.Add(a);
+                            db.SaveChanges();
+                            a.answer_text = ((Excel.Range)range.Cells[row, 3]).Text;
+                            a.question_id = temp;
+                            if (answer.Equals("B"))
+                            {
+                                a.answer_corect = true;
+                            }
+                            else
+                            {
+                                a.answer_corect = false;
+                            }
+                            db.AnswerOptions.Add(a);
+                            db.SaveChanges();
+                            a.answer_text = ((Excel.Range)range.Cells[row, 4]).Text;
+                            a.question_id = temp;
+                            if (answer.Equals("C"))
+                            {
+                                a.answer_corect = true;
+                            }
+                            else
+                            {
+                                a.answer_corect = false;
+                            }
+                            db.AnswerOptions.Add(a);
+                            db.SaveChanges();
+                            a.answer_text = ((Excel.Range)range.Cells[row, 5]).Text;
+                            a.question_id = temp;
+                            if (answer.Equals("D"))
+                            {
+                                a.answer_corect = true;
+                            }
+                            else
+                            {
+                                a.answer_corect = false;
+                            }
+                            db.AnswerOptions.Add(a);
+                            db.SaveChanges();
+                            //System.IO.File.Delete("~/excelfolder/" + excelfile.FileName);
+                        }
+                        ViewBag.Error = "Import success";
+                        return View("/Views/CMS/Question/QuestionList.cshtml");
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Please select a excel file";
+                        return View("/Views/CMS/Question/QuestionList.cshtml");
+                    }
+                }
+            }
+        }
+        
         //filter 
         [HttpPost]
         public ActionResult DoFilter(string filterBy = "")
@@ -214,7 +344,38 @@ namespace CourseOnline.Controllers
                 }
             }
         }
-
+        [HttpPost]
+        public ActionResult SearchByName(string type)
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var questionList = (from q in db.Questions
+                                    join s in db.Subjects on q.subject_id equals s.subject_id
+                                    join d in db.Domains on q.domain_id equals d.domain_id
+                                    join l in db.Lessons on q.lesson_id equals l.lesson_id
+                                    where q.question_name.Contains(type)
+                                    select new QuestionListModel
+                                    {
+                                        question_id = q.question_id,
+                                        question_name = q.question_name,
+                                        question_level = q.question_level,
+                                        question_status = q.question_status,
+                                        subject_name = s.subject_name,
+                                        domain_name = d.domain_name,
+                                        lesson_name = l.lesson_name
+                                    }).ToList();
+                int totalrows = questionList.Count;
+                int totalrowsafterfiltering = questionList.Count;
+                questionList = questionList.Skip(start).Take(length).ToList();
+                questionList = questionList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                return Json(new { success = true, data = questionList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+            }
+        }
         [HttpGet]
         public ActionResult EditQuestion(int id)
         {

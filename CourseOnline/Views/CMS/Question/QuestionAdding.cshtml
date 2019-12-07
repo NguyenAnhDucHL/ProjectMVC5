@@ -87,39 +87,53 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Question Name</label>
-                        <textarea class="form-control" id="inp_quesName" rows="3" placeholder="Enter ..."></textarea>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-2">
-                            <label>Answer Options</label>
+                            @using (Html.BeginForm("Import", "Question", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.Raw(ViewBag.Error)
+                                <span>Excel File</span>
+                                <input type="file" id="input_file" name="excelfile" />
+                                <input type="text" hidden id="lstsubjectname" name="subjectname" value="" />
+                                <input type="text" hidden id="lstLessonName" name="lessonName" value="" />
+                                <input type="text" hidden id="lstDomainName" name="domainName" value="" />
+                                <input id="primaryButton" type="submit" value="Import" />
+                            }
                         </div>
                         <div class="col-sm-2">
-                            <button type="submit" class="btn btn-primary" onclick='getAddOptionQuestion()'>Add Option</button>
+                            <button type="button" class="btn btn-link" onclick="download()" style="float:right;">Click to download template</button>
                         </div>
-                        <div class="col-sm-2" style="margin-left : 380px">
-                            <label>Is Key?</label>
-                        </div>
-                        <div class="col-sm-1" style="margin-left : -80px">
-                            <label>Action</label>
+                            <div class="form-group">
+                                <label>Question Name</label>
+                                <textarea class="form-control" id="inp_quesName" rows="3" placeholder="Enter ..."></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <label>Answer Options</label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="submit" class="btn btn-primary" onclick='getAddOptionQuestion()'>Add Option</button>
+                                </div>
+                                <div class="col-sm-2" style="margin-left : 380px">
+                                    <label>Is Key?</label>
+                                </div>
+                                <div class="col-sm-1" style="margin-left : -80px">
+                                    <label>Action</label>
+                                </div>
+                            </div>
+                            <table class="table table-bordered" id="optionTable">
+                                <tbody>
+                                    <tr>
+                                        <td>Option</td>
+                                        <td><input id="@string.Format("{0}{1}", "optionText",count)" type="text" class="col-lg-10" value=""></td>
+                                        <td><input type="radio" id="@string.Format("{0}{1}", "optionsCheck",count)" name="@string.Format("{0}{1}", "optionsCheckName",count)" class="form-group"></td>
+                                        <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="submit" class="btn btn-danger" style="margin-top : 20px" onclick="SubmitAddQuestion()">Submit</button>
+                            <button type="submit" class="btn btn-info" style="margin-top : 20px" onclick="getBackQuestionList()">Back</button>
                         </div>
                     </div>
-                    <table class="table table-bordered" id="optionTable">
-                        <tbody>
-                            <tr>
-                                <td>Option</td>
-                                <td><input id="@string.Format("{0}{1}", "optionText",count)" type="text" class="col-lg-10" value=""></td>
-                                <td><input type="radio" id="@string.Format("{0}{1}", "optionsCheck",count)" name="@string.Format("{0}{1}", "optionsCheckName",count)" class="form-group"></td>
-                                <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button type="submit" class="btn btn-danger" style="margin-top : 20px" onclick="SubmitAddQuestion()">Submit</button>
-                    <button type="submit" class="btn btn-info" style="margin-top : 20px" onclick="getBackQuestionList()">Back</button>
-                </div>
-            </div>
         </div>
     </div>
 </section>
@@ -127,8 +141,20 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
+      $('#sl_subjectName').change(function () {
+            $('#lstsubjectname').val($('#sl_subjectName').val());
+      });
+        $('#sl_subjectName').change(function () {
+            $('#lstLessonName').val($('#sl_lessonName').val());
+        });
+        $('#sl_subjectName').change(function () {
+            $('#lstDomainName').val($('#sl_domainName').val());
+        });
      $('#giang').val(@count);
         $(document).ready(function () {
+            $('#lstsubjectname').val($('#sl_subjectName').val());
+            $('#lstLessonName').val($('#sl_lessonName').val());
+            $('#lstDomainName').val($('#sl_domainName').val());
             removeOption();
             setValueForComboBox();
         $('input[type=radio]').change(function() {
@@ -199,6 +225,9 @@
         // bat su kien back
     function getBackQuestionList() {
                window.location.href ='@Url.Action("Index", "Question")';
+        }
+        function getAddQuestion() {
+               window.location.href ='@Url.Action("Download", "Question")';
         }
     </script>
 }
