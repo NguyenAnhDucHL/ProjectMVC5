@@ -27,7 +27,7 @@ namespace CourseOnline.Controllers
 
             string sql = "select s.subject_name, c.course_start_date , c.course_end_date , c.course_id, c.course_name, s.picture, s.subject_brief_info from Course c  " +
                 "join Subject s on c.subject_id = s.subject_id where convert(datetime,c.course_start_date) >= @datetimenow and c.course_status = 'True' and s.subject_status = 'Online'";
-            List<CourseListModel> lstCourse = db.Database.SqlQuery<CourseListModel>(sql, new SqlParameter("datetimenow", DateTime.Now)).Take(6).ToList();
+            List<CourseListModel> lstCourse = db.Database.SqlQuery<CourseListModel>(sql, new SqlParameter("datetimenow", DateTime.Now)).Take(3).ToList();
             ViewBag.lstCourse = lstCourse;
 
             var lstPost = db.Posts.Take(7).Where(n => n.post_status == "Published").ToList();
@@ -300,12 +300,12 @@ namespace CourseOnline.Controllers
 
             foreach (CourseListModel courseListModel in lstMyCourse.ToList())
             {
-                if (Convert.ToDateTime(courseListModel.course_start_date) < DateTime.Now)
+                if (Convert.ToDateTime(courseListModel.course_start_date) > DateTime.Now)
                 {
                     lstMyCourse.Remove(courseListModel);
                 }
             }
-            
+
             ViewBag.lstMyCourse = lstMyCourse;
             return View("/Views/User/SelectCourseToQuiz.cshtml");
         }
@@ -333,16 +333,16 @@ namespace CourseOnline.Controllers
             int id = Convert.ToInt32(subjectID);
 
             List<LessonModel> lstLesson = (from l in db.Lessons.Where(l => l.lesson_status == true)
-                                                 join s in db.Subjects.Where(s => s.subject_id == id)
-                                                 on l.subject_id equals s.subject_id
-                                                 join q in db.Questions.Where(q => q.question_status == "Published")
-                                                 on l.lesson_id equals q.lesson_id
-                                                 select new LessonModel
-                                                 {
-                                                     lesson_id = l.lesson_id,
-                                                     lesson_name = l.lesson_name,
-                                                 }).Distinct().ToList();
-            return Json(new { success = true, data = lstLesson}, JsonRequestBehavior.AllowGet);
+                                           join s in db.Subjects.Where(s => s.subject_id == id)
+                                           on l.subject_id equals s.subject_id
+                                           join q in db.Questions.Where(q => q.question_status == "Published")
+                                           on l.lesson_id equals q.lesson_id
+                                           select new LessonModel
+                                           {
+                                               lesson_id = l.lesson_id,
+                                               lesson_name = l.lesson_name,
+                                           }).Distinct().ToList();
+            return Json(new { success = true, data = lstLesson }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -350,30 +350,74 @@ namespace CourseOnline.Controllers
         {
 
             dynamic testInfo = JValue.Parse(postJson);
-
-
-            List<QuestionModel> questions = (from q in db.Questions
-                                             where q.lesson_id == 8 && q.question_status == "Published" && q.subject_id == 1
-                                             join s in db.Subjects.Where(s => s.subject_status == "Online")
-                                             on q.subject_id equals s.subject_id
-                                             select new QuestionModel
-                                             {
-                                                 questionID = q.question_id,
-                                                 questiontext = q.question_name,
-                                                 subjectname = s.subject_name,
-                                                 answers = q.AnswerOptions.Select(tq => new AnswerModel
-                                                 {
-                                                     answerID = tq.answer_option_id,
-                                                     answertext = tq.answer_text,
-                                                     isCorrect = tq.answer_corect,
-                                                 }).ToList()
-                                             }).ToList();
-
-            if (questions != null)
+            int subjectID = Convert.ToInt32(testInfo.subjectID);
+            int numberQuestion = Convert.ToInt32(testInfo.numberQuestion);
+            string testType = testInfo.testType;
+            if (testType.Equals("test_domain"))
             {
-                Session["testquizz"] = questions;
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                int domainID = Convert.ToInt32(testInfo.domainValue);
+                List<QuestionModel> questionsbydomain = (from q in db.Questions
+                                                         where q.domain_id == domainID && q.question_status == "Published" && q.subject_id == subjectID
+                                                         join s in db.Subjects.Where(s => s.subject_status == "Online")
+                                                         on q.subject_id equals s.subject_id
+                                                         select new QuestionModel
+                                                         {
+                                                             questionID = q.question_id,
+                                                             questiontext = q.question_name,
+                                                             subjectname = s.subject_name,
+                                                             answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                             {
+                                                                 answerID = tq.answer_option_id,
+                                                                 answertext = tq.answer_text,
+                                                                 isCorrect = tq.answer_corect,
+                                                             }).ToList()
+                                                         }).ToList();
+                if (numberQuestion > questionsbydomain.Count())
+                {
+                    return Json(new { success = false, data = "Do not have enough number of question" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (questionsbydomain != null)
+                    {
+                        Session["testquizz"] = questionsbydomain;
+                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
+            else if (testType.Equals("test_lesson"))
+            {
+                int lessonID = Convert.ToInt32(testInfo.lessonValue);
+                List<QuestionModel> questions = (from q in db.Questions
+                                                 where q.lesson_id == lessonID && q.question_status == "Published" && q.subject_id == subjectID
+                                                 join s in db.Subjects.Where(s => s.subject_status == "Online")
+                                                 on q.subject_id equals s.subject_id
+                                                 select new QuestionModel
+                                                 {
+                                                     questionID = q.question_id,
+                                                     questiontext = q.question_name,
+                                                     subjectname = s.subject_name,
+                                                     answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                     {
+                                                         answerID = tq.answer_option_id,
+                                                         answertext = tq.answer_text,
+                                                         isCorrect = tq.answer_corect,
+                                                     }).ToList()
+                                                 }).ToList();
+                if (numberQuestion > questions.Count())
+                {
+                    return Json(new { success = false, data = "Do not have enough number of question" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (questions != null)
+                    {
+                        Session["testquizz"] = questions;
+                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
 
@@ -633,7 +677,7 @@ namespace CourseOnline.Controllers
             string sql = "select s.subject_name, c.course_start_date , c.course_end_date , c.course_id, c.course_name, u.user_email, s.subject_category," +
                 "s.picture, s.subject_brief_info, CASE WHEN convert(datetime,c.course_start_date) >= @datetimenow Then 'Waiting of Course Open' Else 'Join Course' END as status_course " +
                 "from Course c join Subject s on c.subject_id = s.subject_id " +
-                 "join  Registration re on c.course_id = re.course_id join [User] u on  re.user_id = u.user_id where c.course_status = 'True' and  re.registration_status = 'Approved' and s.subject_status = Online";
+                 "join  Registration re on c.course_id = re.course_id join [User] u on  re.user_id = u.user_id where c.course_status = 'True' and  re.registration_status = 'Approved' and s.subject_status = 'Online'";
             List<CourseListModel> lstMyCourse = db.Database.SqlQuery<CourseListModel>(sql, new SqlParameter("datetimenow", DateTime.Now)).Where(c => c.user_email == myemail).ToList();
             ViewBag.lstMyCourse = lstMyCourse.ToPagedList(pageNumber, pageSize);
             return View("/Views/User/MyCourse.cshtml");
