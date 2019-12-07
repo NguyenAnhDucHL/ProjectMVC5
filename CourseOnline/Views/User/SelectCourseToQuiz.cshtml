@@ -57,7 +57,7 @@
             $('#lstLessonNeed').fadeOut();
     }
     $('#sl_testType').change(function () {
-     if ($('#sl_testType').val() == 'test_domain') {
+        if ($('#sl_testType').val() == 'test_domain') {
              $.ajax({
              url:'@Url.Action("LoadDomain", "Home")',
              type: "POST",
@@ -81,7 +81,7 @@
              },
            })
           }
-         else if ($('#sl_testType').val() == 'test_lesson') {
+        else if ($('#sl_testType').val() == 'test_lesson') {
            $.ajax({
              url:'@Url.Action("LoadLesson", "Home")',
              type: "POST",
@@ -169,16 +169,28 @@
        if ($("#inp_number_question").val() == "") {
             errorAlert("Question not empty!");
             return;
-        }
-         if ($("#sl_listSubject").val() == "All Course") {
+       }
+        if ($("#sl_listSubject").val() == "All Course") {
             errorAlert("Please Select one course!");
             return;
+        }
+        if ($("#sl_testType").val() == "test_domain") {
+            if ($("#sl_listDomain").val() == null) {
+                errorAlert("Domain is Empty!");
+                return;
+            }
+        } else if ($("#sl_testType").val() == "test_lesson") {
+            if ($("#sl_listLesson").val() == null) {
+                errorAlert("Lesson is Empty!");
+                return;
+            }
         }
          var testData = {
              subjectID: $("#sl_listSubject").val(),
              numberQuestion: $("#inp_number_question").val(),
              testType: $("#sl_testType").val(),
              domainValue: $("#sl_listDomain").val(),
+             lessonValue: $("#sl_listLesson").val(),
         };
        var postJson = JSON.stringify(testData);
        $.ajax({
@@ -190,7 +202,11 @@
                     if (response.success) {
                         window.location.href = '@Url.Action("TestOnline", "Home")';
                     } else {
-                        errorAlert("Get test failed");
+                        if (response.data == "Do not have enough number of question") {
+                            errorAlert("Do not have enough number of question")
+                        } else {
+                            errorAlert("Get test failed");
+                        }
                     }
                 },
                 error: (response) => { errorAlert("Network error !") }
