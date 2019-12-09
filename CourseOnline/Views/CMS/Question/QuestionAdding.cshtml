@@ -100,42 +100,42 @@
                             }
                         </div>
                         <div class="col-sm-2">
-                            <button type="button" class="btn btn-link" onclick="download()" style="float:right;">Click to download template</button>
-                        </div>
-                            <div class="form-group">
-                                <label>Question Name</label>
-                                <textarea class="form-control" id="inp_quesName" rows="3" placeholder="Enter ..."></textarea>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <label>Answer Options</label>
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-primary" onclick='getAddOptionQuestion()'>Add Option</button>
-                                </div>
-                                <div class="col-sm-2" style="margin-left : 380px">
-                                    <label>Is Key?</label>
-                                </div>
-                                <div class="col-sm-1" style="margin-left : -80px">
-                                    <label>Action</label>
-                                </div>
-                            </div>
-                            <table class="table table-bordered" id="optionTable">
-                                <tbody>
-                                    <tr>
-                                        <td>Option</td>
-                                        <td><input id="@string.Format("{0}{1}", "optionText",count)" type="text" class="col-lg-10" value=""></td>
-                                        <td><input type="radio" id="@string.Format("{0}{1}", "optionsCheck",count)" name="@string.Format("{0}{1}", "optionsCheckName",count)" class="form-group"></td>
-                                        <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <button type="submit" class="btn btn-danger" style="margin-top : 20px" onclick="SubmitAddQuestion()">Submit</button>
-                            <button type="submit" class="btn btn-info" style="margin-top : 20px" onclick="getBackQuestionList()">Back</button>
+                            <a id="btn_download" href="~/excelfolder/template/demoExcel.xlsx" style="float:right;">Click to download template</a>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label>Question Name</label>
+                        <textarea class="form-control" id="inp_quesName" rows="3" placeholder="Enter ..."></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label>Answer Options</label>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary" onclick='getAddOptionQuestion()'>Add Option</button>
+                        </div>
+                        <div class="col-sm-2" style="margin-left : 380px">
+                            <label>Is Key?</label>
+                        </div>
+                        <div class="col-sm-1" style="margin-left : -80px">
+                            <label>Action</label>
+                        </div>
+                    </div>
+                    <table class="table table-bordered" id="optionTable">
+                        <tbody>
+                            <tr>
+                                <td>Option</td>
+                                <td><input id="@string.Format("{0}{1}", "optionText",count)" type="text" class="col-lg-10" value=""></td>
+                                <td><input type="radio" id="@string.Format("{0}{1}", "optionsCheck",count)" name="@string.Format("{0}{1}", "optionsCheckName",count)" class="form-group"></td>
+                                <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-danger" style="margin-top : 20px" onclick="SubmitAddQuestion()">Submit</button>
+                    <button type="submit" class="btn btn-info" style="margin-top : 20px" onclick="getBackQuestionList()">Back</button>
+                </div>
+            </div>
         </div>
-    </div>
 </section>
 
 @section scripts{
@@ -160,6 +160,11 @@
         $('input[type=radio]').change(function() {
         $('input[type=radio]:checked').not(this).prop('checked', false);
         });
+        });
+
+        $('#btn_download').click(function (e) {
+            e.preventDefault();  //stop the browser from following
+            window.location.href = '~/excelfolder/template/demoExcel.xlsx';
         });
 
        function removeOption() {
@@ -225,9 +230,6 @@
         // bat su kien back
     function getBackQuestionList() {
                window.location.href ='@Url.Action("Index", "Question")';
-        }
-        function getAddQuestion() {
-               window.location.href ='@Url.Action("Download", "Question")';
         }
     </script>
 }
