@@ -72,67 +72,67 @@ else
         {
             if (Session["ExamTest"] != null)
             {
-                List<QuestionModel> examtest = Session["ExamTest"] as List<QuestionModel>;
-                <div class="Quiz">
-                    <h5 style="margin-top: 4%;"> <span class="label label-info">Time Remaining : <span id="minRemaining"></span> : <span id="secRemaining"></span></span> </h5>
-                    <h4 style="margin-top: 4%;"> <span class="label label-info">Total Question : @examtest.Count() </span> </h4>
-                    @if (examtest != null && examtest.Any())
-                    {
-                        <div class="contents">
-                            @foreach (var question in examtest)
-                            {
-                                <div class="BlockQ" style="border: 1px solid #bdbdbd; width: 75%; border-radius: 4px; margin-top: 40px; background-color: #f0ffff; padding: 8px;">
+            List<QuestionModel> examtest = Session["ExamTest"] as List<QuestionModel>;
+            <div class="Quiz" onselectstart='return false;'>
+                <h5 style="margin-top: 4%;"> <span class="label label-info">Time Remaining : <span id="minRemaining"></span> : <span id="secRemaining"></span></span> </h5>
+                <h4 style="margin-top: 4%;"> <span class="label label-info">Total Question : @examtest.Count() </span> </h4>
+                @if (examtest != null && examtest.Any())
+                {
+                    <div class="contents">
+                        @foreach (var question in examtest)
+                        {
+                            <div class="BlockQ" style="border: 1px solid #bdbdbd; width: 75%; border-radius: 4px; margin-top: 40px; background-color: #f0ffff; padding: 8px;">
 
-                                    <div class="Question" style="padding: 2%;">
-                                        <span class="label label-warning"> @string.Format("{0}{1}.", "Q", count)</span>
-                                        <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.questionID</span>
-                                        <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.questiontext</p>
-                                    </div>
+                                <div class="Question" style="padding: 2%;">
+                                    <span class="label label-warning"> @string.Format("{0}{1}.", "Q", count)</span>
+                                    <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.questionID</span>
+                                    <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.questiontext</p>
+                                </div>
 
-                                    <div class="Choices" style="margin-left: 8%;">
+                                <div class="Choices" style="margin-left: 8%;">
 
-                                        @foreach (var answer in question.answers)
-                                        {
-                                            <label class="radio-inline">
-                                                <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@answer.answertext" style="margin-left: -16px;"> @answer.answertext
-                                            </label><br />
-                                            countR++;
-                                        }
+                                    @foreach (var answer in question.answers)
+                                    {
+                                        <label class="radio-inline">
+                                            <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@answer.answertext" style="margin-left: -16px;"> @answer.answertext
+                                        </label><br />
+                                        countR++;
+                                    }
 
-                                    </div> <!--END Choices-->
+                                </div> <!--END Choices-->
 
-                                    <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
+                                <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
 
 
-                                    </div>
+                                </div>
 
-                                </div> <!-- END BlockQ -->
-                                count++;
-                            }
-                        </div>
-                        <span id="countQuections" style="display:none;">@count</span>
-                        <button type="button" id="SubmitQuiz" class="btn btn-default" value="Submit Quiz"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </button>
-                        <button type="button" id="TestAgain" style="display:none;margin-top: 5px" class="btn btn-default" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </button>
+                            </div> <!-- END BlockQ -->
+                            count++;
+                        }
+                    </div>
+                    <span id="countQuections" style="display:none;">@count</span>
+                    <button type="button" id="SubmitQuiz" class="btn btn-default" value="Submit Quiz"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </button>
+                    <button type="button" id="TestAgain" style="display:none;margin-top: 5px" class="btn btn-default" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </button>
 
-                    }
-                </div>
+                }
+            </div>
 
-            }
-            else
-            {
-                <div class="nav-tabs-custom">
-                    <ul class="nav nav-tabs nav-justified">
-                        <li class="active"><a href="#overview" data-toggle="tab">Quiz Test</a></li>
-                        <!-- /.tab-content -->
-                    </ul>
-                    <div class="tab-content">
-                        <div class="active tab-pane" id="content">
-                            <a href="#" onclick="StartQuiz()" class="btn btn-primary rounded-0 btn-lg px-5">Start Quiz</a>
-                        </div>
+        }
+        else
+        {
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active"><a href="#overview" data-toggle="tab">Quiz Test</a></li>
+                    <!-- /.tab-content -->
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="content">
+                        <a href="#" onclick="StartQuiz()" class="btn btn-primary rounded-0 btn-lg px-5">Start Quiz</a>
                     </div>
                 </div>
-            }
+            </div>
         }
+    }
     </div>
     <div class="modal fade" id="MyModal">
         <div class="modal-dialog">
