@@ -10,6 +10,6 @@ namespace CourseOnline.Models
         public string batch_name { get; set; }
         public string user_fullname { get; set; }
         public string user_email { get; set; }
-        public int grade_user { get; set; }
+        public double grade_user { get; set; }
     }
 }

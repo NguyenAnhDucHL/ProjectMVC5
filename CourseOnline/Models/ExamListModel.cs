@@ -9,6 +9,5 @@ namespace CourseOnline.Models
     {
         public String subject_name { get; set; }
 
-        public String test_type { get; set; }
     }
 }

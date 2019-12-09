@@ -40,7 +40,14 @@
                     <select id="sl_listLesson" class="form-control">
                     </select>
                 </div>
-                <button onclick="getData()" id="Enter" class="btn btn-success btn-lg" style="width:100%;"><span class="glyphicon glyphicon-ok"></span>   Let's GO </button>
+                @if (Session["testquizz"] == null)
+                {
+                    <button onclick="getData()" id="Enter" class="btn btn-success btn-lg" style="width:100%;"><span class="glyphicon glyphicon-ok"></span>   Let's GO </button>
+                }
+                else
+                {
+                    <button onclick="continuetoQuiz()" id="Enter" class="btn btn-success btn-lg" style="width:100%;"><span class="glyphicon glyphicon-ok"></span> Continue To Quiz </button>
+                }
             </div>
 
         </div>
@@ -49,6 +56,9 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
+    function continuetoQuiz() {
+        window.location.href = '@Url.Action("TestOnline", "Home")';
+    }
 
     if ($('#sl_listSubject').val() == 'All Course') {
             $('#lstNumberQuestion').fadeOut();

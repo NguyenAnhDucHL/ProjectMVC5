@@ -17,10 +17,10 @@ namespace CourseOnline.Controllers
         {
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                var listBatch = db.TestBatches.Select(s => s.batch_name).Distinct().ToList();
-                ViewBag.listBatch = listBatch;
-                List<TestBatch> list = db.TestBatches.Where(s => s.batch_name != null).Distinct().ToList();
-                ViewBag.batch = list;
+                //var listBatch = db.TestBatches.Select(s => s.batch_name).Distinct().ToList();
+                //ViewBag.listBatch = listBatch;
+                //List<TestBatch> list = db.TestBatches.Where(s => s.batch_name != null).Distinct().ToList();
+                //ViewBag.batch = list;
             }
             return View("/Views/CMS/Test/ResultTest.cshtml");
         }

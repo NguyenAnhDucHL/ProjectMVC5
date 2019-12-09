@@ -18,8 +18,8 @@ namespace CourseOnline.Controllers
         {
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                var listBatch = db.TestBatches.Select(s => s.batch_name).Distinct().ToList();
-                ViewBag.listBatch = listBatch;
+                //var listBatch = db.TestBatches.Select(s => s.batch_name).Distinct().ToList();
+                //ViewBag.listBatch = listBatch;
                 var listExam = db.Exams.Select(s => s.exam_name).Distinct().ToList();
                 ViewBag.listExam = listExam;
                 var listTest = db.ExamTests.Select(s => s.test_name).Distinct().ToList();
@@ -196,8 +196,8 @@ namespace CourseOnline.Controllers
         {
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                var listBatch = db.TestBatches.Select(s => s.batch_name).Distinct().ToList();
-                ViewBag.listBatch = listBatch;
+                //var listBatch = db.TestBatches.Select(s => s.batch_name).Distinct().ToList();
+               // ViewBag.listBatch = listBatch;
             }
                 return View("/Views/CMS/Test/ResultTest.cshtml");
         }

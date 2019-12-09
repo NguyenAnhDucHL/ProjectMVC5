@@ -7,7 +7,15 @@
             confirmButtonText: 'Close'
         })
     }
-   
+
+    function finishTestAlert(title, text) {
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: "success",
+            confirmButtonText: 'Close to see result'
+        })
+    }
     function errorAlert(title,text) {
         Swal.fire({
             title: title,

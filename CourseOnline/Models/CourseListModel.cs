@@ -7,6 +7,7 @@ namespace CourseOnline.Models
 {
     public class CourseListModel : Course
     {
+        public int registration_id { get; set; }
         public String user_fullname { set; get; }
         public String subject_name { set; get; }
         public string ObjectiveCourse { get; set; }

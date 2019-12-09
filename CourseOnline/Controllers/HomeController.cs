@@ -348,77 +348,102 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult SelectQuizz(string postJson)
         {
-
-            dynamic testInfo = JValue.Parse(postJson);
-            int subjectID = Convert.ToInt32(testInfo.subjectID);
-            int numberQuestion = Convert.ToInt32(testInfo.numberQuestion);
-            string testType = testInfo.testType;
-            if (testType.Equals("test_domain"))
+            if(Session["testquizz"] !=null)
             {
-                int domainID = Convert.ToInt32(testInfo.domainValue);
-                List<QuestionModel> questionsbydomain = (from q in db.Questions
-                                                         where q.domain_id == domainID && q.question_status == "Published" && q.subject_id == subjectID
-                                                         join s in db.Subjects.Where(s => s.subject_status == "Online")
-                                                         on q.subject_id equals s.subject_id
-                                                         select new QuestionModel
-                                                         {
-                                                             questionID = q.question_id,
-                                                             questiontext = q.question_name,
-                                                             subjectname = s.subject_name,
-                                                             answers = q.AnswerOptions.Select(tq => new AnswerModel
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }else
+            {
+                dynamic testInfo = JValue.Parse(postJson);
+                int subjectID = Convert.ToInt32(testInfo.subjectID);
+                int numberQuestion = Convert.ToInt32(testInfo.numberQuestion);
+                string testType = testInfo.testType;
+                if (testType.Equals("test_domain"))
+                {
+                    int domainID = Convert.ToInt32(testInfo.domainValue);
+                    List<QuestionModel> questionsbydomain = (from q in db.Questions
+                                                             where q.domain_id == domainID && q.question_status == "Published" && q.subject_id == subjectID
+                                                             join s in db.Subjects.Where(s => s.subject_status == "Online")
+                                                             on q.subject_id equals s.subject_id
+                                                             select new QuestionModel
                                                              {
-                                                                 answerID = tq.answer_option_id,
-                                                                 answertext = tq.answer_text,
-                                                                 isCorrect = tq.answer_corect,
-                                                             }).ToList()
-                                                         }).ToList();
-                if (numberQuestion > questionsbydomain.Count())
-                {
-                    return Json(new { success = false, data = "Do not have enough number of question" }, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    if (questionsbydomain != null)
+                                                                 questionID = q.question_id,
+                                                                 questiontext = q.question_name,
+                                                                 subjectname = s.subject_name,
+                                                                 answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                                 {
+                                                                     answerID = tq.answer_option_id,
+                                                                     answertext = tq.answer_text,
+                                                                     isCorrect = tq.answer_corect,
+                                                                 }).ToList()
+                                                             }).ToList();
+                    if (numberQuestion > questionsbydomain.Count())
                     {
-                        Session["testquizz"] = questionsbydomain;
-                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = false, data = "Do not have enough number of question" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        if (questionsbydomain != null)
+                        {
+                            List<QuestionModel> testdomain = new List<QuestionModel>();
+                            int indexq = 0;
+                            Random r = new Random();
+                            for (int i = 0; i < numberQuestion; i++)
+                            {
+                                indexq = r.Next(0, questionsbydomain.Count());
+                                testdomain.Add(questionsbydomain[indexq]);
+                                questionsbydomain.Remove(questionsbydomain[indexq]);
+                            }
+                            Session["testquizz"] = testdomain;
+                            Session["time_test_pratice"] = testdomain.Count() * 10;
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        }
                     }
                 }
-            }
-            else if (testType.Equals("test_lesson"))
-            {
-                int lessonID = Convert.ToInt32(testInfo.lessonValue);
-                List<QuestionModel> questions = (from q in db.Questions
-                                                 where q.lesson_id == lessonID && q.question_status == "Published" && q.subject_id == subjectID
-                                                 join s in db.Subjects.Where(s => s.subject_status == "Online")
-                                                 on q.subject_id equals s.subject_id
-                                                 select new QuestionModel
-                                                 {
-                                                     questionID = q.question_id,
-                                                     questiontext = q.question_name,
-                                                     subjectname = s.subject_name,
-                                                     answers = q.AnswerOptions.Select(tq => new AnswerModel
-                                                     {
-                                                         answerID = tq.answer_option_id,
-                                                         answertext = tq.answer_text,
-                                                         isCorrect = tq.answer_corect,
-                                                     }).ToList()
-                                                 }).ToList();
-                if (numberQuestion > questions.Count())
+                else if (testType.Equals("test_lesson"))
                 {
-                    return Json(new { success = false, data = "Do not have enough number of question" }, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    if (questions != null)
+                    int lessonID = Convert.ToInt32(testInfo.lessonValue);
+                    List<QuestionModel> questionsByLesson = (from q in db.Questions
+                                                             where q.lesson_id == lessonID && q.question_status == "Published" && q.subject_id == subjectID
+                                                             join s in db.Subjects.Where(s => s.subject_status == "Online")
+                                                             on q.subject_id equals s.subject_id
+                                                             select new QuestionModel
+                                                             {
+                                                                 questionID = q.question_id,
+                                                                 questiontext = q.question_name,
+                                                                 subjectname = s.subject_name,
+                                                                 answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                                 {
+                                                                     answerID = tq.answer_option_id,
+                                                                     answertext = tq.answer_text,
+                                                                     isCorrect = tq.answer_corect,
+                                                                 }).ToList()
+                                                             }).ToList();
+                    if (numberQuestion > questionsByLesson.Count())
                     {
-                        Session["testquizz"] = questions;
-                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = false, data = "Do not have enough number of question" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        if (questionsByLesson != null)
+                        {
+                            List<QuestionModel> testlesson = new List<QuestionModel>();
+                            int indexq = 0;
+                            Random r = new Random();
+                            for (int i = 0; i < numberQuestion; i++)
+                            {
+                                indexq = r.Next(0, questionsByLesson.Count());
+                                testlesson.Add(questionsByLesson[indexq]);
+                                questionsByLesson.Remove(questionsByLesson[indexq]);
+                            }
+                            Session["testquizz"] = testlesson;
+                            Session["time_test_pratice"] = testlesson.Count() * 10;
+                            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                        }
                     }
                 }
-            }
 
-            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpPost]
@@ -451,15 +476,24 @@ namespace CourseOnline.Controllers
         {
             if (Session["testquizz"] != null)
             {
-                List<QuestionModel> testquizz = Session["testquizz"] as List<QuestionModel>;
-                ViewBag.examtest = testquizz;
+                var dateQuery = db.Database.SqlQuery<DateTime>("SELECT GETDATE()");
+                if (Session["time_start_test"] == null)
+                {
+                    DateTime serverStartDate = dateQuery.AsEnumerable().First();
+                    Session["time_start_test"] = serverStartDate;
+                }
+                else if (Session["time_start_test"] != null)
+                {
+                    DateTime serverEndDate = dateQuery.AsEnumerable().First();
+                    TimeSpan ts = TimeSpan.Parse((serverEndDate - (DateTime)Session["time_start_test"]).ToString());
+                    Session["time_during_pratice"] = Math.Round(ts.TotalSeconds);
+                }
                 return View("/Views/User/PraticeOnlineTest.cshtml");
             }
             else
             {
-                return RedirectToAction("Home_User", "Home");
+                return RedirectToAction("SelectCourseToQuiz", "Home");
             }
-
         }
 
         public ActionResult ListCourses(int? page)
@@ -596,7 +630,6 @@ namespace CourseOnline.Controllers
                 ViewBag.courseDetail = courseDetail;
                 return View("/Views/User/CourseDetail.cshtml");
             }
-
         }
 
         public ActionResult CheckYourCourse(int? id)
@@ -611,6 +644,7 @@ namespace CourseOnline.Controllers
                                                    join u in db.Users.Where(u => u.user_email == email) on re.user_id equals u.user_id
                                                    select new CourseListModel
                                                    {
+                                                       registration_id = re.registration_id,
                                                        subject_id = s.subject_id,
                                                        course_id = c.course_id,
                                                        course_name = c.course_name,
@@ -686,28 +720,151 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult SubmitQuiz(List<QuizResultModel> resultQuiz)
         {
+            int timefishish = Convert.ToInt32(Session["time_during_exam_test"].ToString());
+            Session["time_during_exam_test"] = null;
+            Session["time_start_test"] = null;
+            Session["ExamTest"] = null;
+            Session["time_test_exam"] = null;
+            List<QuizResultModel> finalResultQuiz = new List<QuizResultModel>();
+            double numbercorrect = 0;
+            foreach (QuizResultModel answser in resultQuiz)
+            {
+                string corrrectresult = db.AnswerOptions.Where(ao => ao.question_id == answser.questionID && ao.answer_corect == true).Select(ao => ao.answer_text).FirstOrDefault();
+
+                if (answser.answertext == corrrectresult)
+                {
+                    numbercorrect++;
+                    QuizResultModel result = db.AnswerOptions.Where(ao => ao.question_id == answser.questionID).Select(
+                    ao => new QuizResultModel
+                    {
+                        questionID = ao.question_id,
+                        answertext = answser.answertext,
+                        isCorrect = true,
+                        answercorrect = corrrectresult,
+                        timeduration = timefishish,
+                    }).FirstOrDefault();
+                    finalResultQuiz.Add(result);
+                }
+                else
+                {
+                    QuizResultModel result = db.AnswerOptions.Where(ao => ao.question_id == answser.questionID).Select(
+                    ao => new QuizResultModel
+                    {
+                        questionID = ao.question_id,
+                        answertext = answser.answertext,
+                        isCorrect = false,
+                        answercorrect = corrrectresult,
+                        timeduration = timefishish,
+                    }).FirstOrDefault();
+                    finalResultQuiz.Add(result);
+                }
+            }
+
+            double yourgrade = Math.Round((numbercorrect / (resultQuiz.Count())) * 10, 2);
+
+            Grade grade = new Grade();
+            string email = Session["Email"].ToString();
+            CourseListModel courseListModel = Session["course"] as CourseListModel;
+            grade.registration_id = courseListModel.registration_id;
+            grade.course_id = courseListModel.course_id;
+            grade.user_id = db.Users.Where(u => u.user_email == email).Select(u => u.user_id).FirstOrDefault();
+            CourseWorkListModel courseWorkList = Session["test_exam"] as CourseWorkListModel;
+            Session["test_exam"] = null;
+            grade.coursework_id = courseWorkList.coursework_id;
+            grade.grade_user = yourgrade;
+            if(yourgrade == 10)
+            {
+                grade.grade_comment = "Excellent";
+            }
+            else if  (yourgrade < 10 && yourgrade >= 9)
+            {
+                grade.grade_comment = "Well";
+            }else if (yourgrade < 9 && yourgrade >= 8)
+            {
+                grade.grade_comment = "Good";
+            }
+            else if (yourgrade < 8 && yourgrade >= 7)
+            {
+                grade.grade_comment = "Average";
+            }
+            else if (yourgrade < 7 && yourgrade >= 5)
+            {
+                grade.grade_comment = "Below Average";
+            }
+            else if(yourgrade < 5 && yourgrade > 0)
+            {
+                grade.grade_comment = "Poor";
+            }else
+            {
+                grade.grade_comment = "Terrible";
+            }
+            db.Grades.Add(grade);
+            db.SaveChanges();
+            return Json(new { result = finalResultQuiz }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SubmitPracticeQuiz(List<QuizResultModel> resultQuiz)
+        {
+            int timefishish = Convert.ToInt32(Session["time_during_pratice"].ToString());
+            Session["time_during_pratice"] = null;
+            Session["time_start_test_exam"] = null;
+            Session["testquizz"] = null;
+            Session["time_test_pratice"] = null;
+
             List<QuizResultModel> finalResultQuiz = new List<QuizResultModel>();
 
             foreach (QuizResultModel answser in resultQuiz)
             {
                 string corrrectresult = db.AnswerOptions.Where(ao => ao.question_id == answser.questionID && ao.answer_corect == true).Select(ao => ao.answer_text).FirstOrDefault();
 
-                QuizResultModel result = db.AnswerOptions.Where(ao => ao.question_id == answser.questionID && ao.answer_text == answser.answertext).Select(
+                if (answser.answertext == corrrectresult)
+                {
+                    QuizResultModel result = db.AnswerOptions.Where(ao => ao.question_id == answser.questionID).Select(
                     ao => new QuizResultModel
                     {
                         questionID = ao.question_id,
-                        answertext = ao.answer_text,
-                        isCorrect = ao.answer_corect,
+                        answertext = answser.answertext,
+                        isCorrect = true,
                         answercorrect = corrrectresult,
+                        timeduration = timefishish,
                     }).FirstOrDefault();
-                finalResultQuiz.Add(result);
+                    finalResultQuiz.Add(result);
+                }
+                else
+                {
+                    QuizResultModel result = db.AnswerOptions.Where(ao => ao.question_id == answser.questionID).Select(
+                    ao => new QuizResultModel
+                    {
+                        questionID = ao.question_id,
+                        answertext = answser.answertext,
+                        isCorrect = false,
+                        answercorrect = corrrectresult,
+                        timeduration = timefishish,
+                    }).FirstOrDefault();
+                    finalResultQuiz.Add(result);
+                }
             }
-
             return Json(new { result = finalResultQuiz }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult LessonDetail(int? id)
         {
+            if(Session["ExamTest"] != null)
+            {
+                var dateQuery = db.Database.SqlQuery<DateTime>("SELECT GETDATE()");
+                if (Session["time_start_test_exam"] == null)
+                {
+                    DateTime serverStartDate = dateQuery.AsEnumerable().First();
+                    Session["time_start_test_exam"] = serverStartDate;
+                }
+                else if (Session["time_start_test_exam"] != null)
+                {
+                    DateTime serverEndDate = dateQuery.AsEnumerable().First();
+                    TimeSpan ts = TimeSpan.Parse((serverEndDate - (DateTime)Session["time_start_test_exam"]).ToString());
+                    Session["time_during_exam_test"] = Math.Round(ts.TotalSeconds);
+                }
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -724,12 +881,11 @@ namespace CourseOnline.Controllers
                                                     join c in db.Courseworks.Where(c => c.coursework_status == true) on l.coursework_id equals c.coursework_id
                                                     join et in db.ExamTests on c.test_id equals et.test_id
                                                     join tq in db.TestQuestions on et.test_id equals tq.test_id
-                                                    join ex in db.Exams on et.exam_id equals ex.exam_id
                                                     select new LessonQuizModel
                                                     {
+                                                        coursework_id = c.coursework_id,
                                                         test_id = tq.test_id,
                                                         test_name = et.test_name,
-                                                        exam_duration = ex.exam_duration,
                                                         due_date = c.due_date,
                                                     }).FirstOrDefault();
                 if (Convert.ToDateTime(lessonQuizModels.due_date) > DateTime.Now)
@@ -753,11 +909,21 @@ namespace CourseOnline.Controllers
 
         public ActionResult checkExamTest(string test_id, string test_password)
         {
-            ExamTest examTest = null;
+            CourseWorkListModel examTest = null;
             int idtest = Convert.ToInt32(test_id);
             try
             {
-                examTest = db.ExamTests.Where(et => et.test_id == idtest && et.test_code == test_password).FirstOrDefault();
+                examTest = (from et in db.ExamTests.Where(et => et.test_id == idtest && et.test_code == test_password)
+                            join
+                            cw in db.Courseworks on et.test_id equals cw.test_id
+                            select new CourseWorkListModel
+                            {
+                                exam_id = et.exam_id,
+                                coursework_id = cw.coursework_id
+                            }).FirstOrDefault();
+                Session["test_exam"] = examTest;
+                int timer = db.Exams.Where(e => e.exam_id == examTest.exam_id).Select(s => s.exam_duration).FirstOrDefault();
+                Session["time_test_exam"] = timer * 60;
             }
             catch (Exception e)
             {
@@ -785,6 +951,7 @@ namespace CourseOnline.Controllers
                                                      }).ToList();
                     questionModels.AddRange(questions);
                 }
+                
                 Session["ExamTest"] = questionModels;
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }

@@ -1,11 +1,19 @@
 ﻿@using CourseOnline.Models;
 @{
     ViewBag.Title = "StudyOnline";
-    List<QuestionModel> examtest = ViewBag.examtest;
+    List<QuestionModel> examtest = Session["testquizz"] as List<QuestionModel>;
     int count = 1, countR = 0;
     Layout = "~/Views/Shared/_Test_Layout.cshtml";
-    var endTime = DateTime.UtcNow.AddSeconds(100);
-    var timer = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds.ToString("#");
+
+    int durationTime = 0;
+    if (Session["time_test_exam"] != null)
+    {
+        if (Session["time_during_exam_test"] == null)
+        {
+            Session["time_during_exam_test"] = "0";
+        }
+        durationTime = Convert.ToInt32(Session["time_test_exam"].ToString()) - Convert.ToInt32(Session["time_during_exam_test"].ToString());
+    }
 }
 <link href="~/Assets/customcss/pagination.css" rel="stylesheet" />
 <div class="container" onselectstart='return false;'>
@@ -50,44 +58,34 @@
                 }
             </div>
             <span id="countQuections" style="display:none;">@count</span>
-            <button type="button" id="SubmitQuiz" class="btn btn-default" value="Submit Quiz"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </button>
+            <button type="button" id="SubmitQuiz" class="btn btn-default" value="Submit Quiz" onclick="submitQuiz()"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </button>
             <button type="button" id="TestAgain" style="display:none;margin-top: 5px" class="btn btn-default" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </button>
-
+            <button type="button" id="ExitTest" style="display:none;margin-top: 5px" class="btn btn-default" value="ExitTest"><span class="glyphicon glyphicon-ok"></span> Exit Test </button>
         }
     </div>
 </div>
-
 @section scripts
 {
-
     <script src="~/Assets/customjs/pagination.js"></script>
     <script type="text/javascript">
-        var timeremain = @timer;
-        var secondsCounter = timeremain % 60;
+       var counter = {};
+        counter.end = @durationTime;
+        counter.min = document.getElementById("minRemaining");
+        counter.sec = document.getElementById("secRemaining");
+        var _tick = setInterval(function () {
+            if (counter.end > 0) {
+                counter.end = counter.end - 1;
+                var secs = counter.end;
+                var mins  = Math.floor(secs / 60);
+                secs -= mins * 60;
+                counter.min.innerHTML = mins;
+                counter.sec.innerHTML = secs;
+            } else {
+                clearInterval(_tick);
+                timeup();
+            }
+        }, 1000);
 
-        function formatnumber(number) {
-            if (number < 10) return '0' + number;
-            else return '' + number;
-        }
-        function startTick() {
-            document.getElementById('minRemaining').innerText = formatnumber(parseInt(timeremain / 60));
-            document.getElementById('secRemaining').innerText = formatnumber(secondsCounter);
-            var _tick = setInterval(function () {
-                if (timeremain > 0) {
-                    timeremain = timeremain - 1;
-                    secondsCounter = secondsCounter - 1;
-                    document.getElementById('minRemaining').innerText = formatnumber(parseInt(timeremain / 60));
-                    document.getElementById('secRemaining').innerText = formatnumber(secondsCounter);
-                    if (secondsCounter == 0) {
-                        secondsCounter = 60;
-                    }
-                } else {
-                    alert("Your Time is finish");
-                    clearInterval(_tick);
-                }
-            }, 1000);
-           }
-         startTick();
         $(document).ready(function () {
                $("#tab").pagination({
                   items: 1,
@@ -96,74 +94,122 @@
                   next: 'Next',
                   position: 'bottom',
                   });
-                $('#SubmitQuiz').on('click', function () {
-
-                //count Questions
-                var sel = $('#countQuections').text();
-
-                console.log(sel);
-
-                var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
-
-                    for (var i = 1; i < countQuestion; i++) {
-                        if ($('input[name=inlineRadioOptions' + i + ']:checked').val() == null) {
-                            errorAlert("Question " + i + " is not empty");
-                            $('#AnsQ' + i).html('<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> You need to answer this question</div>');
-                            return;
-                        }
-                    question = {
-                        questionID: $('#ID_Q'+ i).text(),
-                        questiontext: $('#Q' + i).text(),
-                        answertext: $('input[name=inlineRadioOptions' + i + ']:checked').val()
-                    }
-                    resultQuiz.push(question);
-                }
-
-                $.ajax({
-
-                    type: 'POST',
-                    url: '@Url.Action("SubmitQuiz", "Home")',
-                    data: { resultQuiz },
-
-                    success: function (response) {
-
-                        if (response.result.length > 0)
-                        {
-                            for(var i = 0; i <response.result.length; i++ )
-                            {
-                                if(response.result[i].isCorrect == true)
-                                {
-
-                                    $('#AnsQ' + j).html('<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Correct answer</div>');
-                                }
-                                else
-                                {
-                                    $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Incorrect answer - The Correct Answer is <b>' + response.result[i].answercorrect + '</b></div>');
-                                }
-                                j++;
-                            }
-                        }
-                        else
-                        {
-                            errorAlert("Something Wrong");
-                        }
-
-                    $("#SubmitQuiz").hide();
-                    $("#TestAgain").show();
-                    },
-                    error: function (response) {
-                        errorAlert("Somthing wrong");
-                    }
-                });
-
-                console.log(resultQuiz);
-
             });
 
-            $('#TestAgain').on('click', function () {
-                 @*window.location.href = '@Url.Action("LessonDetail","Subject",new { @id = lesson.lesson_id})'*@
-            })
-        });
+        function timeup() {
+            //count Questions
+            var sel = $('#countQuections').text();
 
+            console.log(sel);
+
+            var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
+
+            for (var i = 1; i < countQuestion; i++) {
+                question = {
+                    questionID: $('#ID_Q' + i).text(),
+                    questiontext: $('#Q' + i).text(),
+                    answertext: $('input[name=inlineRadioOptions' + i + ']:checked').val()
+                }
+                resultQuiz.push(question);
+            }
+
+            $.ajax({
+
+                type: 'POST',
+                url: '@Url.Action("SubmitPracticeQuiz", "Home")',
+                data: { resultQuiz },
+
+                success: function (response) {
+                    if (response.result.length > 0) {
+                        var correct = 0;
+                        for (var i = 0; i < response.result.length; i++) {
+                            if (response.result[i].isCorrect == true) {
+                                correct++;
+                                $('#AnsQ' + j).html('<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Correct answer</div>');
+                            }
+                            else {
+                                $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Incorrect answer - The Correct Answer is <b>' + response.result[i].answercorrect + '</b></div>');
+                            }
+                            j++;
+                        }
+                        var result = (correct / response.result.length) * 100;
+                        successAlert("Your Result", "You got " + result + " % in " +"response.result[0].timeduration" + " ss");
+                    }
+                    else {
+                        errorAlert("Something Wrong");
+                    }
+                    $("#SubmitQuiz").hide();
+                    $("#TestAgain").show();
+                    $("#ExitTest").show();
+                },
+                error: function (response) {
+                    errorAlert("Somthing wrong timeup");
+                }
+            })
+            console.log(resultQuiz);
+        }
+
+        function submitQuiz() {
+            //count Questions
+            var sel = $('#countQuections').text();
+
+            console.log(sel);
+
+            var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
+
+            for (var i = 1; i < countQuestion; i++) {
+                if ($('input[name=inlineRadioOptions' + i + ']:checked').val() == null) {
+                    errorAlert("Question " + i + " is not empty");
+                    $('#AnsQ' + i).html('<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> You need to answer this question</div>');
+                    return;
+                }
+                question = {
+                    questionID: $('#ID_Q' + i).text(),
+                    questiontext: $('#Q' + i).text(),
+                    answertext: $('input[name=inlineRadioOptions' + i + ']:checked').val()
+                }
+                resultQuiz.push(question);
+            }
+
+            $.ajax({
+
+                type: 'POST',
+                url: '@Url.Action("SubmitPracticeQuiz", "Home")',
+                data: { resultQuiz },
+
+                success: function (response) {
+                    if (response.result.length > 0) {
+                        var correct = 0;
+                        for (var i = 0; i < response.result.length; i++) {
+                            if (response.result[i].isCorrect == true) {
+                                correct++;
+                                $('#AnsQ' + j).html('<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Correct answer</div>');
+                            }
+                            else {
+                                $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Incorrect answer - The Correct Answer is <b>' + response.result[i].answercorrect + '</b></div>');
+                            }
+                            j++;
+                        }
+                        var result = (correct / response.result.length) * 100;
+                        clearInterval(_tick);
+                        successAlert("Your Result", "You got " + result + " % in " +"response.result[0].timeduration" + " ss");
+                    }
+                    else {
+                        errorAlert("Something Wrong");
+                    }
+                    $("#SubmitQuiz").hide();
+                    $("#TestAgain").show();
+                    $("#ExitTest").show();
+                },
+                error: function (response) {
+                    errorAlert("Somthing wrong submit quiz");
+                }
+            })
+            console.log(resultQuiz);
+        }
+
+        $('#ExitTest').on('click', function () {
+            window.location.href = '@Url.Action("SelectCourseToQuiz","Home")';
+        });
     </script>
 }
