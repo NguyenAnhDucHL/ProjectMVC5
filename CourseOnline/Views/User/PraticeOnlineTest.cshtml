@@ -6,13 +6,13 @@
     Layout = "~/Views/Shared/_Test_Layout.cshtml";
 
     int durationTime = 0;
-    if (Session["time_test_exam"] != null)
+    if (Session["time_test_pratice"] != null)
     {
-        if (Session["time_during_exam_test"] == null)
+        if (Session["time_during_pratice"] == null)
         {
-            Session["time_during_exam_test"] = "0";
+            Session["time_during_pratice"] = "0";
         }
-        durationTime = Convert.ToInt32(Session["time_test_exam"].ToString()) - Convert.ToInt32(Session["time_during_exam_test"].ToString());
+        durationTime = Convert.ToInt32(Session["time_test_pratice"].ToString()) - Convert.ToInt32(Session["time_during_pratice"].ToString());
     }
 }
 <link href="~/Assets/customcss/pagination.css" rel="stylesheet" />
@@ -59,11 +59,24 @@
             </div>
             <span id="countQuections" style="display:none;">@count</span>
             <button type="button" id="SubmitQuiz" class="btn btn-default" value="Submit Quiz" onclick="submitQuiz()"><span class="glyphicon glyphicon-ok"></span> Submit Quiz </button>
-            <button type="button" id="TestAgain" style="display:none;margin-top: 5px" class="btn btn-default" value="TestAgain"><span class="glyphicon glyphicon-ok"></span> Test Again </button>
             <button type="button" id="ExitTest" style="display:none;margin-top: 5px" class="btn btn-default" value="ExitTest"><span class="glyphicon glyphicon-ok"></span> Exit Test </button>
         }
     </div>
 </div>
+
+@if (Session["testquizz"] != null)
+{
+    <script>
+        window.onbeforeunload = function () {
+            return "Leaving this page will reset the wizard";
+        };
+        //function preventBack() { window.history.forward(); }
+        //setTimeout("preventBack()", 0);
+        //window.onunload = function () { null };
+
+    </script>
+}
+
 @section scripts
 {
     <script src="~/Assets/customjs/pagination.js"></script>
@@ -139,7 +152,6 @@
                         errorAlert("Something Wrong");
                     }
                     $("#SubmitQuiz").hide();
-                    $("#TestAgain").show();
                     $("#ExitTest").show();
                 },
                 error: function (response) {
@@ -198,7 +210,6 @@
                         errorAlert("Something Wrong");
                     }
                     $("#SubmitQuiz").hide();
-                    $("#TestAgain").show();
                     $("#ExitTest").show();
                 },
                 error: function (response) {

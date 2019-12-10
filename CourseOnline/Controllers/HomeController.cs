@@ -477,15 +477,15 @@ namespace CourseOnline.Controllers
             if (Session["testquizz"] != null)
             {
                 var dateQuery = db.Database.SqlQuery<DateTime>("SELECT GETDATE()");
-                if (Session["time_start_test"] == null)
+                if (Session["time_start_test_practice"] == null)
                 {
                     DateTime serverStartDate = dateQuery.AsEnumerable().First();
-                    Session["time_start_test"] = serverStartDate;
+                    Session["time_start_test_practice"] = serverStartDate;
                 }
-                else if (Session["time_start_test"] != null)
+                else if (Session["time_start_test_practice"] != null)
                 {
                     DateTime serverEndDate = dateQuery.AsEnumerable().First();
-                    TimeSpan ts = TimeSpan.Parse((serverEndDate - (DateTime)Session["time_start_test"]).ToString());
+                    TimeSpan ts = TimeSpan.Parse((serverEndDate - (DateTime)Session["time_start_test_practice"]).ToString());
                     Session["time_during_pratice"] = Math.Round(ts.TotalSeconds);
                 }
                 return View("/Views/User/PraticeOnlineTest.cshtml");
@@ -722,7 +722,7 @@ namespace CourseOnline.Controllers
         {
             int timefishish = Convert.ToInt32(Session["time_during_exam_test"].ToString());
             Session["time_during_exam_test"] = null;
-            Session["time_start_test"] = null;
+            Session["time_start_test_exam"] = null;
             Session["ExamTest"] = null;
             Session["time_test_exam"] = null;
             List<QuizResultModel> finalResultQuiz = new List<QuizResultModel>();
@@ -808,7 +808,7 @@ namespace CourseOnline.Controllers
         {
             int timefishish = Convert.ToInt32(Session["time_during_pratice"].ToString());
             Session["time_during_pratice"] = null;
-            Session["time_start_test_exam"] = null;
+            Session["time_start_test_practice"] = null;
             Session["testquizz"] = null;
             Session["time_test_pratice"] = null;
 
