@@ -331,9 +331,45 @@ namespace CourseOnline.Controllers
         {
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
+                var answerOpt = db.AnswerOptions.Where(a => a.question_id == id).ToList();
+                var count1 = answerOpt.Count();
+                var testAns = db.TestAnswers.Where(ta => ta.question_id == id).ToList();
+                var count2 = testAns.Count();
+                var testQues = db.TestQuestions.Where(tq => tq.question_id == id).ToList();
+                var count3 = testQues.Count();
                 var question = db.Questions.Where(q => q.question_id == id).FirstOrDefault();
                 if (question != null)
                 {
+                    if(answerOpt != null)
+                    {
+                        while(count1 > 0)
+                        {
+                            var ansOption = db.AnswerOptions.Where(a => a.question_id == id).FirstOrDefault();
+                            db.AnswerOptions.Remove(ansOption);
+                            db.SaveChanges();
+                            count1--;
+                        }
+                    }
+                    if (testAns != null)
+                    {
+                        while (count2 > 0)
+                        {
+                            var testAnswer = db.TestAnswers.Where(ta => ta.question_id == id).FirstOrDefault();
+                            db.TestAnswers.Remove(testAnswer);
+                            db.SaveChanges();
+                            count2--;
+                        }
+                    }
+                    if (testQues != null)
+                    {
+                        while (count3 > 0)
+                        {
+                            var testQuestion = db.TestQuestions.Where(tq => tq.question_id == id).FirstOrDefault();
+                            db.TestQuestions.Remove(testQuestion);
+                            db.SaveChanges();
+                            count3--;
+                        }
+                    }
                     db.Questions.Remove(question);
                     db.SaveChanges();
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
