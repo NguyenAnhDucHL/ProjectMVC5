@@ -102,9 +102,13 @@
                 {
                     "data": "registration_id", "render": function (data) {
                         if (data) {
-                            return  "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:10px' onclick=getEditIdEmp('" + data + "') > Approve</a>" +
-                                    "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:10px' onclick=getDeleteIdEmp('" + data + "') ><i class='link-space-left-20'></i> Reject</a>" +
-                                    "<a class='waves-effect waves-light btn-small red modal-trigger' style='margin-left:10px' onclick=getDeleteIdEmp('" + data + "') ><i class='link-space-left-20'></i> Block</a>";
+                            return "<div class='row'><div class='col-sm-4'><a id='btn_approve' onclick=setApproveStatus('" + data + "') style='width=100%; cursor : pointer'>Approve</a>" +
+                                    "</div>" +
+                                    "<div class='col-sm-4'><a onclick=setRejectStatus('" + data + "') style='width=100%; cursor : pointer'>Reject</a>" +
+                                    "</div>" +
+                                    "<div class='col-sm-4'><a onclick=setBlockStatus('" + data + "') style='width=100%; cursor : pointer'>Block</a>" +
+								    "</div>" +
+								    "</div>";
                         }
                     },
                     "orderable": false,
@@ -112,7 +116,7 @@
                 },
             ],
         "paging": true,
-        "pageLength": 5,
+        "pageLength": 10,
         "ordering": true,
         "serverSide": "true",
         "order": [[0, "asc"]],
@@ -120,7 +124,81 @@
        });
          // them su kien cho filter
         filterListener();
+
+        //setApproveStatus(id);
     });
+
+        function  setApproveStatus(id)
+        {
+        var res = {
+                id : id,
+                resStatus: "Approved",
+            };
+            var postJson = JSON.stringify(res);
+
+        $.ajax({
+                url:'@Url.Action("SetRegistrationStatus","Registration")',
+                        type: "POST",
+                        data: { postJson: postJson },
+                        dataType: "json",
+                        success: (response) => {
+                            if (response.success) {
+                                dataTable.ajax.reload(); successAlert("Success", "Change Success")
+                            } else {
+                                errorAlert("Fail", "Change Fail")
+                            }
+                        },
+                        error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+        }
+
+        function  setRejectStatus(id)
+        {
+        var res = {
+                id : id,
+                resStatus: "Rejected",
+            };
+            var postJson = JSON.stringify(res);
+
+        $.ajax({
+                url:'@Url.Action("SetRegistrationStatus","Registration")',
+                        type: "POST",
+                        data: { postJson: postJson },
+                        dataType: "json",
+                        success: (response) => {
+                            if (response.success) {
+                                dataTable.ajax.reload(); successAlert("Success", "Change Success")
+                            } else {
+                                errorAlert("Fail", "Change Fail")
+                            }
+                        },
+                        error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+        }
+
+        function  setBlockStatus(id)
+        {
+        var res = {
+                id : id,
+                resStatus: "Blocked",
+            };
+            var postJson = JSON.stringify(res);
+
+        $.ajax({
+                url:'@Url.Action("SetRegistrationStatus","Registration")',
+                        type: "POST",
+                        data: { postJson: postJson },
+                        dataType: "json",
+                        success: (response) => {
+                            if (response.success) {
+                                dataTable.ajax.reload(); successAlert("Success", "Change Success")
+                            } else {
+                                errorAlert("Fail", "Change Fail")
+                            }
+                        },
+                        error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+        }
 
         function doFilter() {
                 var valueSelected = {

@@ -117,5 +117,34 @@ namespace CourseOnline.Controllers
                 return Json(new { success = true, data = registrationList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpPost]
+        public ActionResult SetRegistrationStatus(string postJson)
+        {
+            try
+            {
+                using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                {
+                    dynamic changeStatus = JValue.Parse(postJson);
+                    int id = changeStatus.id;
+
+                    Registration r = db.Registrations.Where(re => re.registration_id == id).FirstOrDefault();
+                    if (r != null)
+                    {
+                        r.registration_status = changeStatus.resStatus;
+                        db.SaveChanges();
+                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
