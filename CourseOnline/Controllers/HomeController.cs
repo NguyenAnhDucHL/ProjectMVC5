@@ -244,6 +244,10 @@ namespace CourseOnline.Controllers
             {
                 page = 1;
             }
+            if(keyword == null)
+            {
+                keyword = "";
+            }
             int pageSize = 6;
             int pageNumber = (page ?? 1);
             string sql = "select s.subject_name, c.course_start_date , c.course_end_date , c.course_id, c.course_name, " +
@@ -264,6 +268,10 @@ namespace CourseOnline.Controllers
 
         public ActionResult CourseFoundPartialView(string keyword)
         {
+            if(keyword == null)
+            {
+                keyword = "";
+            }
             string sql = "select s.subject_name, c.course_start_date , c.course_end_date , c.course_id, c.course_name, " +
                "s.picture,  s.subject_brief_info from Course c  join Subject s on c.subject_id = s.subject_id " +
                "where convert(datetime,c.course_start_date) >= @datetimenow and c.course_status = 'True' and s.subject_status = 'Online'";
