@@ -260,14 +260,12 @@ else
             dataType: "json",
             success: (response) => {
                 if (response.success) {
-                    @*window.open('@Url.Action("LessonDetail", "Home")?id = ' + @lesson.lesson_id);
-                    window.close();*@
-                     window.location.href = '@Url.Action("Home_User","Home")';
+                    window.open('@Url.Action("LessonDetail", "Home")?id = ' + @lesson.lesson_id);
+                    window.location.href = '@Url.Action("Home_User","Home")';
                     window.history.pushState(null, "", window.location.href);
                     window.onpopstate = function () {
                        window.history.pushState(null, "", window.location.href);
                     };
-                    window.open('@Url.Action("LessonDetail", "Home")?id = ' + @lesson.lesson_id)
                 }
                 else {
                     errorAlert("Your password is incorrect");
