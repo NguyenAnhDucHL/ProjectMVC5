@@ -6,13 +6,12 @@
     Layout = "~/Views/Shared/_Test_Layout.cshtml";
 
     int durationTime = 0;
-    if (Session["time_test_pratice"] != null)
+    if (Session["testquizz"] != null)
     {
-        if (Session["time_during_pratice"] == null)
+        if (Session["time_during_pratice"] != null)
         {
-            Session["time_during_pratice"] = "0";
+            durationTime = Convert.ToInt32(Session["time_during_pratice"].ToString());
         }
-        durationTime = Convert.ToInt32(Session["time_test_pratice"].ToString()) - Convert.ToInt32(Session["time_during_pratice"].ToString());
     }
 }
 <link href="~/Assets/customcss/pagination.css" rel="stylesheet" />
@@ -85,19 +84,17 @@
         counter.end = @durationTime;
         counter.min = document.getElementById("minRemaining");
         counter.sec = document.getElementById("secRemaining");
-        var _tick = setInterval(function () {
-            if (counter.end > 0) {
-                counter.end = counter.end - 1;
-                var secs = counter.end;
-                var mins  = Math.floor(secs / 60);
-                secs -= mins * 60;
-                counter.min.innerHTML = mins;
-                counter.sec.innerHTML = secs;
-            } else {
-                clearInterval(_tick);
-                timeup();
-            }
-        }, 1000);
+         function startTick(durationTime) {
+            var _tick = setInterval(function () {
+                    counter.end = counter.end + 1;
+                    var secs = counter.end;
+                    var mins  = Math.floor(secs / 60);
+                    secs -= mins * 60;
+                    counter.min.innerHTML = mins;
+                    counter.sec.innerHTML = secs;
+            }, 1000);
+        }
+        startTick();
 
         $(document).ready(function () {
                $("#tab").pagination({
@@ -108,58 +105,6 @@
                   position: 'bottom',
                   });
             });
-
-        function timeup() {
-            //count Questions
-            var sel = $('#countQuections').text();
-
-            console.log(sel);
-
-            var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
-
-            for (var i = 1; i < countQuestion; i++) {
-                question = {
-                    questionID: $('#ID_Q' + i).text(),
-                    questiontext: $('#Q' + i).text(),
-                    answertext: $('input[name=inlineRadioOptions' + i + ']:checked').val()
-                }
-                resultQuiz.push(question);
-            }
-
-            $.ajax({
-
-                type: 'POST',
-                url: '@Url.Action("SubmitPracticeQuiz", "Home")',
-                data: { resultQuiz },
-
-                success: function (response) {
-                    if (response.result.length > 0) {
-                        var correct = 0;
-                        for (var i = 0; i < response.result.length; i++) {
-                            if (response.result[i].isCorrect == true) {
-                                correct++;
-                                $('#AnsQ' + j).html('<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Correct answer</div>');
-                            }
-                            else {
-                                $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Incorrect answer - The Correct Answer is <b>' + response.result[i].answercorrect + '</b></div>');
-                            }
-                            j++;
-                        }
-                        var result = (correct / response.result.length) * 100;
-                        successAlert("Your Result", "You got " + result + " % in " +"response.result[0].timeduration" + " ss");
-                    }
-                    else {
-                        errorAlert("Something Wrong");
-                    }
-                    $("#SubmitQuiz").hide();
-                    $("#ExitTest").show();
-                },
-                error: function (response) {
-                    errorAlert("Somthing wrong timeup");
-                }
-            })
-            console.log(resultQuiz);
-        }
 
         function submitQuiz() {
             //count Questions

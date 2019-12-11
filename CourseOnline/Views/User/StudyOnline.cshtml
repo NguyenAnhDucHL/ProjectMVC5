@@ -14,7 +14,7 @@
     }
     int count = 1, countR = 0;
     int durationTime = 0;
-    if (Session["time_test_exam"] != null)
+    if (Session["test_exam"] != null)
     {
         if (Session["time_during_exam_test"] == null)
         {
@@ -132,9 +132,18 @@ else
                         <!-- /.tab-content -->
                     </ul>
                     <div class="tab-content">
-                        <div class="active tab-pane" id="content">
-                            <a href="#" onclick="StartQuiz()" class="btn btn-primary rounded-0 btn-lg px-5">Start Quiz</a>
-                        </div>
+                        @if (Session["ExamTest"] == null)
+                        {
+                            <div class="active tab-pane" id="content">
+                                <a href="#" onclick="StartQuiz()" class="btn btn-primary rounded-0 btn-lg px-5">Start Quiz</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="active tab-pane" id="content">
+                                <a href="#" onclick="window.open('@Url.Action("LessonDetail", "Home")?id = ' + @lesson.lesson_id)" class="btn btn-primary rounded-0 btn-lg px-5">Countinue to Quiz</a>
+                            </div>
+                        }
                     </div>
                 </div>
             }
