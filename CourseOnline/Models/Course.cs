@@ -18,14 +18,16 @@ namespace CourseOnline.Models
         public Course()
         {
             this.Courseworks = new HashSet<Coursework>();
+            this.Courseworks1 = new HashSet<Coursework>();
             this.Grades = new HashSet<Grade>();
+            this.Grades1 = new HashSet<Grade>();
             this.Registrations = new HashSet<Registration>();
+            this.Registrations1 = new HashSet<Registration>();
         }
     
         public int course_id { get; set; }
         public int subject_id { get; set; }
         public int teacher_id { get; set; }
-        public bool course_is_default { get; set; }
         public string course_start_date { get; set; }
         public string course_end_date { get; set; }
         public string course_name { get; set; }
@@ -33,12 +35,20 @@ namespace CourseOnline.Models
         public string course_note { get; set; }
     
         public virtual Subject Subject { get; set; }
+        public virtual Subject Subject1 { get; set; }
         public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Coursework> Courseworks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Coursework> Courseworks1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grades { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Grade> Grades1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Registration> Registrations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Registration> Registrations1 { get; set; }
     }
 }

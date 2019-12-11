@@ -12,17 +12,14 @@ namespace CourseOnline.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ExamConfig
+    public partial class PostTag
     {
-        public int exam_config_id { get; set; }
-        public int exam_id { get; set; }
-        public int domain_id { get; set; }
-        public string domain_size { get; set; }
-        public int lesson_id { get; set; }
-        public string lesson_size { get; set; }
-        public string keywords { get; set; }
+        public int post_id { get; set; }
+        public int tag_id { get; set; }
     
-        public virtual Exam Exam { get; set; }
-        public virtual Exam Exam1 { get; set; }
+        public virtual Post Post { get; set; }
+        public virtual Post Post1 { get; set; }
+        public virtual Tag Tag { get; set; }
+        public virtual Tag Tag1 { get; set; }
     }
 }

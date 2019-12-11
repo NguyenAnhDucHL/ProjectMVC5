@@ -18,27 +18,38 @@ namespace CourseOnline.Models
         public Question()
         {
             this.AnswerOptions = new HashSet<AnswerOption>();
+            this.AnswerOptions1 = new HashSet<AnswerOption>();
             this.TestAnswers = new HashSet<TestAnswer>();
+            this.TestAnswers1 = new HashSet<TestAnswer>();
             this.TestQuestions = new HashSet<TestQuestion>();
+            this.TestQuestions1 = new HashSet<TestQuestion>();
         }
     
-        public int question_id { get; set; }
         public int subject_id { get; set; }
         public int domain_id { get; set; }
         public int lesson_id { get; set; }
-        public string level { get; set; }
         public string question_level { get; set; }
         public string question_status { get; set; }
         public string question_name { get; set; }
+        public int question_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnswerOption> AnswerOptions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AnswerOption> AnswerOptions1 { get; set; }
         public virtual Domain Domain { get; set; }
+        public virtual Domain Domain1 { get; set; }
         public virtual Lesson Lesson { get; set; }
+        public virtual Lesson Lesson1 { get; set; }
         public virtual Subject Subject { get; set; }
+        public virtual Subject Subject1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestAnswer> TestAnswers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TestAnswer> TestAnswers1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TestQuestion> TestQuestions1 { get; set; }
     }
 }

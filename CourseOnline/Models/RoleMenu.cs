@@ -19,5 +19,6 @@ namespace CourseOnline.Models
         public int menu_id { get; set; }
     
         public virtual Menu Menu { get; set; }
+        public virtual Menu Menu1 { get; set; }
     }
 }

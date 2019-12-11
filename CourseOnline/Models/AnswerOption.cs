@@ -14,11 +14,12 @@ namespace CourseOnline.Models
     
     public partial class AnswerOption
     {
-        public int answer_option_id { get; set; }
         public int question_id { get; set; }
         public string answer_text { get; set; }
         public bool answer_corect { get; set; }
+        public int answer_option_id { get; set; }
     
         public virtual Question Question { get; set; }
+        public virtual Question Question1 { get; set; }
     }
 }

@@ -57,6 +57,7 @@ C:\Users\ANH DUC\source\repos\CourseOnline\bin\PagedList.Mvc.xml
 C:\Users\ANH DUC\source\repos\CourseOnline\bin\PagedList.dll
 C:\Users\ANH DUC\source\repos\CourseOnline\bin\PagedList.Mvc.dll
 C:\Users\ANH DUC\source\repos\CourseOnline\bin\System.Linq.Dynamic.dll
+E:\Sourcecode\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
 E:\Sourcecode\CourseOnline\bin\CourseOnline.dll.config
 E:\Sourcecode\CourseOnline\bin\CourseOnline.dll
 E:\Sourcecode\CourseOnline\bin\CourseOnline.pdb
@@ -84,7 +85,6 @@ E:\Sourcecode\CourseOnline\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
 E:\Sourcecode\CourseOnline\bin\roslyn\System.Diagnostics.StackTrace.dll
 E:\Sourcecode\CourseOnline\bin\roslyn\System.IO.Compression.dll
 E:\Sourcecode\CourseOnline\bin\roslyn\System.IO.FileSystem.dll
-E:\Sourcecode\CourseOnline\bin\roslyn\System.IO.FileSystem.Primitives.dll
 E:\Sourcecode\CourseOnline\bin\roslyn\System.IO.Pipes.AccessControl.dll
 E:\Sourcecode\CourseOnline\bin\roslyn\System.IO.Pipes.dll
 E:\Sourcecode\CourseOnline\bin\roslyn\System.Reflection.Metadata.dll
@@ -106,7 +106,13 @@ E:\Sourcecode\CourseOnline\bin\roslyn\vbc.exe.config
 E:\Sourcecode\CourseOnline\bin\roslyn\vbc.rsp
 E:\Sourcecode\CourseOnline\bin\roslyn\VBCSCompiler.exe
 E:\Sourcecode\CourseOnline\bin\roslyn\VBCSCompiler.exe.config
-E:\Sourcecode\CourseOnline\obj\Debug\CourseOnline.csproj.CoreCompileInputs.cache
 E:\Sourcecode\CourseOnline\obj\Debug\CourseOnline.csproj.CopyComplete
 E:\Sourcecode\CourseOnline\obj\Debug\CourseOnline.dll
 E:\Sourcecode\CourseOnline\obj\Debug\CourseOnline.pdb
+E:\Sourcecode\CourseOnline\bin\Castle.Core.dll
+E:\Sourcecode\CourseOnline\bin\DocumentFormat.OpenXml.dll
+E:\Sourcecode\CourseOnline\bin\Implicitify.dll
+E:\Sourcecode\CourseOnline\bin\Libs.Sheets.Interfaces.dll
+E:\Sourcecode\CourseOnline\bin\Libs.Sheets.OfficeOpenXml.dll
+E:\Sourcecode\CourseOnline\bin\OfficeOpenXml.Core.ExcelPackage.dll
+E:\Sourcecode\CourseOnline\bin\System.IO.FileSystem.Primitives.dll

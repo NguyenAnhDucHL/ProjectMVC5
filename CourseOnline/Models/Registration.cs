@@ -18,6 +18,7 @@ namespace CourseOnline.Models
         public Registration()
         {
             this.Grades = new HashSet<Grade>();
+            this.Grades1 = new HashSet<Grade>();
         }
     
         public int registration_id { get; set; }
@@ -27,8 +28,12 @@ namespace CourseOnline.Models
         public string registration_status { get; set; }
     
         public virtual Course Course { get; set; }
+        public virtual Course Course1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grades { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Grade> Grades1 { get; set; }
         public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

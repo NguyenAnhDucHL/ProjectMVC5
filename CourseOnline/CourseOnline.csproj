@@ -240,6 +240,9 @@
     <Compile Include="Models\Post.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PostTag.cs">
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PracticeResultModel.cs" />
     <Compile Include="Models\Question.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
@@ -287,13 +290,16 @@
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SubjectListModel.cs" />
+    <Compile Include="Models\SubjectReference.cs">
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>STUDYONLINE.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tag.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestAnswer.cs">
-      <DependentUpon>STUDYONLINE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TestBatch.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestExamModel.cs" />
@@ -1065,6 +1071,7 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="excelfolder\template\demoExcel.xlsx" />
     <EntityDeploy Include="Models\STUDYONLINE.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>STUDYONLINE.Designer.cs</LastGenOutput>

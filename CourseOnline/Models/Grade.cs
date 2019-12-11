@@ -19,12 +19,16 @@ namespace CourseOnline.Models
         public int course_id { get; set; }
         public int user_id { get; set; }
         public int coursework_id { get; set; }
-        public int grade1 { get; set; }
         public string grade_comment { get; set; }
+        public double grade_user { get; set; }
     
         public virtual Course Course { get; set; }
+        public virtual Course Course1 { get; set; }
         public virtual Coursework Coursework { get; set; }
+        public virtual Coursework Coursework1 { get; set; }
         public virtual Registration Registration { get; set; }
+        public virtual Registration Registration1 { get; set; }
         public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

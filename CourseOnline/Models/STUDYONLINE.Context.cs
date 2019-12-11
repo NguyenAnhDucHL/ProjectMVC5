@@ -48,10 +48,11 @@ namespace CourseOnline.Models
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<TestAnswer> TestAnswers { get; set; }
-        public virtual DbSet<TestBatch> TestBatches { get; set; }
         public virtual DbSet<TestResult> TestResults { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<PostTag> PostTags { get; set; }
+        public virtual DbSet<SubjectReference> SubjectReferences { get; set; }
         public virtual DbSet<TestQuestion> TestQuestions { get; set; }
     }
 }

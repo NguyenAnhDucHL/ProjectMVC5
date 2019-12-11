@@ -18,6 +18,7 @@ namespace CourseOnline.Models
         public Domain()
         {
             this.Questions = new HashSet<Question>();
+            this.Questions1 = new HashSet<Question>();
         }
     
         public int domain_id { get; set; }
@@ -27,7 +28,10 @@ namespace CourseOnline.Models
         public Nullable<bool> domain_status { get; set; }
     
         public virtual Subject Subject { get; set; }
+        public virtual Subject Subject1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Question> Questions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Question> Questions1 { get; set; }
     }
 }

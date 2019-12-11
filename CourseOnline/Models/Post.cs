@@ -17,8 +17,10 @@ namespace CourseOnline.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Post()
         {
-            this.Tags = new HashSet<Tag>();
-            this.Subjects = new HashSet<Subject>();
+            this.PostTags = new HashSet<PostTag>();
+            this.PostTags1 = new HashSet<PostTag>();
+            this.SubjectReferences = new HashSet<SubjectReference>();
+            this.SubjectReferences1 = new HashSet<SubjectReference>();
         }
     
         public string post_type { get; set; }
@@ -34,8 +36,12 @@ namespace CourseOnline.Models
         public string post_date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<PostTag> PostTags { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Subject> Subjects { get; set; }
+        public virtual ICollection<PostTag> PostTags1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubjectReference> SubjectReferences { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubjectReference> SubjectReferences1 { get; set; }
     }
 }
