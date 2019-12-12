@@ -84,16 +84,16 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="post-entry-big">
-                    <a href="#" class="img-link"><img src="@(listPost[0].post_thumbnail == null ? "" : Url.Content(@listPost[0].post_thumbnail))" alt="Image" class="img-fluid"></a>
+                    <a href="@Url.Action("PostDetail","News", new { id = listPost[0].post_id})" class="img-link"><img src="@(listPost[0].post_thumbnail == null ? "" : Url.Content(listPost[0].post_thumbnail))" alt="Image" class="img-fluid"></a>
                     <div class="post-content">
                         <div class="post-meta">
                             <a href="#">@listPost[0].post_date</a>
                             <span class="mx-1">/@listPost[0].post_category</span>
                         </div>
                         <h3 class="post-heading"><a href="#">@listPost[0].post_name</a></h3>
+                        <p class="icon-tag">@listPost[0].post_type</p>
                         <span>
                             @Html.Raw(listPost[0].post_brief_info)
-                            <a href="#">Read Detail -></a>
                         </span>
                     </div>
                 </div>
@@ -103,22 +103,21 @@
                     foreach (var item in listPost)
                     {
                         <div class="post-entry-big horizontal d-flex mb-4">
-                            <a href="#" class="img-link mr-4"><img src="@(item.post_thumbnail == null ? "" : Url.Content(@item.post_thumbnail))" alt="Image" class="img-fluid"></a>
+                            <a href="@Url.Action("PostDetail","News", new { id = item.post_id})" class="img-link mr-5"><img src="@(item.post_thumbnail == null ? "" : Url.Content(item.post_thumbnail))" alt="Image" class="img-fluid"></a>
                             <div class="post-content">
                                 <div class="post-meta">
                                     <a href="#">@item.post_date</a>
                                     <span class="mx-1">/@item.post_category</span>
                                 </div>
-                                <h3 class="post-heading"><a href="#">@item.post_name</a></h3>
+                                <h3 class="post-heading"><a href="@Url.Action("PostDetail","News", new { id = item.post_id})">@item.post_name</a></h3>
+                                <p class="icon-tag">@item.post_type</p>
                                 <span>
                                     @Html.Raw(item.post_brief_info)
-                                    <a href="#">Read Detail -></a>
                                 </span>
                             </div>
                         </div>
                     }
                 }
-                <div style="text-align:right"><a href="@Url.Action("PostList","News")">Read more --></a></div>
             </div>
 
         </div>

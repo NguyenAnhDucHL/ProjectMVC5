@@ -1135,7 +1135,7 @@
     <Content Include="Views\CMS\User\UserList.cshtml" />
     <Content Include="Views\Shared\_CMS_Layout.cshtml" />
     <Content Include="Views\User\MyCourse.cshtml" />
-    <Content Include="Views\User\Post.cshtml" />
+    <Content Include="Views\User\PostList.cshtml" />
     <Content Include="Views\User\CourseDetail.cshtml" />
     <Content Include="Views\User\CourseList.cshtml" />
     <Content Include="Views\User\TeacherList.cshtml" />
@@ -1167,6 +1167,7 @@
     <Content Include="Views\Shared\_TestInfor.cshtml" />
     <Content Include="Views\Shared\_Test_Layout.cshtml" />
     <Content Include="Views\CMS\Subject\DomainList.cshtml" />
+    <Content Include="Views\User\PostDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

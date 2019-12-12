@@ -42,15 +42,23 @@ else
         <div class="container">
             @foreach (var post in listPosts)
             {
-                <div class="row mb-5">
-                    <div class="col-lg-6 mb-lg-0 mb-4">
-                        <img src="@(post.post_thumbnail == null ? "" : Url.Content(@post.post_thumbnail))" alt="Image" class="img-fluid">
+                <div class="row mb-3">
+                    <div class="col-lg-4 mb-lg-0 mb-4">
+                        <a href="#" class="img-link mr-4"><img src="@(post.post_thumbnail == null ? "" : Url.Content(@post.post_thumbnail))" alt="Image" class="img-fluid"></a>
                     </div>
-                    <div class="col-lg-5 ml-auto align-self-center">
+                    <div class="col-lg-7 ml-auto align-self-center">
                         <h2 class="section-title-underline mb-5">
                             <span>@post.post_name</span>
                         </h2>
+                        <div class="post-meta">
+                            <a href="#">@post.post_date</a>
+                            <span class="mx-1">/@post.post_category</span>
+                        </div>
+                        <h5 class="icon-tag">
+                            <span>@post.post_type</span>
+                        </h5>
                         <p>@Html.Raw(post.post_brief_info)</p>
+                        <a href="@Url.Action("PostDetail","News", new { id = post.post_id})" class="btn btn-primary px-4 rounded-0">Read More</a>
                     </div>
                 </div>
             }
