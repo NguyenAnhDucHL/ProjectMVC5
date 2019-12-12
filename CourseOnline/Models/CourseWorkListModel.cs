@@ -12,5 +12,6 @@ namespace CourseOnline.Models
         public String user_email { set; get; }
         public String test_code { set; get; }
         public int exam_id { get; set; }
+        public double pass_rate { get; set; }
     }
 }

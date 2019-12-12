@@ -84,17 +84,14 @@
         counter.end = @durationTime;
         counter.min = document.getElementById("minRemaining");
         counter.sec = document.getElementById("secRemaining");
-         function startTick(durationTime) {
-            var _tick = setInterval(function () {
-                    counter.end = counter.end + 1;
-                    var secs = counter.end;
-                    var mins  = Math.floor(secs / 60);
-                    secs -= mins * 60;
-                    counter.min.innerHTML = mins;
-                    counter.sec.innerHTML = secs;
-            }, 1000);
-        }
-        startTick();
+        var _tick = setInterval(function () {
+                counter.end = counter.end + 1;
+                var secs = counter.end;
+                var mins  = Math.floor(secs / 60);
+                secs -= mins * 60;
+                counter.min.innerHTML = mins;
+                counter.sec.innerHTML = secs;
+        }, 1000);
 
         $(document).ready(function () {
                $("#tab").pagination({
@@ -147,11 +144,11 @@
                             }
                             j++;
                         }
-                        var result = (correct / response.result.length) * 100;
+                        var result = Math.round((correct / response.result.length) * 100,2);
                         clearInterval(_tick);
                         $("#SubmitQuiz").hide();
                         $("#ExitTest").show();
-                        successAlert("Your Result", "You got " + result + " % in " + "response.result[0].timeduration" + " ss");
+                        successAlert("Your Result", "You got " + result + " % in " + "" + response.result[0].timeduration + " ss");
                     }
                     else {
                         errorAlert("Something Wrong");
