@@ -739,6 +739,7 @@ namespace CourseOnline.Controllers
             Session["time_during_exam_test"] = null;
             Session["ExamTest"] = null;
             Session["time_test_exam"] = null;
+            Session["lesson_quiz_id"] = null;
             List<QuizResultModel> finalResultQuiz = new List<QuizResultModel>();
             double numbercorrect = 0;
             foreach (QuizResultModel answser in resultQuiz)
@@ -999,6 +1000,11 @@ namespace CourseOnline.Controllers
 
         public ActionResult LessonDetail(int? id)
         {
+      
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             if (Session["ExamTest"] != null)
             {
                 var dateQuery = db.Database.SqlQuery<DateTime>("SELECT GETDATE()");
@@ -1013,10 +1019,7 @@ namespace CourseOnline.Controllers
                     TimeSpan ts = TimeSpan.Parse((serverEndDate - (DateTime)Session["time_start_test_exam"]).ToString());
                     Session["time_during_exam_test"] = Math.Round(ts.TotalSeconds);
                 }
-            }
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                id = Convert.ToInt32(Session["lesson_quiz_id"]);
             }
             ViewBag.Current2 = null;
             ViewBag.Current1 = null;
@@ -1037,6 +1040,7 @@ namespace CourseOnline.Controllers
                                                         test_name = et.test_name,
                                                         due_date = c.due_date,
                                                     }).FirstOrDefault();
+                Session["lesson_quiz_id"] = id;
                 if (Convert.ToDateTime(lessonQuizModels.due_date) > DateTime.Now)
                 {
                     ViewBag.lessonQuiz = null;
@@ -1052,7 +1056,7 @@ namespace CourseOnline.Controllers
             ViewBag.Current1 = lesson.lesson_name;
             ViewBag.lesson = lesson;
             ViewBag.lessonType = lesson.lesson_type;
-
+        
             return View("/Views/User/StudyOnline.cshtml");
         }
 
