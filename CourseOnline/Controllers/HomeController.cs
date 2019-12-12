@@ -244,7 +244,7 @@ namespace CourseOnline.Controllers
             {
                 page = 1;
             }
-            if(keyword == null)
+            if (keyword == null)
             {
                 keyword = "";
             }
@@ -268,7 +268,7 @@ namespace CourseOnline.Controllers
 
         public ActionResult CourseFoundPartialView(string keyword)
         {
-            if(keyword == null)
+            if (keyword == null)
             {
                 keyword = "";
             }
@@ -378,6 +378,7 @@ namespace CourseOnline.Controllers
                                                                  questionID = q.question_id,
                                                                  questiontext = q.question_name,
                                                                  subjectname = s.subject_name,
+                                                                 subjectid = s.subject_id,
                                                                  answers = q.AnswerOptions.Select(tq => new AnswerModel
                                                                  {
                                                                      answerID = tq.answer_option_id,
@@ -419,6 +420,7 @@ namespace CourseOnline.Controllers
                                                                  questionID = q.question_id,
                                                                  questiontext = q.question_name,
                                                                  subjectname = s.subject_name,
+                                                                 subjectid = s.subject_id,
                                                                  answers = q.AnswerOptions.Select(tq => new AnswerModel
                                                                  {
                                                                      answerID = tq.answer_option_id,
@@ -479,7 +481,7 @@ namespace CourseOnline.Controllers
         }
 
         [HttpGet]
-        public ActionResult TestOnline(int? count)
+        public ActionResult TestOnline()
         {
             if (Session["testquizz"] != null)
             {
@@ -726,7 +728,11 @@ namespace CourseOnline.Controllers
 
         [HttpPost]
         public ActionResult SubmitQuiz(List<QuizResultModel> resultQuiz)
-        {
+           {
+            var dateQuery = db.Database.SqlQuery<DateTime>("SELECT GETDATE()");
+            DateTime serverEndDate = dateQuery.AsEnumerable().First();
+            TimeSpan ts = TimeSpan.Parse((serverEndDate - (DateTime)Session["time_start_test_exam"]).ToString());
+            Session["time_during_exam_test"] = Math.Round(ts.TotalSeconds);
             int timefishish = Convert.ToInt32(Session["time_during_exam_test"].ToString());
             string email = Session["Email"].ToString();
             int userid = db.Users.Where(u => u.user_email == email).Select(u => u.user_id).FirstOrDefault();
@@ -819,8 +825,8 @@ namespace CourseOnline.Controllers
                 testResult.exam_id = courseWorkList.exam_id;
                 testResult.test_type = "Exam Test";
                 testResult.tested = 1;
-                testResult.average = (yourgrade * 10).ToString() + "%";
-                if (yourgrade > 4)
+                testResult.average = Math.Round((numbercorrect / (resultQuiz.Count())) * 100, 2).ToString() + "%";
+                if (yourgrade > (courseWorkList.pass_rate / 10))
                 {
                     testResult.pass_rate = "100%";
                 }
@@ -845,10 +851,10 @@ namespace CourseOnline.Controllers
             {
                 double old_average = (Convert.ToDouble(testResult.average.Substring(0, testResult.average.Length - 1))) / 10;
                 double new_average = (old_average * Convert.ToDouble(testResult.tested) + yourgrade) / (Convert.ToDouble(testResult.tested) + 1);
-                testResult.average = (new_average *10).ToString() + "%";
+                testResult.average = (Math.Round(new_average * 10,2)).ToString() + "%";
                 double old_pass_rate = (Convert.ToDouble(testResult.pass_rate.Substring(0, testResult.pass_rate.Length - 1))) / 100;
                 double new_pass_rate = 0;
-                if (yourgrade < 4)
+                if (yourgrade < (courseWorkList.pass_rate/10))
                 {
                     new_pass_rate = old_pass_rate * Convert.ToDouble(testResult.tested) / (Convert.ToDouble(testResult.tested) + 1);
                 }
@@ -859,18 +865,26 @@ namespace CourseOnline.Controllers
                 testResult.pass_rate = Math.Round(new_pass_rate * 100, 2).ToString() + "%";
                 testResult.tested += 1;
                 testResult.tested_at = Session["time_start_test_exam"].ToString();
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+
+                    throw;
+                }
             }
             Session["time_start_test_exam"] = null;
             int testResultID = db.TestResults.Select(r => r.test_user_id).Max();
-            
+
             foreach (QuizResultModel quiz in finalResultQuiz)
             {
                 TestAnswer testAnswer = new TestAnswer();
                 testAnswer.test_user_id = testResultID;
                 testAnswer.user_id = userid;
                 testAnswer.question_id = quiz.questionID;
-                if(quiz.answertext == null)
+                if (quiz.answertext == null)
                 {
                     testAnswer.user_answer = "";
                 }
@@ -890,12 +904,27 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult SubmitPracticeQuiz(List<QuizResultModel> resultQuiz)
         {
+            var dateQuery = db.Database.SqlQuery<DateTime>("SELECT GETDATE()");
+            DateTime serverEndDate = dateQuery.AsEnumerable().First();
+            TimeSpan ts = TimeSpan.Parse((serverEndDate - (DateTime)Session["time_start_test_practice"]).ToString());
+            Session["time_during_pratice"] = Math.Round(ts.TotalSeconds);
             int timefishish = Convert.ToInt32(Session["time_during_pratice"].ToString());
-            Session["time_during_pratice"] = null;
-            Session["time_start_test_practice"] = null;
-            Session["testquizz"] = null;
-
-            List<QuizResultModel> finalResultQuiz = new List<QuizResultModel>();
+            List<QuestionModel> lstQuestionModel = Session["testquizz"] as List<QuestionModel>;
+            int subjectID = lstQuestionModel[0].subjectid;
+            double numbercorrect = 0;
+            double time_test = Math.Round(Convert.ToDouble(Session["time_during_pratice"]) / 60, 2);    
+            Exam exam = new Exam();
+            exam.exam_level = "Practice";
+            exam.exam_name = "Practice";
+            exam.exam_is_practice = true;
+            exam.subject_id = subjectID;
+            exam.exam_duration = time_test;
+            exam.exam_description = "practice quiz of student";
+            exam.test_type = "Practice Quiz";
+            exam.pass_rate = 0;
+            db.Exams.Add(exam);
+            db.SaveChanges();
+            List <QuizResultModel> finalResultQuiz = new List<QuizResultModel>();
 
             foreach (QuizResultModel answser in resultQuiz)
             {
@@ -903,6 +932,7 @@ namespace CourseOnline.Controllers
 
                 if (answser.answertext == corrrectresult)
                 {
+                    numbercorrect++;
                     QuizResultModel result = db.AnswerOptions.Where(ao => ao.question_id == answser.questionID).Select(
                     ao => new QuizResultModel
                     {
@@ -928,6 +958,42 @@ namespace CourseOnline.Controllers
                     finalResultQuiz.Add(result);
                 }
             }
+            string email = Session["Email"].ToString();
+            int userid = db.Users.Where(u => u.user_email == email).Select(u => u.user_id).FirstOrDefault();
+ 
+            TestResult testResult = new TestResult();
+            testResult.user_id = userid;
+            testResult.exam_id = db.Exams.Select(ex => ex.exam_id).Max();
+            testResult.test_type = "Exam Test";
+            testResult.tested = 1;
+            double average = numbercorrect / lstQuestionModel.Count();
+            testResult.average = Math.Round(average * 100,2).ToString() + "%";
+            testResult.pass_rate = "100%";
+            string time_start_test = Session["time_start_test_practice"].ToString();
+            testResult.tested_at = time_start_test;
+            db.TestResults.Add(testResult);
+            db.SaveChanges();
+            int testResultID = db.TestResults.Select(r => r.test_user_id).Max();
+            foreach (QuizResultModel quiz in finalResultQuiz)
+            {
+                TestAnswer testAnswer = new TestAnswer();
+                testAnswer.test_user_id = testResultID;
+                testAnswer.user_id = userid;
+                testAnswer.question_id = quiz.questionID;
+                if (quiz.answertext == null)
+                {
+                    testAnswer.user_answer = "";
+                }
+                else
+                {
+                    testAnswer.user_answer = quiz.answertext;
+                }
+                db.TestAnswers.Add(testAnswer);
+                db.SaveChanges();
+            }
+            Session["testquizz"] = null;
+            Session["time_during_pratice"] = null;
+            Session["time_start_test_practice"] = null;
             return Json(new { result = finalResultQuiz }, JsonRequestBehavior.AllowGet);
         }
 
@@ -1005,8 +1071,10 @@ namespace CourseOnline.Controllers
                                 exam_id = et.exam_id,
                                 coursework_id = cw.coursework_id
                             }).FirstOrDefault();
+                double timer = Convert.ToDouble(db.Exams.Where(e => e.exam_id == examTest.exam_id).Select(s => s.exam_duration).FirstOrDefault());
+                double pass_rate = Convert.ToDouble(db.Exams.Where(e => e.exam_id == examTest.exam_id).Select(s => s.pass_rate).FirstOrDefault());
+                examTest.pass_rate = pass_rate;
                 Session["test_exam"] = examTest;
-                int timer = db.Exams.Where(e => e.exam_id == examTest.exam_id).Select(s => s.exam_duration).FirstOrDefault();
                 Session["time_test_exam"] = timer * 60;
                 var dateQuery = db.Database.SqlQuery<DateTime>("SELECT GETDATE()");
                 if (Session["time_start_test_exam"] == null)

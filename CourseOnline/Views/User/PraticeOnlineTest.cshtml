@@ -149,13 +149,13 @@
                         }
                         var result = (correct / response.result.length) * 100;
                         clearInterval(_tick);
-                        successAlert("Your Result", "You got " + result + " % in " +"response.result[0].timeduration" + " ss");
+                        $("#SubmitQuiz").hide();
+                        $("#ExitTest").show();
+                        successAlert("Your Result", "You got " + result + " % in " + "response.result[0].timeduration" + " ss");
                     }
                     else {
                         errorAlert("Something Wrong");
                     }
-                    $("#SubmitQuiz").hide();
-                    $("#ExitTest").show();
                 },
                 error: function (response) {
                     errorAlert("Somthing wrong submit quiz");
