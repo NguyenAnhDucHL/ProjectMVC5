@@ -111,7 +111,7 @@ namespace CourseOnline.Controllers
             }
             else
             {
-                return RedirectToAction("Home_User", "Home");
+                return RedirectToAction("YourCourse", "Home");
             }
         }
 
