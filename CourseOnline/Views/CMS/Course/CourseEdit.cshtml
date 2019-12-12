@@ -184,13 +184,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("Submit success");
+                        alert("Submit Success");
                         turnOnEditMode();
                     } else {
-                        alert("Submit fail");
+                        alert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("NetWork problem!") }
+                error: (response) => { alert("Opps!! Something wrong!") }
             });
         };
 

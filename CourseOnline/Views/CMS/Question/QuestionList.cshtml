@@ -14,16 +14,16 @@
         Questions List
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Question List</li>
     </ol>
 </section>
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
-                <div class="row" style="margin-top : 20px; margin-left : 5px">
-                    <div class="col-lg-1">
+            <div class="box table-responsive">
+                <div class="row">
+                    <div class="col-sm-2" style="margin-left : 10px; margin-top : 10px">
                         <select id="sl_subjectName" class="form-control">
                             <option>All subject</option>
                             @{
@@ -34,7 +34,7 @@
                             }
                         </select>
                     </div>
-                    <div class="col-lg-1">
+                    <div class="col-sm-2" style="margin-top : 10px">
                         <select id="sl_domainName" class="form-control">
                             <option>All Domain</option>
                             @{
@@ -45,7 +45,7 @@
                             }
                         </select>
                     </div>
-                    <div class="col-lg-1">
+                    <div class="col-sm-2" style="margin-top : 10px">
                         <select id="sl_lessonName" class="form-control">
                             <option>All Lesson</option>
                             @{
@@ -56,7 +56,7 @@
                             }
                         </select>
                     </div>
-                    <div class="col-lg-1">
+                    <div class="col-sm-2" style="margin-top : 10px">
                         <select id="sl_questionLevel" class="form-control">
                             <option>All Level</option>
                             @{
@@ -67,7 +67,7 @@
                             }
                         </select>
                     </div>
-                    <div class="col-lg-1">
+                    <div class="col-sm-2" style="margin-top : 10px">
                         <select id="sl_questionStatus" class="form-control">
                             <option>All Status</option>
                             @{
@@ -78,7 +78,12 @@
                             }
                         </select>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2 pull-right" style="margin-left : -10px">
+                        <button type="button" class="btn btn-link" onclick="getAddQuestion()" style="float:right;">Add new</button>
+                    </div>
+                </div>
+                <div class="row" style="margin-left : 200px; margin-top : 10px">
+                    <div class="col-sm-4">
                         Search:
                         <input type="text" placeholder="Search for question" id="inp_search" style="height:34px; margin-left:10px;" />
                         <a onclick="doSearch()" style="cursor: pointer;" data-toggle='tooltip' title='Search'><i class='fa fa-fw fa-search'></i></a>
@@ -89,10 +94,7 @@
                             @Html.Raw(ViewBag.Error)
                         }
                     </div>
-                        <div class="col-sm-2 pull-right">
-                            <button type="button" class="btn btn-link" onclick="getAddQuestion()" style="float:right;">Add new</button>
-                        </div>
-                    </div>
+                </div>
                 <div class="box-body">
                     <table id="tb_question" class="table table-bordered table-striped">
                         <thead>
@@ -195,7 +197,7 @@
 
     function getDelIdQuestion(id) {
             if (id != null) {
-                confirmAlert('Xóa', 'Xác nhận xóa', function submit() {
+                confirmAlert('Delete', 'Do you want to delete?', function submit() {
                     $.ajax({
                         url:'@Url.Action("deleteQuestion", "Question")',
                         type: "POST",
@@ -203,12 +205,12 @@
                         datatype: "json",
                         success: (response) => {
                             if (response.success) {
-                                dataTable.ajax.reload(); successAlert("Thành công", "Xóa thành công")
+                                dataTable.ajax.reload(); successAlert("Success", "Delete Success")
                             } else {
-                                errorAlert("Thất bại", "Xóa thất bại")
+                                errorAlert("Fail", "Delete Fail")
                             }
                         },
-                        error: (response) => { errorAlert("Thất bại", "Xóa thất bại") }
+                        error: (response) => { errorAlert("Fail", "Delete Fail") }
                     });
                 });
             }

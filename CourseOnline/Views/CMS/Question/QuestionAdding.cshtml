@@ -15,7 +15,7 @@
         Question Details
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href='@Url.Action("Index","Question")'>Questions</a></li>
         <li class="active">Question Details</li>
     </ol>
@@ -25,13 +25,13 @@
 <section class="content">
     <div class="row">
         <div class="col-lg-12">
-            <div class="box">
+            <div class="box table-responsive">
                 <div class="box-body">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Subject</label>
-                                <select id="sl_subjectName" class="form-control">
+                                <select id="sl_subjectName" class="form-control edit-field">
                                     @{
                                         foreach (Subject subject in listSubject)
                                         {
@@ -42,7 +42,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Lesson</label>
-                                <select id="sl_lessonName" class="form-control">
+                                <select id="sl_lessonName" class="form-control edit-field">
                                     @{
                                         foreach (Lesson lesson in listLesson)
                                         {
@@ -51,22 +51,11 @@
                                     }
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label>Level</label>
-                                <select id="sl_questionLevel" class="form-control">
-                                    @{
-                                        foreach (string level in listLevel)
-                                        {
-                                            <option value="@level">@level</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Domain</label>
-                                <select id="sl_domainName" class="form-control">
+                                <select id="sl_domainName" class="form-control edit-field">
                                     @{
                                         foreach (Domain domain in listDomain)
                                         {
@@ -77,7 +66,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Status</label>
-                                <select id="sl_questionStatus" class="form-control">
+                                <select id="sl_questionStatus" class="form-control edit-field">
                                     @{
                                         foreach (string status in listStatus)
                                         {
@@ -87,32 +76,45 @@
                                 </select>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label>Level</label>
+                            <select id="sl_questionLevel" class="form-control edit-field">
+                                @{
+                                    foreach (string level in listLevel)
+                                    {
+                                        <option value="@level">@level</option>
+                                    }
+                                }
+                            </select>
+                        </div>
                         <div class="col-sm-2">
                             @using (Html.BeginForm("Import", "Question", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
                                 @Html.Raw(ViewBag.Error)
                                 <span>Excel File</span>
-                                <input type="file" id="input_file" name="excelfile" />
+                                <input type="file" id="input_file" name="excelfile" class="edit-field"/>
                                 <input type="text" hidden id="lstsubjectname" name="subjectname" value="" />
                                 <input type="text" hidden id="lstLessonName" name="lessonName" value="" />
                                 <input type="text" hidden id="lstDomainName" name="domainName" value="" />
-                                <input id="primaryButton" type="submit" value="Import" />
+                                <input id="primaryButton" type="submit" value="Import" class="edit-field" />
                             }
                         </div>
-                        <div class="col-sm-2">
-                            <a id="btn_download" href="~/excelfolder/template/demoExcel.xlsx" style="float:right;">Click to download template</a>
+                        <div class="col-sm-3">
+                            <button type="button" class="btn btn-link edit-field" id="btn_download" href="~/excelfolder/template/demoExcel.xlsx" style="float : right;">Click to download template</button>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Question Name</label>
-                        <textarea class="form-control" id="inp_quesName" rows="3" placeholder="Enter ..."></textarea>
+                        <textarea class="form-control edit-field" id="inp_quesName" rows="3" placeholder="Enter ..."></textarea>
                     </div>
                     <div class="row">
                         <div class="col-sm-2">
                             <label>Answer Options</label>
                         </div>
                         <div class="col-sm-2">
-                            <button type="submit" class="btn btn-primary" onclick='getAddOptionQuestion()'>Add Option</button>
+                            <button type="submit" class="btn btn-primary edit-field" onclick='getAddOptionQuestion()'>Add Option</button>
                         </div>
                         <div class="col-sm-2" style="margin-left : 380px">
                             <label>Is Key?</label>
@@ -125,14 +127,14 @@
                         <tbody>
                             <tr>
                                 <td>Option</td>
-                                <td><input id="@string.Format("{0}{1}", "optionText",count)" type="text" class="col-lg-10" value=""></td>
-                                <td><input type="radio" id="@string.Format("{0}{1}", "optionsCheck",count)" name="@string.Format("{0}{1}", "optionsCheckName",count)" class="form-group"></td>
-                                <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
+                                <td><input id="@string.Format("{0}{1}", "optionText",count)" type="text" class="col-lg-10 edit-field" value=""></td>
+                                <td><input type="radio" id="@string.Format("{0}{1}", "optionsCheck",count)" name="@string.Format("{0}{1}", "optionsCheckName",count)" class="form-group edit-field"></td>
+                                <td><button type="submit" class="btn btn-danger edit-field btnDelete">Delete</button></td>
                             </tr>
                         </tbody>
                     </table>
-                    <button type="submit" class="btn btn-danger" style="margin-top : 20px" onclick="SubmitAddQuestion()">Submit</button>
-                    <button type="submit" class="btn btn-info" style="margin-top : 20px" onclick="getBackQuestionList()">Back</button>
+                    <button type="submit" style="width : 8%;" class="btn btn-info edit-field" onclick="SubmitAddQuestion()">Submit</button>
+                    <button type="submit" style="width : 8%;" class="btn btn-info" onclick="getBackQuestionList()">Back</button>
                 </div>
             </div>
         </div>
@@ -175,6 +177,13 @@
      });
         };
 
+        function turnOnEditMode() {
+                // bat trang thai edit
+                $(".edit-field").each(
+                    function () { $(this).prop('disabled', true); }
+                )
+        };
+
         // bat su kien submit
         function SubmitAddQuestion() {
             var testAnswer= [];
@@ -198,6 +207,10 @@
 
             var postJson = JSON.stringify(question);
             var postJson2 = JSON.stringify(testAnswer);
+            if ($("#inp_quesName").val() == "") {
+                errorAlert("Name not empty!");
+                return;
+            }
             $.ajax({
                 url: '@Url.Action("SubmitAddQuestion","Question")',
                 type: "POST",
@@ -205,12 +218,13 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("submit thanh cong");
+                        successAlert("Submit Success");
+                        turnOnEditMode();
                     } else {
-                        alert("submit that bai");
+                        errorAlert("Submit Fail");
                     }
                 },
-                error: (response) => { alert("co van de ve mang") }
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         };
         function getAddOptionQuestion() {
@@ -218,9 +232,9 @@
             $('#giang').val(giiang);
              row ="<tr>" +
                               "  <td>Option </td>" +
-                             "   <td><input type=\"text\" class=\"col-lg-10\" placeholder=\"Option\" id=\"optionText" + giiang +"\"></td> " +
-                              "  <td><input type=\"radio\" class=\"form-group\" name=\"optionsCheckName" + giiang +"\"></td> " +
-                              "  <td><button type=\"submit\" class=\"btn btn-danger btnDelete\" >Delete</button></td>" +
+                             "   <td><input type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + giiang +"\"></td> " +
+                              "  <td><input type=\"radio\" class=\"form-group edit-field\" name=\"optionsCheckName" + giiang +"\"></td> " +
+                              "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete\" >Delete</button></td>" +
                   " </tr>"
            $('#optionTable > tbody:last-child').append(row);
            $('input[type=radio]').change(function() {

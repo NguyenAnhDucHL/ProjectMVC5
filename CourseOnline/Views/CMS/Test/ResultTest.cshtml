@@ -3,7 +3,6 @@
     ViewBag.Title = "ResultTest";
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
     var listBatch = ViewBag.listBatch;
-    List<TestBatch> batch = ViewBag.batch;
 }
 <section class="content-header">
     <h1>
@@ -72,7 +71,7 @@
                 },
             ],
         "paging": true,
-        "pageLength": 5,
+        "pageLength": 10,
         "ordering": true,
         "serverSide": "true",
         "order": [[0, "asc"]],
