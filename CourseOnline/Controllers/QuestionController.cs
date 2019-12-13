@@ -22,21 +22,42 @@ namespace CourseOnline.Controllers
         [Route("QuestionList")]
         public ActionResult Index()
         {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                var listSubject = db.Subjects.Select(s => s.subject_name).Distinct().ToList();
-                ViewBag.subjectName = listSubject;
-                var listDomain = db.Domains.Select(d => d.domain_name).Distinct().ToList();
-                ViewBag.domainName = listDomain;
-                var listLesson = db.Lessons.Select(l => l.lesson_name).Distinct().ToList();
-                ViewBag.lessonName = listLesson;
-                var listLevel = db.Questions.Select(q => q.question_level).Distinct().ToList();
-                ViewBag.questionLevel = listLevel;
-                var listStatus = db.Questions.Select(q => q.question_status).Distinct().ToList();
-                ViewBag.questionStatus = listStatus;
+                return View("/Views/Error_404.cshtml");
             }
-            return View("/Views/CMS/Question/QuestionList.cshtml");
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/LTContent/Questions");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        var listSubject = db.Subjects.Select(s => s.subject_name).Distinct().ToList();
+                        ViewBag.subjectName = listSubject;
+                        var listDomain = db.Domains.Select(d => d.domain_name).Distinct().ToList();
+                        ViewBag.domainName = listDomain;
+                        var listLesson = db.Lessons.Select(l => l.lesson_name).Distinct().ToList();
+                        ViewBag.lessonName = listLesson;
+                        var listLevel = db.Questions.Select(q => q.question_level).Distinct().ToList();
+                        ViewBag.questionLevel = listLevel;
+                        var listStatus = db.Questions.Select(q => q.question_status).Distinct().ToList();
+                        ViewBag.questionStatus = listStatus;
+                    }
+                    return View("/Views/CMS/Question/QuestionList.cshtml");
+                }
+            }
         }
+
         //[HttpPost]
         //public ActionResult Download() // download template area/location
         //{
@@ -235,29 +256,49 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult GetAllQuestion()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                string sql = "select q.question_id, q.question_name, s.subject_name, d.domain_name, l.lesson_name, q.question_level, q.question_status " +
-                                "from Question q join [Subject] s " +
-                                "on q.subject_id = s.subject_id " +
-                                "join Domain d " +
-                                "on q.domain_id = d.domain_id " +
-                                "join Lesson l " +
-                                "on q.lesson_id = l.lesson_id";
+                return View("/Views/Error_404.cshtml");
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/LTContent/Questions");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
 
-                List<QuestionListModel> Questions = db.Database.SqlQuery<QuestionListModel>(sql).ToList();
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        string sql = "select q.question_id, q.question_name, s.subject_name, d.domain_name, l.lesson_name, q.question_level, q.question_status " +
+                                        "from Question q join [Subject] s " +
+                                        "on q.subject_id = s.subject_id " +
+                                        "join Domain d " +
+                                        "on q.domain_id = d.domain_id " +
+                                        "join Lesson l " +
+                                        "on q.lesson_id = l.lesson_id";
 
-                int totalrows = Questions.Count;
-                int totalrowsafterfiltering = Questions.Count;
-                Questions = Questions.Skip(start).Take(length).ToList();
-                Questions = Questions.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = Questions, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                        List<QuestionListModel> Questions = db.Database.SqlQuery<QuestionListModel>(sql).ToList();
+
+                        int totalrows = Questions.Count;
+                        int totalrowsafterfiltering = Questions.Count;
+                        Questions = Questions.Skip(start).Take(length).ToList();
+                        Questions = Questions.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = Questions, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
         }
 

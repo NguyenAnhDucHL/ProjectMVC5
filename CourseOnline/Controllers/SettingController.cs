@@ -16,35 +16,73 @@ namespace CourseOnline.Controllers
         [Route("SettingList")]
         public ActionResult Index()
         {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-
-                var listGroup = db.Settings.Select(s => s.setting_group_value).Distinct().ToList();
-                ViewBag.settingGroup = listGroup;
+                return View("/Views/Error_404.cshtml");
             }
-
-            return View("/Views/CMS/Setting/SettingList.cshtml");
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "No Permission");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        var listGroup = db.Settings.Select(s => s.setting_group_value).Distinct().ToList();
+                        ViewBag.settingGroup = listGroup;
+                    }
+                    return View("/Views/CMS/Setting/SettingList.cshtml");
+                }
+            }
         }
         [HttpPost]
         public ActionResult GetAllSetting()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                string sql = "select * from Setting";
+                return null;
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "No Permission");
+                if (result.Equals("Student"))
+                {
+                    return null;
+                }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
 
-                List<Setting> Settings = db.Database.SqlQuery<Setting>(sql).ToList();
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        string sql = "select * from Setting";
 
-                int totalrows = Settings.Count;
-                int totalrowsafterfiltering = Settings.Count;
-                Settings = Settings.Skip(start).Take(length).ToList();
-                Settings = Settings.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = Settings, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                        List<Setting> Settings = db.Database.SqlQuery<Setting>(sql).ToList();
+
+                        int totalrows = Settings.Count;
+                        int totalrowsafterfiltering = Settings.Count;
+                        Settings = Settings.Skip(start).Take(length).ToList();
+                        Settings = Settings.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = Settings, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
         }
 

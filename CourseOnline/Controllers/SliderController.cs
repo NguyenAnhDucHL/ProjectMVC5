@@ -17,35 +17,74 @@ namespace CourseOnline.Controllers
         [Route("SliderList")]
         public ActionResult Index()
         {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                var listStatus = db.Sliders.Select(s=>s.slider_status).Distinct().ToList();
-                ViewBag.sliderStatus = listStatus;
-
+                return View("/Views/Error_404.cshtml");
             }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/PublicContent/Sliders");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        var listStatus = db.Sliders.Select(s => s.slider_status).Distinct().ToList();
+                        ViewBag.sliderStatus = listStatus;
 
-            return View("/Views/CMS/Slider/SliderList.cshtml");
+                    }
+                    return View("/Views/CMS/Slider/SliderList.cshtml");
+                }
+            }
         }
         [HttpPost]
         public ActionResult GetAllSlider()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                string sql = "select * from Slider";
+                return null;
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/PublicContent/Sliders");
+                if (result.Equals("Student"))
+                {
+                    return null;
+                }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
 
-                List<Slider> Sliders = db.Database.SqlQuery<Slider>(sql).ToList();
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        string sql = "select * from Slider";
 
-                int totalrows = Sliders.Count;
-                int totalrowsafterfiltering = Sliders.Count;
-                Sliders = Sliders.Skip(start).Take(length).ToList();
-                Sliders = Sliders.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = Sliders, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                        List<Slider> Sliders = db.Database.SqlQuery<Slider>(sql).ToList();
+
+                        int totalrows = Sliders.Count;
+                        int totalrowsafterfiltering = Sliders.Count;
+                        Sliders = Sliders.Skip(start).Take(length).ToList();
+                        Sliders = Sliders.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = Sliders, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
         }
         [HttpGet]

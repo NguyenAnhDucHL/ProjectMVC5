@@ -20,18 +20,38 @@ namespace CourseOnline.Controllers
         [Route("SubjectList")]
         public ActionResult Index()
         {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                var listType = db.Subjects.Select(s => s.subject_type).Distinct().ToList();
-                ViewBag.subjectType = listType;
-
-                var listCategory = db.Subjects.Select(s => s.subject_category).Distinct().ToList();
-                ViewBag.subjectCategory = listCategory;
-
-                var listStatus = db.Subjects.Select(s => s.subject_status).Distinct().ToList();
-                ViewBag.subjectStatus = listStatus;
+                return View("/Views/Error_404.cshtml");
             }
-            return View("/Views/CMS/Subject/SubjectList.cshtml");
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/LTContent/SubjectsList");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        var listType = db.Subjects.Select(s => s.subject_type).Distinct().ToList();
+                        ViewBag.subjectType = listType;
+
+                        var listCategory = db.Subjects.Select(s => s.subject_category).Distinct().ToList();
+                        ViewBag.subjectCategory = listCategory;
+
+                        var listStatus = db.Subjects.Select(s => s.subject_status).Distinct().ToList();
+                        ViewBag.subjectStatus = listStatus;
+                    }
+                    return View("/Views/CMS/Subject/SubjectList.cshtml");
+                }
+            }
         }
 
         //search
@@ -131,32 +151,52 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult GetAllSubject()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-
-                string sql = "select * from Subject";
-
-                List<SubjectListModel> Subjects = db.Database.SqlQuery<SubjectListModel>(sql).ToList();
-
-                foreach (var sj in Subjects)
+                return null;
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/LTContent/SubjectsList");
+                if (result.Equals("Student"))
                 {
-                    var lessons = (from l in db.Lessons
-                                   where l.subject_id == sj.subject_id
-                                   select new { l.lesson_id }).ToList();
-                    sj.lesson_count = lessons.Count;
+                    return null;
                 }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
 
-                int totalrows = Subjects.Count;
-                int totalrowsafterfiltering = Subjects.Count;
-                Subjects = Subjects.Skip(start).Take(length).ToList();
-                Subjects = Subjects.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = Subjects, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+
+                        string sql = "select * from Subject";
+
+                        List<SubjectListModel> Subjects = db.Database.SqlQuery<SubjectListModel>(sql).ToList();
+
+                        foreach (var sj in Subjects)
+                        {
+                            var lessons = (from l in db.Lessons
+                                           where l.subject_id == sj.subject_id
+                                           select new { l.lesson_id }).ToList();
+                            sj.lesson_count = lessons.Count;
+                        }
+
+                        int totalrows = Subjects.Count;
+                        int totalrowsafterfiltering = Subjects.Count;
+                        Subjects = Subjects.Skip(start).Take(length).ToList();
+                        Subjects = Subjects.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = Subjects, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
         }
 

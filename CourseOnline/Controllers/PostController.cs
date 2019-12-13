@@ -17,18 +17,37 @@ namespace CourseOnline.Controllers
         // GET: PostList
         public ActionResult Index()
         {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                List<Setting> listType = db.Settings.Where(s => s.setting_group_value.Equals(SettingGroup.POST_TYPE)).ToList();
-                ViewBag.postType = listType;
-
-                List<Setting> listCategory = db.Settings.Where(s => s.setting_group_value.Equals(SettingGroup.SUBJECT_CATEGORY) || s.setting_group_value.Equals(SettingGroup.GUIDE_CATEGORY)).ToList();
-                ViewBag.postCategory = listCategory;
-
-                var listStatus = db.Posts.Select(p => p.post_status).Distinct().ToList();
-                ViewBag.postStatus = listStatus;
+                return View("/Views/Error_404.cshtml");
             }
-            return View("~/Views/CMS/Post/PostList.cshtml");
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/PublicContent/Posts");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                } else
+                {
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        List<Setting> listType = db.Settings.Where(s => s.setting_group_value.Equals(SettingGroup.POST_TYPE)).ToList();
+                        ViewBag.postType = listType;
+
+                        List<Setting> listCategory = db.Settings.Where(s => s.setting_group_value.Equals(SettingGroup.SUBJECT_CATEGORY) || s.setting_group_value.Equals(SettingGroup.GUIDE_CATEGORY)).ToList();
+                        ViewBag.postCategory = listCategory;
+
+                        var listStatus = db.Posts.Select(p => p.post_status).Distinct().ToList();
+                        ViewBag.postStatus = listStatus;
+                    }
+                    return View("~/Views/CMS/Post/PostList.cshtml");
+                }
+            }
         }
 
         //filter 
@@ -89,32 +108,52 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult GetAllPost()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                var postList = (from p in db.Posts
-                                select new
-                                {
-                                    p.post_id,
-                                    p.post_thumbnail,
-                                    p.post_name,
-                                    p.post_category,
-                                    p.post_type,
-                                    p.post_brief_info,
-                                    p.post_status,
-                                    p.post_detail_info,
-                                }).ToList();
-                
-                int totalrows = postList.Count;
-                int totalrowsafterfiltering = postList.Count;
-                postList = postList.Skip(start).Take(length).ToList();
-                postList = postList.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = postList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                return null;
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/PublicContent/Posts");
+                if (result.Equals("Student"))
+                {
+                    return null;
+                }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
+
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        var postList = (from p in db.Posts
+                                        select new
+                                        {
+                                            p.post_id,
+                                            p.post_thumbnail,
+                                            p.post_name,
+                                            p.post_category,
+                                            p.post_type,
+                                            p.post_brief_info,
+                                            p.post_status,
+                                            p.post_detail_info,
+                                        }).ToList();
+
+                        int totalrows = postList.Count;
+                        int totalrowsafterfiltering = postList.Count;
+                        postList = postList.Skip(start).Take(length).ToList();
+                        postList = postList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = postList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
         }
         [HttpPost]

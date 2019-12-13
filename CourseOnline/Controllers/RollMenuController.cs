@@ -14,30 +14,70 @@ namespace CourseOnline.Controllers
         [Route("RoleMenuList")]
         public ActionResult Index()
         {
-            return View("/Views/CMS/RoleMenuList.cshtml");
+            if (Session["Email"] == null)
+            {
+                return View("/Views/Error_404.cshtml");
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "No Permission");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    return View("/Views/CMS/RoleMenuList.cshtml");
+                }
+            }
         }
         [HttpPost]
         public ActionResult GetAllRoleMenu()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                string sql = " select rm.role_menu_id, m.menu_name " +
-                                "from RoleMenu rm join Menu m " +
-                                "on rm.menu_id = m.menu_id";
+                return null;
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "No Permission");
+                if (result.Equals("Student"))
+                {
+                    return null;
+                }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
 
-                List<RoleMenuModel> RoleMenus = db.Database.SqlQuery<RoleMenuModel>(sql).ToList();
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        string sql = " select rm.role_menu_id, m.menu_name " +
+                                        "from RoleMenu rm join Menu m " +
+                                        "on rm.menu_id = m.menu_id";
 
-                int totalrows = RoleMenus.Count;
-                int totalrowsafterfiltering = RoleMenus.Count;
-                RoleMenus = RoleMenus.Skip(start).Take(length).ToList();
-                RoleMenus = RoleMenus.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = RoleMenus, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                        List<RoleMenuModel> RoleMenus = db.Database.SqlQuery<RoleMenuModel>(sql).ToList();
+
+                        int totalrows = RoleMenus.Count;
+                        int totalrowsafterfiltering = RoleMenus.Count;
+                        RoleMenus = RoleMenus.Skip(start).Take(length).ToList();
+                        RoleMenus = RoleMenus.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = RoleMenus, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
         }
     }

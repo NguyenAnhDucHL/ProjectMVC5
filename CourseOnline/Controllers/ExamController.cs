@@ -16,14 +16,34 @@ namespace CourseOnline.Controllers
         // GET: Exam
         public ActionResult Index()
         {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                var listSubject = db.Subjects.Select(s => s.subject_name).Distinct().ToList();
-                ViewBag.listSubject = listSubject;
-                List<Setting> listType = db.Settings.Where(s => s.setting_group_value.Equals(SettingGroup.EXAM_TYPES)).ToList();
-                ViewBag.examType = listType;
+                return View("/Views/Error_404.cshtml");
             }
-            return View("/Views/CMS/Exam/ExamList.cshtml");
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/TCR/ExamsList");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        var listSubject = db.Subjects.Select(s => s.subject_name).Distinct().ToList();
+                        ViewBag.listSubject = listSubject;
+                        List<Setting> listType = db.Settings.Where(s => s.setting_group_value.Equals(SettingGroup.EXAM_TYPES)).ToList();
+                        ViewBag.examType = listType;
+                    }
+                    return View("/Views/CMS/Exam/ExamList.cshtml");
+                }
+            }
         }
 
         //filter 
@@ -112,26 +132,47 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult GetAllExam()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                string sql = "select e.exam_id, e.exam_name,s.subject_name, e.exam_level, e.exam_duration, e.pass_rate, e.test_type, e.exam_description  " +
-                            "from Exam e join [Subject] s " +
-                            "on e.subject_id = s.subject_id";
-
-                List<ExamListModel> examListModels = db.Database.SqlQuery<ExamListModel>(sql).ToList();
-
-                int totalrows = examListModels.Count;
-                int totalrowsafterfiltering = examListModels.Count;
-                examListModels = examListModels.Skip(start).Take(length).ToList();
-                examListModels = examListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = examListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                return null;
             }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/TCR/ExamsList");
+                if (result.Equals("Student"))
+                {
+                    return null;
+                }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
+
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        string sql = "select e.exam_id, e.exam_name,s.subject_name, e.exam_level, e.exam_duration, e.pass_rate, e.test_type, e.exam_description  " +
+                                    "from Exam e join [Subject] s " +
+                                    "on e.subject_id = s.subject_id";
+
+                        List<ExamListModel> examListModels = db.Database.SqlQuery<ExamListModel>(sql).ToList();
+
+                        int totalrows = examListModels.Count;
+                        int totalrowsafterfiltering = examListModels.Count;
+                        examListModels = examListModels.Skip(start).Take(length).ToList();
+                        examListModels = examListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = examListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+
         }
 
         [HttpGet]

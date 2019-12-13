@@ -16,42 +16,79 @@ namespace CourseOnline.Controllers
         // GET: Test
         public ActionResult Index()
         {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                //var listBatch = db.TestBatches.Select(s => s.batch_name).Distinct().ToList();
-                //ViewBag.listBatch = listBatch;
-                var listExam = db.Exams.Select(s => s.exam_name).Distinct().ToList();
-                ViewBag.listExam = listExam;
-                var listTest = db.ExamTests.Select(s => s.test_name).Distinct().ToList();
-                ViewBag.listTest = listTest;
+                return View("/Views/Error_404.cshtml");
             }
-
-                return View("/Views/CMS/Test/TestList.cshtml");
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/TCR/TestsList");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        var listExam = db.Exams.Select(s => s.exam_name).Distinct().ToList();
+                        ViewBag.listExam = listExam;
+                        var listTest = db.ExamTests.Select(s => s.test_name).Distinct().ToList();
+                        ViewBag.listTest = listTest;
+                    }
+                    return View("/Views/CMS/Test/TestList.cshtml");
+                }
+            }
         }
         [HttpPost]
         public ActionResult GetAllTest()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                string sql = "select et.test_id, e.exam_name, et.test_name, et.test_code " +
-                            "from ExamTest et left join Exam e " +
-                            "on et.exam_id = e.exam_id " +
-                            "left join TestResult tr " +
-                            "on et.test_id = tr.test_id";
+                return null;
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/TCR/TestsList");
+                if (result.Equals("Student"))
+                {
+                    return null;
+                }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
 
-                List<TestListModel> testListModels = db.Database.SqlQuery<TestListModel>(sql).ToList();
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        string sql = "select et.test_id, e.exam_name, et.test_name, et.test_code " +
+                                    "from ExamTest et left join Exam e " +
+                                    "on et.exam_id = e.exam_id " +
+                                    "left join TestResult tr " +
+                                    "on et.test_id = tr.test_id";
 
-                int totalrows = testListModels.Count;
-                int totalrowsafterfiltering = testListModels.Count;
-                testListModels = testListModels.Skip(start).Take(length).ToList();
-                testListModels = testListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = testListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                        List<TestListModel> testListModels = db.Database.SqlQuery<TestListModel>(sql).ToList();
+
+                        int totalrows = testListModels.Count;
+                        int totalrowsafterfiltering = testListModels.Count;
+                        testListModels = testListModels.Skip(start).Take(length).ToList();
+                        testListModels = testListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = testListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
         }
         //search
