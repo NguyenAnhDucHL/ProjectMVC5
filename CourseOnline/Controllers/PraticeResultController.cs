@@ -79,7 +79,7 @@ namespace CourseOnline.Controllers
                                     "join [Exam] e " +
                                     "on tr.exam_id = e.exam_id " +
                                     "join [Subject] s " +
-                                    "on e.subject_id = s.subject_id"
+                                    "on e.subject_id = s.subject_id where tr.test_type  = 'Pratice Test' "
                                     ;
 
                         List<PracticeResultModel> practiceListModels = db.Database.SqlQuery<PracticeResultModel>(sql).ToList();

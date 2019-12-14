@@ -12,6 +12,6 @@ namespace CourseOnline.Models
         public string user_fullname { get; set; }
         public string user_email { get; set; }
         public string tested_at { get; set; }
-        public int grade { get; set; }
+        public double grade_user { get; set; }
     }
 }
