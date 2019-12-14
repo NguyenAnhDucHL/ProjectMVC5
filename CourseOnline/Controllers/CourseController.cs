@@ -18,12 +18,32 @@ namespace CourseOnline.Controllers
         [Route("CourseList")]
         public ActionResult Index()
         {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                List<Subject> listSubject = db.Subjects.Where(s => s.subject_name != null).ToList();
-                ViewBag.Subjects = listSubject;
+                return View("/Views/Error_404.cshtml");
             }
-            return View("/Views/CMS/Course/CourseList.cshtml");
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/CourseManagement/CoursesList");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        List<Subject> listSubject = db.Subjects.Where(s => s.subject_name != null).ToList();
+                        ViewBag.Subjects = listSubject;
+                    }
+                    return View("/Views/CMS/Course/CourseList.cshtml");
+                }
+            }
         }
 
         //search
@@ -127,25 +147,45 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult GetAllCourse()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                string sql = "select c.course_id, c.course_name, u.user_fullname, c.course_start_date, c.course_end_date, c.course_status " +
-                            "from Course c join [User] u " +
-                            "on c.teacher_id = u.user_id";
+                return null;
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/CourseManagement/CoursesList");
+                if (result.Equals("Student"))
+                {
+                    return null;
+                }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
 
-                List<CourseListModel> Courses = db.Database.SqlQuery<CourseListModel>(sql).ToList();
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        string sql = "select c.course_id, c.course_name, u.user_fullname, c.course_start_date, c.course_end_date, c.course_status " +
+                                    "from Course c join [User] u " +
+                                    "on c.teacher_id = u.user_id";
 
-                int totalrows = Courses.Count;
-                int totalrowsafterfiltering = Courses.Count;
-                Courses = Courses.Skip(start).Take(length).ToList();
-                Courses = Courses.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = Courses, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                        List<CourseListModel> Courses = db.Database.SqlQuery<CourseListModel>(sql).ToList();
+
+                        int totalrows = Courses.Count;
+                        int totalrowsafterfiltering = Courses.Count;
+                        Courses = Courses.Skip(start).Take(length).ToList();
+                        Courses = Courses.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = Courses, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
         }
         [HttpGet]

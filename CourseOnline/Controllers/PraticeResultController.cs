@@ -15,45 +15,83 @@ namespace CourseOnline.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                var listSubject = db.Subjects.Select(s => s.subject_name).Distinct().ToList();
-                ViewBag.listSubject = listSubject;
-
+                return View("/Views/Error_404.cshtml");
             }
-            return View("~/Views/CMS/PracticeResult/PracticeResultList.cshtml");
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/TCR/PracticeResults");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        var listSubject = db.Subjects.Select(s => s.subject_name).Distinct().ToList();
+                        ViewBag.listSubject = listSubject;
+                    }
+                    return View("~/Views/CMS/PracticeResult/PracticeResultList.cshtml");
+                }
+            }
         }
 
         [HttpPost]
         public ActionResult GetAllPracticeResults()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                string sql = "select u.[user_fullname], u.[user_email], s.[subject_name], e.[exam_name], tr.[tested_at], gr.[grade_user]" +
-                            "from [User] u join [TestResult] tr " +
-                            "on u.[user_id] = tr.[user_id] " +
-                            "join [Grade] gr " +
-                            "on u.user_id = gr.user_id " +
-                            "join [Exam] e " +
-                            "on tr.exam_id = e.exam_id " +
-                            "join [Subject] s " +
-                            "on e.subject_id = s.subject_id"
-                            ;
-
-                List<PracticeResultModel> practiceListModels = db.Database.SqlQuery<PracticeResultModel>(sql).ToList();
-
-                int totalrows = practiceListModels.Count;
-                int totalrowsafterfiltering = practiceListModels.Count;
-                practiceListModels = practiceListModels.Skip(start).Take(length).ToList();
-                practiceListModels = practiceListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = practiceListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                return null;
             }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/TCR/PracticeResults");
+                if (result.Equals("Student"))
+                {
+                    return null;
+                }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        string sql = "select u.[user_fullname], u.[user_email], s.[subject_name], e.[exam_name], tr.[tested_at], gr.[grade_user]" +
+                                    "from [User] u join [TestResult] tr " +
+                                    "on u.[user_id] = tr.[user_id] " +
+                                    "join [Grade] gr " +
+                                    "on u.user_id = gr.user_id " +
+                                    "join [Exam] e " +
+                                    "on tr.exam_id = e.exam_id " +
+                                    "join [Subject] s " +
+                                    "on e.subject_id = s.subject_id"
+                                    ;
 
+                        List<PracticeResultModel> practiceListModels = db.Database.SqlQuery<PracticeResultModel>(sql).ToList();
+
+                        int totalrows = practiceListModels.Count;
+                        int totalrowsafterfiltering = practiceListModels.Count;
+                        practiceListModels = practiceListModels.Skip(start).Take(length).ToList();
+                        practiceListModels = practiceListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = practiceListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
         }
 
 

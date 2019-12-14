@@ -18,40 +18,80 @@ namespace CourseOnline.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                var lstRoles = db.Roles.Select(r => r.role_name).Distinct().ToList();
-                ViewBag.lstRoles = lstRoles;
-
-                var lstStatus = db.Users.Select(r => r.user_status).Distinct().ToList();
-                ViewBag.lstStatus = lstStatus;
+                return View("/Views/Error_404.cshtml");
             }
-            return View("/Views/CMS/User/UserList.cshtml");
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "No Permission");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        var lstRoles = db.Roles.Select(r => r.role_name).Distinct().ToList();
+                        ViewBag.lstRoles = lstRoles;
+
+                        var lstStatus = db.Users.Select(r => r.user_status).Distinct().ToList();
+                        ViewBag.lstStatus = lstStatus;
+                    }
+                    return View("/Views/CMS/User/UserList.cshtml");
+                }
+            }
         }
         [HttpPost]
         public ActionResult GetAllUser()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                string sql = "select u.[user_id], u.user_fullname, u.[user_email], u.use_mobile, u.[user_gender], u.[user_status], r.role_name  " +
-                            "from[User] u join [UserRole] ur " +
-                            "on u.[user_id] = ur.user_id " +
-                            "join Roles r " +
-                            "on r.role_id = ur.role_id";
+                return null;
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "No Permission");
+                if (result.Equals("Student"))
+                {
+                    return null;
+                }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
 
-                List<UserListModel> userListModels = db.Database.SqlQuery<UserListModel>(sql).ToList();
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        string sql = "select u.[user_id], u.user_fullname, u.[user_email], u.use_mobile, u.[user_gender], u.[user_status], r.role_name  " +
+                                    "from[User] u join [UserRole] ur " +
+                                    "on u.[user_id] = ur.user_id " +
+                                    "join Roles r " +
+                                    "on r.role_id = ur.role_id";
 
-                int totalrows = userListModels.Count;
-                int totalrowsafterfiltering = userListModels.Count;
-                userListModels = userListModels.Skip(start).Take(length).ToList();
-                userListModels = userListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = userListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                        List<UserListModel> userListModels = db.Database.SqlQuery<UserListModel>(sql).ToList();
+
+                        int totalrows = userListModels.Count;
+                        int totalrowsafterfiltering = userListModels.Count;
+                        userListModels = userListModels.Skip(start).Take(length).ToList();
+                        userListModels = userListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = userListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
         }
 

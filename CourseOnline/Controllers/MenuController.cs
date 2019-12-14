@@ -16,28 +16,68 @@ namespace CourseOnline.Controllers
         [Route("MenuList")]
         public ActionResult Index()
         {
-            return View("/Views/CMS/Menu/MenuList.cshtml");
+            if (Session["Email"] == null)
+            {
+                return View("/Views/Error_404.cshtml");
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "No Permission");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    return View("/Views/CMS/Menu/MenuList.cshtml");
+                }
+            }
         }
         [HttpPost]
         public ActionResult GetAllMenu()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                string sql = "select * from Menu";
+                return null;
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "No Permission");
+                if (result.Equals("Student"))
+                {
+                    return null;
+                }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
 
-                List<Menu> Menus = db.Database.SqlQuery<Menu>(sql).ToList();
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        string sql = "select * from Menu";
 
-                int totalrows = Menus.Count;
-                int totalrowsafterfiltering = Menus.Count;
-                Menus = Menus.Skip(start).Take(length).ToList();
-                Menus = Menus.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = Menus, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                        List<Menu> Menus = db.Database.SqlQuery<Menu>(sql).ToList();
+
+                        int totalrows = Menus.Count;
+                        int totalrowsafterfiltering = Menus.Count;
+                        Menus = Menus.Skip(start).Take(length).ToList();
+                        Menus = Menus.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = Menus, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
         }
 

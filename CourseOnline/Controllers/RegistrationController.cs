@@ -16,47 +16,85 @@ namespace CourseOnline.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                var lstSubject = db.Subjects.Select(s => s.subject_name).Distinct().ToList();
-                ViewBag.lstSubject = lstSubject;
-
-                var lstCourse = db.Courses.Select(c => c.course_name).Distinct().ToList();
-                ViewBag.lstCourse = lstCourse;
-
-                var lststatus = db.Registrations.Select(r => r.registration_status).Distinct().ToList();
-                ViewBag.lststatus = lststatus;
+                return View("/Views/Error_404.cshtml");
             }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/CourseManagement/Registrations");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        var lstSubject = db.Subjects.Select(s => s.subject_name).Distinct().ToList();
+                        ViewBag.lstSubject = lstSubject;
 
+                        var lstCourse = db.Courses.Select(c => c.course_name).Distinct().ToList();
+                        ViewBag.lstCourse = lstCourse;
 
-                return View("/Views/CMS/Registration/RegistrationList.cshtml");
+                        var lststatus = db.Registrations.Select(r => r.registration_status).Distinct().ToList();
+                        ViewBag.lststatus = lststatus;
+                    }
+                    return View("/Views/CMS/Registration/RegistrationList.cshtml");
+                }
+            }
         }
         [HttpPost]
         public ActionResult GetAllRegistration()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                string sql = "select r.registration_id, s.subject_name, c.course_name, u.user_fullname, u.user_email, r.registration_time, r.registration_status " +
-                            "from Registration r join [User] u " +
-                            "on r.[user_id] = u.[user_id] " +
-                            "join Course c " +
-                            "on c.course_id = r.course_id " +
-                            "join Subject s " +
-                            "on s.subject_id = c.subject_id";
+                return null;
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "CMS/CourseManagement/Registrations");
+                if (result.Equals("Student"))
+                {
+                    return null;
+                }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
 
-                List<RegistrationListModel> Registrations = db.Database.SqlQuery<RegistrationListModel>(sql).ToList();
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        string sql = "select r.registration_id, s.subject_name, c.course_name, u.user_fullname, u.user_email, r.registration_time, r.registration_status " +
+                                    "from Registration r join [User] u " +
+                                    "on r.[user_id] = u.[user_id] " +
+                                    "join Course c " +
+                                    "on c.course_id = r.course_id " +
+                                    "join Subject s " +
+                                    "on s.subject_id = c.subject_id";
 
-                int totalrows = Registrations.Count;
-                int totalrowsafterfiltering = Registrations.Count;
-                Registrations = Registrations.Skip(start).Take(length).ToList();
-                Registrations = Registrations.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = Registrations, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                        List<RegistrationListModel> Registrations = db.Database.SqlQuery<RegistrationListModel>(sql).ToList();
+
+                        int totalrows = Registrations.Count;
+                        int totalrowsafterfiltering = Registrations.Count;
+                        Registrations = Registrations.Skip(start).Take(length).ToList();
+                        Registrations = Registrations.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = Registrations, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
         }
 

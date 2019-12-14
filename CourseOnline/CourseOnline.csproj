@@ -191,6 +191,7 @@
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VerifyAccController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -240,9 +241,6 @@
     <Compile Include="Models\Post.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PostTag.cs">
-      <DependentUpon>STUDYONLINE.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PracticeResultModel.cs" />
     <Compile Include="Models\Question.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
@@ -290,9 +288,6 @@
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SubjectListModel.cs" />
-    <Compile Include="Models\SubjectReference.cs">
-      <DependentUpon>STUDYONLINE.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
@@ -1168,11 +1163,13 @@
     <Content Include="Views\Shared\_Test_Layout.cshtml" />
     <Content Include="Views\CMS\Subject\DomainList.cshtml" />
     <Content Include="Views\User\PostDetail.cshtml" />
+    <Content Include="Views\Error_404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assets\IMGCMS\" />
     <Folder Include="Path\" />
+    <Folder Include="Views\VerifyAcc\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

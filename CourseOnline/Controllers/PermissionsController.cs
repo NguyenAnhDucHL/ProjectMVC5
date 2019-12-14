@@ -14,35 +14,75 @@ namespace CourseOnline.Controllers
         // GET: Permissions
         public ActionResult Index()
         {
-            return View("/Views/CMS/Permission/PermissionsList.cshtml");
+            if (Session["Email"] == null)
+            {
+                return View("/Views/Error_404.cshtml");
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "No Permission");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                if (result.Equals("Reject"))
+                {
+                    return View("~/Views/CMS/Home.cshtml");
+                }
+                else
+                {
+                    return View("/Views/CMS/Permission/PermissionsList.cshtml");
+                }
+            }
         }
 
 
         [HttpPost]
         public ActionResult GetAllPermissions()
         {
-            int start = Convert.ToInt32(Request["start"]);
-            int length = Convert.ToInt32(Request["length"]);
-            string searchValue = Request["search[value]"];
-            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
-            string sortDirection = Request["order[0][dir]"];
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            if (Session["Email"] == null)
             {
-                var permissionList = (from p in db.Permissions
-                                      select new
-                                      {
-                                          permission_id = p.permission_id,
-                                          permission_name = p.permission_name,
-                                          permission_link = p.permission_link,
-                                          permission_status = p.permission_status
-                                      }).ToList();
+                return null;
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "No Permission");
+                if (result.Equals("Student"))
+                {
+                    return null;
+                }
+                if (result.Equals("Reject"))
+                {
+                    return null;
+                }
+                else
+                {
+                    int start = Convert.ToInt32(Request["start"]);
+                    int length = Convert.ToInt32(Request["length"]);
+                    string searchValue = Request["search[value]"];
+                    string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+                    string sortDirection = Request["order[0][dir]"];
 
-                int totalrows = permissionList.Count;
-                int totalrowsafterfiltering = permissionList.Count;
-                permissionList = permissionList.Skip(start).Take(length).ToList();
-                permissionList = permissionList.OrderBy(sortColumnName + " " + sortDirection).ToList();
-                return Json(new { success = true, data = permissionList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                    {
+                        var permissionList = (from p in db.Permissions
+                                              select new
+                                              {
+                                                  permission_id = p.permission_id,
+                                                  permission_name = p.permission_name,
+                                                  permission_link = p.permission_link,
+                                                  permission_status = p.permission_status
+                                              }).ToList();
+
+                        int totalrows = permissionList.Count;
+                        int totalrowsafterfiltering = permissionList.Count;
+                        permissionList = permissionList.Skip(start).Take(length).ToList();
+                        permissionList = permissionList.OrderBy(sortColumnName + " " + sortDirection).ToList();
+                        return Json(new { success = true, data = permissionList, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
         }
 
