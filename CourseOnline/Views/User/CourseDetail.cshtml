@@ -150,18 +150,19 @@
                 <a href="#" class="close" data-dismiss="modal">&times;</a>
             </div>
             <div class="modal-body">
-                <h5>@courseDetail.course_name</h5>
-                <h5>Your Information</h5>
+                <div class="text-center">
+                    <h2>@courseDetail.course_name</h2>
+                </div>
                 <form id="form">
                     <fieldset id="SubmitForm">
                         <div class="form-group">
-                            Your Name : <input disabled id="slName" value="@Session["Name"]" />
+                            Your Name : <input disabled id="slName" class="form-control form-control-lg" value="@Session["Name"]" />
                         </div>
                         <div class="form-group">
-                            Your Email : <input disabled id="slEmail" value="@Session["Email"]" />
+                            Your Email : <input disabled id="slEmail" class="form-control form-control-lg" value="@Session["Email"]" />
                         </div>
                         <div class="form-group">
-                            Name Subject : <input disabled id="slMobile" value="@courseDetail.subject_name" />
+                            Name Subject : <input disabled id="slMobile" class="form-control form-control-lg" value="@courseDetail.subject_name" />
                         </div>
                         <div class="form-group">
                             <a href="#" class="btn btn-block btn-danger" id="RegistrationCourse">Registration</a>

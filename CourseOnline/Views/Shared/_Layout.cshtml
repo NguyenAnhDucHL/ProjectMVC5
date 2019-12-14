@@ -165,32 +165,28 @@
                                             </a>
                                             <ul class="dropdown-menu">
                                                 <!-- User image -->
-                                                <li class="user-header">
+                                                <li class="user-header" style="background-color:#51BE78">
                                                     <img src="@(Session["Picture"] == null ? "" : Url.Content(@Session["Picture"].ToString()))" class="img-circle" alt="User Image">
                                                     <p>
                                                         @Session["Name"]
                                                     </p>
                                                     <p>@Session["Email"]</p>
                                                 </li>
-                                                <!-- Menu Body -->
-                                                <li class="user-body">
-                                                    <div class="row">
-                                                        <div class="col-xs-4 text-center">
-                                                            <a href="@Url.Action("YourCourse", "Home")">My Course</a>
-                                                        </div>
-                                                    </div>
-                                                    <!-- /.row -->
-                                                </li>
                                                 <!-- Menu Footer-->
                                                 <li class="user-footer">
-                                                    <div class="pull-left">
-                                                        <a href="@Url.Action("YourAcountInformation", "Home")" class="btn btn-default btn-flat">Profile</a>
-                                                    </div>
-                                                    <div class="pull-right">
-                                                        @using (Html.BeginForm("LogOff", "Home", FormMethod.Post, new { id = "logoutForm" }))
-                                                        {
-                                                            <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat"> Sign Out</a>
-                                                        }
+                                                    <div class="row">
+                                                        <div class="col-sm-3" style="margin-left:2px">
+                                                            <a href="@Url.Action("YourAcountInformation", "Home")" class="btn btn-default btn-flat">Profile</a>
+                                                        </div>
+                                                        <div class="col-sm-4" style="margin-left:2px">
+                                                            <a href="@Url.Action("YourCourse", "Home")" class="btn btn-default btn-flat">My Course</a>
+                                                        </div>
+                                                        <div class="col-sm-4" style="margin-left:6px">
+                                                            @using (Html.BeginForm("LogOff", "Home", FormMethod.Post, new { id = "logoutForm" }))
+                                                            {
+                                                                <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat"> Sign Out</a>
+                                                            }
+                                                        </div>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -340,10 +336,10 @@
 @RenderSection("scripts", required: false)
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-    <script>
-            if ($('#errorMessage').val() != "") {
-                 errorAlert("" + $('#errorMessage').val());
-            }
-    </script>
+<script>
+    if ($('#errorMessage').val() != "") {
+        errorAlert("" + $('#errorMessage').val());
+    }
+</script>
 
 
