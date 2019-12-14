@@ -1,0 +1,80 @@
+﻿@using CourseOnline.Models;
+@{
+    ViewBag.Title = "ReviewPraticeTest";
+    Layout = "~/Views/Shared/_Test_Layout.cshtml";
+    int count = 1, countR = 0;
+    List<QuestionModel> questionModels = ViewBag.questionModels;
+}
+
+<link href="~/Assets/customcss/pagination.css" rel="stylesheet" />
+<div class="container" onselectstart='return false;'>
+    <div class="Quiz">
+        <h4 style="margin-top: 4%;"> <span class="label label-info">Total Question : @questionModels.Count() </span> </h4>
+        <div class="contents">
+            @foreach (var question in questionModels)
+            {
+                <div class="BlockQ" style="border: 1px solid #bdbdbd; width: 75%; border-radius: 4px; margin-top: 40px; background-color: #f0ffff; padding: 8px;">
+
+                    <div class="Question" style="padding: 2%;">
+                        <span class="label label-warning"> @string.Format("{0}{1}.", "Q", count)</span>
+                        <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.questionID</span>
+                        <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.questiontext</p>
+                    </div>
+
+                    <div class="Choices" style="margin-left: 8%;">
+
+                        @foreach (var answer in question.answers)
+                        {
+                            if (question.useranswer == answer.answertext)
+                            {
+                                <label class="radio-inline">
+                                    <input disabled type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@answer.answertext" style="margin-left: -16px;" checked> @answer.answertext
+                                </label><br />
+                            }
+                            else
+                            {
+                                <label class="radio-inline">
+                                    <input disabled type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@answer.answertext" style="margin-left: -16px;"> @answer.answertext
+                                </label><br />
+                            }
+                            countR++;
+                        }
+                    </div>
+                    <br/>
+                    <div>
+                        @if (question.useranswer == question.correctanswer)
+                        {
+                            <div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Correct answer</div>
+                        }
+                        else if (question.useranswer != question.correctanswer)
+                        {
+                            <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Incorrect answer - The Correct Answer is @question.correctanswer</div>
+                        }
+                    </div>
+                </div>
+                count++;
+            }
+        </div>
+        <span id="countQuections" style="display:none;">@count</span>
+        <button type="button" id="ExitReview" style="margin-top: 5px" class="btn btn-default" value="ExitReview"><span class="glyphicon glyphicon-ok"></span> Exit Review </button>
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Assets/customjs/pagination.js"></script>
+    <script>
+            $(document).ready(function () {
+               $("#tab").pagination({
+                  items: 1,
+                  contents: 'contents',
+                  previous: 'Previous',
+                  next: 'Next',
+                  position: 'bottom',
+                  });
+            });
+      $('#ExitReview').on('click', function () {
+            window.location.href = '@Url.Action("SelectCourseToQuiz","Home")';
+        });
+    </script>
+}
+

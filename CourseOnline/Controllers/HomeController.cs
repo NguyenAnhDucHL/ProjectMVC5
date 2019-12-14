@@ -12,6 +12,7 @@ using PagedList;
 using CourseOnline.Global.Setting;
 using System.Net;
 using System.Globalization;
+using System.Linq.Dynamic;
 
 namespace CourseOnline.Controllers
 {
@@ -728,7 +729,7 @@ namespace CourseOnline.Controllers
 
         [HttpPost]
         public ActionResult SubmitQuiz(List<QuizResultModel> resultQuiz)
-           {
+        {
             var dateQuery = db.Database.SqlQuery<DateTime>("SELECT GETDATE()");
             DateTime serverEndDate = dateQuery.AsEnumerable().First();
             TimeSpan ts = TimeSpan.Parse((serverEndDate - (DateTime)Session["time_start_test_exam"]).ToString());
@@ -852,10 +853,10 @@ namespace CourseOnline.Controllers
             {
                 double old_average = (Convert.ToDouble(testResult.average.Substring(0, testResult.average.Length - 1))) / 10;
                 double new_average = (old_average * Convert.ToDouble(testResult.tested) + yourgrade) / (Convert.ToDouble(testResult.tested) + 1);
-                testResult.average = (Math.Round(new_average * 10,2)).ToString() + "%";
+                testResult.average = (Math.Round(new_average * 10, 2)).ToString() + "%";
                 double old_pass_rate = (Convert.ToDouble(testResult.pass_rate.Substring(0, testResult.pass_rate.Length - 1))) / 100;
                 double new_pass_rate = 0;
-                if (yourgrade < (courseWorkList.pass_rate/10))
+                if (yourgrade < (courseWorkList.pass_rate / 10))
                 {
                     new_pass_rate = old_pass_rate * Convert.ToDouble(testResult.tested) / (Convert.ToDouble(testResult.tested) + 1);
                 }
@@ -913,7 +914,7 @@ namespace CourseOnline.Controllers
             List<QuestionModel> lstQuestionModel = Session["testquizz"] as List<QuestionModel>;
             int subjectID = lstQuestionModel[0].subjectid;
             double numbercorrect = 0;
-            double time_test = Math.Round(Convert.ToDouble(Session["time_during_pratice"]) / 60, 2);    
+            double time_test = Math.Round(Convert.ToDouble(Session["time_during_pratice"]) / 60, 2);
             Exam exam = new Exam();
             exam.exam_level = "Practice";
             exam.exam_name = "Practice";
@@ -921,11 +922,11 @@ namespace CourseOnline.Controllers
             exam.subject_id = subjectID;
             exam.exam_duration = time_test;
             exam.exam_description = "practice quiz of student";
-            exam.test_type = "Practice Quiz";
+            exam.test_type = "Practice Test";
             exam.pass_rate = 0;
             db.Exams.Add(exam);
             db.SaveChanges();
-            List <QuizResultModel> finalResultQuiz = new List<QuizResultModel>();
+            List<QuizResultModel> finalResultQuiz = new List<QuizResultModel>();
 
             foreach (QuizResultModel answser in resultQuiz)
             {
@@ -961,14 +962,14 @@ namespace CourseOnline.Controllers
             }
             string email = Session["Email"].ToString();
             int userid = db.Users.Where(u => u.user_email == email).Select(u => u.user_id).FirstOrDefault();
- 
+
             TestResult testResult = new TestResult();
             testResult.user_id = userid;
             testResult.exam_id = db.Exams.Select(ex => ex.exam_id).Max();
-            testResult.test_type = "Exam Test";
+            testResult.test_type = "Pratice Test";
             testResult.tested = 1;
             double average = numbercorrect / lstQuestionModel.Count();
-            testResult.average = Math.Round(average * 100,2).ToString() + "%";
+            testResult.average = Math.Round(average * 100, 2).ToString() + "%";
             testResult.pass_rate = "100%";
             string time_start_test = Session["time_start_test_practice"].ToString();
             testResult.tested_at = time_start_test;
@@ -1000,7 +1001,7 @@ namespace CourseOnline.Controllers
 
         public ActionResult LessonDetail(int? id)
         {
-      
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -1056,7 +1057,7 @@ namespace CourseOnline.Controllers
             ViewBag.Current1 = lesson.lesson_name;
             ViewBag.lesson = lesson;
             ViewBag.lessonType = lesson.lesson_type;
-        
+
             return View("/Views/User/StudyOnline.cshtml");
         }
 
@@ -1104,7 +1105,7 @@ namespace CourseOnline.Controllers
                 List<QuestionModel> questionModels = new List<QuestionModel>();
                 foreach (int idques in questionID)
                 {
-                    List<QuestionModel> questions = (from q in db.Questions
+                    QuestionModel questions = (from q in db.Questions
                                                      where q.question_status == "Published" && q.question_id == idques
                                                      select new QuestionModel
                                                      {
@@ -1116,8 +1117,8 @@ namespace CourseOnline.Controllers
                                                              answertext = tq.answer_text,
                                                              isCorrect = tq.answer_corect,
                                                          }).ToList()
-                                                     }).ToList();
-                    questionModels.AddRange(questions);
+                                                     }).FirstOrDefault();
+                    questionModels.Add(questions);
                 }
 
                 Session["ExamTest"] = questionModels;
@@ -1128,5 +1129,76 @@ namespace CourseOnline.Controllers
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpPost]
+        public ActionResult GetAllPracticeTest()
+        {
+            int start = Convert.ToInt32(Request["start"]);
+            int length = Convert.ToInt32(Request["length"]);
+            string searchValue = Request["search[value]"];
+            string sortColumnName = Request["columns[" + Request["order[0][column]"] + "][name]"];
+            string sortDirection = Request["order[0][dir]"];
+            string email = Session["Email"].ToString();
+
+            var testdetail = (from tr in db.TestResults
+                             join ex in db.Exams.Where(ex => ex.exam_is_practice == true) on tr.exam_id equals ex.exam_id
+                             join s in db.Subjects on ex.subject_id equals s.subject_id
+                             join ur in db.Users.Where(ur => ur.user_email == email) on tr.user_id equals ur.user_id
+                             join c in db.Courses.Where(c => c.course_status == true) on s.subject_id equals c.subject_id
+                             select new ResultModel
+                             {
+                                 test_user_id = tr.test_user_id,
+                                 course_name = c.course_name,
+                                 subject_name = s.subject_name,
+                                 average = tr.average,
+                                 time_duration = ex.exam_duration ?? 0,
+                                 tested_at = tr.tested_at,
+                             }).ToList();
+
+            int totalrows = testdetail.Count;
+            int totalrowsafterfiltering = testdetail.Count;
+            testdetail = testdetail.Skip(start).Take(length).ToList();
+            testdetail = testdetail.OrderBy(sortColumnName + " " + sortDirection).ToList();
+            return Json(new { success = true, data = testdetail, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult PracticeReviewDetail(int id)
+        {
+            string email = Session["Email"].ToString();
+            int userid = db.Users.Where(u => u.user_email == email).Select(u => u.user_id).FirstOrDefault();
+            List<ResultModel> testdetail = (from t in db.TestResults.Where(t => t.test_user_id == id && t.user_id == userid)
+                              join q in db.TestAnswers on t.test_user_id equals q.test_user_id
+                              select new ResultModel
+                              {
+                                  test_answer_id = q.test_answer_id,
+                                  question_id = q.question_id,
+                                  user_answer = q.user_answer,
+                              }).ToList();
+            List<QuestionModel> questionModels = new List<QuestionModel>();
+            foreach (ResultModel resultModel in testdetail)
+            {
+                string corrrectresult = db.AnswerOptions.Where(ao => ao.question_id == resultModel.question_id && ao.answer_corect == true).Select(ao => ao.answer_text).FirstOrDefault();
+                QuestionModel questions = (from q in db.Questions
+                                                     where q.question_status == "Published" && q.question_id == resultModel.question_id
+                                                     select new QuestionModel
+                                                     {
+                                                         questionID = q.question_id,
+                                                         questiontext = q.question_name,
+                                                         useranswer = resultModel.user_answer,
+                                                         correctanswer = corrrectresult,
+                                                         answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                         {
+                                                             answerID = tq.answer_option_id,
+                                                             answertext = tq.answer_text,
+                                                             isCorrect = tq.answer_corect,
+                                                         }).ToList()
+                                                     }).FirstOrDefault();
+                    questionModels.Add(questions);
+            }
+            ViewBag.questionModels = questionModels;
+            return View("/Views/User/ReviewPraticeTest.cshtml");
+        }
+
     }
 }

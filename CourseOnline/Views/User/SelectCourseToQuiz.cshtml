@@ -4,9 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<CourseListModel> lstMyCourse = ViewBag.lstMyCourse;
 }
-<div class="container">
+<div class="container" style="margin-bottom: 100px">
     <div class="SelQuiz">
-        <div class="panel panel-default" style="width: 37%; margin: 20% 32%;">
+        <div class="panel panel-default" style="width: 37%; margin: 10% 32%;">
             <div class="panel-heading">Create Your Pratice Test  ^_^</div>
             <div class="panel-body">
                 <div class="form-group">
@@ -49,13 +49,67 @@
                     <button onclick="continuetoQuiz()" id="Enter" class="btn btn-success btn-lg" style="width:100%;"><span class="glyphicon glyphicon-ok"></span> Continue To Quiz </button>
                 }
             </div>
-
         </div>
-
+        <div class="row mb-5 justify-content-center text-center">
+            <h2 class="section-title-underline mb-3">
+                <span>Your Pratice Result</span>
+            </h2>
+        </div>
+        <table id="tb_testresult" class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Course Name</th>
+                    <th>Subject Name</th>
+                    <th>Mark</th>
+                    <th>Duration</th>
+                    <th>Tested At</th>
+                    <th class="col-sm-1">Review</th>
+                </tr>
+            </thead>
+        </table>
     </div>
 </div>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
 <script>
+    $('#tb_testresult').DataTable({
+            "ajax": {
+                "url": '@Url.Action("GetAllPracticeTest", "Home")',
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "test_user_id", "name": "test_user_id", "orderable": true },
+                { "data": "course_name", "name": "course_name", "orderable": true },
+                { "data": "subject_name", "name": "subject_name", "orderable": true },
+                { "data": "average", "name": "average", "orderable": true },
+                { "data": "time_duration", "name": "time_duration", "orderable": true },
+                { "data": "tested_at", "name": "tested_at", "orderable": true },
+                {
+                    "data": "test_user_id", "name": "test_user_id", "orderable": true, "render": function (data) {
+                        return "<div class='col-lg-6'><a href ='#' onclick=getReviewIdTest('" + data + "') style='width=100%;'>Review</a>" +
+                            "</div>"
+                    },
+                },
+            ],
+            "paging": true,
+            "pageLength": 10,
+            "ordering": true,
+            "serverSide": "true",
+            "order": [[0, "asc"]],
+            "searching": false
+    });
+
+    function getReviewIdTest(id) {
+         if (id != null) {
+               window.location.href ='@Url.Action("PracticeReviewDetail", "Home")?id=' + id;
+            }
+    }
+
     function continuetoQuiz() {
         window.location.href = '@Url.Action("TestOnline", "Home")';
     }

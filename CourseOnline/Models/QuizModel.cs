@@ -11,6 +11,8 @@ namespace CourseOnline.Models
         public string questiontext { get; set; } 
         public string subjectname { get; set; }
         public int subjectid { get; set; }
+        public string useranswer { get; set; }
+        public string correctanswer { get; set; }
         public ICollection<AnswerModel> answers { get; set; }
 
     }
