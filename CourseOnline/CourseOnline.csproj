@@ -1164,6 +1164,7 @@
     <Content Include="Views\CMS\Subject\DomainList.cshtml" />
     <Content Include="Views\User\PostDetail.cshtml" />
     <Content Include="Views\Error_404.cshtml" />
+    <Content Include="Views\User\ReviewPraticeTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
