@@ -49,5 +49,14 @@ namespace CourseOnline.Controllers
             ViewBag.post = post;
             return View("/Views/User/PostDetail.cshtml");
         }
+
+        public ActionResult DownloadFile(int? id)
+        {
+            Post post = db.Posts.Where(p => p.post_id == id).FirstOrDefault();
+            string path = post.post_document_link;
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+            string fileName = path.Split('\\').Last();
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
     }
 }

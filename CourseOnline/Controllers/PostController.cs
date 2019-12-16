@@ -368,14 +368,21 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult Import(HttpPostedFileBase pdfFile, string postID)
         {
-            STUDYONLINEEntities db = new STUDYONLINEEntities();
-            string path = Server.MapPath("~/PostFolder/" + pdfFile.FileName);
-            pdfFile.SaveAs(path);
-            int id = Convert.ToInt32(postID);
-            Post p = db.Posts.Where(pp => pp.post_id == id).FirstOrDefault();
-            p.post_document_link = path;
-            db.SaveChanges();
-            return RedirectToAction("PostDetail", "Post", new { id = id });
+            if(pdfFile != null)
+            {
+                STUDYONLINEEntities db = new STUDYONLINEEntities();
+                string path = Server.MapPath("~/PostFolder/" + pdfFile.FileName);
+                pdfFile.SaveAs(path);
+                int id = Convert.ToInt32(postID);
+                Post p = db.Posts.Where(pp => pp.post_id == id).FirstOrDefault();
+                p.post_document_link = path;
+                db.SaveChanges();
+                return RedirectToAction("PostDetail", "Post", new { id = id });
+            }else
+            {
+                int id = Convert.ToInt32(postID);
+                return RedirectToAction("PostDetail", "Post", new { id = id });
+            }
         }
     }
 }
