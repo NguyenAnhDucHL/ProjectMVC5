@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Linq.Dynamic;
 using CourseOnline.Models;
+using Newtonsoft.Json.Linq;
 
 namespace CourseOnline.Controllers
 {
@@ -65,7 +66,7 @@ namespace CourseOnline.Controllers
 
                     using (STUDYONLINEEntities db = new STUDYONLINEEntities())
                     {
-                        string sql = " select rm.role_menu_id, m.menu_name " +
+                        string sql = " select rm.role_menu_id, m.menu_name, m.menu_link, rm.roll_menu_status " +
                                         "from RoleMenu rm join Menu m " +
                                         "on rm.menu_id = m.menu_id";
 
@@ -80,5 +81,35 @@ namespace CourseOnline.Controllers
                 }
             }
         }
+
+        [HttpPost]
+        public ActionResult ChangeMenuStatus(string postJson)
+        {
+            try
+            {
+                using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                {
+                    dynamic changeStatus = JValue.Parse(postJson);
+                    int id = changeStatus.roleMenuId;
+
+                    RoleMenu r = db.RoleMenus.Where(ro => ro.role_menu_id == id).FirstOrDefault();
+                    if (r != null)
+                    {
+                        r.roll_menu_status = changeStatus.RoleMenuStatus;
+                        db.SaveChanges();
+                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }

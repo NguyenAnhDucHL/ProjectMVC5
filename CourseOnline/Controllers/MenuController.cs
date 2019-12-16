@@ -186,8 +186,17 @@ namespace CourseOnline.Controllers
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
                 var menu = db.Menus.Where(m => m.menu_id == id).FirstOrDefault();
-                if(menu != null)
+                if (menu != null)
                 {
+                    if (menu.menu_status == true)
+                    {
+                        var rolemenu = db.RoleMenus.Where(rm => rm.menu_id == id).FirstOrDefault();
+                        if (rolemenu != null)
+                        {
+                            db.RoleMenus.Remove(rolemenu);
+                            db.SaveChanges();
+                        }
+                    }
                     db.Menus.Remove(menu);
                     db.SaveChanges();
                     return Json(new { success = true}, JsonRequestBehavior.AllowGet);
@@ -196,10 +205,7 @@ namespace CourseOnline.Controllers
                 {
                     return Json(new { success = false }, JsonRequestBehavior.AllowGet);
                 }
-               
-
             }
-
         }
 
 
@@ -236,6 +242,16 @@ namespace CourseOnline.Controllers
                     m.menu_description = addmenu.shortDes;
                     db.Menus.Add(m);
                     db.SaveChanges();
+                    if(m.menu_status == true)
+                    {
+                        int id_new = db.Menus.DefaultIfEmpty().Max(me => me == null ? 0 : me.menu_id);
+                        RoleMenu r = new RoleMenu();
+                        r.role_id = 2;
+                        r.menu_id = id_new;
+                        r.roll_menu_status = false;
+                        db.RoleMenus.Add(r);
+                        db.SaveChanges();
+                    }
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -268,7 +284,6 @@ namespace CourseOnline.Controllers
                     string temp = null;
                     dynamic editmenu = JValue.Parse(postJson);
                     int id = editmenu.menuid;
-
                     Menu m = db.Menus.Where(menu => menu.menu_id == id).FirstOrDefault();
                     if (m != null)
                     {
@@ -276,14 +291,35 @@ namespace CourseOnline.Controllers
                         m.menu_link = editmenu.menuLink;
                         m.menu_order = editmenu.menuOrder;
                         temp = editmenu.menuStatus;
+                        bool status = new bool();
                         if (temp.Equals("Active"))
                         {
-                            m.menu_status = true;
+                            status = true;
                         }
                         else
                         {
-                            m.menu_status = false;
+                            status = false;
                         }
+                        if(m.menu_status != status)
+                        {
+                            if (status == true)
+                            {
+                                RoleMenu me = new RoleMenu();
+                                me.role_id = 2;
+                                me.menu_id = id;
+                                me.roll_menu_status = false;
+                                db.RoleMenus.Add(me);
+                            }
+                            else
+                            {
+                                var rolemenu = db.RoleMenus.Where(rm => rm.menu_id == id).FirstOrDefault();
+                                if (rolemenu != null)
+                                {
+                                    db.RoleMenus.Remove(rolemenu);
+                                }
+                            }
+                        }
+                        m.menu_status = status;
                         m.menu_description = editmenu.shortDes;
                         db.SaveChanges();
                         return Json(new { success = true }, JsonRequestBehavior.AllowGet);

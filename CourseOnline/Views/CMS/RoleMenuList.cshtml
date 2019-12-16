@@ -8,7 +8,7 @@
         Role Menus
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Home_CMS", "Home")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Role Menu</li>
     </ol>
 </section>
@@ -22,65 +22,113 @@
                     <table id="tb_menu_role" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th class="table-width5">ID</th>
-                                <th class="table-width80">Menu</th>
-                                <th class="table-width5">Role 1</th>
-                                <th class="table-width5">Role 2</th>
-                                <th class="table-width5">Role 3</th>
+                                <th>ID</th>
+                                <th>Menu Name</th>
+                                <th>Menu Link</th>
+                                <th class="col-sm-1">Tearcher's permission</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
-                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
         </div>
-        <!-- /.col -->
     </div>
-    <!-- /.row -->
 </section>
 @section scripts{
+    <script src="~/Assets/bootstrap/js/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
+        var dataTable;
     $(document).ready(function() {
-        $('#tb_menu_role').DataTable({
+        dataTable = $('#tb_menu_role').DataTable({
              "ajax": {
                 "url": '@Url.Action("GetAllRoleMenu", "RoleMenu")',
                 "type": "POST",
                 "datatype": "json",
             },
             "columns": [
-                { "data": "role_menu_id", "name": "role_menu_id", "orderable": true },
+                { "data": "role_menu_id", "name": "menu_id", "orderable": true },
                 { "data": "menu_name", "name": "menu_name", "orderable": true },
-                { "data": "role_menu_id", "render": function (data) {
-                        if (data) {
-                            return "<input type='checkbox' >";
-                        }
-                    },
-                    "orderable": false,
-                    "searchable": false },
-                { "data": "role_menu_id", "render": function (data) {
-                        if (data) {
-                            return "<input type='checkbox' >";
-                        }
-                    },
-                    "orderable": false,
-                    "searchable": false },
-                { "data": "role_menu_id", "render": function (data) {
-                        if (data) {
-                            return "<input type='checkbox' >";
-                        }
-                    },
-                    "orderable": false,
-                    "searchable": false },
+                { "data": "menu_link", "name": "menu_link", "orderable": true },
+                { "data": "total", "name": "total", "render": function (data) {
+                    if (data%10==1) {
+                        return "<input type='checkbox' onclick=EditRollActive('" + data + "') id='check_status' checked>";
+                    } else {
+                        return "<input type='checkbox' onclick=EditRollInactive('" + data + "') id='check_status'>"
+                    }
+                    }
+                },
             ],
         "paging": true,
-        "pageLength": 5,
+        "pageLength": 10,
         "ordering": true,
         "serverSide": "true",
         "order": [[0, "asc"]],
         "searching": false
         });
+
+        //bat su kien checkbox
+
+        $(function () {
+            $("#check_status").on('change', function () {
+                if ($(this).is(':checked')) {
+                    $(this).attr('value', 'true');
+                    EditRollTeacher
+                } else {
+                    $(this).attr('value', 'false');
+
+                }
+            })
+        })
     });
+
+        function EditRollActive(id)
+        {
+            var res = {
+                roleMenuId: Math.round(id/10,0),
+                RoleMenuStatus: false,
+            };
+            var postJson = JSON.stringify(res);
+
+        $.ajax({
+                url:'@Url.Action("ChangeMenuStatus","RollMenu")',
+                        type: "POST",
+                        data: { postJson: postJson },
+                        dataType: "json",
+                        success: (response) => {
+                            if (response.success) {
+                                dataTable.ajax.reload(); successAlert("Success", "Change Success")
+                            } else {
+                                errorAlert("Fail", "Change Fail")
+                            }
+                        },
+                        error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+        }
+
+        function EditRollInactive(id) {
+
+            var res = {
+                roleMenuId: Math.round(id/10,0),
+                RoleMenuStatus: true,
+            };
+            var postJson = JSON.stringify(res);
+
+        $.ajax({
+                url:'@Url.Action("ChangeMenuStatus","RollMenu")',
+                        type: "POST",
+                        data: { postJson: postJson },
+                        dataType: "json",
+                        success: (response) => {
+                            if (response.success) {
+                                dataTable.ajax.reload(); successAlert("Success", "Change Success")
+                            } else {
+                                errorAlert("Fail", "Change Fail")
+                            }
+                        },
+                        error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+        }
+
     </script>
 }
