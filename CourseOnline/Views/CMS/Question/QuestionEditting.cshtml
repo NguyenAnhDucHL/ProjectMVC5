@@ -196,7 +196,7 @@
                  $(this).closest('tr').remove();
             var checkoption =  +$('#checkcount').val() - 1;
             $('#checkcount').val(checkoption);
-     });
+        });
         };
 
 
@@ -205,12 +205,28 @@
         function SubmitEditQuestion() {
             var testAnswer= [];
             var answerOption = {};
+            var checkKey = 0;
+            var checkName = 0;
             for (var i = 1; i <= $('#checkcount').val(); i++) {
                 answerOption = {
                     answer_text: $('#optionText' + i).val(),
                     answer_corect: $('input[name=optionsCheckName'+ i +']:checked').val(),
                 }
+                if (answerOption.answer_corect != null) {
+                    checkKey++;
+                }
+                if (answerOption.answer_text == "") {
+                    checkName++;
+                }
                 testAnswer.push(answerOption);
+            }
+            if (checkKey == 0) {
+                errorAlert("Please select correct answer !");
+                return;
+            }
+            if (checkName != 0) {
+                 errorAlert("Please input answer text !");
+                 return;
             }
             if (testAnswer.length == 0) {
                 errorAlert("Answer not empty !");
