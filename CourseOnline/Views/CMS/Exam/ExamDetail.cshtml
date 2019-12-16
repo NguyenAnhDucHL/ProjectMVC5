@@ -98,7 +98,7 @@
                                     <label>Sum of questions </label>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" />
+                                    <input type="text" id="sum_of_question" />
                                 </div>
                             </div>
                         </div>
@@ -357,6 +357,11 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit Success");
+                        if ($('#sum_of_question').val() - $('#number_question_lesson').val() < 0) {
+                            errorAlert("Not Enough Question !!!");
+                        } else {
+                             $('#sum_of_question').val($('#sum_of_question').val() - $('#number_question_lesson').val()); 
+                        }
                     } else {
                         errorAlert("Submit Fail");
                     }
@@ -364,31 +369,6 @@
                 error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
         }
-
-        function removeOption() {
-          $("#optionTable").on('click','.btnDelete',function(){
-                 $(this).closest('tr').remove();
-                 var savequestion = {
-                  lessonID : $('#sl_listLesson').val(),
-                  number_question_lesson: $('#number_question_lesson').val(),
-                 }
-                 var postJson = JSON.stringify(savequestion);
-                 $.ajax({
-                     url: '@Url.Action("DeleteQuestionByLesson","Exam")',
-                     type: "POST",
-                     data: { postJson : postJson },
-                     dataType: "json",
-                     success: (response) => {
-                         if (response.success) {
-                             successAlert("Submit Success");
-                         } else {
-                             errorAlert("Submit Fail");
-                         }
-                     },
-                     error: (response) => { errorAlert("Opps!! Something wrong!") }
-                 });
-         });
-        };
 
         function saveNumberQuestionByDomain() {
             var savequestion = {
@@ -404,7 +384,11 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit Success");
-
+                        if ($('#sum_of_question').val() - $('#number_question_domain').val() < 0) {
+                            errorAlert("Not Enough Question !!!");
+                        } else {
+                             $('#sum_of_question').val($('#sum_of_question').val() - $('#number_question_domain').val()); 
+                        }
                     } else {
                         errorAlert("Submit Fail");
                     }
