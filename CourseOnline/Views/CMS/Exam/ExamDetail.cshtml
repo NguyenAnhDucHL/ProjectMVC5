@@ -92,17 +92,18 @@
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="content">
-                        <div class="form-group">
+                        <div class="form-group" id="Sum of questions">
                             <div class="row">
                                 <div class="col-sm-3">
                                     <label>Sum of questions </label>
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="text" id="sum_of_question" />
+                                    <button onclick="saveTotalQuestion()">Save</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="typeOfQuestion">
                             <div class="row">
                                 <div class="col-md-3">
                                     <label>Type of questions</label>
@@ -164,16 +165,25 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
+        var number = 0;
+        function saveTotalQuestion() {
+            $('#sum_of_question').prop('disabled', true);
+            $('#typeOfQuestion').fadeIn();
+            number = $('#sum_of_question').val();
+        }
+
         if ($('#sl_subject').val() == 'All Subject') {
-             $('#content_header').fadeOut();
+             $('#content_header').hide();
              $('#lstDomainNeed').fadeOut();
-             $('#lstLessonNeed').fadeOut();
+            $('#lstLessonNeed').fadeOut();
+            $('#typeOfQuestion').fadeOut();
         }
         $('#sl_subject').change(function () {
             if (this.value == 'All Subject') {
-                $('#content_header').fadeOut();
+                $('#content_header').show();
                 $('#lstDomainNeed').fadeOut();
-                $('#lstLessonNeed').fadeOut();
+               $('#lstLessonNeed').fadeOut();
+               $('#typeOfQuestion').fadeOut();
             } else {
            if ($("input[name='type_question']:checked").val() == 'Domain') {
              $.ajax({
@@ -183,8 +193,7 @@
              success: (response) => {
                  if (response.success) {
                      $('#content_header').fadeIn();
-                     $('#lstDomainNeed').fadeIn();
-                     $('#lstLessonNeed').fadeOut();
+                     $('#Sum of questions').fadeIn();
                      $('#sl_listDomain').find('option').remove();
                      for (var i = 0, len = response.data.length; i < len; ++i) {
                      $('#sl_listDomain').append(`<option value="${response.data[i].domain_id}">
@@ -208,8 +217,7 @@
              success: (response) => {
                  if (response.success) {
                      $('#content_header').fadeIn();
-                     $('#lstLessonNeed').fadeIn();
-                     $('#lstDomainNeed').fadeOut();
+                     $('#Sum of questions').fadeIn();
                      $('#sl_listLesson').find('option').remove();
                      for (var i = 0, len = response.data.length; i < len; ++i) {
                          if (response.data[i].lesson_id == response.data[i].parent_id) {
@@ -360,7 +368,7 @@
                         if ($('#sum_of_question').val() - $('#number_question_lesson').val() < 0) {
                             errorAlert("Not Enough Question !!!");
                         } else {
-                             $('#sum_of_question').val($('#sum_of_question').val() - $('#number_question_lesson').val()); 
+                             $('#sum_of_question').val($('#sum_of_question').val() - $('#number_question_lesson').val());
                         }
                     } else {
                         errorAlert("Submit Fail");
@@ -387,7 +395,7 @@
                         if ($('#sum_of_question').val() - $('#number_question_domain').val() < 0) {
                             errorAlert("Not Enough Question !!!");
                         } else {
-                             $('#sum_of_question').val($('#sum_of_question').val() - $('#number_question_domain').val()); 
+                             $('#sum_of_question').val($('#sum_of_question').val() - $('#number_question_domain').val());
                         }
                     } else {
                         errorAlert("Submit Fail");
@@ -411,6 +419,11 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit Success");
+                        if (number < +$('#sum_of_question').val() + + $('#number_question_lesson').val()) {
+                            return;
+                        } else {
+                            $('#sum_of_question').val(+$('#sum_of_question').val()+ + $('#number_question_lesson').val());
+                        }
                     } else {
                         errorAlert("Submit Fail");
                     }
@@ -433,6 +446,11 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit Success");
+                        if (number < + $('#sum_of_question').val() + + $('#number_question_domain').val()) {
+                            return;
+                        } else {
+                            $('#sum_of_question').val(+ $('#sum_of_question').val()+ + $('#number_question_domain').val());
+                        }
                     } else {
                         errorAlert("Submit Fail");
                     }
