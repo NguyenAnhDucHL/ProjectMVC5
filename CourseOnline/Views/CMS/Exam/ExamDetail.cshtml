@@ -257,7 +257,7 @@
                                             &nbsp;&nbsp;+ ${response.data[i].lesson_name}
                                       </option>`);
                              }
-             
+
                        }
                      } else {
 
@@ -350,7 +350,7 @@
             }
             var postJson = JSON.stringify(savequestion);
             $.ajax({
-                url: '@Url.Action("SaveLessonQuestion","Exam")',
+                url: '@Url.Action("SaveQuestionByLesson","Exam")',
                 type: "POST",
                 data: { postJson : postJson },
                 dataType: "json",
@@ -365,6 +365,31 @@
             });
         }
 
+        function removeOption() {
+          $("#optionTable").on('click','.btnDelete',function(){
+                 $(this).closest('tr').remove();
+                 var savequestion = {
+                  lessonID : $('#sl_listLesson').val(),
+                  number_question_lesson: $('#number_question_lesson').val(),
+                 }
+                 var postJson = JSON.stringify(savequestion);
+                 $.ajax({
+                     url: '@Url.Action("DeleteQuestionByLesson","Exam")',
+                     type: "POST",
+                     data: { postJson : postJson },
+                     dataType: "json",
+                     success: (response) => {
+                         if (response.success) {
+                             successAlert("Submit Success");
+                         } else {
+                             errorAlert("Submit Fail");
+                         }
+                     },
+                     error: (response) => { errorAlert("Opps!! Something wrong!") }
+                 });
+         });
+        };
+
         function saveNumberQuestionByDomain() {
             var savequestion = {
                 domainID : $('#sl_listDomain').val(),
@@ -372,13 +397,14 @@
             }
             var postJson = JSON.stringify(savequestion);
             $.ajax({
-                url: '@Url.Action("SaveLessonQuestion","Exam")',
+                url: '@Url.Action("SaveQuestionByDomain","Exam")',
                 type: "POST",
                 data: { postJson : postJson },
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit Success");
+
                     } else {
                         errorAlert("Submit Fail");
                     }
@@ -394,7 +420,7 @@
             }
             var postJson = JSON.stringify(savequestion);
             $.ajax({
-                url: '@Url.Action("DeleteLessonQuestion","Exam")',
+                url: '@Url.Action("DeleteQuestionByLesson","Exam")',
                 type: "POST",
                 data: { postJson : postJson },
                 dataType: "json",
@@ -416,7 +442,7 @@
             }
             var postJson = JSON.stringify(savequestion);
             $.ajax({
-                url: '@Url.Action("DeleteLessonQuestion","Exam")',
+                url: '@Url.Action("DeleteQuestionByDomain","Exam")',
                 type: "POST",
                 data: { postJson : postJson },
                 dataType: "json",

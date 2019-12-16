@@ -369,14 +369,12 @@ namespace CourseOnline.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveLessonQuestion(string postJson)
+        public ActionResult SaveQuestionByLesson(string postJson)
         {
             dynamic addNumberTest = JValue.Parse(postJson);
             ExamConfigModel examConfigModel = new ExamConfigModel();
             examConfigModel.lesson_id = addNumberTest.lessonID;
-            examConfigModel.lesson_size = addNumberTest.numberQuestion;
-            examConfigModel.domain_id = addNumberTest.domainID;
-            examConfigModel.domain_size = addNumberTest.numberQuestion;
+            examConfigModel.lesson_size = addNumberTest.number_question_lesson;
             if (examConfigModel.lesson_id != null)
             {
                 int check = 0;
@@ -393,16 +391,27 @@ namespace CourseOnline.Controllers
                     All.examConfigs.Add(examConfigModel);
                 }
             }
-            else if (examConfigModel.domain_id != null)
+            
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public ActionResult SaveQuestionByDomain(string postJson)
+        {
+            dynamic addNumberTest = JValue.Parse(postJson);
+            ExamConfigModel examConfigModel = new ExamConfigModel();
+            examConfigModel.domain_id = addNumberTest.domainID;
+            examConfigModel.domain_size = addNumberTest.number_question_domain;
+            if (examConfigModel.domain_id != null)
             {
-                List<ExamConfigModel> lstConfigModel = new List<ExamConfigModel>();
                 int check = 0;
                 foreach (ExamConfigModel examConfigs in All.examConfigs)
                 {
                     if (examConfigModel.domain_id == examConfigs.domain_id)
                     {
                         check++;
-                        All.examConfigs.Remove(examConfigs);
+                        examConfigs.domain_size = examConfigModel.domain_size;
                     }
                 }
                 if (check == 0)
@@ -410,12 +419,12 @@ namespace CourseOnline.Controllers
                     All.examConfigs.Add(examConfigModel);
                 }
             }
-
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
+
         [HttpPost]
-        public ActionResult DeleteLessonQuestion(string postJson)
+        public ActionResult DeleteQuestionByLesson(string postJson)
         {
             dynamic addNumberTest = JValue.Parse(postJson);
             ExamConfigModel examConfigModel = new ExamConfigModel();
@@ -431,8 +440,16 @@ namespace CourseOnline.Controllers
                     }
                 }
             }
-            else if (examConfigModel.domain_id != null)
-            {
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteQuestionByDomain(string postJson)
+        {
+            dynamic addNumberTest = JValue.Parse(postJson);
+            ExamConfigModel examConfigModel = new ExamConfigModel();
+             if (examConfigModel.domain_id != null)
+             {
                 examConfigModel.domain_id = addNumberTest.domainID;
                 examConfigModel.domain_size = addNumberTest.numberQuestion;
                 foreach (ExamConfigModel examConfigs in All.examConfigs)
