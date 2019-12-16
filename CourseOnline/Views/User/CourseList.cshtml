@@ -37,7 +37,7 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="course-1-item">
                         <figure class="thumnail">
-                            <a href="@Url.Action("CourseDetail","Home", new { @id = item.subject_id})"><img src="@(item.picture == null ? "" : Url.Content(@item.picture))" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
+                            <a href="@Url.Action("CheckYourCourse","Home", new { @id = item.course_id})"><img src="@(item.picture == null ? "" : Url.Content(@item.picture))" alt="Image" class="img-fluid" style="height:150px; width:500px; overflow:hidden"></a>
                             <div class="price" style="padding-top:1em">Start Date: @item.course_start_date</div>
                             <div class="category"><h3>@item.subject_name</h3></div>
                         </figure>
