@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="text" id="sum_of_question" />
-                                    <button onclick="saveTotalQuestion()">Save</button>
+                                    <button id ="totalQuestion" onclick="saveTotalQuestion()">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -168,6 +168,7 @@
         var number = 0;
         function saveTotalQuestion() {
             $('#sum_of_question').prop('disabled', true);
+            $('#totalQuestion').prop('disabled', true);
             $('#typeOfQuestion').fadeIn();
             number = $('#sum_of_question').val();
         }
