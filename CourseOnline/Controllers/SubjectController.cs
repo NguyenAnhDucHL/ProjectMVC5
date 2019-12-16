@@ -330,33 +330,5 @@ namespace CourseOnline.Controllers
             }
 
         }
-
-        [HttpGet]
-        public ActionResult SubjectLessonList(int id)
-        {
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
-            {
-                ViewBag.id = id;
-                Subject subject = db.Subjects.Where(s => s.subject_id == id).FirstOrDefault();
-                ViewBag.Subject = subject;
-                return View("/Views/CMS/Subject/SubjectLessonList.cshtml");
-            }
-        }
-
-        [HttpGet]
-        public ActionResult DomainList(int id)
-        {
-
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
-            {
-                ViewBag.id = id;
-                Subject subject = db.Subjects.Where(s => s.subject_id == id).FirstOrDefault();
-                ViewBag.Subject = subject;
-                return View("/Views/CMS/Subject/DomainList.cshtml");
-            }
-        }
-
- 
     }
 }

@@ -15,9 +15,15 @@ namespace CourseOnline.Controllers
     {
         // GET: SubjectLesson
         [Route("SubjectLessonList")]
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            return View("/Views/CMS/Subject/SubjectLessonList.cshtml");
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                ViewBag.id = id;
+                Subject subject = db.Subjects.Where(s => s.subject_id == id).FirstOrDefault();
+                ViewBag.Subject = subject;
+                return View("/Views/CMS/Subject/SubjectLessonList.cshtml");
+            }
         }
         [HttpPost]
         public ActionResult GetAllSubjectLesson(int id = -1)

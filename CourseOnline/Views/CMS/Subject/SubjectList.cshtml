@@ -179,14 +179,14 @@
     //bat su kien subject lesson
         function getSubjectLesson(id) {
             if (id != null) {
-               window.location.href ='@Url.Action("SubjectLessonList", "Subject")?id=' + id;
+               window.location.href ='@Url.Action("Index", "SubjectLesson")?id=' + id;
             }
         }
 
     //bat su kien subject lesson
         function getDomainList(id) {
             if (id != null) {
-               window.location.href ='@Url.Action("DomainList", "Subject")?id=' + id;
+               window.location.href ='@Url.Action("Index", "Domain")?id=' + id;
             }
         }
 

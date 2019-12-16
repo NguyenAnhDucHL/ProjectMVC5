@@ -15,9 +15,15 @@ namespace CourseOnline.Controllers
     {
         // GET: Domain
         [Route("DomainList")]
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            return View("/Views/CMS/Subject/SubjectEditting.cshtml");
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                ViewBag.id = id;
+                Subject subject = db.Subjects.Where(s => s.subject_id == id).FirstOrDefault();
+                ViewBag.Subject = subject;
+                return View("/Views/CMS/Subject/DomainList.cshtml");
+            }
         }
 
         [HttpPost]
