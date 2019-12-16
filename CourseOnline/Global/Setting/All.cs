@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CourseOnline.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -24,6 +25,6 @@ namespace CourseOnline.Global.Setting
         public static readonly int ALL_ID_SUBJECT = 187697411;
         public static readonly int ALL_COURSE = 0837060716;
         public static string Error_Message = "";
-    
+        public static List<ExamConfigModel> examConfigs = new List<ExamConfigModel>();
     }
 }

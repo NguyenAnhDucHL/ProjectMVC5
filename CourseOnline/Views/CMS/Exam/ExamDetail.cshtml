@@ -125,10 +125,11 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
-                                    <input id="number_question" placeholder="Input Question Number" />
+                                    <input id="number_question_domain" placeholder="Input Question Number" />
                                 </div>
                                 <div class="col-sm-3">
-                                    <button onclick="saveNumberQuestion()">Save</button>
+                                    <button onclick="saveNumberQuestionByDomain()">Save</button>
+                                    <button onclick="deleteNumberQuestionByDomain()">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -142,10 +143,11 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
-                                   <input id="number_question" placeholder="Input Question Number"/>
+                                    <input id="number_question_lesson" placeholder="Input Question Number" />
                                 </div>
                                 <div class="col-sm-3">
-                                    <button onclick="saveNumberQuestion()">Save</button>
+                                    <button onclick="saveNumberQuestionByLesson()">Save</button>
+                                    <button onclick="deleteNumberQuestionByLesson()">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -209,10 +211,16 @@
                      $('#lstLessonNeed').fadeIn();
                      $('#lstDomainNeed').fadeOut();
                      $('#sl_listLesson').find('option').remove();
-                  for (var i = 0, len = response.data.length; i < len; ++i) {
-                      $('#sl_listLesson').append(`<option value="${response.data[i].lesson_id}">
-                                       ${response.data[i].lesson_name}
+                     for (var i = 0, len = response.data.length; i < len; ++i) {
+                         if (response.data[i].lesson_id == response.data[i].parent_id) {
+                             $('#sl_listLesson').append(`<option style='background-color: #99D9EA' value="${response.data[i].lesson_id}">
+                                      -  ${response.data[i].lesson_name}
                                   </option>`);
+                         } else {
+                             $('#sl_listLesson').append(`<option value="${response.data[i].lesson_id}">
+                                    &nbsp;&nbsp;+ ${response.data[i].lesson_name}
+                             </option>`);
+                         }
                    }
                  } else {
 
@@ -239,10 +247,17 @@
                          $('#lstLessonNeed').fadeIn();
                          $('#lstDomainNeed').fadeOut();
                          $('#sl_listLesson').find('option').remove();
-                      for (var i = 0, len = response.data.length; i < len; ++i) {
-                          $('#sl_listLesson').append(`<option value="${response.data[i].lesson_id}">
-                                           ${response.data[i].lesson_name}
+                         for (var i = 0, len = response.data.length; i < len; ++i) {
+                             if (response.data[i].lesson_id == response.data[i].parent_id) {
+                                 $('#sl_listLesson').append(`<option style='background-color: #99D9EA' value="${response.data[i].lesson_id}">
+                                      -  ${response.data[i].lesson_name}
+                                  </option>`);
+                             } else {
+                               $('#sl_listLesson').append(`<option value="${response.data[i].lesson_id}">
+                                            &nbsp;&nbsp;+ ${response.data[i].lesson_name}
                                       </option>`);
+                             }
+             
                        }
                      } else {
 
@@ -328,16 +343,20 @@
             window.location.href = '@Url.Action("Index", "Exam")';
         }
 
-        function saveNumberQuestion() {
+        function saveNumberQuestionByLesson() {
+            var savequestion = {
+                lessonID : $('#sl_listLesson').val(),
+                number_question_lesson: $('#number_question_lesson').val(),
+            }
+            var postJson = JSON.stringify(savequestion);
             $.ajax({
-                url: '@Url.Action("SubmitExam","Exam")',
+                url: '@Url.Action("SaveLessonQuestion","Exam")',
                 type: "POST",
                 data: { postJson : postJson },
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit Success");
-                        turnOnEditMode();
                     } else {
                         errorAlert("Submit Fail");
                     }
@@ -346,5 +365,70 @@
             });
         }
 
+        function saveNumberQuestionByDomain() {
+            var savequestion = {
+                domainID : $('#sl_listDomain').val(),
+                number_question_domain : $('#number_question_domain').val(),
+            }
+            var postJson = JSON.stringify(savequestion);
+            $.ajax({
+                url: '@Url.Action("SaveLessonQuestion","Exam")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        successAlert("Submit Success");
+                    } else {
+                        errorAlert("Submit Fail");
+                    }
+                },
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+        }
+
+        function deleteNumberQuestionByLesson() {
+            var savequestion = {
+                lessonID : $('#sl_listLesson').val(),
+                number_question_lesson: $('#number_question_lesson').val(),
+            }
+            var postJson = JSON.stringify(savequestion);
+            $.ajax({
+                url: '@Url.Action("DeleteLessonQuestion","Exam")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        successAlert("Submit Success");
+                    } else {
+                        errorAlert("Submit Fail");
+                    }
+                },
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+        }
+
+         function deleteNumberQuestionByDomain() {
+            var savequestion = {
+                domainID : $('#sl_listDomain').val(),
+                number_question_domain : $('#number_question_domain').val(),
+            }
+            var postJson = JSON.stringify(savequestion);
+            $.ajax({
+                url: '@Url.Action("DeleteLessonQuestion","Exam")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        successAlert("Submit Success");
+                    } else {
+                        errorAlert("Submit Fail");
+                    }
+                },
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+        }
     </script>
 }

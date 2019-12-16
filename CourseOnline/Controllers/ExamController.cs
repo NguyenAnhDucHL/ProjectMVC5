@@ -207,6 +207,28 @@ namespace CourseOnline.Controllers
                     e.test_type = addExam.examType;
                     db.Exams.Add(e);
                     db.SaveChanges();
+                    foreach (ExamConfigModel examConfigModel in All.examConfigs)
+                    {
+                        if (examConfigModel.lesson_id != null)
+                        {
+                            ExamConfig examConfig = new ExamConfig();
+                            examConfig.exam_id = db.Exams.Select(ex => ex.exam_id).Max();
+                            examConfig.lesson_id = examConfigModel.lesson_id;
+                            examConfig.lesson_size = examConfig.lesson_size;
+                            db.ExamConfigs.Add(examConfig);
+                            db.SaveChanges();
+                        }else if(examConfigModel.domain_id != null)
+                        {
+                            ExamConfig examConfig = new ExamConfig();
+                            examConfig.exam_id = db.Exams.Select(ex => ex.exam_id).Max();
+                            examConfig.domain_id = examConfigModel.domain_id;
+                            examConfig.domain_size = examConfig.domain_size;
+                            db.ExamConfigs.Add(examConfig);
+                            db.SaveChanges();
+                        }
+                    }
+                    All.examConfigs = new List<ExamConfigModel>();
+
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -328,13 +350,14 @@ namespace CourseOnline.Controllers
             {
                 using (STUDYONLINEEntities db = new STUDYONLINEEntities())
                 {
-                    List<LessonModel> lstLesson = (from l in db.Lessons.Where(l => l.lesson_status == true)
+                    List<LessonModel> lstLesson = (from l in db.Lessons.Where(l => l.lesson_status == true && l.lesson_type != "Quiz")
                                                    join s in db.Subjects.Where(s => s.subject_id == id)
                                                    on l.subject_id equals s.subject_id
                                                    select new LessonModel
                                                    {
                                                        lesson_id = l.lesson_id,
                                                        lesson_name = l.lesson_name,
+                                                       parent_id = l.parent_id,
                                                    }).Distinct().ToList();
                     return Json(new { success = true, data = lstLesson }, JsonRequestBehavior.AllowGet);
                 }
@@ -346,30 +369,81 @@ namespace CourseOnline.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveLessonQuestion(string lessonID)
+        public ActionResult SaveLessonQuestion(string postJson)
         {
-            int id = Convert.ToInt32(lessonID);
-            try
+            dynamic addNumberTest = JValue.Parse(postJson);
+            ExamConfigModel examConfigModel = new ExamConfigModel();
+            examConfigModel.lesson_id = addNumberTest.lessonID;
+            examConfigModel.lesson_size = addNumberTest.numberQuestion;
+            examConfigModel.domain_id = addNumberTest.domainID;
+            examConfigModel.domain_size = addNumberTest.numberQuestion;
+            if (examConfigModel.lesson_id != null)
             {
-                using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                int check = 0;
+                foreach (ExamConfigModel examConfigs in All.examConfigs)
                 {
-                    List<LessonModel> lstLesson = (from l in db.Lessons.Where(l => l.lesson_status == true)
-                                                   join s in db.Subjects.Where(s => s.subject_id == id)
-                                                   on l.subject_id equals s.subject_id
-                                                   select new LessonModel
-                                                   {
-                                                       lesson_id = l.lesson_id,
-                                                       lesson_name = l.lesson_name,
-                                                   }).Distinct().ToList();
-                    return Json(new { success = true, data = lstLesson }, JsonRequestBehavior.AllowGet);
+                    if (examConfigModel.lesson_id == examConfigs.lesson_id)
+                    {
+                        check++;
+                        examConfigs.lesson_size = examConfigModel.lesson_size;
+                    }
+                }
+                if (check == 0)
+                {
+                    All.examConfigs.Add(examConfigModel);
                 }
             }
-            catch (Exception)
+            else if (examConfigModel.domain_id != null)
             {
-
-                throw;
+                List<ExamConfigModel> lstConfigModel = new List<ExamConfigModel>();
+                int check = 0;
+                foreach (ExamConfigModel examConfigs in All.examConfigs)
+                {
+                    if (examConfigModel.domain_id == examConfigs.domain_id)
+                    {
+                        check++;
+                        All.examConfigs.Remove(examConfigs);
+                    }
+                }
+                if (check == 0)
+                {
+                    All.examConfigs.Add(examConfigModel);
+                }
             }
 
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteLessonQuestion(string postJson)
+        {
+            dynamic addNumberTest = JValue.Parse(postJson);
+            ExamConfigModel examConfigModel = new ExamConfigModel();
+            if (examConfigModel.lesson_id != null)
+            {
+                examConfigModel.lesson_id = addNumberTest.lessonID;
+                examConfigModel.lesson_size = addNumberTest.numberQuestion;
+                foreach (ExamConfigModel examConfigs in All.examConfigs)
+                {
+                    if (examConfigModel.lesson_id == examConfigs.lesson_id)
+                    {
+                        All.examConfigs.Remove(examConfigs);
+                    }
+                }
+            }
+            else if (examConfigModel.domain_id != null)
+            {
+                examConfigModel.domain_id = addNumberTest.domainID;
+                examConfigModel.domain_size = addNumberTest.numberQuestion;
+                foreach (ExamConfigModel examConfigs in All.examConfigs)
+                {
+                    if (examConfigModel.domain_id == examConfigs.domain_id)
+                    {
+                        All.examConfigs.Remove(examConfigs);
+                    }
+                }
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
     }
 }

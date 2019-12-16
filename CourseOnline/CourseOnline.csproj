@@ -220,6 +220,7 @@
     <Compile Include="Models\ExamConfig.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ExamConfigModel.cs" />
     <Compile Include="Models\ExamListModel.cs" />
     <Compile Include="Models\ExamTest.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
