@@ -22,7 +22,7 @@
             <div class="nav-tabs-custom ">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#overview" data-toggle="tab">Overview</a></li>
-                    <li><a href="#content" data-toggle="tab">Content</a></li>
+                    <li><a href="#content" data-toggle="tab" id="content_header">Content</a></li>
 
                     <!-- /.tab-content -->
                 </ul>
@@ -36,6 +36,7 @@
                             <div class="form-group col-sm-6">
                                 <label>Subject</label>
                                 <select id="sl_subject" class="form-control edit-field">
+                                    <option>All Subject</option>
                                     @{
                                         foreach (Subject subject in subjectName)
                                         {
@@ -92,7 +93,14 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="content">
                         <div class="form-group">
-                            <label>Sum of questions </label><input type="text" />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label>Sum of questions </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" />
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
@@ -100,10 +108,44 @@
                                     <label>Type of questions</label>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="radio" name="gender" value="male"> Domain
+                                    <input type="radio" name="type_question" value="Domain" checked> Domain
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="radio" name="gender" value="male"> Topic
+                                    <input type="radio" name="type_question" value="Lesson"> Lesson
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="lstDomainNeed">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label>Choose Domain</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <select id="sl_listDomain" class="form-control">
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input id="number_question" placeholder="Input Question Number" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <button onclick="saveNumberQuestion()">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="lstLessonNeed">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label id="lesson_name">Choose Lesson</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <select id="sl_listLesson" class="form-control">
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                   <input id="number_question" placeholder="Input Question Number"/>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button onclick="saveNumberQuestion()">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -120,6 +162,121 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
+        if ($('#sl_subject').val() == 'All Subject') {
+             $('#content_header').fadeOut();
+             $('#lstDomainNeed').fadeOut();
+             $('#lstLessonNeed').fadeOut();
+        }
+        $('#sl_subject').change(function () {
+            if (this.value == 'All Subject') {
+                $('#content_header').fadeOut();
+                $('#lstDomainNeed').fadeOut();
+                $('#lstLessonNeed').fadeOut();
+            } else {
+           if ($("input[name='type_question']:checked").val() == 'Domain') {
+             $.ajax({
+             url:'@Url.Action("LoadDomain", "Exam")',
+             type: "POST",
+             data: { subjectID : $("#sl_subject").val() },
+             success: (response) => {
+                 if (response.success) {
+                     $('#content_header').fadeIn();
+                     $('#lstDomainNeed').fadeIn();
+                     $('#lstLessonNeed').fadeOut();
+                     $('#sl_listDomain').find('option').remove();
+                     for (var i = 0, len = response.data.length; i < len; ++i) {
+                     $('#sl_listDomain').append(`<option value="${response.data[i].domain_id}">
+                                       ${response.data[i].domain_name}
+                                  </option>`) ;
+                   }
+                 } else {
+
+                 }
+             },
+             error: (response) => {
+
+             },
+           })
+          }
+         else if ($("input[name='type_question']:checked").val() == 'Lesson') {
+           $.ajax({
+             url:'@Url.Action("LoadLesson", "Exam")',
+             type: "POST",
+             data: { subjectID : $("#sl_subject").val() },
+             success: (response) => {
+                 if (response.success) {
+                     $('#content_header').fadeIn();
+                     $('#lstLessonNeed').fadeIn();
+                     $('#lstDomainNeed').fadeOut();
+                     $('#sl_listLesson').find('option').remove();
+                  for (var i = 0, len = response.data.length; i < len; ++i) {
+                      $('#sl_listLesson').append(`<option value="${response.data[i].lesson_id}">
+                                       ${response.data[i].lesson_name}
+                                  </option>`);
+                   }
+                 } else {
+
+                 }
+               },
+              error: (response) => {
+             },
+           })
+        }
+       }
+      });
+
+
+         $("input[name='type_question']").on("change", function()
+           {
+            if ($("input[name='type_question']:checked").val() == 'Lesson') {
+                $.ajax({
+                 url:'@Url.Action("LoadLesson", "Exam")',
+                 type: "POST",
+                 data: { subjectID : $("#sl_subject").val() },
+                 success: (response) => {
+                     if (response.success) {
+                         $('#content_header').fadeIn();
+                         $('#lstLessonNeed').fadeIn();
+                         $('#lstDomainNeed').fadeOut();
+                         $('#sl_listLesson').find('option').remove();
+                      for (var i = 0, len = response.data.length; i < len; ++i) {
+                          $('#sl_listLesson').append(`<option value="${response.data[i].lesson_id}">
+                                           ${response.data[i].lesson_name}
+                                      </option>`);
+                       }
+                     } else {
+
+                     }
+                   },
+                  error: (response) => {
+                 },
+               })
+            } else if ($("input[name='type_question']:checked").val() == 'Domain') {
+               $.ajax({
+                 url:'@Url.Action("LoadDomain", "Exam")',
+                 type: "POST",
+                 data: { subjectID : $("#sl_subject").val() },
+                 success: (response) => {
+                     if (response.success) {
+                         $('#content_header').fadeIn();
+                         $('#lstDomainNeed').fadeIn();
+                         $('#lstLessonNeed').fadeOut();
+                         $('#sl_listDomain').find('option').remove();
+                         for (var i = 0, len = response.data.length; i < len; ++i) {
+                         $('#sl_listDomain').append(`<option value="${response.data[i].domain_id}">
+                                           ${response.data[i].domain_name}
+                                      </option>`) ;
+                       }
+                     } else {
+
+                     }
+                 },
+                 error: (response) => {
+
+                 },
+               })
+            }
+           });
 
         function turnOnEditMode() {
                 // bat trang thai edit
@@ -169,6 +326,24 @@
         };
         function goBack() {
             window.location.href = '@Url.Action("Index", "Exam")';
+        }
+
+        function saveNumberQuestion() {
+            $.ajax({
+                url: '@Url.Action("SubmitExam","Exam")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        successAlert("Submit Success");
+                        turnOnEditMode();
+                    } else {
+                        errorAlert("Submit Fail");
+                    }
+                },
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
         }
 
     </script>

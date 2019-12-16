@@ -110,17 +110,17 @@ namespace CourseOnline.Controllers
                 var examList = (from e in db.Exams
                                 join s in db.Subjects on e.subject_id equals s.subject_id
                                 where e.exam_name.Contains(type)
-                                   select new ExamListModel
-                                   {
-                                       exam_id = e.exam_id,
-                                       exam_name = e.exam_name,
-                                       subject_name = s.subject_name,
-                                       exam_level = e.exam_level,
-                                       exam_duration = e.exam_duration,
-                                       pass_rate = e.pass_rate,
-                                       test_type = e.test_type,
-                                       exam_description = e.exam_description,
-                                   }).ToList();
+                                select new ExamListModel
+                                {
+                                    exam_id = e.exam_id,
+                                    exam_name = e.exam_name,
+                                    subject_name = s.subject_name,
+                                    exam_level = e.exam_level,
+                                    exam_duration = e.exam_duration,
+                                    pass_rate = e.pass_rate,
+                                    test_type = e.test_type,
+                                    exam_description = e.exam_description,
+                                }).ToList();
                 int totalrows = examList.Count;
                 int totalrowsafterfiltering = examList.Count;
                 examList = examList.Skip(start).Take(length).ToList();
@@ -294,12 +294,82 @@ namespace CourseOnline.Controllers
             }
         }
 
-        //public ActionResult GetExam(int subjectID)
-        //{
-        //    using (STUDYONLINEEntities db = new STUDYONLINEEntities())
-        //    {
-                
-        //    }
-        //}
+        [HttpPost]
+        public ActionResult LoadDomain(string subjectID)
+        {
+            int id = Convert.ToInt32(subjectID);
+            try
+            {
+                using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                {
+                    List<DomainListModel> lstDomain = (from d in db.Domains.Where(d => d.domain_status == true)
+                                                       join s in db.Subjects.Where(s => s.subject_status == "Online" && s.subject_id == id)
+                                                       on d.subject_id equals s.subject_id
+                                                       select new DomainListModel
+                                                       {
+                                                           domain_id = d.domain_id,
+                                                           domain_name = d.domain_name,
+                                                           subject_id = s.subject_id,
+                                                       }).Distinct().ToList();
+                    return Json(new { success = true, data = lstDomain }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult LoadLesson(string subjectID)
+        {
+            int id = Convert.ToInt32(subjectID);
+            try
+            {
+                using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                {
+                    List<LessonModel> lstLesson = (from l in db.Lessons.Where(l => l.lesson_status == true)
+                                                   join s in db.Subjects.Where(s => s.subject_id == id)
+                                                   on l.subject_id equals s.subject_id
+                                                   select new LessonModel
+                                                   {
+                                                       lesson_id = l.lesson_id,
+                                                       lesson_name = l.lesson_name,
+                                                   }).Distinct().ToList();
+                    return Json(new { success = true, data = lstLesson }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SaveLessonQuestion(string lessonID)
+        {
+            int id = Convert.ToInt32(lessonID);
+            try
+            {
+                using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+                {
+                    List<LessonModel> lstLesson = (from l in db.Lessons.Where(l => l.lesson_status == true)
+                                                   join s in db.Subjects.Where(s => s.subject_id == id)
+                                                   on l.subject_id equals s.subject_id
+                                                   select new LessonModel
+                                                   {
+                                                       lesson_id = l.lesson_id,
+                                                       lesson_name = l.lesson_name,
+                                                   }).Distinct().ToList();
+                    return Json(new { success = true, data = lstLesson }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
     }
 }
