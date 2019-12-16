@@ -340,7 +340,7 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit Success");
-                        turnOnEditMode();
+                        window.location.href = '@Url.Action("Index", "Exam")';
                     } else {
                         errorAlert("Submit Fail");
                     }

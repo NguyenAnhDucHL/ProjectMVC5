@@ -214,7 +214,7 @@ namespace CourseOnline.Controllers
                             ExamConfig examConfig = new ExamConfig();
                             examConfig.exam_id = db.Exams.Select(ex => ex.exam_id).Max();
                             examConfig.lesson_id = examConfigModel.lesson_id;
-                            examConfig.lesson_size = examConfig.lesson_size;
+                            examConfig.lesson_size = examConfigModel.lesson_size;
                             db.ExamConfigs.Add(examConfig);
                             db.SaveChanges();
                         }else if(examConfigModel.domain_id != null)
@@ -222,7 +222,7 @@ namespace CourseOnline.Controllers
                             ExamConfig examConfig = new ExamConfig();
                             examConfig.exam_id = db.Exams.Select(ex => ex.exam_id).Max();
                             examConfig.domain_id = examConfigModel.domain_id;
-                            examConfig.domain_size = examConfig.domain_size;
+                            examConfig.domain_size = examConfigModel.domain_size;
                             db.ExamConfigs.Add(examConfig);
                             db.SaveChanges();
                         }
