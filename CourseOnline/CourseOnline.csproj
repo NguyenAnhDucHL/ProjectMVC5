@@ -1170,6 +1170,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Assets\IMGCMS\" />
     <Folder Include="Path\" />
+    <Folder Include="PostFolder\" />
     <Folder Include="Views\VerifyAcc\" />
   </ItemGroup>
   <ItemGroup>

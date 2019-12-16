@@ -58,7 +58,17 @@ else
                             <span>@post.post_type</span>
                         </h5>
                         <p>@Html.Raw(post.post_brief_info)</p>
-                        <a href="@Url.Action("PostDetail","News", new { id = post.post_id})" class="btn btn-primary px-4 rounded-0">Read More</a>
+                        @if (post.post_type == "Resourse")
+                        {
+                            if (post.post_document_link != null)
+                            {
+                                <a href = "@Url.Action("DownloadFile", "News", new { id = post.post_id })" class="btn btn-primary px-4 rounded-0">Download</a>
+                            }
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("PostDetail","News", new { id = post.post_id})" class="btn btn-primary px-4 rounded-0">Read More</a>
+                        }
                     </div>
                 </div>
             }
