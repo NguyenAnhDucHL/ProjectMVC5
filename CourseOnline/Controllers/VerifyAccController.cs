@@ -54,15 +54,15 @@ namespace CourseOnline.Controllers
                 }
                 else
                 {
-                    sql = "Select M.menu_link " +
+                    sql = "Select M.menu_link RM.roll_menu_status " +
                              "from Menu M " +
                              "join RoleMenu RM on M.menu_id = RM.menu_id " +
                              "where rm.role_id = @role_id";
 
-                    List<String> menus = db.Database.SqlQuery<String>(sql, new SqlParameter("role_id", role_id)).ToList();
-                    foreach (String menu in menus)
+                    List<RoleMenuModel> menus = db.Database.SqlQuery<RoleMenuModel>(sql, new SqlParameter("role_id", role_id)).ToList();
+                    foreach (RoleMenuModel m in menus)
                     {
-                        if (menu.Equals(menu_link))
+                        if (m.menu_link.Equals(menu_link) && m.roll_menu_status == true)
                         {
                             return "Accept";
                         }
