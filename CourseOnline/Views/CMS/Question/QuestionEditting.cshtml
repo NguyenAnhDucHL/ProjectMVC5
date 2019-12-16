@@ -12,7 +12,7 @@
     int id = ViewBag.id;
     int count = 0;
 }
-<input id="giang" hidden value="@count" />
+<input id="checkcount" hidden value="@count" />
 <section class="content-header">
     <h1>
         Question Details
@@ -131,7 +131,7 @@
 
                             }
                         </tbody>
-                        </table>
+                    </table>
                     <button class="btn btn-info" style="width : 8%;" onclick="turnOnEditMode()">Edit</button>
                     <button type="submit" style="width : 8%;" disabled class="btn btn-info edit-field" onclick="SubmitEditQuestion()">Submit</button>
                     <button type="submit" style="width : 8%;" class="btn btn-info" onclick="getBackQuestionList()">Back</button>
@@ -144,7 +144,7 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
-        $('#giang').val(@count);
+        $('#checkcount').val(@count);
         $(document).ready(function () {
             removeOption();
             setValueForComboBox();
@@ -177,12 +177,12 @@
         };
 
         function getAddOptionQuestion() {
-            var giiang =  +$('#giang').val() + 1;
-            $('#giang').val(giiang);
+            var checkoption =  +$('#checkcount').val() + 1;
+            $('#checkcount').val(checkoption);
              row ="<tr>" +
                               "  <td>Option </td>" +
-                             "   <td><input type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + giiang +"\"></td> " +
-                              "  <td><input type=\"radio\" class=\"form-group edit-field\" name=\"optionsCheckName" + giiang +"\"></td> " +
+                             "   <td><input type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption +"\"></td> " +
+                              "  <td><input type=\"radio\" class=\"form-group edit-field\" name=\"optionsCheckName" + checkoption +"\"></td> " +
                               "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete\" >Delete</button></td>" +
                            " </tr>"
            $('#optionTable > tbody:last-child').append(row);
@@ -194,8 +194,8 @@
         function removeOption() {
              $("#optionTable").on('click','.btnDelete',function(){
                  $(this).closest('tr').remove();
-            var giiang =  +$('#giang').val() - 1;
-            $('#giang').val(giiang);
+            var checkoption =  +$('#checkcount').val() - 1;
+            $('#checkcount').val(checkoption);
      });
         };
 
@@ -205,14 +205,18 @@
         function SubmitEditQuestion() {
             var testAnswer= [];
             var answerOption = {};
-            for (var i = 1; i <= $('#giang').val(); i++) {
+            for (var i = 1; i <= $('#checkcount').val(); i++) {
                 answerOption = {
                     answer_text: $('#optionText' + i).val(),
                     answer_corect: $('input[name=optionsCheckName'+ i +']:checked').val(),
                 }
                 testAnswer.push(answerOption);
             }
-            var ques = {
+            if (testAnswer.length == 0) {
+                errorAlert("Answer not empty !");
+                return;
+            } else {
+                var ques = {
                 id : @id,
                 quesStatus: $("#sl_questionStatus").val(),
                 quesLevel: $("#sl_questionLevel").val(),
@@ -241,6 +245,7 @@
                 },
                 error: (response) => { errorAlert("Opps!! Something wrong!") }
             });
+            }
         };
 
         // bat su kien back
