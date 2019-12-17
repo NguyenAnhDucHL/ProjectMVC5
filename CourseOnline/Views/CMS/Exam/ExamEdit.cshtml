@@ -97,7 +97,7 @@
                         <div class="form-group">
                             @if (sumofQuestion != -1)
                             {
-                                <label>Sum of questions </label><input type="text" id="sumOfQuesion" style="margin-left: 10px" value="@sumofQuestion" disabled />
+                                <label>Sum of questions </label><input type="text" id="sum_of_question" style="margin-left: 10px" value="@sumofQuestion" disabled />
                             }
                         </div>
                         <div class="form-group">
@@ -192,7 +192,7 @@
                                         <tr id="@examConfig.domain_id">
                                             <td>Your Option</td>
                                             <td><input disabled type="text" class="col-lg-10" value="@examConfig.domain_name"/></td>
-                                            <td><input disabled class="col-lg-10" value="@examConfig.domain_size"/></td>
+                                            <td><input disabled class="col-lg-10" id="@string.Format("{0}{1}", "number",examConfig.domain_id)" value="@examConfig.domain_size"/></td>
                                             <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
                                         </tr>
                                         }
@@ -208,7 +208,7 @@
                                             <tr id="@examConfig.exam_id">
                                                 <td>Your Option</td>
                                                 <td><input disabled type="text" class="col-lg-10" value="@examConfig.lesson_name" /></td>
-                                                <td><input disabled class="col-lg-10" value="@examConfig.lesson_size" /></td>
+                                                <td><input disabled class="col-lg-10" id="@string.Format("{0}{1}", "number",examConfig.lesson_id)" value="@examConfig.lesson_size" /></td>
                                                 <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
                                             </tr>
                                         }
@@ -299,5 +299,127 @@
         function goBack() {
             window.location.href = '@Url.Action("Index", "Exam")';
         }
+       function removeOption() {
+            $("#optionTable").on('click', '.btnDelete', function () {
+            var savequestion = {
+                lessonID : $(this).closest('tr').attr('id'),
+             }
+                if (0 > $('#sum_of_question').val() - $('#number' + savequestion.lessonID).val()) {
+                    return;
+                } else {
+                 $('#sum_of_question').val($('#sum_of_question').val() - $('#number' + savequestion.lessonID).val());
+                 var postJson = JSON.stringify(savequestion);
+                 $.ajax({
+                url: '@Url.Action("DeleteQuestionByLesson","Exam")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        successAlert("Submit Success");
+                        $(this).closest('tr').remove();
+                    } else {
+                        errorAlert("Submit Fail");
+                    }
+                },
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+                }
+         });
+        };
+        removeOption();
+
+        function removeOptionDomain() {
+            $("#optionTableDomain").on('click', '.btnDelete', function () {
+             var savequestion = {
+                domainID : $(this).closest('tr').attr('id'),
+            }
+              if (0 > $('#sum_of_question').val() - $('#number' + savequestion.domainID).val()) {
+                            return;
+              } else {
+                    $('#sum_of_question').val($('#sum_of_question').val() - $('#number' + savequestion.domainID).val());
+                    var postJson = JSON.stringify(savequestion);
+                    $(this).closest('tr').remove();
+                     $.ajax({
+                        url: '@Url.Action("DeleteQuestionByDomain","Exam")',
+                        type: "POST",
+                        data: { postJson : postJson },
+                        dataType: "json",
+                        success: (response) => {
+                    if (response.success) {
+                        successAlert("Submit Success");
+                        $(this).closest('tr').remove();
+                    } else {
+                        errorAlert("Submit Fail");
+                    }
+                },
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+                }
+         });
+        };
+        removeOptionDomain();
+        function saveNumberQuestionByLesson() {
+            var savequestion = {
+                lessonID : $('#sl_listLesson').val(),
+                number_question_lesson: $('#number_question_lesson').val(),
+            }
+            var postJson = JSON.stringify(savequestion);
+            $.ajax({
+                url: '@Url.Action("SaveQuestionByLesson","Exam")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        successAlert("Submit Success");
+                            $('#sum_of_question').val(+$('#sum_of_question').val() + + $('#number_question_lesson').val());
+                            var checkoption = $('#sl_listLesson').val();
+                            row ="<tr id = " + checkoption + ">" +
+                              "  <td>Your Option</td>" +
+                                "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption + "\" value=\"" + response.data.lesson_name + "\"></td> " +
+                                "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"number" + checkoption + "\" value=\""+ response.data.lesson_size + "\"></td> " +
+                                "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
+                            " </tr>"
+                           $('#optionTable > tbody:last-child').append(row);
+                    } else {
+                        errorAlert("Submit Fail");
+                    }
+                },
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+        }
+
+        function saveNumberQuestionByDomain() {
+            var savequestion = {
+                domainID : $('#sl_listDomain').val(),
+                number_question_domain : $('#number_question_domain').val(),
+            }
+            var postJson = JSON.stringify(savequestion);
+            $.ajax({
+                url: '@Url.Action("SaveQuestionByDomain","Exam")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        successAlert("Submit Success");
+                        $('#sum_of_question').val(+$('#sum_of_question').val() + + $('#number_question_domain').val());
+                        var checkoption = $('#sl_listDomain').val();
+                        row ="<tr id = " + checkoption + ">" +
+                          "  <td>Your Option</td>" +
+                          "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption + "\" value=\"" + response.data.domain_name + "\"></td> " +
+                          "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"number" + checkoption + "\" value=\""+response.data.domain_size + "\"></td> " +
+                          "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
+                        " </tr>"
+                       $('#optionTableDomain > tbody:last-child').append(row);
+                    } else {
+                        errorAlert("Submit Fail");
+                    }
+                },
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+        }
+
     </script>
 }

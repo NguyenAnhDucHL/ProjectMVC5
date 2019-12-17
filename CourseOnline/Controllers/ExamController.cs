@@ -237,32 +237,6 @@ namespace CourseOnline.Controllers
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        [HttpPost]
-        public ActionResult delExam(int id)
-        {
-            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
-            {
-                var exam = db.Exams.Where(s => s.exam_id == id).FirstOrDefault();
-                if (exam != null)
-                {
-                    List<ExamConfig> examConfigs = db.ExamConfigs.Where(n => n.exam_id == id).ToList();
-
-                    foreach(ExamConfig examConfig in examConfigs)
-                    {
-                        db.ExamConfigs.Remove(examConfig);
-                        db.SaveChanges();
-                    }
-                    db.Exams.Remove(exam);
-                    db.SaveChanges();
-                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json(new { success = false }, JsonRequestBehavior.AllowGet);
-                }
-            }
-
-        }
         [HttpGet]
         public ActionResult EditExam(int id)
         {

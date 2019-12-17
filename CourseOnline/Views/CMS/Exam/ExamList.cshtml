@@ -95,8 +95,6 @@
                     "data": "exam_id", "render": function (data) {
                         return "<div class='row'><div class='col-sm-6'><a onclick=getEditExam('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>" +
                                     "</div>" + 
-                                    "<div class='col-sm-6'><a onclick=getDeleteIdExam('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Delete'><i class='fa fa-trash'></i></a>" +
-								 "</div>" +
 								 "</div>";
                     },
                     "orderable": false,
@@ -152,27 +150,6 @@
             $('#sl_listType').on('change', function (e) {
                 doFilter();
             });
-        }
-        //delete slider theo id
-        function getDeleteIdExam(id) {
-            if (id != null) {
-                confirmAlert('Delete', 'Do you want to delete?', function submit() {
-                    $.ajax({
-                        url:'@Url.Action("delExam","Exam")',
-                        type: "POST",
-                        data: { id: id },
-                        datatype: "json",
-                        success: (response) => {
-                            if (response.success) {
-                                dataTable.ajax.reload(); successAlert("Success", "Delete Success")
-                            } else {
-                                errorAlert("Fail", "Delete Fail")
-                            }
-                        },
-                        error: (response) => { errorAlert("Fail", "Delete Fail") }
-                    });
-                });
-            }
         }
 
     </script>
