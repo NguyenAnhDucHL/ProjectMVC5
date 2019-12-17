@@ -187,14 +187,14 @@
                             {
                                 <table class="table table-bordered" id="optionTableDomain">
                                     <tbody>
-                                        @foreach(ExamConfigModel examConfig in lstExamConfigModel)
+                                        @foreach (ExamConfigModel examConfig in lstExamConfigModel)
                                         {
-                                        <tr id="@examConfig.domain_id">
-                                            <td>Your Option</td>
-                                            <td><input disabled type="text" class="col-lg-10" value="@examConfig.domain_name"/></td>
-                                            <td><input disabled class="col-lg-10" id="@string.Format("{0}{1}", "number",examConfig.domain_id)" value="@examConfig.domain_size"/></td>
-                                            <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
-                                        </tr>
+                                            <tr id="@examConfig.domain_id">
+                                                <td>Your Option</td>
+                                                <td><input disabled type="text" class="col-lg-10" value="@examConfig.domain_name" /></td>
+                                                <td><input disabled class="col-lg-10" id="@string.Format("{0}{1}", "number",examConfig.domain_id)" value="@examConfig.domain_size" /></td>
+                                                <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -205,7 +205,7 @@
                                     <tbody>
                                         @foreach (ExamConfigModel examConfig in lstExamConfigModel)
                                         {
-                                            <tr id="@examConfig.exam_id">
+                                            <tr id="@examConfig.lesson_id">
                                                 <td>Your Option</td>
                                                 <td><input disabled type="text" class="col-lg-10" value="@examConfig.lesson_name" /></td>
                                                 <td><input disabled class="col-lg-10" id="@string.Format("{0}{1}", "number",examConfig.lesson_id)" value="@examConfig.lesson_size" /></td>
@@ -373,15 +373,24 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit Success");
-                            $('#sum_of_question').val(+$('#sum_of_question').val() + + $('#number_question_lesson').val());
-                            var checkoption = $('#sl_listLesson').val();
-                            row ="<tr id = " + checkoption + ">" +
-                              "  <td>Your Option</td>" +
-                                "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption + "\" value=\"" + response.data.lesson_name + "\"></td> " +
-                                "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"number" + checkoption + "\" value=\""+ response.data.lesson_size + "\"></td> " +
-                                "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
-                            " </tr>"
-                           $('#optionTable > tbody:last-child').append(row);
+                        var check = 0;
+                        $('#sum_of_question').val(+$('#sum_of_question').val() + + $('#number_question_lesson').val());
+                        var checkoption = $('#sl_listLesson').val();
+                        $('#optionTable').find('input').each(function () {
+                            if ($(this).attr('id') == "number" + checkoption) {
+                                $("#number" + checkoption).val( +$("#number" + checkoption).val() + + response.data.lesson_size);
+                                check++;
+                            }
+                        });
+                        if (check == 0) {
+                        row ="<tr id = " + checkoption + ">" +
+                        "    <td>Your Option</td>" +
+                          "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption + "\" value=\"" + response.data.lesson_name + "\"></td> " +
+                          "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"number" + checkoption + "\" value=\""+ response.data.lesson_size + "\"></td> " +
+                          "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
+                      " </tr>"
+                        $('#optionTable > tbody:last-child').append(row);
+                        }
                     } else {
                         errorAlert("Submit Fail");
                     }
@@ -404,15 +413,24 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit Success");
+                        var check = 0;
                         $('#sum_of_question').val(+$('#sum_of_question').val() + + $('#number_question_domain').val());
                         var checkoption = $('#sl_listDomain').val();
-                        row ="<tr id = " + checkoption + ">" +
+                        $('#optionTable').find('input').each(function () {
+                        if ($(this).attr('id') == "number" + checkoption) {
+                           $("#number" + checkoption).val( +$("#number" + checkoption).val() + + response.data.domain_size);
+                           check++;
+                         }
+                        });
+                        if (check == 0) {
+                          row ="<tr id = " + checkoption + ">" +
                           "  <td>Your Option</td>" +
                           "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption + "\" value=\"" + response.data.domain_name + "\"></td> " +
                           "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"number" + checkoption + "\" value=\""+response.data.domain_size + "\"></td> " +
                           "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
-                        " </tr>"
+                          " </tr>"
                        $('#optionTableDomain > tbody:last-child').append(row);
+                        }
                     } else {
                         errorAlert("Submit Fail");
                     }

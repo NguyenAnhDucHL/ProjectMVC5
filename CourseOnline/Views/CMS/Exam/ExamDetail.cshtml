@@ -434,15 +434,24 @@
                         if ($('#sum_of_question').val() - $('#number_question_lesson').val() < 0) {
                             errorAlert("Not Enough Question !!!");
                         } else {
+                            var check = 0;
                             $('#sum_of_question').val($('#sum_of_question').val() - $('#number_question_lesson').val());
                             var checkoption = $('#sl_listLesson').val();
-                            row ="<tr id = " + checkoption + ">" +
-                              "  <td>Your Option</td>" +
-                                "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption + "\" value=\"" + response.data.lesson_name + "\"></td> " +
-                                "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"number" + checkoption + "\" value=\""+response.data.lesson_size+ "\"></td> " +
-                                "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
-                            " </tr>"
-                           $('#optionTable > tbody:last-child').append(row);
+                            $('#optionTable').find('input').each(function () {
+                            if ($(this).attr('id') == "number" + checkoption) {
+                                $("#number" + checkoption).val( +$("#number" + checkoption).val() + + response.data.lesson_size);
+                                check++;
+                            }
+                            });
+                            if (check == 0) {
+                                row = "<tr id = " + checkoption + ">" +
+                                    "  <td>Your Option</td>" +
+                                    "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption + "\" value=\"" + response.data.lesson_name + "\"></td> " +
+                                    "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"number" + checkoption + "\" value=\"" + response.data.lesson_size + "\"></td> " +
+                                    "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
+                                    " </tr>"
+                                $('#optionTable > tbody:last-child').append(row);
+                            }
                         }
                     } else {
                         errorAlert("Submit Fail");
@@ -466,11 +475,19 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit Success");
+                        var check = 0;
                         if ($('#sum_of_question').val() - $('#number_question_domain').val() < 0) {
                             errorAlert("Not Enough Question !!!");
                         } else {
                             $('#sum_of_question').val($('#sum_of_question').val() - $('#number_question_domain').val());
                             var checkoption = $('#sl_listDomain').val();
+                            $('#optionTable').find('input').each(function () {
+                              if ($(this).attr('id') == "number" + checkoption) {
+                                 $("#number" + checkoption).val( +$("#number" + checkoption).val() + + response.data.domain_size);
+                                 check++;
+                               }
+                            });
+                           if (check == 0) {
                             row ="<tr id = " + checkoption + ">" +
                               "  <td>Your Option</td>" +
                                 "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption + "\" value=\"" + response.data.domain_name + "\"></td> " +
@@ -478,6 +495,7 @@
                                 "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
                             " </tr>"
                            $('#optionTableDomain > tbody:last-child').append(row);
+                          }
                         }
                     } else {
                         errorAlert("Submit Fail");
