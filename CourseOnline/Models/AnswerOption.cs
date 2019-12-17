@@ -20,6 +20,5 @@ namespace CourseOnline.Models
         public int answer_option_id { get; set; }
     
         public virtual Question Question { get; set; }
-        public virtual Question Question1 { get; set; }
     }
 }

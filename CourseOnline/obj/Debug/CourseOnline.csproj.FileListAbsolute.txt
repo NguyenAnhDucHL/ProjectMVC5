@@ -116,3 +116,4 @@ E:\Sourcecode\CourseOnline\bin\Libs.Sheets.Interfaces.dll
 E:\Sourcecode\CourseOnline\bin\Libs.Sheets.OfficeOpenXml.dll
 E:\Sourcecode\CourseOnline\bin\OfficeOpenXml.Core.ExcelPackage.dll
 E:\Sourcecode\CourseOnline\bin\System.IO.FileSystem.Primitives.dll
+E:\Sourcecode\CourseOnline\obj\Debug\CourseOnline.csprojAssemblyReference.cache

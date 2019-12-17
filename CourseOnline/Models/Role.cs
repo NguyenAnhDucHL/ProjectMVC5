@@ -18,9 +18,7 @@ namespace CourseOnline.Models
         public Role()
         {
             this.RolePermissions = new HashSet<RolePermission>();
-            this.RolePermissions1 = new HashSet<RolePermission>();
             this.UserRoles = new HashSet<UserRole>();
-            this.UserRoles1 = new HashSet<UserRole>();
         }
     
         public int role_id { get; set; }
@@ -29,10 +27,6 @@ namespace CourseOnline.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RolePermission> RolePermissions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RolePermission> RolePermissions1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRole> UserRoles1 { get; set; }
     }
 }

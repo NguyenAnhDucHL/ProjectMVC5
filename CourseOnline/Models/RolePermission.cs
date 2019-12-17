@@ -20,8 +20,6 @@ namespace CourseOnline.Models
         public string role_name { get; set; }
     
         public virtual Permission Permission { get; set; }
-        public virtual Permission Permission1 { get; set; }
         public virtual Role Role { get; set; }
-        public virtual Role Role1 { get; set; }
     }
 }

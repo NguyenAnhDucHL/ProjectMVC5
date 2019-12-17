@@ -16,13 +16,11 @@ namespace CourseOnline.Models
     {
         public int exam_config_id { get; set; }
         public int exam_id { get; set; }
-        public int domain_id { get; set; }
-        public string domain_size { get; set; }
-        public int lesson_id { get; set; }
-        public string lesson_size { get; set; }
-        public string keywords { get; set; }
+        public Nullable<int> domain_id { get; set; }
+        public Nullable<int> domain_size { get; set; }
+        public Nullable<int> lesson_id { get; set; }
+        public Nullable<int> lesson_size { get; set; }
     
         public virtual Exam Exam { get; set; }
-        public virtual Exam Exam1 { get; set; }
     }
 }

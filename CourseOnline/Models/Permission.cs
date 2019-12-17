@@ -18,7 +18,6 @@ namespace CourseOnline.Models
         public Permission()
         {
             this.RolePermissions = new HashSet<RolePermission>();
-            this.RolePermissions1 = new HashSet<RolePermission>();
         }
     
         public int permission_id { get; set; }
@@ -29,7 +28,5 @@ namespace CourseOnline.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RolePermission> RolePermissions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RolePermission> RolePermissions1 { get; set; }
     }
 }

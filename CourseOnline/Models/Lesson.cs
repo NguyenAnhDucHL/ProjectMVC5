@@ -18,9 +18,7 @@ namespace CourseOnline.Models
         public Lesson()
         {
             this.Lesson1 = new HashSet<Lesson>();
-            this.Lesson11 = new HashSet<Lesson>();
             this.Questions = new HashSet<Question>();
-            this.Questions1 = new HashSet<Question>();
         }
     
         public int lesson_id { get; set; }
@@ -37,18 +35,11 @@ namespace CourseOnline.Models
         public Nullable<int> coursework_id { get; set; }
     
         public virtual Coursework Coursework { get; set; }
-        public virtual Coursework Coursework1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lesson> Lesson1 { get; set; }
         public virtual Lesson Lesson2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Lesson> Lesson11 { get; set; }
-        public virtual Lesson Lesson3 { get; set; }
         public virtual Subject Subject { get; set; }
-        public virtual Subject Subject1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Question> Questions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Question> Questions1 { get; set; }
     }
 }

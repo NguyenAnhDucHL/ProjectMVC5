@@ -18,9 +18,7 @@ namespace CourseOnline.Models
         public Menu()
         {
             this.Menu1 = new HashSet<Menu>();
-            this.Menu11 = new HashSet<Menu>();
             this.RoleMenus = new HashSet<RoleMenu>();
-            this.RoleMenus1 = new HashSet<RoleMenu>();
         }
     
         public int menu_id { get; set; }
@@ -35,11 +33,6 @@ namespace CourseOnline.Models
         public virtual ICollection<Menu> Menu1 { get; set; }
         public virtual Menu Menu2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Menu> Menu11 { get; set; }
-        public virtual Menu Menu3 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoleMenu> RoleMenus { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RoleMenu> RoleMenus1 { get; set; }
     }
 }

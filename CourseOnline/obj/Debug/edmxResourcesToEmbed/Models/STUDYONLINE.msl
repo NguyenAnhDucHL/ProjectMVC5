@@ -76,7 +76,6 @@
           <ScalarProperty Name="domain_size" ColumnName="domain_size" />
           <ScalarProperty Name="lesson_id" ColumnName="lesson_id" />
           <ScalarProperty Name="lesson_size" ColumnName="lesson_size" />
-          <ScalarProperty Name="keywords" ColumnName="keywords" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -196,6 +195,7 @@
           <ScalarProperty Name="role_menu_id" ColumnName="role_menu_id" />
           <ScalarProperty Name="role_id" ColumnName="role_id" />
           <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+          <ScalarProperty Name="roll_menu_status" ColumnName="roll_menu_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -327,22 +327,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PostTags">
-      <EntityTypeMapping TypeName="STUDYONLINEModel.PostTag">
-        <MappingFragment StoreEntitySet="PostTag">
-          <ScalarProperty Name="post_id" ColumnName="post_id" />
-          <ScalarProperty Name="tag_id" ColumnName="tag_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SubjectReferences">
-      <EntityTypeMapping TypeName="STUDYONLINEModel.SubjectReference">
-        <MappingFragment StoreEntitySet="SubjectReference">
-          <ScalarProperty Name="subject_id" ColumnName="subject_id" />
-          <ScalarProperty Name="post_id" ColumnName="post_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TestQuestions">
       <EntityTypeMapping TypeName="STUDYONLINEModel.TestQuestion">
         <MappingFragment StoreEntitySet="TestQuestion">
@@ -352,5 +336,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="PostTag" TypeName="STUDYONLINEModel.PostTag" StoreEntitySet="PostTag">
+      <EndProperty Name="Post">
+        <ScalarProperty Name="post_id" ColumnName="post_id" />
+      </EndProperty>
+      <EndProperty Name="Tag">
+        <ScalarProperty Name="tag_id" ColumnName="tag_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SubjectReference" TypeName="STUDYONLINEModel.SubjectReference" StoreEntitySet="SubjectReference">
+      <EndProperty Name="Post">
+        <ScalarProperty Name="post_id" ColumnName="post_id" />
+      </EndProperty>
+      <EndProperty Name="Subject">
+        <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

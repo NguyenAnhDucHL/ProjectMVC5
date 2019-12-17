@@ -22,10 +22,7 @@ namespace CourseOnline.Models
         public int test_id { get; set; }
     
         public virtual ExamTest ExamTest { get; set; }
-        public virtual ExamTest ExamTest1 { get; set; }
         public virtual Question Question { get; set; }
-        public virtual Question Question1 { get; set; }
         public virtual TestResult TestResult { get; set; }
-        public virtual TestResult TestResult1 { get; set; }
     }
 }

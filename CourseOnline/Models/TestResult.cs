@@ -18,7 +18,6 @@ namespace CourseOnline.Models
         public TestResult()
         {
             this.TestAnswers = new HashSet<TestAnswer>();
-            this.TestAnswers1 = new HashSet<TestAnswer>();
         }
     
         public int test_user_id { get; set; }
@@ -32,14 +31,9 @@ namespace CourseOnline.Models
         public string tested_at { get; set; }
     
         public virtual Exam Exam { get; set; }
-        public virtual Exam Exam1 { get; set; }
         public virtual ExamTest ExamTest { get; set; }
-        public virtual ExamTest ExamTest1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestAnswer> TestAnswers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TestAnswer> TestAnswers1 { get; set; }
         public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
     }
 }
