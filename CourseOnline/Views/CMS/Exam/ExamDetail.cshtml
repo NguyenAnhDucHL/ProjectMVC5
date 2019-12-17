@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="text" id="sum_of_question" />
-                                    <button id ="totalQuestion" onclick="saveTotalQuestion()">Save</button>
+                                    <button id="totalQuestion" onclick="saveTotalQuestion()">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +130,6 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <button onclick="saveNumberQuestionByDomain()">Save</button>
-                                    <button onclick="deleteNumberQuestionByDomain()">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -148,10 +147,17 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <button onclick="saveNumberQuestionByLesson()">Save</button>
-                                    <button onclick="deleteNumberQuestionByLesson()">Delete</button>
                                 </div>
                             </div>
                         </div>
+                        <table class="table table-bordered" id="optionTable">
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered" id="optionTableDomain">
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                     <!-- /.tab-pane -->
                 </div>
@@ -351,7 +357,66 @@
         function goBack() {
             window.location.href = '@Url.Action("Index", "Exam")';
         }
+        function removeOption() {
+            $("#optionTable").on('click', '.btnDelete', function () {
+            var savequestion = {
+                lessonID : $(this).closest('tr').attr('id'),
+             }
+                if (number < +$('#sum_of_question').val() + + $('#number' + savequestion.lessonID).val()) {
+                    return;
+                } else {
+                 $('#sum_of_question').val(+$('#sum_of_question').val() + + $('#number' + savequestion.lessonID).val());
+                 var postJson = JSON.stringify(savequestion);
+                 $.ajax({
+                url: '@Url.Action("DeleteQuestionByLesson","Exam")',
+                type: "POST",
+                data: { postJson : postJson },
+                dataType: "json",
+                success: (response) => {
+                    if (response.success) {
+                        successAlert("Submit Success");
+                        $(this).closest('tr').remove();
+                    } else {
+                        errorAlert("Submit Fail");
+                    }
+                },
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+                }
+         });
+        };
+        removeOption();
 
+        function removeOptionDomain() {
+            $("#optionTableDomain").on('click', '.btnDelete', function () {
+             var savequestion = {
+                domainID : $(this).closest('tr').attr('id'),
+            }
+              if (number < +$('#sum_of_question').val() + + $('#number' + savequestion.domainID).val()) {
+                            return;
+              } else {
+                    $('#sum_of_question').val(+$('#sum_of_question').val() + + $('#number' + savequestion.domainID).val());
+                    var postJson = JSON.stringify(savequestion);
+                    $(this).closest('tr').remove();
+                     $.ajax({
+                        url: '@Url.Action("DeleteQuestionByDomain","Exam")',
+                        type: "POST",
+                        data: { postJson : postJson },
+                        dataType: "json",
+                        success: (response) => {
+                    if (response.success) {
+                        successAlert("Submit Success");
+                        $(this).closest('tr').remove();
+                    } else {
+                        errorAlert("Submit Fail");
+                    }
+                },
+                error: (response) => { errorAlert("Opps!! Something wrong!") }
+            });
+                }
+         });
+        };
+        removeOptionDomain();
         function saveNumberQuestionByLesson() {
             var savequestion = {
                 lessonID : $('#sl_listLesson').val(),
@@ -369,7 +434,15 @@
                         if ($('#sum_of_question').val() - $('#number_question_lesson').val() < 0) {
                             errorAlert("Not Enough Question !!!");
                         } else {
-                             $('#sum_of_question').val($('#sum_of_question').val() - $('#number_question_lesson').val());
+                            $('#sum_of_question').val($('#sum_of_question').val() - $('#number_question_lesson').val());
+                            var checkoption = $('#sl_listLesson').val();
+                            row ="<tr id = " + checkoption + ">" +
+                              "  <td>Your Option</td>" +
+                                "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption + "\" value=\"" + response.data.lesson_name + "\"></td> " +
+                                "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"number" + checkoption + "\" value=\""+response.data.lesson_size+ "\"></td> " +
+                                "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
+                            " </tr>"
+                           $('#optionTable > tbody:last-child').append(row);
                         }
                     } else {
                         errorAlert("Submit Fail");
@@ -396,61 +469,15 @@
                         if ($('#sum_of_question').val() - $('#number_question_domain').val() < 0) {
                             errorAlert("Not Enough Question !!!");
                         } else {
-                             $('#sum_of_question').val($('#sum_of_question').val() - $('#number_question_domain').val());
-                        }
-                    } else {
-                        errorAlert("Submit Fail");
-                    }
-                },
-                error: (response) => { errorAlert("Opps!! Something wrong!") }
-            });
-        }
-
-        function deleteNumberQuestionByLesson() {
-            var savequestion = {
-                lessonID : $('#sl_listLesson').val(),
-                number_question_lesson: $('#number_question_lesson').val(),
-            }
-            var postJson = JSON.stringify(savequestion);
-            $.ajax({
-                url: '@Url.Action("DeleteQuestionByLesson","Exam")',
-                type: "POST",
-                data: { postJson : postJson },
-                dataType: "json",
-                success: (response) => {
-                    if (response.success) {
-                        successAlert("Submit Success");
-                        if (number < +$('#sum_of_question').val() + + $('#number_question_lesson').val()) {
-                            return;
-                        } else {
-                            $('#sum_of_question').val(+$('#sum_of_question').val()+ + $('#number_question_lesson').val());
-                        }
-                    } else {
-                        errorAlert("Submit Fail");
-                    }
-                },
-                error: (response) => { errorAlert("Opps!! Something wrong!") }
-            });
-        }
-
-         function deleteNumberQuestionByDomain() {
-            var savequestion = {
-                domainID : $('#sl_listDomain').val(),
-                number_question_domain : $('#number_question_domain').val(),
-            }
-            var postJson = JSON.stringify(savequestion);
-            $.ajax({
-                url: '@Url.Action("DeleteQuestionByDomain","Exam")',
-                type: "POST",
-                data: { postJson : postJson },
-                dataType: "json",
-                success: (response) => {
-                    if (response.success) {
-                        successAlert("Submit Success");
-                        if (number < + $('#sum_of_question').val() + + $('#number_question_domain').val()) {
-                            return;
-                        } else {
-                            $('#sum_of_question').val(+ $('#sum_of_question').val()+ + $('#number_question_domain').val());
+                            $('#sum_of_question').val($('#sum_of_question').val() - $('#number_question_domain').val());
+                            var checkoption = $('#sl_listDomain').val();
+                            row ="<tr id = " + checkoption + ">" +
+                              "  <td>Your Option</td>" +
+                                "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption + "\" value=\"" + response.data.domain_name + "\"></td> " +
+                                "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"number" + checkoption + "\" value=\""+response.data.domain_size + "\"></td> " +
+                                "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
+                            " </tr>"
+                           $('#optionTableDomain > tbody:last-child').append(row);
                         }
                     } else {
                         errorAlert("Submit Fail");

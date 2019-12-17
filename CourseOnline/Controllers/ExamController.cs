@@ -245,6 +245,13 @@ namespace CourseOnline.Controllers
                 var exam = db.Exams.Where(s => s.exam_id == id).FirstOrDefault();
                 if (exam != null)
                 {
+                    List<ExamConfig> examConfigs = db.ExamConfigs.Where(n => n.exam_id == id).ToList();
+
+                    foreach(ExamConfig examConfig in examConfigs)
+                    {
+                        db.ExamConfigs.Remove(examConfig);
+                        db.SaveChanges();
+                    }
                     db.Exams.Remove(exam);
                     db.SaveChanges();
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
@@ -375,6 +382,7 @@ namespace CourseOnline.Controllers
             ExamConfigModel examConfigModel = new ExamConfigModel();
             examConfigModel.lesson_id = addNumberTest.lessonID;
             examConfigModel.lesson_size = addNumberTest.number_question_lesson;
+            int id = addNumberTest.lessonID;
             if (examConfigModel.lesson_id != null)
             {
                 int check = 0;
@@ -391,8 +399,10 @@ namespace CourseOnline.Controllers
                     All.examConfigs.Add(examConfigModel);
                 }
             }
-            
-            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            STUDYONLINEEntities db = new STUDYONLINEEntities();
+            string lessonname = db.Lessons.Where(l => l.lesson_id == id).Select(l => l.lesson_name).FirstOrDefault();
+            examConfigModel.lesson_name = lessonname;
+            return Json(new { success = true, data = examConfigModel }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -403,6 +413,7 @@ namespace CourseOnline.Controllers
             ExamConfigModel examConfigModel = new ExamConfigModel();
             examConfigModel.domain_id = addNumberTest.domainID;
             examConfigModel.domain_size = addNumberTest.number_question_domain;
+            int id = addNumberTest.domainID;
             if (examConfigModel.domain_id != null)
             {
                 int check = 0;
@@ -419,7 +430,10 @@ namespace CourseOnline.Controllers
                     All.examConfigs.Add(examConfigModel);
                 }
             }
-            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            STUDYONLINEEntities db = new STUDYONLINEEntities();
+            string domainname = db.Domains.Where(l => l.domain_id == id).Select(l => l.domain_name).FirstOrDefault();
+            examConfigModel.domain_name = domainname;
+            return Json(new { success = true, data = examConfigModel }, JsonRequestBehavior.AllowGet);
         }
 
 
