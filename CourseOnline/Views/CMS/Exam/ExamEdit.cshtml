@@ -2,11 +2,16 @@
 @{
     ViewBag.Title = "Exam Detail";
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
-    List<Subject> subjectName = ViewBag.subjectName;
     List<Setting> listType = ViewBag.examType;
     int id = ViewBag.id;
     Exam ex = ViewBag.Exam;
     var listExamLevel = ViewBag.ExamLevel;
+    List<ExamConfig> examConfigs = ViewBag.examConfig;
+    List<LessonModel> lstlesson = ViewBag.lstLesson;
+    List<DomainListModel> lstDomain = ViewBag.lstDomain;
+
+    List<ExamConfigModel> lstExamConfigModel = ViewBag.examConfigModels;
+    int sumofQuestion = ViewBag.sumofquestion;
 }
 <section class="content-header">
     <h1>
@@ -90,21 +95,127 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="content">
                         <div class="form-group">
-                            <label>Sum of questions </label><input type="text" id="sumOfQuesion" style="margin-left: 10px"/>
+                            @if (sumofQuestion != -1)
+                            {
+                                <label>Sum of questions </label><input type="text" id="sumOfQuesion" style="margin-left: 10px" value="@sumofQuestion" disabled />
+                            }
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-3">
                                     <label>Type of questions</label>
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="radio" name="gender" value="male"> Domain
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="radio" name="gender" value="male"> Topic
-                                </div>
+                                @if (examConfigs != null)
+                                {
+                                    if (examConfigs[0].domain_id != null)
+                                    {
+                                        <div class="col-md-3">
+                                            <input type="radio" name="type_question" value="Domain" checked> Domain
+                                        </div>
+                                    }
+                                    else if (examConfigs[0].lesson_id != null)
+                                    {
+                                        <div class="col-md-3">
+                                            <input type="radio" name="type_question" value="Lesson" checked> Lesson
+                                        </div>
+                                    }
+                                }
                             </div>
                         </div>
+
+                        @if (examConfigs != null)
+                        {
+                            if (examConfigs[0].domain_id != null)
+                            {
+                                <div class="form-group" id="lstDomainNeed">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <label>Choose Domain</label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <select id="sl_listDomain" class="form-control">
+                                                @foreach (DomainListModel domainListModel in lstDomain)
+                                                {
+                                                    <option value="@domainListModel.domain_id"> @domainListModel.domain_name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="number" id="number_question_domain" placeholder="Input Number" min="1" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button onclick="saveNumberQuestionByDomain()">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (examConfigs[0].lesson_id != null)
+                            {
+                                <div class="form-group" id="lstLessonNeed">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <label id="lesson_name">Choose Lesson</label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <select id="sl_listLesson" class="form-control">
+                                                @foreach (LessonModel lessonModel in lstlesson)
+                                                {
+                                                    if (lessonModel.lesson_id == lessonModel.parent_id)
+                                                    {
+                                                        <option style='background-color: #99D9EA' value="@lessonModel.lesson_id">@lessonModel.lesson_name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@lessonModel.lesson_id">@lessonModel.lesson_name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="number" id="number_question_lesson" placeholder="Input Question Number" min="1" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button onclick="saveNumberQuestionByLesson()">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        @if (examConfigs != null)
+                        {
+                            if (examConfigs[0].domain_id != null)
+                            {
+                                <table class="table table-bordered" id="optionTableDomain">
+                                    <tbody>
+                                        @foreach(ExamConfigModel examConfig in lstExamConfigModel)
+                                        {
+                                        <tr id="@examConfig.domain_id">
+                                            <td>Your Option</td>
+                                            <td><input disabled type="text" class="col-lg-10" value="@examConfig.domain_name"/></td>
+                                            <td><input disabled class="col-lg-10" value="@examConfig.domain_size"/></td>
+                                            <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else if (examConfigs[0].lesson_id != null)
+                            {
+                                <table class="table table-bordered" id="optionTable">
+                                    <tbody>
+                                        @foreach (ExamConfigModel examConfig in lstExamConfigModel)
+                                        {
+                                            <tr id="@examConfig.exam_id">
+                                                <td>Your Option</td>
+                                                <td><input disabled type="text" class="col-lg-10" value="@examConfig.lesson_name" /></td>
+                                                <td><input disabled class="col-lg-10" value="@examConfig.lesson_size" /></td>
+                                                <td><button type="submit" class="btn btn-danger btnDelete">Delete</button></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        }
                     </div>
                     <!-- /.tab-pane -->
                 </div>

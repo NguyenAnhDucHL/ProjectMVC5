@@ -283,9 +283,65 @@ namespace CourseOnline.Controllers
                 ViewBag.ExamSetType = exam.test_type;
                 var listExamLevel = db.Exams.Select(e => e.exam_level).Distinct().ToList();
                 ViewBag.ExamLevel = listExamLevel;
-                List<Subject> listSubject = db.Subjects.Where(s => s.subject_name != null).ToList();
-                ViewBag.subjectName = listSubject;
                 ViewBag.id = id;
+
+                List<ExamConfig> examConfig = db.ExamConfigs.Where(s => s.exam_id == id).ToList();
+                if(examConfig.Count() != 0)
+                {
+                    ViewBag.examConfig = examConfig;
+                    int sumofquestion = 0;
+                    List<ExamConfigModel> examConfigModels = new List<ExamConfigModel>();
+                    foreach (ExamConfig examConfig1 in examConfig)
+                    {
+                        int size = examConfig1.lesson_size ?? 0;
+                        sumofquestion += size;
+                        if(examConfig1.domain_id != null)
+                        {
+                            ExamConfigModel examConfigModel = new ExamConfigModel();
+                            examConfigModel.domain_id = examConfig1.domain_id;
+                            examConfigModel.domain_name = db.Domains.Where(d => d.domain_id == examConfig1.domain_id).Select(d => d.domain_name).FirstOrDefault();
+                            examConfigModel.domain_size = examConfig1.domain_size;
+                            examConfigModels.Add(examConfigModel);
+                        }
+                        else if(examConfig1.lesson_id != null)
+                        {
+                            ExamConfigModel examConfigModel = new ExamConfigModel();
+                            examConfigModel.lesson_id = examConfig1.lesson_id;
+                            examConfigModel.lesson_name = db.Lessons.Where(d => d.lesson_id == examConfig1.lesson_id).Select(d => d.lesson_name).FirstOrDefault();
+                            examConfigModel.lesson_size = examConfig1.lesson_size;
+                            examConfigModels.Add(examConfigModel);
+                        }
+                    }
+                    ViewBag.examConfigModels = examConfigModels;
+                    ViewBag.sumofquestion = sumofquestion;
+
+                }
+                else
+                {
+                    ViewBag.examConfig = null;
+                    ViewBag.sumofquestion = -1;
+                }
+
+                List<LessonModel> lstLesson = (from l in db.Lessons.Where(l => l.lesson_status == true && l.lesson_type != "Quiz")
+                                               join s in db.Subjects.Where(s => s.subject_id == Exam1.subject_id)
+                                               on l.subject_id equals s.subject_id
+                                               select new LessonModel
+                                               {
+                                                   lesson_id = l.lesson_id,
+                                                   lesson_name = l.lesson_name,
+                                                   parent_id = l.parent_id,
+                                               }).Distinct().ToList();
+                ViewBag.lstLesson = lstLesson;
+                List<DomainListModel> lstDomain = (from d in db.Domains.Where(d => d.domain_status == true)
+                                                   join s in db.Subjects.Where(s => s.subject_status == "Online" && s.subject_id == Exam1.subject_id)
+                                                   on d.subject_id equals s.subject_id
+                                                   select new DomainListModel
+                                                   {
+                                                       domain_id = d.domain_id,
+                                                       domain_name = d.domain_name,
+                                                       subject_id = s.subject_id,
+                                                   }).Distinct().ToList();
+                ViewBag.lstDomain = lstDomain;
                 return View("/Views/CMS/Exam/ExamEdit.cshtml");
             }
         }
