@@ -229,12 +229,13 @@ namespace CourseOnline.Controllers
             return View("/Views/CMS/Test/AddTest.cshtml");
         }
         [HttpGet]
-        public ActionResult Result()
+        public ActionResult Result(int id)
         {
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
                 //var listBatch = db.TestBatches.Select(s => s.batch_name).Distinct().ToList();
-               // ViewBag.listBatch = listBatch;
+                // ViewBag.listBatch = listBatch;
+                ViewBag.id = id;
             }
                 return View("/Views/CMS/Test/ResultTest.cshtml");
         }

@@ -25,7 +25,7 @@ namespace CourseOnline.Controllers
             return View("/Views/CMS/Test/ResultTest.cshtml");
         }
         [HttpPost]
-        public ActionResult GetAllResult()
+        public ActionResult GetAllResult(int id)
         {
             int start = Convert.ToInt32(Request["start"]);
             int length = Convert.ToInt32(Request["length"]);
@@ -40,9 +40,10 @@ namespace CourseOnline.Controllers
                                 "join TestResult tr " +
                                 "on u.[user_id] = tr.[user_id] " +
                                 "join Grade g " +
-                                "on u.[user_id] = g.[user_id]";
+                                "on u.[user_id] = g.[user_id]" +
+                                " where tr.test_id = @id";
 
-                List<ResultModel> gradeListModels = db.Database.SqlQuery<ResultModel>(sql).ToList();
+                List<ResultModel> gradeListModels = db.Database.SqlQuery<ResultModel>(sql, new SqlParameter("id", id)).ToList();
 
                 int totalrows = gradeListModels.Count;
                 int totalrowsafterfiltering = gradeListModels.Count;
