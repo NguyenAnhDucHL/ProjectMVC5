@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.Linq.Dynamic;
 using CourseOnline.Global.Setting;
 using Newtonsoft.Json.Linq;
-
+using Excel = Microsoft.Office.Interop.Excel;
 namespace CourseOnline.Controllers
 {
     public class RegistrationController : Controller
@@ -46,6 +46,92 @@ namespace CourseOnline.Controllers
                         ViewBag.lststatus = lststatus;
                     }
                     return View("/Views/CMS/Registration/RegistrationList.cshtml");
+                }
+            }
+        }
+        [HttpPost]
+        public ActionResult Import(HttpPostedFileBase excelfile)
+        {
+            using (STUDYONLINEEntities db = new STUDYONLINEEntities())
+            {
+                var lstSubject = db.Subjects.Select(s => s.subject_name).Distinct().ToList();
+                ViewBag.lstSubject = lstSubject;
+
+                var lstCourse = db.Courses.Select(c => c.course_name).Distinct().ToList();
+                ViewBag.lstCourse = lstCourse;
+
+                var lststatus = db.Registrations.Select(r => r.registration_status).Distinct().ToList();
+                ViewBag.lststatus = lststatus;
+
+
+                if (excelfile == null || excelfile.ContentLength == 0)
+                {
+                    ViewBag.Error = "Please select ";
+                    return View("/Views/CMS/Registration/RegistrationList.cshtml");
+                }
+                else
+                {
+                    if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
+                    {
+                        string path = Server.MapPath("~/excelfolder/" + excelfile.FileName);
+                        if (System.IO.File.Exists(path))
+                        {
+                            ViewBag.Error = "File has been exist";
+                            return View("/Views/CMS/Registration/RegistrationList.cshtml");
+                        }
+                        excelfile.SaveAs(path);
+                        //Read data from excel file
+                        Excel.Application application = new Excel.Application();
+                        Excel.Workbook workbook = application.Workbooks.Open(path);
+                        Excel.Worksheet worksheet = workbook.ActiveSheet;
+                        Excel.Range range = worksheet.UsedRange;
+                        for (int row = 2; row <= range.Rows.Count; row++)
+                        {
+                            string email = ((Excel.Range)range.Cells[row, 2]).Text;
+
+                            string a = email;
+                            int intID = db.Users.Where(s => s.user_email == email).Select(s => s.user_id).FirstOrDefault();
+                            if (intID != 0)
+                            {
+                                
+                                Registration res = new Registration();
+                                res.user_id = intID;
+                                res.course_id = ((Excel.Range)range.Cells[row, 3]).Text;
+                                res.registration_status = "Approved";
+                                res.registration_time = DateTime.Now.ToString();
+                                db.Registrations.Add(res);
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                User u = new User();
+                                u.user_status = true;
+                                u.user_fullname = ((Excel.Range)range.Cells[row, 1]).Text;
+                                u.user_email = email;
+                                db.Users.Add(u);
+                                db.SaveChanges();
+                                UserRole ur = new UserRole();
+                                int temp = db.Users.DefaultIfEmpty().Max(pos => pos == null ? 0 : pos.user_id);
+                                ur.user_id = temp;
+                                ur.role_id = 3;
+                                db.UserRoles.Add(ur);
+                                db.SaveChanges();
+                                Registration res = new Registration();
+                                res.user_id = temp;
+                                res.course_id = ((Excel.Range)range.Cells[row, 3]).Text;
+                                res.registration_time = DateTime.Now.ToString();
+                                db.Registrations.Add(res);
+                                db.SaveChanges();
+                            }
+                        }
+                        ViewBag.Error = "Import success";
+                        return View("/Views/CMS/Registration/RegistrationList.cshtml");
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Inport fail";
+                        return View("/Views/CMS/Registration/RegistrationList.cshtml");
+                    }
                 }
             }
         }

@@ -3,6 +3,7 @@
     ViewBag.Title = "ResultTest";
     Layout = "~/Views/Shared/_CMS_Layout.cshtml";
     var listBatch = ViewBag.listBatch;
+    int idTest = ViewBag.id;
 }
 <section class="content-header">
     <h1>
@@ -52,7 +53,7 @@
         $(document).ready(function () {
             dataTable =  $('#tb_result').DataTable({
             "ajax": {
-                "url": '@Url.Action("GetAllResult", "ResultTest")',
+                "url": '@Url.Action("GetAllResult", "ResultTest", new { @id = idTest})',
                 "type": "POST",
                 "datatype": "json",
             },

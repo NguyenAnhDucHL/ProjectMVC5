@@ -55,8 +55,14 @@
                             }
                         </select>
                     </div>
-                    <div class="col-sm-1 pull-right">
-                        <button type="button" class="btn btn-link" onclick="" style="float:right;">Import</button>
+                    <div class="col-sm-2">
+                        @using (Html.BeginForm("Import", "Registration", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.Raw(ViewBag.Error)
+                            <span>Excel File</span>
+                            <input type="file" id="input_file" name="excelfile" class="edit-field" />
+                            <input id="primaryButton" type="submit" value="Import" class="edit-field" />
+                        }
                     </div>
                 </div>
                 <div class="box-body">

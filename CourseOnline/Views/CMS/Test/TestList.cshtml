@@ -126,8 +126,10 @@
                 window.location.href = '@Url.Action("EditTest", "Test")?id=' + id;
             }
         }
-        function getResult() {
-            window.location.href ='@Url.Action("Result", "Test")';
+        function getResult(id) {
+            if (id != null) {
+                window.location.href = '@Url.Action("Result", "Test")?id=' + id;
+            }
         }
 
     </script>

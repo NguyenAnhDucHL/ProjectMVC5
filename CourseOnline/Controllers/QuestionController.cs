@@ -102,7 +102,12 @@ namespace CourseOnline.Controllers
                     if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
                     {
                         string path = Server.MapPath("~/excelfolder/" + excelfile.FileName);
-                        excelfile.SaveAs(path);
+                        if (System.IO.File.Exists(path))
+                        {
+                            ViewBag.Error = "File has been exist";
+                            return View("/Views/CMS/Question/QuestionList.cshtml");
+                        }
+                            excelfile.SaveAs(path);
                         //Read data from excel file
                         Excel.Application application = new Excel.Application();
                         Excel.Workbook workbook = application.Workbooks.Open(path);
