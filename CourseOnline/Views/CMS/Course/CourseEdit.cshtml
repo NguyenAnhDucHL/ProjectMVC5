@@ -164,16 +164,16 @@
 
             var courseJson = JSON.stringify(course);
             if ($("#inp_name").val() == "") {
-                alert("Name not empty!");
+                errorAlert("Name not empty!");
                 return;
             } else if ($("#inp_StartDate").val() == "") {
-                alert("Start-Date not empty!");
+                errorAlert("Start-Date not empty!");
                 return;
             } else if ($("#inp_EndDate").val() == "") {
-                alert("End-Date is not empty!");
+                errorAlert("End-Date is not empty!");
                 return;
             } else if (n==1 || n==0) {
-                alert("End-Date is wrong!");
+                errorAlert("End-Date is wrong!");
                 return;
             }
 
@@ -184,10 +184,10 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.success) {
-                        alert("Submit Success");
+                        successAlert("Submit Success");
                         turnOnEditMode();
                     } else {
-                        alert("Submit Fail");
+                        errorAlert("Submit Fail");
                     }
                 },
                 error: (response) => { alert("Opps!! Something wrong!") }
