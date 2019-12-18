@@ -2,7 +2,7 @@
     ViewBag.Title = "Index";
 }
 ﻿@using CourseOnline.Models
-
+﻿@using CourseOnline.Global.Setting
 
 
 <!DOCTYPE html>
@@ -213,19 +213,19 @@
                     <div class="mr-auto">
                         <nav class="site-navigation position-relative text-right" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                                <li class="active">
+                                <li class="@Url.IsActive("Home_User", "Home")">
                                     <a href="@Url.Action("Home_User", "Home")" class="nav-link text-left">Home</a>
                                 </li>
-                                <li>
+                                <li class="@Url.IsActive("GuideList", "News")">
                                     <a href="@Url.Action("GuideList", "News")" class="nav-link text-left fa fa-fw fa-sort-desc">Guide</a>
                                 </li>
-                                <li>
+                                <li class="@Url.IsActive("ResourcesList", "News")">
                                     <a href="@Url.Action("ResourcesList", "News")" class="nav-link text-left">Resource</a>
                                 </li>
-                                <li>
+                                <li class="@Url.IsActive("ListCourses", "Home")">
                                     <a href="@Url.Action("ListCourses", "Home")" class="nav-link text-left">Course</a>
                                 </li>
-                                <li>
+                                <li class="@Url.IsActive("SelectCourseToQuiz", "Home")">
                                     <a href="@Url.Action("SelectCourseToQuiz", "Home")" class="nav-link text-left">Practice Test</a>
                                 </li>
                                 @if (Session["permission"] != null)

@@ -196,6 +196,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Global\Setting\All.cs" />
+    <Compile Include="Global\Setting\HtmlUtility.cs" />
     <Compile Include="Global\Setting\SettingGroup.cs" />
     <Compile Include="Global\Setting\SettingStatus.cs" />
     <Compile Include="Global\Setting\Status.cs" />

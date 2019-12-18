@@ -1,5 +1,5 @@
 ﻿@using CourseOnline.Models
-
+﻿@using CourseOnline.Global.Setting
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,13 +114,13 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar" style="height: auto;">
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu">
-                    <li class="treeview">
+                <ul class="sidebar-menu @Url.IsActive("Home_CMS", "Home")">
+                    <li class="treeview @Url.IsActive("Home_CMS", "Home")">
                         <a href="@Url.Action("Home_CMS","Home")">
                             <i class="fa fa-fw fa-television"></i> <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="treeview">
+                    <li class="treeview @Url.IsActive("Index", "Post") @Url.IsActive("Index", "Slider")">
                         <a href="#">
                             <i class="fa fa-fw fa-file-text"></i> <span>Public Content</span>
                             <span class="pull-right-container">
@@ -128,11 +128,11 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="@Url.Action("Index","Post")"><i class="fa fa-circle-o"></i> Posts</a></li>
-                            <li><a href="@Url.Action("Index","Slider")"><i class="fa fa-circle-o"></i> Sliders</a></li>
+                            <li class="@Url.IsActive("Index", "Post")"><a href="@Url.Action("Index","Post")"><i class="fa fa-circle-o"></i> Posts</a></li>
+                            <li class="@Url.IsActive("Index", "Slider")"><a href="@Url.Action("Index","Slider")"><i class="fa fa-circle-o"></i> Sliders</a></li>
                         </ul>
                     </li>
-                    <li class=" treeview">
+                    <li class="treeview @Url.IsActive("Index", "Subject") @Url.IsActive("Index", "Question")">
                         <a href="#">
                             <i class="fa fa-fw fa-graduation-cap"></i>
                             <span>Learning & Testing Content</span>
@@ -141,11 +141,11 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class=""><a href="@Url.Action("Index","Subject")"><i class="fa fa-circle-o"></i> Subjects List</a></li>
-                            <li class=""><a href="@Url.Action("Index","Question")"><i class="fa fa-circle-o"></i> Questions</a></li>
+                            <li class="@Url.IsActive("Index", "Subject")"><a href="@Url.Action("Index","Subject")"><i class="fa fa-circle-o"></i> Subjects List</a></li>
+                            <li class="@Url.IsActive("Index", "Question")"><a href="@Url.Action("Index","Question")"><i class="fa fa-circle-o"></i> Questions</a></li>
                         </ul>
                     </li>
-                    <li class="treeview">
+                    <li class="treeview @Url.IsActive("Index", "Exam") @Url.IsActive("Index","Test") @Url.IsActive("Index", "PraticeResult")">
                         <a href="#">
                             <i class="fa fa-fw fa-graduation-cap"></i>
                             <span>Testing Config & Report</span>
@@ -154,12 +154,12 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="exams-list"><a href="@Url.Action("Index","Exam")"><i class="fa fa-circle-o"></i> Exams List</a></li>
-                            <li class=""><a href="@Url.Action("Index","Test")"><i class="fa fa-circle-o"></i> Tests List</a></li>
-                            <li class=""><a href="@Url.Action("Index","PraticeResult")"><i class="fa fa-circle-o"></i> Practice Results</a></li>
+                            <li class="@Url.IsActive("Index", "Exam")"><a href="@Url.Action("Index","Exam")"><i class="fa fa-circle-o"></i> Exams List</a></li>
+                            <li class="@Url.IsActive("Index", "Test")"><a href="@Url.Action("Index","Test")"><i class="fa fa-circle-o"></i> Tests List</a></li>
+                            <li class="@Url.IsActive("Index", "PraticeResult")"><a href="@Url.Action("Index","PraticeResult")"><i class="fa fa-circle-o"></i> Practice Results</a></li>
                         </ul>
                     </li>
-                    <li class=" treeview">
+                    <li class=" treeview @Url.IsActive("Index", "Setting") @Url.IsActive("Index", "Menu") @Url.IsActive("Index", "Permissions") @Url.IsActive("Index", "User") @Url.IsActive("Index", "RoleMenu") @Url.IsActive("Index", "RolePermission")">
                         <a href="#">
                             <i class="fa fa-fw fa-sun-o"></i> <span>System Config</span>
                             <span class="pull-right-container">
@@ -167,15 +167,15 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="@Url.Action( "Index","Setting")"><i class="fa fa-circle-o"></i> Settings List</a></li>
-                            <li><a href="@Url.Action( "Index","Menu")"><i class="fa fa-circle-o"></i> Menus List</a></li>
-                            <li><a href="@Url.Action("Index","Permissions")"><i class="fa fa-circle-o"></i> Permissions</a></li>
-                            <li><a href="@Url.Action("Index","User")"><i class="fa fa-circle-o"></i> Users List</a></li>
-                            <li><a href="@Url.Action("Index","RoleMenu")"><i class="fa fa-circle-o"></i> Role Menus</a></li>
-                            <li><a href="@Url.Action("Index","RolePermission")"><i class="fa fa-circle-o"></i> Role Permissions</a></li>
+                            <li class="@Url.IsActive("Index", "Setting")"><a href="@Url.Action( "Index","Setting")"><i class="fa fa-circle-o"></i> Settings List</a></li>
+                            <li class="@Url.IsActive("Index", "Menu")"><a href="@Url.Action( "Index","Menu")"><i class="fa fa-circle-o"></i> Menus List</a></li>
+                            <li class="@Url.IsActive("Index", "Permissions")"><a href="@Url.Action("Index","Permissions")"><i class="fa fa-circle-o"></i> Permissions</a></li>
+                            <li class="@Url.IsActive("Index", "User")"><a href="@Url.Action("Index","User")"><i class="fa fa-circle-o"></i> Users List</a></li>
+                            <li class="@Url.IsActive("Index", "RoleMenu")"><a href="@Url.Action("Index","RoleMenu")"><i class="fa fa-circle-o"></i> Role Menus</a></li>
+                            <li class="@Url.IsActive("Index", "RolePermission")"><a href="@Url.Action("Index","RolePermission")"><i class="fa fa-circle-o"></i> Role Permissions</a></li>
                         </ul>
                     </li>
-                    <li class="treeview">
+                    <li class="treeview @Url.IsActive("Index", "Registration") @Url.IsActive("Index", "Course")">
                         <a href="#">
                             <i class="fa fa-edit"></i> <span>Course Management</span>
                             <span class="pull-right-container">
@@ -183,8 +183,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="@Url.Action("Index","Registration")"><i class="fa fa-circle-o"></i> Registrations</a></li>
-                            <li><a href="@Url.Action("Index","Course")"><i class="fa fa-circle-o"></i> Courses List</a></li>
+                            <li class="@Url.IsActive("Index", "Registration")"><a href="@Url.Action("Index","Registration")"><i class="fa fa-circle-o"></i> Registrations</a></li>
+                            <li class="@Url.IsActive("Index", "Course")"><a href="@Url.Action("Index","Course")"><i class="fa fa-circle-o"></i> Courses List</a></li>
                         </ul>
                     </li>
                 </ul>
