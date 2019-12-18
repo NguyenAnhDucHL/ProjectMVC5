@@ -418,9 +418,24 @@
         };
         removeOptionDomain();
         function saveNumberQuestionByLesson() {
-            var savequestion = {
-                lessonID : $('#sl_listLesson').val(),
-                number_question_lesson: $('#number_question_lesson').val(),
+           var checklesson = 0;
+            $('#optionTable').find('input').each(function () {
+                if ($(this).attr('id') == "number" + $('#sl_listLesson').val()) {
+                    checklesson++;
+                }
+            });
+            
+            var savequestion = {};
+            if (checklesson != 0) {
+                savequestion = {
+                    lessonID: $('#sl_listLesson').val(),
+                    number_question_lesson: +$("#number" + $('#sl_listLesson').val()).val() + + $('#number_question_lesson').val(),
+                }
+            } else {
+                 savequestion = {
+                    lessonID: $('#sl_listLesson').val(),
+                    number_question_lesson: $('#number_question_lesson').val(),
+                }
             }
             var postJson = JSON.stringify(savequestion);
             $.ajax({
@@ -439,7 +454,7 @@
                             var checkoption = $('#sl_listLesson').val();
                             $('#optionTable').find('input').each(function () {
                             if ($(this).attr('id') == "number" + checkoption) {
-                                $("#number" + checkoption).val( +$("#number" + checkoption).val() + + response.data.lesson_size);
+                                $("#number" + checkoption).val(response.data.lesson_size);
                                 check++;
                             }
                             });
@@ -462,9 +477,23 @@
         }
 
         function saveNumberQuestionByDomain() {
-            var savequestion = {
-                domainID : $('#sl_listDomain').val(),
-                number_question_domain : $('#number_question_domain').val(),
+            var checkdomain = 0;
+            $('#optionTableDomain').find('input').each(function () {
+                if ($(this).attr('id') == "number" + $('#sl_listDomain').val()) {
+                    checkdomain++;
+                }
+            });
+            var savequestion = {};
+            if (checkdomain != 0) {
+                savequestion = {
+                    domainID: $('#sl_listDomain').val(),
+                    number_question_domain: +$("#number" + $('#sl_listDomain').val()).val() + + $('#number_question_domain').val(),
+                }
+            } else {
+               savequestion = {
+                    domainID: $('#sl_listDomain').val(),
+                   number_question_domain: $('#number_question_domain').val(),
+                }
             }
             var postJson = JSON.stringify(savequestion);
             $.ajax({
@@ -483,7 +512,7 @@
                             var checkoption = $('#sl_listDomain').val();
                             $('#optionTable').find('input').each(function () {
                               if ($(this).attr('id') == "number" + checkoption) {
-                                 $("#number" + checkoption).val( +$("#number" + checkoption).val() + + response.data.domain_size);
+                                 $("#number" + checkoption).val(response.data.domain_size);
                                  check++;
                                }
                             });

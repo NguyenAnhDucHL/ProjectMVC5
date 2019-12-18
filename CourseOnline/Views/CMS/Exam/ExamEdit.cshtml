@@ -359,13 +359,12 @@
          });
         };
         removeOptionDomain();
+
         function saveNumberQuestionByLesson() {
             var checklesson = 0;
             $('#optionTable').find('input').each(function () {
                 if ($(this).attr('id') == "number" + $('#sl_listLesson').val()) {
                     checklesson++;
-                } else {
-                    size = $('#number_question_lesson').val();
                 }
             });
             
@@ -421,8 +420,6 @@
             $('#optionTableDomain').find('input').each(function () {
                 if ($(this).attr('id') == "number" + $('#sl_listDomain').val()) {
                     checkdomain++;
-                } else {
-                    size = $('#number_question_domain').val();
                 }
             });
             var savequestion = {};
