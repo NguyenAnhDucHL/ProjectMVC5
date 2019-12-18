@@ -217,7 +217,8 @@ namespace CourseOnline.Controllers
                             examConfig.lesson_size = examConfigModel.lesson_size;
                             db.ExamConfigs.Add(examConfig);
                             db.SaveChanges();
-                        }else if(examConfigModel.domain_id != null)
+                        }
+                        else if (examConfigModel.domain_id != null)
                         {
                             ExamConfig examConfig = new ExamConfig();
                             examConfig.exam_id = db.Exams.Select(ex => ex.exam_id).Max();
@@ -249,7 +250,7 @@ namespace CourseOnline.Controllers
                 ViewBag.Exam1 = Exam1;
                 ViewBag.SubjectSetName = Exam1.subject_name;
                 ViewBag.SubjectId = Exam1.subject_id;
-
+                All.examConfigs = new List<ExamConfigModel>();
                 List<Setting> listType = db.Settings.Where(s => s.setting_group_value.Equals(SettingGroup.EXAM_TYPES)).ToList();
                 ViewBag.examType = listType;
                 Exam exam = db.Exams.Where(s => s.exam_id == id).FirstOrDefault();
@@ -260,7 +261,7 @@ namespace CourseOnline.Controllers
                 ViewBag.id = id;
 
                 List<ExamConfig> examConfig = db.ExamConfigs.Where(s => s.exam_id == id).ToList();
-                if(examConfig.Count() != 0)
+                if (examConfig.Count() != 0)
                 {
                     ViewBag.examConfig = examConfig;
                     int sumofquestion = 0;
@@ -269,21 +270,23 @@ namespace CourseOnline.Controllers
                     {
                         int size = examConfig1.lesson_size ?? 0;
                         sumofquestion += size;
-                        if(examConfig1.domain_id != null)
+                        if (examConfig1.domain_id != null)
                         {
                             ExamConfigModel examConfigModel = new ExamConfigModel();
                             examConfigModel.domain_id = examConfig1.domain_id;
                             examConfigModel.domain_name = db.Domains.Where(d => d.domain_id == examConfig1.domain_id).Select(d => d.domain_name).FirstOrDefault();
                             examConfigModel.domain_size = examConfig1.domain_size;
                             examConfigModels.Add(examConfigModel);
+                            All.examConfigs.Add(examConfigModel);
                         }
-                        else if(examConfig1.lesson_id != null)
+                        else if (examConfig1.lesson_id != null)
                         {
                             ExamConfigModel examConfigModel = new ExamConfigModel();
                             examConfigModel.lesson_id = examConfig1.lesson_id;
                             examConfigModel.lesson_name = db.Lessons.Where(d => d.lesson_id == examConfig1.lesson_id).Select(d => d.lesson_name).FirstOrDefault();
                             examConfigModel.lesson_size = examConfig1.lesson_size;
                             examConfigModels.Add(examConfigModel);
+                            All.examConfigs.Add(examConfigModel);
                         }
                     }
                     ViewBag.examConfigModels = examConfigModels;
@@ -339,6 +342,36 @@ namespace CourseOnline.Controllers
                         ex.exam_description = edtExam.examDescription;
                         ex.test_type = edtExam.examType;
                         db.SaveChanges();
+
+                        List<ExamConfig> lstExamConfig = db.ExamConfigs.Where(s => s.exam_id == ex.exam_id).ToList();
+                        foreach (ExamConfig examConfig1 in lstExamConfig)
+                        {
+                            db.ExamConfigs.Remove(examConfig1);
+                            db.SaveChanges();
+                        }
+
+                        foreach (ExamConfigModel examConfigModel in All.examConfigs)
+                        {
+                            if (examConfigModel.lesson_id != null)
+                            {
+                                ExamConfig examConfig = new ExamConfig();
+                                examConfig.exam_id = ex.exam_id;
+                                examConfig.lesson_id = examConfigModel.lesson_id;
+                                examConfig.lesson_size = examConfigModel.lesson_size;
+                                db.ExamConfigs.Add(examConfig);
+                                db.SaveChanges();
+                            }
+                            else if (examConfigModel.domain_id != null)
+                            {
+                                ExamConfig examConfig = new ExamConfig();
+                                examConfig.exam_id = ex.exam_id;
+                                examConfig.domain_id = examConfigModel.domain_id;
+                                examConfig.domain_size = examConfigModel.domain_size;
+                                db.ExamConfigs.Add(examConfig);
+                                db.SaveChanges();
+                            }
+                        }
+                        All.examConfigs = new List<ExamConfigModel>();
                         return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                     }
                     else
@@ -472,16 +505,13 @@ namespace CourseOnline.Controllers
         {
             dynamic addNumberTest = JValue.Parse(postJson);
             ExamConfigModel examConfigModel = new ExamConfigModel();
-            if (examConfigModel.lesson_id != null)
+            examConfigModel.lesson_id = addNumberTest.lessonID;
+            examConfigModel.lesson_size = addNumberTest.numberQuestion;
+            foreach (ExamConfigModel examConfigs in All.examConfigs.ToList())
             {
-                examConfigModel.lesson_id = addNumberTest.lessonID;
-                examConfigModel.lesson_size = addNumberTest.numberQuestion;
-                foreach (ExamConfigModel examConfigs in All.examConfigs)
+                if (examConfigModel.lesson_id == examConfigs.lesson_id)
                 {
-                    if (examConfigModel.lesson_id == examConfigs.lesson_id)
-                    {
-                        All.examConfigs.Remove(examConfigs);
-                    }
+                    All.examConfigs.Remove(examConfigs);
                 }
             }
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
@@ -492,18 +522,15 @@ namespace CourseOnline.Controllers
         {
             dynamic addNumberTest = JValue.Parse(postJson);
             ExamConfigModel examConfigModel = new ExamConfigModel();
-             if (examConfigModel.domain_id != null)
-             {
                 examConfigModel.domain_id = addNumberTest.domainID;
                 examConfigModel.domain_size = addNumberTest.numberQuestion;
-                foreach (ExamConfigModel examConfigs in All.examConfigs)
+                foreach (ExamConfigModel examConfigs in All.examConfigs.ToList())
                 {
                     if (examConfigModel.domain_id == examConfigs.domain_id)
                     {
                         All.examConfigs.Remove(examConfigs);
                     }
                 }
-            }
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
     }

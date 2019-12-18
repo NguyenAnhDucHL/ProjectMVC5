@@ -288,7 +288,7 @@
                 success: (response) => {
                     if (response.success) {
                         successAlert("Submit Success");
-                        turnOnEditMode();
+                        window.location.href = '@Url.Action("Index", "Exam")';
                     } else {
                         errorAlert("Submit Fail");
                     }
@@ -360,9 +360,26 @@
         };
         removeOptionDomain();
         function saveNumberQuestionByLesson() {
-            var savequestion = {
-                lessonID : $('#sl_listLesson').val(),
-                number_question_lesson: $('#number_question_lesson').val(),
+            var checklesson = 0;
+            $('#optionTable').find('input').each(function () {
+                if ($(this).attr('id') == "number" + $('#sl_listLesson').val()) {
+                    checklesson++;
+                } else {
+                    size = $('#number_question_lesson').val();
+                }
+            });
+            
+            var savequestion = {};
+            if (checklesson != 0) {
+                savequestion = {
+                    lessonID: $('#sl_listLesson').val(),
+                    number_question_lesson: +$("#number" + $('#sl_listLesson').val()).val() + + $('#number_question_lesson').val(),
+                }
+            } else {
+                 savequestion = {
+                    lessonID: $('#sl_listLesson').val(),
+                    number_question_lesson: $('#number_question_lesson').val(),
+                }
             }
             var postJson = JSON.stringify(savequestion);
             $.ajax({
@@ -378,16 +395,16 @@
                         var checkoption = $('#sl_listLesson').val();
                         $('#optionTable').find('input').each(function () {
                             if ($(this).attr('id') == "number" + checkoption) {
-                                $("#number" + checkoption).val( +$("#number" + checkoption).val() + + response.data.lesson_size);
+                                $("#number" + checkoption).val(response.data.lesson_size);
                                 check++;
                             }
                         });
                         if (check == 0) {
                         row ="<tr id = " + checkoption + ">" +
                         "    <td>Your Option</td>" +
-                          "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption + "\" value=\"" + response.data.lesson_name + "\"></td> " +
-                          "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"number" + checkoption + "\" value=\""+ response.data.lesson_size + "\"></td> " +
-                          "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
+                          "  <td><input disabled type=\"text\" class=\"col-lg-10 \" id=\"optionText" + checkoption + "\" value=\"" + response.data.lesson_name + "\"></td> " +
+                          "  <td><input disabled type=\"text\" class=\"col-lg-10 \" id=\"number" + checkoption + "\" value=\""+ response.data.lesson_size + "\"></td> " +
+                          "  <td><button type=\"submit\" class=\"btn btn-danger btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
                       " </tr>"
                         $('#optionTable > tbody:last-child').append(row);
                         }
@@ -400,9 +417,25 @@
         }
 
         function saveNumberQuestionByDomain() {
-            var savequestion = {
-                domainID : $('#sl_listDomain').val(),
-                number_question_domain : $('#number_question_domain').val(),
+           var checkdomain = 0;
+            $('#optionTableDomain').find('input').each(function () {
+                if ($(this).attr('id') == "number" + $('#sl_listDomain').val()) {
+                    checkdomain++;
+                } else {
+                    size = $('#number_question_domain').val();
+                }
+            });
+            var savequestion = {};
+            if (checkdomain != 0) {
+                savequestion = {
+                    domainID: $('#sl_listDomain').val(),
+                    number_question_domain: +$("#number" + $('#sl_listDomain').val()).val() + + $('#number_question_domain').val(),
+                }
+            } else {
+               savequestion = {
+                    domainID: $('#sl_listDomain').val(),
+                   number_question_domain: $('#number_question_domain').val(),
+                }
             }
             var postJson = JSON.stringify(savequestion);
             $.ajax({
@@ -416,18 +449,18 @@
                         var check = 0;
                         $('#sum_of_question').val(+$('#sum_of_question').val() + + $('#number_question_domain').val());
                         var checkoption = $('#sl_listDomain').val();
-                        $('#optionTable').find('input').each(function () {
+                        $('#optionTableDomain').find('input').each(function () {
                         if ($(this).attr('id') == "number" + checkoption) {
-                           $("#number" + checkoption).val( +$("#number" + checkoption).val() + + response.data.domain_size);
+                           $("#number" + checkoption).val(response.data.domain_size);
                            check++;
                          }
                         });
                         if (check == 0) {
                           row ="<tr id = " + checkoption + ">" +
                           "  <td>Your Option</td>" +
-                          "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"optionText" + checkoption + "\" value=\"" + response.data.domain_name + "\"></td> " +
-                          "  <td><input disabled type=\"text\" class=\"col-lg-10 edit-field\" id=\"number" + checkoption + "\" value=\""+response.data.domain_size + "\"></td> " +
-                          "  <td><button type=\"submit\" class=\"btn btn-danger edit-field btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
+                          "  <td><input disabled type=\"text\" class=\"col-lg-10 \" id=\"optionText" + checkoption + "\" value=\"" + response.data.domain_name + "\"></td> " +
+                          "  <td><input disabled type=\"text\" class=\"col-lg-10 \" id=\"number" + checkoption + "\" value=\""+response.data.domain_size + "\"></td> " +
+                          "  <td><button type=\"submit\" class=\"btn btn-danger  btnDelete id=\"" + checkoption + "\">Delete</button></td>" +
                           " </tr>"
                        $('#optionTableDomain > tbody:last-child').append(row);
                         }
