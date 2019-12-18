@@ -258,6 +258,7 @@
 
         //bat su kien publish
         function publishEditPost() {
+            tinyMCE.triggerSave();
             var post = {
                 id : @id,
                 postName: $("#inp_name").val(),
