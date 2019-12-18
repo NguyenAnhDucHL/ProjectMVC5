@@ -70,7 +70,7 @@ namespace CourseOnline.Controllers
                                 new SqlParameter("user_fullname", name),
                                 new SqlParameter("user_email", email),
                                 new SqlParameter("use_mobile", ""),
-                                new SqlParameter("user_status", ""),
+                                new SqlParameter("user_status", true),
                                  new SqlParameter("user_image", picture)
                                 );
                             db.SaveChanges();
