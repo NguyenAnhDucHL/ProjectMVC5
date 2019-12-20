@@ -122,12 +122,12 @@
                             </select>
                         </div>
                     </div>
-                    <div class="tab-pane tab-image" id="photo">
+                    <div disabled class="tab-pane tab-image" id="photo">
                         <img id="image_user" class="img-responsive pad" src="@(userListModel.user_image == null ? "" : Url.Content(@userListModel.user_image))" alt="Photo">
                         <div class="row tab-button">
                             <div class="form-group col-sm-5 col-sm-push-7">
                                 <label for="exampleChange">Add/Change image</label>
-                                <input onchange="readURL(this);" class="custom-input" type="file" id="exampleChange">
+                                <input disabled onchange="readURL(this);" class="custom-input edit-field" type="file" id="exampleChange">
                             </div>
                         </div>
                     </div>
