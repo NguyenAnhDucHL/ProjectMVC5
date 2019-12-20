@@ -272,14 +272,15 @@ namespace CourseOnline.Controllers
                     dynamic editUser = JValue.Parse(postJson);
                     string email = editUser.userMail;
                     int duplicate = (from checkuser in db.Users where checkuser.user_email == email select checkuser).Count();
-                    
-                    if(duplicate == 0)
+                    int tempID = db.Users.DefaultIfEmpty().Max(pos => pos == null ? 0 : pos.user_id);
+                    int id_new = tempID + 1;
+                    if (duplicate == 0)
                     {
                         string roleName = editUser.userRole;
                         string imageValue = editUser.userImage;
                         var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
                         var hinhanh = Convert.FromBase64String(ava);
-                        string relative_path = "~/Path/" + editUser.userMail + ".png";
+                        string relative_path = "/Path/" + "user" + id_new + ".png";
                         string path = Server.MapPath(relative_path);
                         System.IO.File.WriteAllBytes(path, hinhanh);
                         User user = new User();
