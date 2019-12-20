@@ -719,7 +719,7 @@ namespace CourseOnline.Controllers
             int pageNumber = (page ?? 1);
 
             string sql = "select s.subject_name, c.course_start_date , c.course_end_date , c.course_id, c.course_name, u.user_email, s.subject_category," +
-                "s.picture, s.subject_brief_info, CASE WHEN convert(datetime,c.course_start_date) >= @datetimenow Then 'Waiting of Course Open' Else 'Join Course' END as status_course " +
+                "s.picture, s.subject_brief_info, CASE WHEN convert(datetime,c.course_start_date) >= @datetimenow Then 'Waiting of Course Open' Else 'Go To Course' END as status_course " +
                 "from Course c join Subject s on c.subject_id = s.subject_id " +
                  "join  Registration re on c.course_id = re.course_id join [User] u on  re.user_id = u.user_id where c.course_status = 'True' and  re.registration_status = 'Approved' and s.subject_status = 'Online'";
             List<CourseListModel> lstMyCourse = db.Database.SqlQuery<CourseListModel>(sql, new SqlParameter("datetimenow", DateTime.Now)).Where(c => c.user_email == myemail).ToList();

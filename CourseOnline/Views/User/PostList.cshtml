@@ -62,7 +62,7 @@ else
                         {
                             if (post.post_document_link != null)
                             {
-                                <a href = "@Url.Action("DownloadFile", "News", new { id = post.post_id })" class="btn btn-primary px-4 rounded-0">Download</a>
+                                <a href="@Url.Action("DownloadFile", "News", new { id = post.post_id })" class="btn btn-primary px-4 rounded-0">Download</a>
                             }
                         }
                         else
@@ -74,10 +74,27 @@ else
             }
         </div>
     </div>
-    <div class="dlink" style="text-align:center">
-        Page @(listPosts.PageCount < listPosts.PageNumber ? 0 : listPosts.PageNumber)/@listPosts.PageCount
-        @Html.PagedListPager(listPosts, page => Url.Action("PostList", new { page = page }))
-    </div>
+    if (@ViewData["PostType"].ToString() == "Resource Post")
+    {
+        <div class="dlink" style="text-align:center">
+            Page @(listPosts.PageCount < listPosts.PageNumber ? 0 : listPosts.PageNumber)/@listPosts.PageCount
+            @Html.PagedListPager(listPosts, page => Url.Action("ResourcesList", new { page = page }))
+        </div>
+    }
+    else if (@ViewData["PostType"].ToString() == "Guide Post")
+    {
+        <div class="dlink" style="text-align:center">
+            Page @(listPosts.PageCount < listPosts.PageNumber ? 0 : listPosts.PageNumber)/@listPosts.PageCount
+            @Html.PagedListPager(listPosts, page => Url.Action("GuideList", new { page = page }))
+        </div>
+    }
+    else
+    {
+        <div class="dlink" style="text-align:center">
+            Page @(listPosts.PageCount < listPosts.PageNumber ? 0 : listPosts.PageNumber)/@listPosts.PageCount
+            @Html.PagedListPager(listPosts, page => Url.Action("PostList", new { page = page }))
+        </div>
+    }
 }
 
 

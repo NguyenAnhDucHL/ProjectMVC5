@@ -19,6 +19,7 @@ namespace CourseOnline.Controllers
             int pageNumber = (page ?? 1);
             var lstPost = db.Posts.OrderByDescending(n => n.post_id).Where(post => post.post_status == "Published").ToPagedList(pageNumber, pageSize);
             ViewBag.lstPost = lstPost;
+            ViewData["PostType"] = "All Post";
             return View("/Views/User/PostList.cshtml");
         }
         public ActionResult ResourcesList(int? page)
