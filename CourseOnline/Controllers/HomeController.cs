@@ -294,7 +294,7 @@ namespace CourseOnline.Controllers
         {
             if (Session["Email"] == null)
             {
-                TempData["ErrorMessage"] = "You need to login to join the Pratice Test";
+                
                 return RedirectToAction("Home_User");
             }
             string myemail = Session["Email"].ToString();
