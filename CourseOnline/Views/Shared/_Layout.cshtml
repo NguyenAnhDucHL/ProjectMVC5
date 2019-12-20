@@ -47,8 +47,11 @@
     var user;
     var loggedIn = false;
     function login() {
-
-        var win = window.open(_url, "windowname1", 'width=800, height=600');
+        var top = window.screen.height - 700;
+        top = top > 0 ? top/2 : 0;
+        var left = window.screen.width - 800;
+        left = left > 0 ? left/2 : 0;
+        var win = window.open(_url, "windowname1", "width=800,height=600" + ",top=" + top + ",left=" + left);
         var pollTimer = window.setInterval(function () {
             try {
                 console.log(win.document.URL);
