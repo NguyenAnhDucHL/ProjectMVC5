@@ -115,9 +115,14 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify({ 'email': user.email, 'name': user.name, 'gender': user.gender, "lastname": user.lastname, "location": user.location, "picture": user.picture }),
-            success: function () {
-                window.location.href = '@Url.Action("CheckAccount", "Home")'
-            }
+            success: (response) => {
+                   if (response.success) {
+                       window.location.href = '@Url.Action("CheckAccount", "Home")'
+                   } else {
+                       errorAlert("Your account is locked");
+                   }
+               },
+             error: (response) => { alert("Something wrong!") }
         })
         }
 

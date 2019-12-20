@@ -87,9 +87,16 @@ namespace CourseOnline.Controllers
                         }
                         else
                         {
-
-                            string userPicture = db.Users.Where(u => u.user_email == email).Select(u => u.user_image).FirstOrDefault();
-                            Session["Picture"] = userPicture;
+                            bool userstatus = db.Users.Where(u => u.user_email == email).Select(u => u.user_status).FirstOrDefault();
+                            if(userstatus == true)
+                            {
+                                string userPicture = db.Users.Where(u => u.user_email == email).Select(u => u.user_image).FirstOrDefault();
+                                Session["Picture"] = userPicture;
+                            }
+                            else
+                            {
+                                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                            }
                         }
                     }
                     catch (Exception e)
