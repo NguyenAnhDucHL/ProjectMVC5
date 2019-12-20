@@ -179,7 +179,7 @@ namespace CourseOnline.Controllers
                     string imageValue = editUser.userImage;
                     var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
 
-                    if (ava == "/Assets/dist/img/" + "user" + editUser.id + ".png")
+                    if (ava == "/Path/" + "user" + editUser.id + ".png")
                     {
                         if (user != null)
                         {
@@ -215,7 +215,7 @@ namespace CourseOnline.Controllers
                                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                             }
                         }
-                        string relative_path = "/Assets/dist/img/" + "user" + editUser.id + ".png";
+                        string relative_path = "/Path/" + "user" + editUser.id + ".png";
                         string path = Server.MapPath(relative_path);
                         System.IO.File.WriteAllBytes(path, hinhanh);
                         if (Session["Email"].Equals(user.user_email))
