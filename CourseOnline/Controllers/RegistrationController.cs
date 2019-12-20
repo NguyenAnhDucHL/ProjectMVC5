@@ -66,7 +66,7 @@ namespace CourseOnline.Controllers
 
                 if (excelfile == null || excelfile.ContentLength == 0)
                 {
-                    ViewBag.Error = "Please select ";
+                    ViewData["Message"] = "Please select ";
                     return View("/Views/CMS/Registration/RegistrationList.cshtml");
                 }
                 else
@@ -76,7 +76,7 @@ namespace CourseOnline.Controllers
                         string path = Server.MapPath("~/excelfolder/" + excelfile.FileName);
                         if (System.IO.File.Exists(path))
                         {
-                            ViewBag.Error = "File has been exist";
+                            ViewData["Message"] = "File has been exist";
                             return View("/Views/CMS/Registration/RegistrationList.cshtml");
                         }
                         excelfile.SaveAs(path);
@@ -96,9 +96,10 @@ namespace CourseOnline.Controllers
                                 
                                 Registration res = new Registration();
                                 res.user_id = intID;
-                                res.course_id = ((Excel.Range)range.Cells[row, 3]).Text;
+                                res.course_id = Convert.ToInt32(((Excel.Range)range.Cells[row, 3]).Text);
                                 res.registration_status = "Approved";
                                 res.registration_time = DateTime.Now.ToString();
+                                res.registration_status = "Submitted";
                                 db.Registrations.Add(res);
                                 db.SaveChanges();
                             }
@@ -118,18 +119,19 @@ namespace CourseOnline.Controllers
                                 db.SaveChanges();
                                 Registration res = new Registration();
                                 res.user_id = temp;
-                                res.course_id = ((Excel.Range)range.Cells[row, 3]).Text;
+                                res.course_id = Convert.ToInt32(((Excel.Range)range.Cells[row, 3]).Text);
                                 res.registration_time = DateTime.Now.ToString();
+                                res.registration_status = "Submitted";
                                 db.Registrations.Add(res);
                                 db.SaveChanges();
                             }
                         }
-                        ViewBag.Error = "Import success";
+                        ViewData["Message"] = "Import success";
                         return View("/Views/CMS/Registration/RegistrationList.cshtml");
                     }
                     else
                     {
-                        ViewBag.Error = "Inport fail";
+                        ViewData["Message"] = "Inport fail";
                         return View("/Views/CMS/Registration/RegistrationList.cshtml");
                     }
                 }

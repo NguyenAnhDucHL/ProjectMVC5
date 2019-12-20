@@ -72,7 +72,6 @@
                                     <div class="col-sm-2">
                                         @using (Html.BeginForm("Import", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                         {
-                                            @Html.Raw(ViewBag.Error)
                                             <span>Choose your File to import</span>
                                             <input type="file" id="input_file" name="pdfFile" class="edit-field" onchange="inform()"/>
                                             <input type="text" id="postID" name="postID" hidden class="edit-field" value="@post.post_id" />

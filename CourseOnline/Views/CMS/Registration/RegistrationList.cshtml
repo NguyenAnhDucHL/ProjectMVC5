@@ -6,6 +6,11 @@
     var lstSubject = ViewBag.lstSubject;
     var lstCourse = ViewBag.lstCourse;
     var lststatus = ViewBag.lststatus;
+    var message = "";
+    if(ViewData["Message"] != null)
+    {
+         message = ViewData["Message"].ToString();
+    }
 }
 
 <section class="content-header">
@@ -58,7 +63,6 @@
                     <div class="col-sm-2">
                         @using (Html.BeginForm("Import", "Registration", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
-                            @Html.Raw(ViewBag.Error)
                             <span>Excel File</span>
                             <input type="file" id="input_file" name="excelfile" class="edit-field" />
                             <input id="primaryButton" type="submit" value="Import" class="edit-field" />
@@ -89,8 +93,16 @@
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
+        var message = '@message';
+        if (message) {
+            if (message == "Import success") {
+                successAlert(message);
+            } else {
+                errorAlert(message);
+            }
+        }
         var dataTable;
-    $(document).ready(function() {
+        $(document).ready(function() {
        dataTable = $('#tb_registration').DataTable({
             "ajax": {
                 "url": '@Url.Action("GetAllRegistration", "Registration")',
