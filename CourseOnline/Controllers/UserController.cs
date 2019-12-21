@@ -216,7 +216,37 @@ namespace CourseOnline.Controllers
                         }
                     } else
                     {
-                        var hinhanh = Convert.FromBase64String(ava);
+                        Byte[] hinhanh = null;
+                        try
+                        {
+                            hinhanh = Convert.FromBase64String(ava);
+                        }
+                        catch (Exception)
+                        {
+                            if (user != null)
+                            {
+                                userRole.role_id = Convert.ToInt32(idRole);
+                                userRole.user_id = id;
+                                user.user_fullname = editUser.userName;
+                                user.user_email = editUser.userMail;
+                                user.use_mobile = editUser.userMobile;
+                                user.user_position = editUser.userPosition;
+                                user.user_description = editUser.userDescription;
+                                user.check_recieveInformation = editUser.userCheckReceive;
+                                user.user_gender = editUser.userGender;
+                                temp = editUser.userStatus;
+                                if (temp.Equals("Active"))
+                                {
+                                    user.user_status = true;
+                                }
+                                else
+                                {
+                                    user.user_status = false;
+                                }
+                                db.SaveChanges();
+                                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                            }
+                        }
                         string relative_path = "/Path/" + "user" + editUser.userID + ".png";
                         string path = Server.MapPath(relative_path);
                         System.IO.File.WriteAllBytes(path, hinhanh);
