@@ -132,6 +132,13 @@
 
 
     </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .resp-container {
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
     <div class="site-wrap">
@@ -214,32 +221,32 @@
                 <div class="d-flex align-items-center">
                     <div class="site-logo">
                         <a href="@Url.Action("Home_User", "Home")" class="d-block">
-                            <img src="~/Assets/IMGUSER/logo.png" alt="Image" class="img-fluid" height="36" width="144">
+                            <img src="~/Assets/IMGUSER/logo.png" alt="Image" class="img-fluid" style="max-height:36px;max-width:144px;width: 100%;">
                         </a>
                     </div>
                     <div class="mr-auto">
                         <nav class="site-navigation position-relative text-right" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                                 <li class="@Url.IsActive("Home_User", "Home")">
-                                    <a onclick="window.location.href = '@Url.Action("Home_User", "Home")'" style="cursor:pointer" class="nav-link text-left">Home</a>
+                                    <a onclick="window.location.href = '@Url.Action("Home_User", "Home")'" style="cursor:pointer" class="nav-link text-left">HOME</a>
                                 </li>
                                 <li class="@Url.IsActive("GuideList", "News")">
-                                    <a onclick="window.location.href = '@Url.Action("GuideList", "News")'" style="cursor:pointer" class="nav-link text-left fa fa-fw fa-sort-desc">Guide</a>
+                                    <a onclick="window.location.href = '@Url.Action("GuideList", "News")'" style="cursor:pointer" class="nav-link text-left fa fa-fw fa-sort-desc">GUIDE</a>
                                 </li>
                                 <li class="@Url.IsActive("ResourcesList", "News")">
-                                    <a onclick="window.location.href = '@Url.Action("ResourcesList", "News")'" style="cursor:pointer" class="nav-link text-left">Resource</a>
+                                    <a onclick="window.location.href = '@Url.Action("ResourcesList", "News")'" style="cursor:pointer" class="nav-link text-left">RESOURCE</a>
                                 </li>
                                 <li class="@Url.IsActive("ListCourses", "Home")">
-                                    <a onclick="window.location.href = '@Url.Action("ListCourses", "Home")'" style="cursor:pointer" class="nav-link text-left">Course</a>
+                                    <a onclick="window.location.href = '@Url.Action("ListCourses", "Home")'" style="cursor:pointer" class="nav-link text-left">COURSE</a>
                                 </li>
                                 <li class="@Url.IsActive("SelectCourseToQuiz", "Home")">
                                     @if (Session["Email"] != null)
                                     {
-                                        <a onclick="window.location.href = '@Url.Action("SelectCourseToQuiz", "Home")'" style="cursor:pointer" class="nav-link text-left">Practice Test</a>
+                                        <a onclick="window.location.href = '@Url.Action("SelectCourseToQuiz", "Home")'" style="cursor:pointer" class="nav-link text-left">PRACTICE</a>
                                     }
                                     else
                                     {
-                                        <a onclick="login()" style="cursor: pointer" class="nav-link text-left">Practice Test</a>
+                                        <a onclick="login()" style="cursor: pointer" class="nav-link text-left">PRACTICE</a>
                                     }
                                 </li>
                                 @if (Session["permission"] != null)
@@ -247,19 +254,19 @@
                                     if (Session["permission"].Equals("Permission 1") || Session["permission"].Equals("Permission 2"))
                                     {
                                         <li>
-                                            <a onclick="window.location.href = '@Url.Action("Home_CMS", "Home")'" style="cursor: pointer" class="nav-link text-left">Go Back To CMS</a>
+                                            <a onclick="window.location.href = '@Url.Action("Home_CMS", "Home")'" style="cursor: pointer" class="nav-link text-left">GO TO CMS</a>
                                         </li>
                                     }
                                 }
                             </ul>
                         </nav>
                     </div>
-                    <div class="col-lg-2" style="margin-right:50px">
+                    <div class="col-lg-3">
                         @using (Html.BeginForm("GetKeyWord", "Home"))
                         {
                             <div class="d-flex" style="margin-top:10px">
-                                <input type="text" class="rounded form-control" placeholder="Search Course ... " style="min-width: 200px" name="keyword">
-                                <button class="btn btn-primary rounded" style="margin-left:5px" type="submit">Search</button>
+                                <input type="text" class="rounded form-control" placeholder="Search Course ... " style="max-width: 200px" name="keyword">
+                                <button class="btn btn-primary rounded" style="margin-left:5px; margin-right:2px" type="submit">Search</button>
                             </div>
                         }
                     </div>
@@ -287,12 +294,12 @@
                         <p>Email: fpteducation@fe.edu.vn</p>
                     </div>
                     <div class="col-lg-2">
-                        <h3 class="footer-heading"><span>Our Courses</span></h3>
+                        <h3 class="footer-heading"><span>Our Majors</span></h3>
                         <ul class="list-unstyled">
-                            <li><a href="#">Software Engineer</a></li>
-                            <li><a href="#">Computer Science</a></li>
-                            <li><a href="#">Graphic Design</a></li>
-                            <li><a href="#">Janpanese Language</a></li>
+                            <li><a href="https://en.wikipedia.org/wiki/Software_engineer">Software Engineer</a></li>
+                            <li><a href="https://en.wikipedia.org/wiki/Computer_science">Computer Science</a></li>
+                            <li><a href="https://en.wikipedia.org/wiki/Graphic_design">Graphic Design</a></li>
+                            <li><a href="https://en.wikipedia.org/wiki/Japanese_language">Janpanese Language</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-2">
@@ -304,7 +311,9 @@
                         </ul>
                     </div>
                     <div class="col-lg-4">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.4822058510476!2d105.52509761429765!3d21.01338329368048!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313454b32ca5086d%3A0xa3c62e29d8ab37e4!2sFPT%20University!5e0!3m2!1sen!2s!4v1576846520095!5m2!1sen!2s" width="400" height="200" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                        <div class="resp-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.4822058510476!2d105.52509761429765!3d21.01338329368048!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313454b32ca5086d%3A0xa3c62e29d8ab37e4!2sFPT%20University!5e0!3m2!1sen!2s!4v1576846520095!5m2!1sen!2s" width="400" height="200" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                        </div>
                     </div>
                 </div>
 
