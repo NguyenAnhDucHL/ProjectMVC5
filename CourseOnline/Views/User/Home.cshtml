@@ -121,34 +121,56 @@
                     @{ listPost.RemoveAt(0);
                         foreach (var item in listPost)
                         {
-                            <div class="post-entry-big horizontal d-flex mb-4">
-                                @if (item.post_type == "Resourse")
-                                {
-                                    if (item.post_document_link != null)
-                                    {
-                                        <a href="@Url.Action("DownloadFile","News", new { id = item.post_id})" class="img-link mr-5"><img src="@(item.post_thumbnail == null ? "" : Url.Content(item.post_thumbnail))" alt="Image" class="img-fluid"></a>
-                                    }
-                                    else
-                                    {
-                                        <a href="#" class="img-link mr-5"><img src="@(item.post_thumbnail == null ? "" : Url.Content(item.post_thumbnail))" alt="Image" class="img-fluid"></a>
-                                    }
-                                }
-                                else
-                                {
-                                    <a href="@Url.Action("PostDetail","News", new { id = item.post_id})" class="img-link mr-5"><img src="@(item.post_thumbnail == null ? "" : Url.Content(item.post_thumbnail))" alt="Image" class="img-fluid"></a>
-                                }
-                                <div class="post-content">
-                                    <div class="post-meta">
-                                        <a href="#">@item.post_date</a>
-                                        <span class="mx-1">/@item.post_category</span>
-                                    </div>
-                                    <h3 class="post-heading"><a href="#">@item.post_name</a></h3>
-                                    <p class="icon-tag">@item.post_type</p>
-                                    <span>
-                                        @Html.Raw(item.post_brief_info)
-                                    </span>
-                                </div>
-                            </div>
+                                        <div class="post-entry-big horizontal d-flex mb-4">
+                                            @if (item.post_type == "Resourse")
+                                            {
+                                                if (item.post_document_link != null)
+                                                {
+                                                    <a href="@Url.Action("DownloadFile","News", new { id = item.post_id})" class="img-link mr-5"><img src="@(item.post_thumbnail == null ? "" : Url.Content(item.post_thumbnail))" alt="Image" class="img-fluid"></a>
+                                                    <div class="post-content">
+                                                        <div class="post-meta">
+                                                            <a href="#">@item.post_date</a>
+                                                            <span class="mx-1">/@item.post_category</span>
+                                                        </div>
+                                                        <h3 class="post-heading"><a href="@Url.Action("DownloadFile","News", new { id = item.post_id})">@item.post_name</a></h3>
+                                                        <p class="icon-tag">@item.post_type</p>
+                                                        <span>
+                                                            @Html.Raw(item.post_brief_info)
+                                                        </span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <a href="#" class="img-link mr-5"><img src="@(item.post_thumbnail == null ? "" : Url.Content(item.post_thumbnail))" alt="Image" class="img-fluid"></a>
+                                                    <div class="post-content">
+                                                        <div class="post-meta">
+                                                            <a href="#">@item.post_date</a>
+                                                            <span class="mx-1">/@item.post_category</span>
+                                                        </div>
+                                                        <h3 class="post-heading"><a href="#">@item.post_name</a></h3>
+                                                        <p class="icon-tag">@item.post_type</p>
+                                                        <span>
+                                                            @Html.Raw(item.post_brief_info)
+                                                        </span>
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("PostDetail","News", new { id = item.post_id})" class="img-link mr-5"><img src="@(item.post_thumbnail == null ? "" : Url.Content(item.post_thumbnail))" alt="Image" class="img-fluid"></a>
+                                                <div class="post-content">
+                                                    <div class="post-meta">
+                                                        <a href="#">@item.post_date</a>
+                                                        <span class="mx-1">/@item.post_category</span>
+                                                    </div>
+                                                    <h3 class="post-heading"><a href="@Url.Action("PostDetail","News", new { id = item.post_id})">@item.post_name</a></h3>
+                                                    <p class="icon-tag">@item.post_type</p>
+                                                    <span>
+                                                        @Html.Raw(item.post_brief_info)
+                                                    </span>
+                                                </div>
+                                            }
+                                        </div>
                         }
                     }
                 </div>

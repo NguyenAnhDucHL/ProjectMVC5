@@ -47,14 +47,16 @@ else
                 </ul>
                 <div class="tab-content">
                     <div class="active tab-pane" id="overview">
-                        <h2>Lesson Objectives</h2>
-                        <div class="form-group">
-                            <label>@lesson.lesson_objecttive</label>
-                        </div>
-                        <h2>Description</h2>
-                        <div class="form-group">
-                            <label>@lesson.lesson_support</label>
-                        </div>
+                        <center>
+                            <h2>Lesson Objectives</h2>
+                            <div class="form-group">
+                                <label>@lesson.lesson_objecttive</label>
+                            </div>
+                            <h2>Description</h2>
+                            <div class="form-group">
+                                <label>@lesson.lesson_support</label>
+                            </div>
+                        </center>
                     </div>
                 </div>
             </div>
@@ -69,8 +71,10 @@ else
                 <div class="tab-content">
                     <div class="active tab-pane" id="content">
                         <div class="youtube-responsive-container">
-                            <iframe width="560" height="315" src="@lesson.lesson_link" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-                            </iframe>
+                            <center>
+                                <iframe width="560" height="315" src="@lesson.lesson_link" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                                </iframe>
+                            </center>
                         </div>
                     </div>
                 </div>
@@ -135,13 +139,17 @@ else
                         @if (Session["ExamTest"] == null)
                         {
                             <div class="active tab-pane" id="content">
-                                <a href="#" onclick="StartQuiz()" class="btn btn-primary rounded-0 btn-lg px-5">Start Quiz</a>
+                                <center>
+                                    <a href="#" onclick="StartQuiz()" class="btn btn-primary rounded-0 btn-lg px-5">Start Quiz</a>
+                                </center>
                             </div>
                         }
                         else
                         {
                             <div class="active tab-pane" id="content">
-                                <a href="#" onclick="window.open('@Url.Action("LessonDetail", "Home")?id = ' + @lesson.lesson_id)" class="btn btn-primary rounded-0 btn-lg px-5">Countinue to Quiz</a>
+                                <center>
+                                    <a href="#" onclick="window.open('@Url.Action("LessonDetail", "Home")?id = ' + @lesson.lesson_id)" class="btn btn-primary rounded-0 btn-lg px-5">Countinue to Quiz</a>
+                                </center>
                             </div>
                         }
                     </div>
@@ -152,23 +160,25 @@ else
     <div class="modal fade" id="MyModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Join Test</h4>
-                    <a href="#" class="close" data-dismiss="modal">&times;</a>
-                </div>
-                <div class="modal-body">
-                    <h5>Input Password</h5>
-                    <form id="form">
-                        <fieldset id="SubmitForm">
-                            <div class="form-group">
-                                <input id="slPassword" value="" />
-                            </div>
-                            <div class="form-group">
-                                <a href="#" class="btn btn-block btn-danger" id="VerifyPassword">Verify Password</a>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
+                <center>
+                    <div class="modal-header">
+                        <h4>Join Test</h4>
+                        <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Input Password</h5>
+                        <form id="form">
+                            <fieldset id="SubmitForm">
+                                <div class="form-group">
+                                    <input id="slPassword" value="" />
+                                </div>
+                                <div class="form-group">
+                                    <a href="#" class="btn btn-block btn-danger" id="VerifyPassword">Verify Password</a>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </center>
             </div>
         </div>
     </div>
