@@ -21,6 +21,12 @@ namespace CourseOnline.Controllers
         private STUDYONLINEEntities db = new STUDYONLINEEntities();
         public ActionResult Home_CMS()
         {
+            int countAdmin = db.UserRoles.Where(ur => ur.role_id == 1).Count();
+            int countTeacher = db.UserRoles.Where(ur => ur.role_id == 2).Count();
+            int countStudent = db.UserRoles.Where(ur => ur.role_id == 3).Count();
+            ViewBag.countAdmin = countAdmin;
+            ViewBag.countTeacher = countTeacher;
+            ViewBag.countStudent = countStudent;
             return View("/Views/CMS/Home.cshtml");
         }
         public ActionResult Home_User()
