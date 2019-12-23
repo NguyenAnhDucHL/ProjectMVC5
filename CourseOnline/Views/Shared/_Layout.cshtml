@@ -128,9 +128,6 @@
              error: (response) => { alert("Something wrong!") }
         })
         }
-
-
-
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -246,7 +243,91 @@
                                     }
                                     else
                                     {
-                                        <a onclick="login()" style="cursor: pointer" class="nav-link text-left">PRACTICE</a>
+                                        <script>
+                                      function loginpractice() {
+                                    var top = window.screen.height - 700;
+                                    top = top > 0 ? top/2 : 0;
+                                    var left = window.screen.width - 800;
+                                    left = left > 0 ? left/2 : 0;
+                                    var win = window.open(_url, "windowname1", "width=800,height=600" + ",top=" + top + ",left=" + left);
+                                    var pollTimer = window.setInterval(function () {
+                                        try {
+                                            console.log(win.document.URL);
+                                            if (win.document.URL.indexOf(REDIRECT) != -1) {
+                                                window.clearInterval(pollTimer);
+                                                var url = win.document.URL;
+                                                acToken = guppractice(url, 'access_token');
+                                                tokenType = guppractice(url, 'token_type');
+                                                expiresIn = guppractice(url, 'expires_in');
+
+                                                win.close();
+                                                debugger;
+                                                validateTokenpractice(acToken);
+                                            }
+                                        }
+                                        catch (e) {
+
+                                        }
+                                    }, 500);
+                                }
+                                function guppractice(url, name) {
+                                    namename = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+                                    var regexS = "[\\#&]" + name + "=([^&#]*)";
+                                    var regex = new RegExp(regexS);
+                                    var results = regex.exec(url);
+                                    if (results == null)
+                                        return "";
+                                    else
+                                        return results[1];
+                                }
+
+                                function validateTokenpractice(token) {
+
+                                    getUserInfopractice();
+                                    $.ajax(
+
+                                        {
+
+                                            url: VALIDURL + token,
+                                            data: null,
+                                            success: function (responseText) {
+
+                                            },
+
+                                        });
+
+                                }
+
+                                function getUserInfopractice() {
+                                    $.ajax({
+
+                                        url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
+                                        data: null,
+                                        success: function (resp) {
+                                            user = resp;
+                                            getDatapractice();
+                                        },
+                                    })
+                                }
+                                    function getDatapractice() {
+                                         $.ajax({
+                                        url: '@Url.Action("GoogleLogin", "Home")',
+                                        type: 'POST',
+                                        dataType: 'json',
+                                        contentType: 'application/json; charset=utf-8',
+                                        data: JSON.stringify({ 'email': user.email, 'name': user.name, 'gender': user.gender, "lastname": user.lastname, "location": user.location, "picture": user.picture }),
+                                        success: (response) => {
+                                               if (response.success) {
+                                                   window.location.href = '@Url.Action("SelectCourseToQuiz", "Home")'
+                                               } else {
+                                                   errorAlert("Your account is locked");
+                                               }
+                                           },
+                                         error: (response) => { alert("Something wrong!") }
+                                    })
+                                    }
+                                        </script>
+                                        <a onclick="loginpractice()" style="cursor: pointer" class="nav-link text-left">PRACTICE</a>
                                     }
                                 </li>
                                 @if (Session["permission"] != null)

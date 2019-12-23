@@ -37,7 +37,7 @@ namespace CourseOnline.Controllers
             List<CourseListModel> lstCourse = db.Database.SqlQuery<CourseListModel>(sql, new SqlParameter("datetimenow", DateTime.Now)).Take(3).ToList();
             ViewBag.lstCourse = lstCourse;
 
-            List<Post> lstPost = db.Posts.Take(5).OrderByDescending(n => n.post_id).Where(n => n.post_status == "Published").ToList();
+            List<Post> lstPost = db.Posts.Take(5).OrderByDescending(n => n.post_id).Where(n => n.post_status == "Published" && n.post_type == "Guide").ToList();
             ViewBag.lstPost = lstPost;
 
             var lstSlider = db.Sliders.ToList();
