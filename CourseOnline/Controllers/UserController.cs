@@ -147,6 +147,7 @@ namespace CourseOnline.Controllers
                                 user_position = u.user_position,
                                 role_name = r.role_name,
                                 user_image = u.user_image,
+                                user_status = u.user_status,
                             }).FirstOrDefault();
 
                 ViewBag.User = User;
