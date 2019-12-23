@@ -30,7 +30,7 @@ namespace CourseOnline.Controllers
                 }
                 if (result.Equals("Reject"))
                 {
-                    return View("~/Views/CMS/Home.cshtml");
+                    return RedirectToAction("Home_CMS", "Home");
                 }
                 else
                 {

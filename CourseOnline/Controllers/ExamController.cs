@@ -30,7 +30,7 @@ namespace CourseOnline.Controllers
                 }
                 if (result.Equals("Reject"))
                 {
-                    return View("~/Views/CMS/Home.cshtml");
+                    return RedirectToAction("Home_CMS", "Home");
                 }
                 else
                 {
@@ -522,15 +522,15 @@ namespace CourseOnline.Controllers
         {
             dynamic addNumberTest = JValue.Parse(postJson);
             ExamConfigModel examConfigModel = new ExamConfigModel();
-                examConfigModel.domain_id = addNumberTest.domainID;
-                examConfigModel.domain_size = addNumberTest.numberQuestion;
-                foreach (ExamConfigModel examConfigs in All.examConfigs.ToList())
+            examConfigModel.domain_id = addNumberTest.domainID;
+            examConfigModel.domain_size = addNumberTest.numberQuestion;
+            foreach (ExamConfigModel examConfigs in All.examConfigs.ToList())
+            {
+                if (examConfigModel.domain_id == examConfigs.domain_id)
                 {
-                    if (examConfigModel.domain_id == examConfigs.domain_id)
-                    {
-                        All.examConfigs.Remove(examConfigs);
-                    }
+                    All.examConfigs.Remove(examConfigs);
                 }
+            }
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
     }

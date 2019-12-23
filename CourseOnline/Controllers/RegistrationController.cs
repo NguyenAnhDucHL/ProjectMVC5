@@ -30,7 +30,7 @@ namespace CourseOnline.Controllers
                 }
                 if (result.Equals("Reject"))
                 {
-                    return View("~/Views/CMS/Home.cshtml");
+                    return RedirectToAction("Home_CMS", "Home");
                 }
                 else
                 {
@@ -93,7 +93,7 @@ namespace CourseOnline.Controllers
                             int intID = db.Users.Where(s => s.user_email == email).Select(s => s.user_id).FirstOrDefault();
                             if (intID != 0)
                             {
-                                
+
                                 Registration res = new Registration();
                                 res.user_id = intID;
                                 res.course_id = Convert.ToInt32(((Excel.Range)range.Cells[row, 3]).Text);

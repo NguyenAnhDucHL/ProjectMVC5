@@ -54,7 +54,7 @@ namespace CourseOnline.Controllers
                 }
                 else
                 {
-                    sql = "Select M.menu_link RM.roll_menu_status " +
+                    sql = "Select M.menu_link, RM.roll_menu_status " +
                              "from Menu M " +
                              "join RoleMenu RM on M.menu_id = RM.menu_id " +
                              "where rm.role_id = @role_id";

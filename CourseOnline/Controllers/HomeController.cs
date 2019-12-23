@@ -94,7 +94,7 @@ namespace CourseOnline.Controllers
                         else
                         {
                             bool userstatus = db.Users.Where(u => u.user_email == email).Select(u => u.user_status).FirstOrDefault();
-                            if(userstatus == true)
+                            if (userstatus == true)
                             {
                                 string userPicture = db.Users.Where(u => u.user_email == email).Select(u => u.user_image).FirstOrDefault();
                                 Session["Picture"] = userPicture;
@@ -300,7 +300,7 @@ namespace CourseOnline.Controllers
         {
             if (Session["Email"] == null)
             {
-                
+
                 return RedirectToAction("Home_User");
             }
             string myemail = Session["Email"].ToString();
@@ -1119,18 +1119,18 @@ namespace CourseOnline.Controllers
                 foreach (int idques in questionID)
                 {
                     QuestionModel questions = (from q in db.Questions
-                                                     where q.question_status == "Published" && q.question_id == idques
-                                                     select new QuestionModel
-                                                     {
-                                                         questionID = q.question_id,
-                                                         questiontext = q.question_name,
-                                                         answers = q.AnswerOptions.Select(tq => new AnswerModel
-                                                         {
-                                                             answerID = tq.answer_option_id,
-                                                             answertext = tq.answer_text,
-                                                             isCorrect = tq.answer_corect,
-                                                         }).ToList()
-                                                     }).FirstOrDefault();
+                                               where q.question_status == "Published" && q.question_id == idques
+                                               select new QuestionModel
+                                               {
+                                                   questionID = q.question_id,
+                                                   questiontext = q.question_name,
+                                                   answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                   {
+                                                       answerID = tq.answer_option_id,
+                                                       answertext = tq.answer_text,
+                                                       isCorrect = tq.answer_corect,
+                                                   }).ToList()
+                                               }).FirstOrDefault();
                     questionModels.Add(questions);
                 }
 
@@ -1154,19 +1154,19 @@ namespace CourseOnline.Controllers
             string email = Session["Email"].ToString();
 
             var testdetail = (from tr in db.TestResults
-                             join ex in db.Exams.Where(ex => ex.exam_is_practice == true) on tr.exam_id equals ex.exam_id
-                             join s in db.Subjects on ex.subject_id equals s.subject_id
-                             join ur in db.Users.Where(ur => ur.user_email == email) on tr.user_id equals ur.user_id
-                             join c in db.Courses.Where(c => c.course_status == true) on s.subject_id equals c.subject_id
-                             select new ResultModel
-                             {
-                                 test_user_id = tr.test_user_id,
-                                 course_name = c.course_name,
-                                 subject_name = s.subject_name,
-                                 average = tr.average,
-                                 time_duration = ex.exam_duration ?? 0,
-                                 tested_at = tr.tested_at,
-                             }).ToList();
+                              join ex in db.Exams.Where(ex => ex.exam_is_practice == true) on tr.exam_id equals ex.exam_id
+                              join s in db.Subjects on ex.subject_id equals s.subject_id
+                              join ur in db.Users.Where(ur => ur.user_email == email) on tr.user_id equals ur.user_id
+                              join c in db.Courses.Where(c => c.course_status == true) on s.subject_id equals c.subject_id
+                              select new ResultModel
+                              {
+                                  test_user_id = tr.test_user_id,
+                                  course_name = c.course_name,
+                                  subject_name = s.subject_name,
+                                  average = tr.average,
+                                  time_duration = ex.exam_duration ?? 0,
+                                  tested_at = tr.tested_at,
+                              }).ToList();
 
             int totalrows = testdetail.Count;
             int totalrowsafterfiltering = testdetail.Count;
@@ -1181,33 +1181,33 @@ namespace CourseOnline.Controllers
             string email = Session["Email"].ToString();
             int userid = db.Users.Where(u => u.user_email == email).Select(u => u.user_id).FirstOrDefault();
             List<ResultModel> testdetail = (from t in db.TestResults.Where(t => t.test_user_id == id && t.user_id == userid)
-                              join q in db.TestAnswers on t.test_user_id equals q.test_user_id
-                              select new ResultModel
-                              {
-                                  test_answer_id = q.test_answer_id,
-                                  question_id = q.question_id,
-                                  user_answer = q.user_answer,
-                              }).ToList();
+                                            join q in db.TestAnswers on t.test_user_id equals q.test_user_id
+                                            select new ResultModel
+                                            {
+                                                test_answer_id = q.test_answer_id,
+                                                question_id = q.question_id,
+                                                user_answer = q.user_answer,
+                                            }).ToList();
             List<QuestionModel> questionModels = new List<QuestionModel>();
             foreach (ResultModel resultModel in testdetail)
             {
                 string corrrectresult = db.AnswerOptions.Where(ao => ao.question_id == resultModel.question_id && ao.answer_corect == true).Select(ao => ao.answer_text).FirstOrDefault();
                 QuestionModel questions = (from q in db.Questions
-                                                     where q.question_status == "Published" && q.question_id == resultModel.question_id
-                                                     select new QuestionModel
-                                                     {
-                                                         questionID = q.question_id,
-                                                         questiontext = q.question_name,
-                                                         useranswer = resultModel.user_answer,
-                                                         correctanswer = corrrectresult,
-                                                         answers = q.AnswerOptions.Select(tq => new AnswerModel
-                                                         {
-                                                             answerID = tq.answer_option_id,
-                                                             answertext = tq.answer_text,
-                                                             isCorrect = tq.answer_corect,
-                                                         }).ToList()
-                                                     }).FirstOrDefault();
-                    questionModels.Add(questions);
+                                           where q.question_status == "Published" && q.question_id == resultModel.question_id
+                                           select new QuestionModel
+                                           {
+                                               questionID = q.question_id,
+                                               questiontext = q.question_name,
+                                               useranswer = resultModel.user_answer,
+                                               correctanswer = corrrectresult,
+                                               answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                               {
+                                                   answerID = tq.answer_option_id,
+                                                   answertext = tq.answer_text,
+                                                   isCorrect = tq.answer_corect,
+                                               }).ToList()
+                                           }).FirstOrDefault();
+                questionModels.Add(questions);
             }
             ViewBag.questionModels = questionModels;
             return View("/Views/User/ReviewPraticeTest.cshtml");

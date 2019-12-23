@@ -32,7 +32,7 @@ namespace CourseOnline.Controllers
                 }
                 if (result.Equals("Reject"))
                 {
-                    return View("~/Views/CMS/Home.cshtml");
+                    return RedirectToAction("Home_CMS", "Home");
                 }
                 else
                 {
@@ -109,16 +109,16 @@ namespace CourseOnline.Controllers
                                 join u in db.Users on ur.user_id equals u.user_id
                                 join r in db.Roles on ur.role_id equals r.role_id
                                 where u.user_fullname.Contains(type)
-                                   select new
-                                   {
-                                       user_id = u.user_id,
-                                       user_fullname = u.user_fullname,
-                                       user_email = u.user_email,
-                                       use_mobile = u.use_mobile,
-                                       user_gender = u.user_gender,
-                                       user_status = u.user_status,
-                                       role_name = r.role_name
-                                   }).ToList();
+                                select new
+                                {
+                                    user_id = u.user_id,
+                                    user_fullname = u.user_fullname,
+                                    user_email = u.user_email,
+                                    use_mobile = u.use_mobile,
+                                    user_gender = u.user_gender,
+                                    user_status = u.user_status,
+                                    role_name = r.role_name
+                                }).ToList();
                 int totalrows = userList.Count;
                 int totalrowsafterfiltering = userList.Count;
                 userList = userList.Skip(start).Take(length).ToList();
@@ -178,13 +178,13 @@ namespace CourseOnline.Controllers
                     int id = editUser.userID;
                     string roleName = editUser.userRole;
 
-                   
+
                     User user = db.Users.Where(p => p.user_id == id).FirstOrDefault();
                     UserRole userRole = db.UserRoles.Where(p => p.user_id == id).FirstOrDefault();
                     var idRole = db.Roles.Where(r => r.role_name == roleName).Select(r => r.role_id).FirstOrDefault();
                     string imageValue = editUser.userImage;
-                    var ava = imageValue.Substring(imageValue.IndexOf(",")+1);
-                    if(ava == "/Path/" + "user"+ editUser.userID + ".png")
+                    var ava = imageValue.Substring(imageValue.IndexOf(",") + 1);
+                    if (ava == "/Path/" + "user" + editUser.userID + ".png")
                     {
                         if (user != null)
                         {
@@ -214,7 +214,8 @@ namespace CourseOnline.Controllers
                         {
                             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
                         }
-                    } else
+                    }
+                    else
                     {
                         Byte[] hinhanh = null;
                         try
@@ -354,7 +355,7 @@ namespace CourseOnline.Controllers
                     {
                         return Json(new { postJson = "" }, JsonRequestBehavior.AllowGet);
                     }
-                    
+
                 }
             }
             catch (Exception e)
@@ -403,16 +404,16 @@ namespace CourseOnline.Controllers
                                 join r in db.Roles on ur.role_id equals r.role_id
                                 where r.role_name.Contains(role)
                                 && u.user_status.ToString().Contains(status)
-                                   select new UserListModel
-                                   {
-                                       user_id = u.user_id,
-                                       user_fullname = u.user_fullname,
-                                       user_email = u.user_email,
-                                       use_mobile = u.use_mobile,
-                                       user_gender = u.user_gender,
-                                       user_status = u.user_status,
-                                       role_name = r.role_name
-                                   }).ToList();
+                                select new UserListModel
+                                {
+                                    user_id = u.user_id,
+                                    user_fullname = u.user_fullname,
+                                    user_email = u.user_email,
+                                    use_mobile = u.use_mobile,
+                                    user_gender = u.user_gender,
+                                    user_status = u.user_status,
+                                    role_name = r.role_name
+                                }).ToList();
 
                 int totalrows = userList.Count;
                 int totalrowsafterfiltering = userList.Count;
