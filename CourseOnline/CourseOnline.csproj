@@ -43,6 +43,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
@@ -169,29 +170,29 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CourseController.cs" />
-    <Compile Include="Controllers\CourseWorkController.cs" />
-    <Compile Include="Controllers\DomainController.cs" />
-    <Compile Include="Controllers\ExamController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MenuController.cs" />
-    <Compile Include="Controllers\NewsController.cs" />
-    <Compile Include="Controllers\PermissionsController.cs" />
-    <Compile Include="Controllers\PostController.cs" />
-    <Compile Include="Controllers\PraticeResultController.cs" />
-    <Compile Include="Controllers\QuestionController.cs" />
-    <Compile Include="Controllers\RegistrationController.cs" />
-    <Compile Include="Controllers\ResultTestController.cs" />
-    <Compile Include="Controllers\RolePermissionController.cs" />
-    <Compile Include="Controllers\RollMenuController.cs" />
-    <Compile Include="Controllers\SettingController.cs" />
-    <Compile Include="Controllers\SliderController.cs" />
-    <Compile Include="Controllers\SubjectController.cs" />
-    <Compile Include="Controllers\SubjectLessonController.cs" />
-    <Compile Include="Controllers\TeacherController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\VerifyAccController.cs" />
+    <Compile Include="Controllers\AminSide\CourseController.cs" />
+    <Compile Include="Controllers\AminSide\CourseWorkController.cs" />
+    <Compile Include="Controllers\AminSide\DomainController.cs" />
+    <Compile Include="Controllers\AminSide\ExamController.cs" />
+    <Compile Include="Controllers\UserSide\HomeController.cs" />
+    <Compile Include="Controllers\AminSide\MenuController.cs" />
+    <Compile Include="Controllers\AminSide\NewsController.cs" />
+    <Compile Include="Controllers\AminSide\PermissionsController.cs" />
+    <Compile Include="Controllers\AminSide\PostController.cs" />
+    <Compile Include="Controllers\AminSide\PraticeResultController.cs" />
+    <Compile Include="Controllers\AminSide\QuestionController.cs" />
+    <Compile Include="Controllers\AminSide\RegistrationController.cs" />
+    <Compile Include="Controllers\AminSide\ResultTestController.cs" />
+    <Compile Include="Controllers\AminSide\RolePermissionController.cs" />
+    <Compile Include="Controllers\AminSide\RoleMenuController.cs" />
+    <Compile Include="Controllers\AminSide\SettingController.cs" />
+    <Compile Include="Controllers\AminSide\SliderController.cs" />
+    <Compile Include="Controllers\AminSide\SubjectController.cs" />
+    <Compile Include="Controllers\AminSide\SubjectLessonController.cs" />
+    <Compile Include="Controllers\AminSide\TeacherController.cs" />
+    <Compile Include="Controllers\AminSide\TestController.cs" />
+    <Compile Include="Controllers\AminSide\UserController.cs" />
+    <Compile Include="Controllers\AminSide\VerifyAccController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -290,9 +291,6 @@
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SubjectListModel.cs" />
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>STUDYONLINE.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Tag.cs">
       <DependentUpon>STUDYONLINE.tt</DependentUpon>
     </Compile>
@@ -416,14 +414,6 @@
     <Content Include="Assets\dist\img\photo2.png" />
     <Content Include="Assets\dist\img\photo3.jpg" />
     <Content Include="Assets\dist\img\photo4.jpg" />
-    <Content Include="Assets\dist\img\user1-128x128.jpg" />
-    <Content Include="Assets\dist\img\user2-160x160.jpg" />
-    <Content Include="Assets\dist\img\user3-128x128.jpg" />
-    <Content Include="Assets\dist\img\user4-128x128.jpg" />
-    <Content Include="Assets\dist\img\user5-128x128.jpg" />
-    <Content Include="Assets\dist\img\user6-128x128.jpg" />
-    <Content Include="Assets\dist\img\user7-128x128.jpg" />
-    <Content Include="Assets\dist\img\user8-128x128.jpg" />
     <Content Include="Assets\dist\js\app.js" />
     <Content Include="Assets\dist\js\app.min.js" />
     <Content Include="Assets\dist\js\demo.js" />
@@ -946,16 +936,13 @@
     <Content Include="Assets\studyonlinealert\sweetalert2.min.css" />
     <Content Include="Assets\studyonlinealert\sweetalert2.min.js" />
     <Content Include="bin\Antlr3.Runtime.dll" />
-    <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\CourseOnline.dll" />
     <Content Include="bin\CourseOnline.pdb" />
     <Content Include="bin\EntityFramework.dll" />
     <Content Include="bin\EntityFramework.SqlServer.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
-    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Newtonsoft.Json.dll" />
-    <Content Include="bin\Newtonsoft.Json.xml" />
     <Content Include="bin\roslyn\csc.exe" />
     <Content Include="bin\roslyn\csi.exe" />
     <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
@@ -993,19 +980,12 @@
     <Content Include="bin\roslyn\vbc.exe" />
     <Content Include="bin\roslyn\VBCSCompiler.exe" />
     <Content Include="bin\System.Web.Helpers.dll" />
-    <Content Include="bin\System.Web.Helpers.xml" />
     <Content Include="bin\System.Web.Mvc.dll" />
-    <Content Include="bin\System.Web.Mvc.xml" />
     <Content Include="bin\System.Web.Optimization.dll" />
-    <Content Include="bin\System.Web.Optimization.xml" />
     <Content Include="bin\System.Web.Razor.dll" />
-    <Content Include="bin\System.Web.Razor.xml" />
     <Content Include="bin\System.Web.WebPages.Deployment.dll" />
-    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
     <Content Include="bin\System.Web.WebPages.dll" />
     <Content Include="bin\System.Web.WebPages.Razor.dll" />
-    <Content Include="bin\System.Web.WebPages.Razor.xml" />
-    <Content Include="bin\System.Web.WebPages.xml" />
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -1076,6 +1056,7 @@
     <Content Include="Models\STUDYONLINE.edmx.diagram">
       <DependentUpon>STUDYONLINE.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1171,6 +1152,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assets\IMGCMS\" />
+    <Folder Include="excelfolder\questionfolder\" />
+    <Folder Include="excelfolder\registrationfolder\" />
     <Folder Include="Path\" />
     <Folder Include="PostFolder\" />
     <Folder Include="Views\VerifyAcc\" />

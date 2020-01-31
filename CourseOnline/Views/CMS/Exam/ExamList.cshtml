@@ -91,10 +91,10 @@
                 { "data": "exam_duration", "name": "exam_duration", "orderable": true },
                 { "data": "pass_rate", "name": "pass_rate", "orderable": true },
                 { "data": "test_type", "name": "test_type", "orderable": true },
-                { 
+                {
                     "data": "exam_id", "render": function (data) {
                         return "<div class='row'><div class='col-sm-6'><a onclick=getEditExam('" + data + "') style='width=100%; cursor : pointer' data-toggle='tooltip' title='Edit'><i class='fa fa-fw fa-edit'></i></a>" +
-                                    "</div>" + 
+                                    "</div>" +
 								 "</div>";
                     },
                     "orderable": false,
@@ -116,7 +116,7 @@
 
         //bat su kien search
         function doSearch() {
-            
+
             $('#inp_search').on('change', function (e) {
                 var valueSelected = this.value;
                 dataTable.ajax.url('@Url.Action("SearchByName","Exam")' + '?type=' + valueSelected).load(function (response) { });

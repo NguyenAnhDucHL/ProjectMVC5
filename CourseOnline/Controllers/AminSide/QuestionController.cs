@@ -22,6 +22,7 @@ namespace CourseOnline.Controllers
         [Route("QuestionList")]
         public ActionResult Index()
         {
+            ViewBag.Error = null;
             if (Session["Email"] == null)
             {
                 return View("/Views/Error_404.cshtml");
@@ -101,13 +102,13 @@ namespace CourseOnline.Controllers
                 {
                     if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
                     {
-                        string path = Server.MapPath("~/excelfolder/" + excelfile.FileName);
+                        string path = Server.MapPath("~/excelfolder/questionfolder/" + excelfile.FileName);
                         if (System.IO.File.Exists(path))
                         {
                             ViewBag.Error = "File has been exist";
                             return View("/Views/CMS/Question/QuestionList.cshtml");
                         }
-                            excelfile.SaveAs(path);
+                        excelfile.SaveAs(path);
                         //Read data from excel file
                         Excel.Application application = new Excel.Application();
                         Excel.Workbook workbook = application.Workbooks.Open(path);
@@ -555,6 +556,14 @@ namespace CourseOnline.Controllers
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
 
+        }
+
+        public ActionResult DownloadFile()
+        {
+            string path = Server.MapPath("~/excelfolder/template/demoExcel.xlsx");
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+            string fileName = path.Split('\\').Last();
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
     }
 }

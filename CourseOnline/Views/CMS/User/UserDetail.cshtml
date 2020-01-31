@@ -122,12 +122,12 @@
                             </select>
                         </div>
                     </div>
-                    <div disabled class="tab-pane tab-image" id="photo">
+                    <div class="tab-pane tab-image" id="photo">
                         <img id="image_user" class="img-responsive pad" src="@(userListModel.user_image == null ? "" : Url.Content(@userListModel.user_image))" alt="Photo">
                         <div class="row tab-button">
                             <div class="form-group col-sm-5 col-sm-push-7">
                                 <label for="exampleChange">Add/Change image</label>
-                                <input disabled onchange="readURL(this);" class="custom-input edit-field" type="file" id="exampleChange">
+                                <input onchange="readURL(this);" class="custom-input" type="file" id="exampleChange">
                             </div>
                         </div>
                     </div>
@@ -201,9 +201,11 @@
             } else if (!ValidateEmail($("#inputEmail").val())) {
                 errorAlert("Email invalid!");
                 return;
-            } else if ($("#inputMobile").val().length < 10 || $("#inputMobile").val().length > 11 || !regex.test($("#inputMobile").val())) {
-                errorAlert("Please enter phone valid!");
-                return;
+            } else if ($("#inputMobile").val() != "") {
+                if ($("#inputMobile").val().length < 10 || $("#inputMobile").val().length > 11 || !regex.test($("#inputMobile").val())) {
+                    errorAlert("Please enter phone valid!");
+                    return;
+                }
             }
             $.ajax({
                 url: '@Url.Action("SubmitUser","User")',

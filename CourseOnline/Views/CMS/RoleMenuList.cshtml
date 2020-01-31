@@ -34,8 +34,8 @@
         </div>
     </div>
 </section>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts{
-    <script src="~/Assets/bootstrap/js/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
         var dataTable;
@@ -91,7 +91,7 @@
             var postJson = JSON.stringify(res);
 
         $.ajax({
-                url:'@Url.Action("ChangeMenuStatus","RollMenu")',
+                url:'@Url.Action("ChangeMenuStatus","RoleMenu")',
                         type: "POST",
                         data: { postJson: postJson },
                         dataType: "json",
@@ -115,7 +115,7 @@
             var postJson = JSON.stringify(res);
 
         $.ajax({
-                url:'@Url.Action("ChangeMenuStatus","RollMenu")',
+                url:'@Url.Action("ChangeMenuStatus","RoleMenu")',
                         type: "POST",
                         data: { postJson: postJson },
                         dataType: "json",

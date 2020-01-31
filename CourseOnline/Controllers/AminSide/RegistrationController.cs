@@ -73,7 +73,7 @@ namespace CourseOnline.Controllers
                 {
                     if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
                     {
-                        string path = Server.MapPath("~/excelfolder/" + excelfile.FileName);
+                        string path = Server.MapPath("~/excelfolder/registrationfolder/" + excelfile.FileName);
                         if (System.IO.File.Exists(path))
                         {
                             ViewData["Message"] = "File has been exist";

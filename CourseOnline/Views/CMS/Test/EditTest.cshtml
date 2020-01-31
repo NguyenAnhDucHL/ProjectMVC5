@@ -37,7 +37,7 @@
                                 <input id="inp_code" type="text" disabled class="form-control edit-field" value="@test.test_code">
                             </div>
                             <div class="col-lg-4">
-                                <button type="button" class="btn btn-block btn-primary" onclick='getResetCode()'>Reset</button>
+                                <button type="button" class="btn btn-block btn-primary" disabled onclick='getResetCode()'>Reset</button>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
             if ($("#inp_testName").val() == "") {
                 errorAlert("Test Name not empty!");
                 return;
-            }
+            };
             $.ajax({
                 url: '@Url.Action("SubmitTestEdit","Test")',
                 type: "POST",

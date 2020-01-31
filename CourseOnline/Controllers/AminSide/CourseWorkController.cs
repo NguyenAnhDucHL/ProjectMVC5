@@ -86,10 +86,10 @@ namespace CourseOnline.Controllers
         {
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                List<ExamTest> listExamTest = db.ExamTests.Where(ex => ex.course_id == courseid).ToList();
-                ViewBag.ExamTestName = listExamTest;
                 Course course = db.Courses.Where(c => c.course_id == courseid).FirstOrDefault();
                 ViewBag.course = course;
+                List<ExamTest> listExamTest = db.ExamTests.Where(ex => ex.subject_id == course.subject_id).ToList();
+                ViewBag.ExamTestName = listExamTest;
                 return View("/Views/CMS/Course/CourseWorkAdd.cshtml");
             }
         }

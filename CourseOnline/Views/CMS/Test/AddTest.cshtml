@@ -34,6 +34,19 @@
                         <label>Test Name</label>
                         <input id="inp_testName" type="text" class="form-control edit-field" />
                     </div>
+                    <div class="row">
+                        <div class="form-group" style="width:30%;">
+                            <div class="col-lg-2">
+                                <label>Code</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input id="inp_code" type="text" class="form-control edit-field">
+                            </div>
+                            <div class="col-lg-4">
+                                <button type="button" class="btn btn-block btn-primary" onclick='getResetCode()'>Random</button>
+                            </div>
+                        </div>
+                    </div>
                     <button type="submit" style="width : 8%;" onclick="submitTest()" class="btn btn-info edit-field">Submit</button>
                     <button type="submit" style="width : 8%;" onclick="goBack()" class="btn btn-info">Back</button>
                 </div>
@@ -52,12 +65,15 @@
                     function () { $(this).prop('disabled', true); }
                 )
         };
-
+    function getResetCode() {
+            document.getElementById("inp_code").value = Math.random().toString(36).substring(2);
+    };
     function submitTest() {
 
         var test = {
-            examName: $("#sl_exam").val(),
-            testName: $("#inp_testName").val()
+            examId: $("#sl_exam").val(),
+            testName: $("#inp_testName").val(),
+            testCode: $("#inp_code").val()
             };
 
             var postJson = JSON.stringify(test);

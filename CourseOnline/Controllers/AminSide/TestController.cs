@@ -106,13 +106,13 @@ namespace CourseOnline.Controllers
                                 join et in db.ExamTests on e.exam_id equals et.exam_id
                                 join tr in db.TestResults on e.exam_id equals tr.exam_id
                                 where et.test_name.Contains(type)
-                                   select new TestListModel
-                                   {
-                                       test_id = et.test_id,
-                                       exam_name = e.exam_name,
-                                       test_name = et.test_name,
-                                       test_code = et.test_code
-                                   }).ToList();
+                                select new TestListModel
+                                {
+                                    test_id = et.test_id,
+                                    exam_name = e.exam_name,
+                                    test_name = et.test_name,
+                                    test_code = et.test_code
+                                }).ToList();
                 int totalrows = testList.Count;
                 int totalrowsafterfiltering = testList.Count;
                 testList = testList.Skip(start).Take(length).ToList();
@@ -147,7 +147,7 @@ namespace CourseOnline.Controllers
                     testListModels = testListModels.Skip(start).Take(length).ToList();
                     testListModels = testListModels.OrderBy(sortColumnName + " " + sortDirection).ToList();
                     return Json(new { success = true, data = testListModels, draw = Request["draw"], recordsTotal = totalrows, recordsFiltered = totalrowsafterfiltering }, JsonRequestBehavior.AllowGet);
-                    
+
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace CourseOnline.Controllers
                             "on et.test_id = tr.test_id" +
                             " where e.exam_name = @ename";
 
-                    List<TestListModel> testListModels = db.Database.SqlQuery<TestListModel>(sql, new SqlParameter("ename",type)).ToList();
+                    List<TestListModel> testListModels = db.Database.SqlQuery<TestListModel>(sql, new SqlParameter("ename", type)).ToList();
 
                     int totalrows = testListModels.Count;
                     int totalrowsafterfiltering = testListModels.Count;
@@ -222,7 +222,7 @@ namespace CourseOnline.Controllers
         {
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                List<Exam> listExam = db.Exams.Where(s => s.exam_name != null).Distinct().ToList();
+                List<Exam> listExam = db.Exams.Where(s => s.exam_name != null && s.exam_name != "Practice").Distinct().ToList();
                 ViewBag.listExam = listExam;
 
             }
@@ -237,7 +237,7 @@ namespace CourseOnline.Controllers
                 // ViewBag.listBatch = listBatch;
                 ViewBag.id = id;
             }
-                return View("/Views/CMS/Test/ResultTest.cshtml");
+            return View("/Views/CMS/Test/ResultTest.cshtml");
         }
 
         [HttpGet]
@@ -245,16 +245,15 @@ namespace CourseOnline.Controllers
         {
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
-                string sql = "select et.test_id, e.exam_name, et.test_name, et.test_code " + 
+                string sql = "select et.test_id, e.exam_name, et.test_name, et.test_code " +
                                 "from Exam e join ExamTest et " +
                                 "on e.exam_id = et.exam_id " +
-                                "join TestResult tr " +
-                                "on e.exam_id = tr.exam_id where et.test_id = @id";
+                                "where et.test_id = @id";
                 TestListModel test = db.Database.SqlQuery<TestListModel>(sql, new SqlParameter("id", id)).FirstOrDefault();
                 ViewBag.Test = test;
                 ViewBag.ExamName = test.exam_name;
 
-                ExamTest ex = db.ExamTests.Where(s => s.exam_id == id).FirstOrDefault();
+                ExamTest ex = db.ExamTests.Where(s => s.test_id == id).FirstOrDefault();
                 ViewBag.ExamTest = ex;
 
                 ViewBag.TestId = id;
@@ -271,14 +270,17 @@ namespace CourseOnline.Controllers
                 {
                     dynamic addTest = JValue.Parse(postJson);
                     ExamTest t = new ExamTest();
-                    t.exam_id = addTest.examName;
+                    t.exam_id = addTest.examId;
                     t.test_name = addTest.testName;
+                    t.test_code = addTest.testCode;
+                    Exam exam = db.Exams.Where(s => s.exam_name != null).Distinct().FirstOrDefault();
+                    t.subject_id = exam.subject_id;
                     db.ExamTests.Add(t);
                     db.SaveChanges();
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }

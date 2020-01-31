@@ -78,7 +78,7 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="@(Session["Picture"] == null ? "" :  Url.Content(@Session["Picture"].ToString()))" class="user-image" alt="User Image">
+                                <img src="@(Session["Picture"] == null ? "" : Url.Content(@Session["Picture"].ToString()))" class="user-image" alt="User Image">
                                 <span class="hidden-xs">@Session["Name"]</span>
                             </a>
                             <ul class="dropdown-menu">
@@ -169,10 +169,8 @@
                         <ul class="treeview-menu">
                             <li class="@Url.IsActive("Index", "Setting")"><a href="@Url.Action( "Index","Setting")"><i class="fa fa-circle-o"></i> Settings List</a></li>
                             <li class="@Url.IsActive("Index", "Menu")"><a href="@Url.Action( "Index","Menu")"><i class="fa fa-circle-o"></i> Menus List</a></li>
-                            <li class="@Url.IsActive("Index", "Permissions")"><a href="@Url.Action("Index","Permissions")"><i class="fa fa-circle-o"></i> Permissions</a></li>
                             <li class="@Url.IsActive("Index", "User")"><a href="@Url.Action("Index","User")"><i class="fa fa-circle-o"></i> Users List</a></li>
                             <li class="@Url.IsActive("Index", "RoleMenu")"><a href="@Url.Action("Index","RoleMenu")"><i class="fa fa-circle-o"></i> Role Menus</a></li>
-                            <li class="@Url.IsActive("Index", "RolePermission")"><a href="@Url.Action("Index","RolePermission")"><i class="fa fa-circle-o"></i> Role Permissions</a></li>
                         </ul>
                     </li>
                     <li class="treeview @Url.IsActive("Index", "Registration") @Url.IsActive("Index", "Course")">
@@ -198,9 +196,9 @@
         <!-- /.content-wrapper -->
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
-                <b>Version</b> 2.3.12
+                <b>Version</b> 1.0.0
             </div>
-            <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+            <strong>Copyright &copy; <script>document.write(new Date().getFullYear());</script></strong> All rights
             reserved.
         </footer>
 

@@ -348,7 +348,7 @@ namespace CourseOnline.Controllers
                 testsorted.Sort();
                 List<GradeModels> gradeModels = new List<GradeModels>();
 
-                String sql = "select u.[user_id], user_fullname, u.user_email, g.grade_user, cw.coursework_id, cw.coursework_weight " +
+                    String sql = "select u.[user_id], user_fullname, u.user_email, g.grade_user, cw.coursework_id, cw.coursework_weight " +
                                 "from Grade g " +
                                 "join Coursework cw on g.coursework_id = cw.coursework_id " +
                                 "join[User] u on g.[user_id] = u.[user_id] " +
@@ -358,8 +358,8 @@ namespace CourseOnline.Controllers
                 String[] courseworkid;
                 foreach (GradeModels gms in gradeTempModels)
                 {
-                    if (!gradeModels.Exists(gm => gm.registration_id == gms.registration_id))
-                    {
+                     if (!gradeModels.Exists(gm => gm.user_email == gms.user_email))
+                     {
                         for (int i = 0; i < testsorted.Count;)
                         {
                             courseworkid = testsorted[i].Split('/');
@@ -370,7 +370,8 @@ namespace CourseOnline.Controllers
                                     gradeModels.Add(new GradeModels()
                                     {
                                         user_fullname = gms.user_fullname,
-                                        user_email = gms.user_email,
+                                        user_email = gms.user_email, 
+                                        registration_id = gms.registration_id,
                                         Test1 = gms.grade_user,
                                         Total = ((float)gms.grade_user/10)*gms.coursework_weight
                                     });
@@ -381,6 +382,7 @@ namespace CourseOnline.Controllers
                                     {
                                         user_fullname = gms.user_fullname,
                                         user_email = gms.user_email,
+                                        registration_id = gms.registration_id,
                                         Test2 = gms.grade_user,
                                         Total = ((float)gms.grade_user / 10) * gms.coursework_weight
                                     });
@@ -391,6 +393,7 @@ namespace CourseOnline.Controllers
                                     {
                                         user_fullname = gms.user_fullname,
                                         user_email = gms.user_email,
+                                        registration_id = gms.registration_id,
                                         Test3 = gms.grade_user,
                                         Total = ((float)gms.grade_user / 10) * gms.coursework_weight
                                     });
@@ -401,6 +404,7 @@ namespace CourseOnline.Controllers
                                     {
                                         user_fullname = gms.user_fullname,
                                         user_email = gms.user_email,
+                                        registration_id = gms.registration_id,
                                         Test4 = gms.grade_user,
                                         Total = ((float)gms.grade_user / 10) * gms.coursework_weight
                                     });
@@ -411,6 +415,7 @@ namespace CourseOnline.Controllers
                                     {
                                         user_fullname = gms.user_fullname,
                                         user_email = gms.user_email,
+                                        registration_id = gms.registration_id,
                                         Test5 = gms.grade_user,
                                         Total = ((float)gms.grade_user / 10) * gms.coursework_weight
                                     });
@@ -421,6 +426,7 @@ namespace CourseOnline.Controllers
                                     {
                                         user_fullname = gms.user_fullname,
                                         user_email = gms.user_email,
+                                        registration_id = gms.registration_id,
                                         Test6 = gms.grade_user,
                                         Total = ((float)gms.grade_user / 10) * gms.coursework_weight
                                     });

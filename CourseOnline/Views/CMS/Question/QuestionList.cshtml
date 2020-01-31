@@ -7,6 +7,7 @@
     var listLesson = ViewBag.lessonName;
     var listLevel = ViewBag.questionLevel;
     var listStatus = ViewBag.questionStatus;
+    var errormessage = ViewBag.Error;
 }
 <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <section class="content-header">
@@ -88,12 +89,6 @@
                         <input type="text" placeholder="Search for question" id="inp_search" style="height:34px; margin-left:10px;" />
                         <a onclick="doSearch()" style="cursor: pointer;" data-toggle='tooltip' title='Search'><i class='fa fa-fw fa-search'></i></a>
                     </div>
-                    <div class="col-sm-2">
-                        @using (Html.BeginForm("Import", "Question"))
-                        {
-                            @Html.Raw(ViewBag.Error)
-                        }
-                    </div>
                 </div>
                 <div class="box-body">
                     <table id="tb_question" class="table table-bordered table-striped">
@@ -120,6 +115,13 @@
     <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
+         if ('@errormessage' != '') {
+            if ('@errormessage' == "Import success") {
+                successAlert('@errormessage');
+            } else {
+                errorAlert('@errormessage');
+            }
+        }
         var dataTable;
         $(document).ready(function () {
 

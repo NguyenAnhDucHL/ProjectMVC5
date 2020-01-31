@@ -21,13 +21,29 @@ namespace CourseOnline.Controllers
         private STUDYONLINEEntities db = new STUDYONLINEEntities();
         public ActionResult Home_CMS()
         {
-            int countAdmin = db.UserRoles.Where(ur => ur.role_id == 1).Count();
-            int countTeacher = db.UserRoles.Where(ur => ur.role_id == 2).Count();
-            int countStudent = db.UserRoles.Where(ur => ur.role_id == 3).Count();
-            ViewBag.countAdmin = countAdmin;
-            ViewBag.countTeacher = countTeacher;
-            ViewBag.countStudent = countStudent;
-            return View("/Views/CMS/Home.cshtml");
+            if (Session["Email"] == null)
+            {
+                return View("/Views/Error_404.cshtml");
+            }
+            else
+            {
+                VerifyAccController verifyAccController = new VerifyAccController();
+                String result = verifyAccController.Menu(Session["Email"].ToString(), "No Permission");
+                if (result.Equals("Student"))
+                {
+                    return View("/Views/Error_404.cshtml");
+                }
+                else
+                {
+                    int countAdmin = db.UserRoles.Where(ur => ur.role_id == 1).Count();
+                    int countTeacher = db.UserRoles.Where(ur => ur.role_id == 2).Count();
+                    int countStudent = db.UserRoles.Where(ur => ur.role_id == 3).Count();
+                    ViewBag.countAdmin = countAdmin;
+                    ViewBag.countTeacher = countTeacher;
+                    ViewBag.countStudent = countStudent;
+                    return View("/Views/CMS/Home.cshtml");
+                }
+            }
         }
         public ActionResult Home_User()
         {
@@ -59,8 +75,6 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public JsonResult GoogleLogin(string email, string name, string gender, string lastname, string location, string picture)
         {
-            Session["Name"] = name;
-            Session["Email"] = email;
             using (STUDYONLINEEntities db = new STUDYONLINEEntities())
             {
                 using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -88,6 +102,8 @@ namespace CourseOnline.Controllers
                                 new SqlParameter("role_id", 3)
                                 );
                             Session["Picture"] = picture;
+                            Session["Name"] = name;
+                            Session["Email"] = email;
                             db.SaveChanges();
                             transaction.Commit();
                         }
@@ -98,6 +114,8 @@ namespace CourseOnline.Controllers
                             {
                                 string userPicture = db.Users.Where(u => u.user_email == email).Select(u => u.user_image).FirstOrDefault();
                                 Session["Picture"] = userPicture;
+                                Session["Name"] = name;
+                                Session["Email"] = email;
                             }
                             else
                             {
@@ -119,7 +137,7 @@ namespace CourseOnline.Controllers
         public ActionResult CheckAccount()
         {
             GetPermission(Session["Email"].ToString());
-            if (Session["permission"].Equals("Permission 1") || Session["permission"].Equals("Permission 2"))
+            if (Session["rolepermission"].Equals("Admin") || Session["rolepermission"].Equals("Teacher"))
             {
                 return RedirectToAction("Home_CMS", "Home");
             }
@@ -131,28 +149,25 @@ namespace CourseOnline.Controllers
 
         public void GetPermission(string email)
         {
-            List<String> Permission = new List<string>();
             var checkPermission = (from u in db.Users.Where(x => x.user_email == email)
                                    join ur in db.UserRoles on u.user_id equals ur.user_id
                                    join r in db.Roles on ur.role_id equals r.role_id
-                                   join rp in db.RolePermissions on r.role_id equals rp.role_id
-                                   join p in db.Permissions on rp.permission_id equals p.permission_id
-                                   select p.permission_name);
+                                   select r.role_name);
 
-            Session["permission"] = "";
+            Session["rolepermission"] = "";
             foreach (string permissionName in checkPermission)
             {
-                if (permissionName.Equals("Permission 1"))
+                if (permissionName.Equals("Admin"))
                 {
-                    Session["permission"] = "Permission 1";
+                    Session["rolepermission"] = "Admin";
                 }
-                else if (permissionName.Equals("Permission 2"))
+                else if (permissionName.Equals("Teacher"))
                 {
-                    Session["permission"] = "Permission 2";
+                    Session["rolepermission"] = "Teacher";
                 }
                 else
                 {
-                    Session["permission"] = "Permission 3";
+                    Session["rolepermission"] = "Student";
                 }
             }
         }
@@ -166,6 +181,10 @@ namespace CourseOnline.Controllers
         [HttpGet]
         public ActionResult YourAcountInformation()
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("Home_User", "Home");
+            }
             string email = Session["Email"].ToString();
             User userInformation = db.Users.Where(u => u.user_email == email).FirstOrDefault();
             ViewBag.userInformation = userInformation;
@@ -354,7 +373,7 @@ namespace CourseOnline.Controllers
         {
             int id = Convert.ToInt32(subjectID);
 
-            List<LessonModel> lstLesson = (from l in db.Lessons.Where(l => l.lesson_status == true)
+            List<LessonModel> lstLesson = (from l in db.Lessons.Where(l => l.lesson_status == true && l.lesson_type != "Quiz")
                                            join s in db.Subjects.Where(s => s.subject_id == id)
                                            on l.subject_id equals s.subject_id
                                            join q in db.Questions.Where(q => q.question_status == "Published")
@@ -497,6 +516,10 @@ namespace CourseOnline.Controllers
         [HttpGet]
         public ActionResult TestOnline()
         {
+            if (Session["Email"] == null)
+            {
+                return View("/Views/Error_404.cshtml");
+            }
             if (Session["testquizz"] != null)
             {
                 var dateQuery = db.Database.SqlQuery<DateTime>("SELECT GETDATE()");
@@ -727,6 +750,10 @@ namespace CourseOnline.Controllers
 
         public ActionResult YourCourse(int? page)
         {
+            if (Session["Email"] == null)
+            {
+                return RedirectToAction("Home_User", "Home");
+            }
             string myemail = Session["Email"].ToString();
             int pageSize = 6;
             int pageNumber = (page ?? 1);
@@ -743,6 +770,7 @@ namespace CourseOnline.Controllers
         [HttpPost]
         public ActionResult SubmitQuiz(List<QuizResultModel> resultQuiz)
         {
+            Session["configModel"] = null;
             var dateQuery = db.Database.SqlQuery<DateTime>("SELECT GETDATE()");
             DateTime serverEndDate = dateQuery.AsEnumerable().First();
             TimeSpan ts = TimeSpan.Parse((serverEndDate - (DateTime)Session["time_start_test_exam"]).ToString());
@@ -797,7 +825,7 @@ namespace CourseOnline.Controllers
             grade.registration_id = courseListModel.registration_id;
             grade.course_id = courseListModel.course_id;
             grade.user_id = userid;
-            CourseWorkListModel courseWorkList = Session["test_exam"] as CourseWorkListModel;
+            ConfigModel courseWorkList = Session["test_exam"] as ConfigModel;
             Session["test_exam"] = null;
             grade.coursework_id = courseWorkList.coursework_id;
             grade.grade_user = yourgrade;
@@ -1014,11 +1042,19 @@ namespace CourseOnline.Controllers
 
         public ActionResult LessonDetail(int? id)
         {
-
+            if(Session["course"] == null)
+            {
+                return View("/Views/Error_404.cshtml");
+            }
+            if (Session["Email"] == null)
+            {
+                return View("/Views/Error_404.cshtml");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             if (Session["ExamTest"] != null)
             {
                 var dateQuery = db.Database.SqlQuery<DateTime>("SELECT GETDATE()");
@@ -1043,27 +1079,33 @@ namespace CourseOnline.Controllers
 
             if (lesson.lesson_type == "Quiz")
             {
-                LessonQuizModel lessonQuizModels = (from l in db.Lessons.Where(l => l.lesson_id == id && l.lesson_status == true)
-                                                    join c in db.Courseworks.Where(c => c.coursework_status == true) on l.coursework_id equals c.coursework_id
-                                                    join et in db.ExamTests on c.test_id equals et.test_id
-                                                    join tq in db.TestQuestions on et.test_id equals tq.test_id
-                                                    select new LessonQuizModel
-                                                    {
-                                                        coursework_id = c.coursework_id,
-                                                        test_id = tq.test_id,
-                                                        test_name = et.test_name,
-                                                        due_date = c.due_date,
-                                                    }).FirstOrDefault();
-                Session["lesson_quiz_id"] = id;
-                if (Convert.ToDateTime(lessonQuizModels.due_date) > DateTime.Now)
+                using (STUDYONLINEEntities db = new STUDYONLINEEntities())
                 {
-                    ViewBag.lessonQuiz = null;
+                    string sql = "select ls.subject_id, e.exam_level, ISNULL(ec.lesson_id, 0)AS lesson_id, " +
+                                "ISNULL(ec.lesson_size, 0) AS lesson_size, ISNULL(ec.domain_id, 0) AS domain_id, ISNULL(ec.domain_size, 0) AS domain_size, " +
+                                "e.exam_duration, cw.due_date, ISNULL(et.test_code, 0) AS test_code, et.test_id, " +
+                                "e.pass_rate, cw.coursework_id, e.exam_id " +
+                                "From Lesson ls " +
+                                "join Coursework cw on ls.coursework_id = cw.coursework_id " +
+                                "join ExamTest et on cw.test_id = et.test_id " +
+                                "join Exam e on et.exam_id = e.exam_id " +
+                                "join ExamConfig ec on e.exam_id = ec.exam_id " +
+                                "where ls.lesson_id = 23";
+
+                    ConfigModel configModel = db.Database.SqlQuery<ConfigModel>(sql, new SqlParameter("id", id)).FirstOrDefault();
+                    Session["lesson_quiz_id"] = id;
+                    if (Convert.ToDateTime(configModel.due_date) > DateTime.Now)
+                    {
+                        ViewBag.lessonQuiz = null;
+                    }
+                    ViewBag.lessonQuiz = configModel;
+                    Session["configModel"] = configModel;
                 }
-                ViewBag.lessonQuiz = lessonQuizModels;
             }
             else
             {
                 ViewBag.lessonQuiz = null;
+                Session["configModel"] = null;
             }
 
             ViewBag.Current2 = lesson2.lesson_name;
@@ -1074,25 +1116,13 @@ namespace CourseOnline.Controllers
             return View("/Views/User/StudyOnline.cshtml");
         }
 
-        public ActionResult checkExamTest(string test_id, string test_password)
+        public ActionResult checkExamTest(string test_password)
         {
-            CourseWorkListModel examTest = null;
-            int idtest = Convert.ToInt32(test_id);
+            ConfigModel configmodel = Session["configModel"] as ConfigModel;
             try
             {
-                examTest = (from et in db.ExamTests.Where(et => et.test_id == idtest && et.test_code == test_password)
-                            join
-                            cw in db.Courseworks on et.test_id equals cw.test_id
-                            select new CourseWorkListModel
-                            {
-                                test_id = et.test_id,
-                                exam_id = et.exam_id,
-                                coursework_id = cw.coursework_id
-                            }).FirstOrDefault();
-                double timer = Convert.ToDouble(db.Exams.Where(e => e.exam_id == examTest.exam_id).Select(s => s.exam_duration).FirstOrDefault());
-                double pass_rate = Convert.ToDouble(db.Exams.Where(e => e.exam_id == examTest.exam_id).Select(s => s.pass_rate).FirstOrDefault());
-                examTest.pass_rate = pass_rate;
-                Session["test_exam"] = examTest;
+                double timer = configmodel.exam_duration;
+                Session["test_exam"] = configmodel;
                 Session["time_test_exam"] = timer * 60;
                 var dateQuery = db.Database.SqlQuery<DateTime>("SELECT GETDATE()");
                 if (Session["time_start_test_exam"] == null)
@@ -1112,35 +1142,131 @@ namespace CourseOnline.Controllers
 
                 throw;
             }
-            if (examTest != null)
+            List<int> questionID = new List<int>();
+            List<int> questionIDNew = new List<int>();
+            List<QuestionModel> questionModels = new List<QuestionModel>();
+            int indexq = 0;
+            if (configmodel.domain_id != 0)
             {
-                List<int> questionID = db.TestQuestions.Where(tq => tq.test_id == idtest).Select(tq => tq.question_id).ToList();
-                List<QuestionModel> questionModels = new List<QuestionModel>();
-                foreach (int idques in questionID)
+                string question_level = configmodel.exam_level;
+                questionID = db.Questions.Where(tq => tq.domain_id == configmodel.domain_id && tq.subject_id == configmodel.subject_id && tq.question_level == question_level).Select(tq => tq.question_id).ToList();
+                if (configmodel.domain_size < questionID.Count)
                 {
-                    QuestionModel questions = (from q in db.Questions
-                                               where q.question_status == "Published" && q.question_id == idques
-                                               select new QuestionModel
-                                               {
-                                                   questionID = q.question_id,
-                                                   questiontext = q.question_name,
-                                                   answers = q.AnswerOptions.Select(tq => new AnswerModel
+                    Random random = new Random();
+                    for (int i = 0; i < configmodel.domain_size; i++)
+                    {
+                        indexq = random.Next(0, questionID.Count());
+                        questionIDNew.Add(questionID[indexq]);
+                        questionID.Remove(questionID[indexq]);
+                    }
+                    foreach (int idques in questionIDNew)
+                    {
+                        QuestionModel questions = (from q in db.Questions
+                                                   where q.question_status == "Published" && q.question_id == idques
+                                                   select new QuestionModel
                                                    {
-                                                       answerID = tq.answer_option_id,
-                                                       answertext = tq.answer_text,
-                                                       isCorrect = tq.answer_corect,
-                                                   }).ToList()
-                                               }).FirstOrDefault();
-                    questionModels.Add(questions);
+                                                       questionID = q.question_id,
+                                                       questiontext = q.question_name,
+                                                       answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                       {
+                                                           answerID = tq.answer_option_id,
+                                                           answertext = tq.answer_text,
+                                                           isCorrect = tq.answer_corect,
+                                                       }).ToList()
+                                                   }).FirstOrDefault();
+                        questionModels.Add(questions);
+                    }
                 }
-
+                else
+                {
+                    foreach (int idques in questionID)
+                    {
+                        QuestionModel questions = (from q in db.Questions
+                                                   where q.question_status == "Published" && q.question_id == idques
+                                                   select new QuestionModel
+                                                   {
+                                                       questionID = q.question_id,
+                                                       questiontext = q.question_name,
+                                                       answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                       {
+                                                           answerID = tq.answer_option_id,
+                                                           answertext = tq.answer_text,
+                                                           isCorrect = tq.answer_corect,
+                                                       }).ToList()
+                                                   }).FirstOrDefault();
+                        questionModels.Add(questions);
+                    }
+                }
                 Session["ExamTest"] = questionModels;
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
-            else
+            else if (configmodel.lesson_id != 0)
             {
-                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                int idles = configmodel.lesson_id;
+                List<int> checkparentID = db.Lessons.Where(l => l.parent_id == idles && l.lesson_id != idles).Select(l => l.lesson_id).ToList();
+                if (checkparentID == null)
+                {
+                    string question_level = configmodel.exam_level;
+                    questionID = db.Questions.Where(tq => tq.lesson_id == configmodel.lesson_id && tq.subject_id == configmodel.subject_id && tq.question_level == question_level).Select(tq => tq.question_id).ToList();
+                }else if(checkparentID != null)
+                {
+                    string question_level = configmodel.exam_level;
+                    checkparentID.Add(configmodel.lesson_id);
+                    foreach (int lesson in checkparentID.ToList())
+                    {
+                        List<int> questionidnew = db.Questions.Where(tq => tq.lesson_id == lesson && tq.subject_id == configmodel.subject_id && tq.question_level == question_level).Select(tq => tq.question_id).ToList();
+                        questionID.AddRange(questionidnew);
+                    }
+                }
+                if (configmodel.lesson_size < questionID.Count)
+                {
+                    Random random = new Random();
+                    for (int i = 0; i < configmodel.domain_size; i++)
+                    {
+                        indexq = random.Next(0, questionID.Count());
+                        questionIDNew.Add(questionID[indexq]);
+                        questionID.Remove(questionID[indexq]);
+                    }
+                    foreach (int idques in questionIDNew)
+                    {
+                        QuestionModel questions = (from q in db.Questions
+                                                   where q.question_status == "Published" && q.question_id == idques
+                                                   select new QuestionModel
+                                                   {
+                                                       questionID = q.question_id,
+                                                       questiontext = q.question_name,
+                                                       answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                       {
+                                                           answerID = tq.answer_option_id,
+                                                           answertext = tq.answer_text,
+                                                           isCorrect = tq.answer_corect,
+                                                       }).ToList()
+                                                   }).FirstOrDefault();
+                        questionModels.Add(questions);
+                    }
+                }
+                else
+                {
+                    foreach (int idques in questionID)
+                    {
+                        QuestionModel questions = (from q in db.Questions
+                                                   where q.question_status == "Published" && q.question_id == idques
+                                                   select new QuestionModel
+                                                   {
+                                                       questionID = q.question_id,
+                                                       questiontext = q.question_name,
+                                                       answers = q.AnswerOptions.Select(tq => new AnswerModel
+                                                       {
+                                                           answerID = tq.answer_option_id,
+                                                           answertext = tq.answer_text,
+                                                           isCorrect = tq.answer_corect,
+                                                       }).ToList()
+                                                   }).FirstOrDefault();
+                        questionModels.Add(questions);
+                    }
+                }
+                Session["ExamTest"] = questionModels;
             }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -1178,6 +1304,10 @@ namespace CourseOnline.Controllers
         [HttpGet]
         public ActionResult PracticeReviewDetail(int id)
         {
+            if (Session["Email"] == null)
+            {
+                return View("/Views/Error_404.cshtml");
+            }
             string email = Session["Email"].ToString();
             int userid = db.Users.Where(u => u.user_email == email).Select(u => u.user_id).FirstOrDefault();
             List<ResultModel> testdetail = (from t in db.TestResults.Where(t => t.test_user_id == id && t.user_id == userid)
