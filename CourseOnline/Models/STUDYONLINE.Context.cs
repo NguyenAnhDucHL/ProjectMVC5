@@ -45,7 +45,6 @@ namespace CourseOnline.Models
         public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<Slider> Sliders { get; set; }
         public virtual DbSet<Subject> Subjects { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<TestAnswer> TestAnswers { get; set; }
         public virtual DbSet<TestResult> TestResults { get; set; }

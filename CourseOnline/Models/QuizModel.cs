@@ -8,7 +8,7 @@ namespace CourseOnline.Models
     public class QuestionModel
     {
         public int questionID { get; set; }
-        public string questiontext { get; set; } 
+        public string questiontext { get; set; }
         public string subjectname { get; set; }
         public int subjectid { get; set; }
         public string useranswer { get; set; }
@@ -32,10 +32,27 @@ namespace CourseOnline.Models
         public int timeduration { get; set; }
     }
 
-    public class LessonQuizModel :Lesson
+    public class LessonQuizModel : Lesson
     {
         public int test_id { get; set; }
         public string test_name { get; set; }
         public string due_date { get; set; }
+    }
+
+    public class ConfigModel
+    {
+        public int subject_id { get; set; }
+        public string exam_level { get; set; }
+        public int lesson_id { get; set; }
+        public int lesson_size { get; set; }
+        public int domain_id { get; set; }
+        public int domain_size { get; set; }
+        public double exam_duration { get; set; }
+        public string due_date { get; set; }
+        public string test_code { get; set; }
+        public int test_id { get; set; }
+        public int coursework_id { get; set; }
+        public int exam_id { get; set; }
+        public double pass_rate { get; set; }
     }
 }

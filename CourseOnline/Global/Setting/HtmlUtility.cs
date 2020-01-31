@@ -8,10 +8,10 @@ namespace CourseOnline.Global.Setting
 {
     public static class HtmlUtility
     {
-          public static string IsActive(this UrlHelper html,
-                                  string control,
-                                  string action)
-          {
+        public static string IsActive(this UrlHelper html,
+                                 string control,
+                                 string action)
+        {
             var routeAction = (string)html.RequestContext.RouteData.Values["controller"];
             var routeControl = (string)html.RequestContext.RouteData.Values["action"];
 

@@ -19,7 +19,7 @@ namespace CourseOnline.Models
         public int user_id { get; set; }
         public int question_id { get; set; }
         public string user_answer { get; set; }
-        public int test_id { get; set; }
+        public Nullable<int> test_id { get; set; }
     
         public virtual ExamTest ExamTest { get; set; }
         public virtual Question Question { get; set; }

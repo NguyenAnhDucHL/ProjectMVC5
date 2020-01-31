@@ -22,7 +22,7 @@ namespace CourseOnline.Models
     
         public int test_user_id { get; set; }
         public int user_id { get; set; }
-        public int test_id { get; set; }
+        public Nullable<int> test_id { get; set; }
         public int exam_id { get; set; }
         public string test_type { get; set; }
         public Nullable<int> tested { get; set; }

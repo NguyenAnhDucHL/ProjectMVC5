@@ -15,7 +15,6 @@ namespace CourseOnline.Models
         public double Test4 { get; set; }
         public double Test5 { get; set; }
         public double Test6 { get; set; }
-
         public int coursework_weight { get; set; }
         public float Total { get; set; }
         public string due_date { get; set; }
